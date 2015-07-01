@@ -44,17 +44,10 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/ivAvatar"
-            android:layout_width="@dimen/list_photo_size"
-            android:layout_height="@dimen/list_photo_size"
-            android:src="@drawable/sample_picture"
-            android:scaleType="centerCrop"/>
-
-
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/item_padding">
 
@@ -77,6 +70,13 @@
                 android:text="Nie można sobie teraz spokojnie usiąść i dokarmiać gołębi. Czy ktoś to zgłaszał do zarządu parku?"/>
         </LinearLayout>
 
+        <ImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="@dimen/list_photo_size"
+            android:layout_height="@dimen/list_photo_size"
+            android:layout_marginRight="@dimen/item_padding"
+            android:src="@drawable/sample_picture"
+            android:scaleType="centerCrop"/>
     </LinearLayout>
 
     <TextView
