@@ -6,115 +6,68 @@
         <variable name="issue" type="pl.snowdog.dzialajlokalnie.model.Issue"/>
     </data>
 
-    <LinearLayout
-        android:orientation="vertical"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/item_padding">
 
-        <RelativeLayout
+        <include layout="@layout/rating_widget"
+            android:id="@+id/ratingWidget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            bind:rating="@{issue.issueStatus}"
+            />
+
+        <LinearLayout
+            android:id="@+id/textContent"
+            android:layout_toRightOf="@+id/ratingWidget"
+            android:layout_toLeftOf="@+id/ivAvatar"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/item_padding"
             android:paddingTop="@dimen/item_padding"
             android:paddingBottom="@dimen/item_padding">
-            >
 
-            <!--<include layout="@layout/rating_widget"-->
-                <!--android:id="@+id/ratingWidget"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_alignParentLeft="true"-->
-                <!--bind:issue="@{issue}"-->
-                <!--/>-->
-
-            <LinearLayout
-                android:id="@+id/ratingWidget"
-                android:layout_alignParentLeft="true"
-                android:orientation="vertical"
-                android:gravity="center_horizontal"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-                <ImageButton
-                    android:id="@+id/ibRateUp"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/ic_action_up"
-                    android:paddingLeft="@dimen/rating_button_padding"
-                    android:paddingRight="@dimen/rating_button_padding"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <TextView
-                    android:id="@+id/tvRating"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/textView_item_title"
-                    android:gravity="center"
-                    android:layout_gravity="center_horizontal"
-                    android:lines="1"
-                    android:ellipsize="marquee"
-                    android:text="37" />
-
-                <ImageButton
-                    android:id="@+id/ibRateDown"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/ic_action_down"
-                    android:paddingLeft="@dimen/rating_button_padding"
-                    android:paddingRight="@dimen/rating_button_padding"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_toRightOf="@+id/ratingWidget"
-                android:layout_toLeftOf="@+id/ivAvatar"
-                android:orientation="vertical"
+            <TextView
+                android:id="@+id/tvTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/item_padding">
+                style="@style/textView_item_title"
+                android:lines="2"
+                android:ellipsize="end"
+                android:text="@{issue.title}"/>
 
-                <TextView
-                    android:id="@+id/tvTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/textView_item_title"
-                    android:lines="2"
-                    android:ellipsize="end"
-                    android:text="@{issue.title}"/>
+            <TextView
+                android:id="@+id/tvDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/textView_item_desc"
+                android:lines="3"
+                android:ellipsize="end"
+                android:text="@{issue.description}"/>
+        </LinearLayout>
 
-                <TextView
-                    android:id="@+id/tvDesc"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/textView_item_desc"
-                    android:lines="3"
-                    android:ellipsize="end"
-                    android:text="@{issue.description}"/>
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/ivAvatar"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_width="@dimen/list_photo_size"
-                android:layout_height="@dimen/list_photo_size"
-                android:layout_marginLeft="@dimen/item_padding"
-                android:layout_marginRight="@dimen/item_padding"
-                android:src="@drawable/sample_picture"
-                android:scaleType="centerCrop"/>
-        </RelativeLayout>
+        <ImageView
+            android:id="@+id/ivAvatar"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_width="@dimen/list_photo_size"
+            android:layout_height="@dimen/list_photo_size"
+            android:layout_marginLeft="@dimen/item_padding"
+            android:layout_marginRight="@dimen/item_padding"
+            android:layout_marginTop="@dimen/item_padding"
+            android:src="@drawable/sample_picture"
+            android:scaleType="centerCrop"/>
 
         <include layout="@layout/item_footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textContent"
             bind:footerText='@{@plurals/votes(issue.categoryID, issue.categoryID) + ", " + @plurals/comments(issue.categoryID, issue.categoryID) + ", " + @string/tags(issue.address)}'/>
 
-        <!--<TextView-->
-            <!--android:id="@+id/tvFooter"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--style="@style/textView_footer"-->
-            <!--android:lines="1"-->
-            <!--android:ellipsize="end"-->
-            <!--android:text="@{@plurals/comments(issue.categoryID)}" />-->
-    </LinearLayout>
+    </RelativeLayout>
 </layout>

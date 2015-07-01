@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="issue" type="pl.snowdog.dzialajlokalnie.model.Issue"/>
+        <variable name="rating" type="int"/>
     </data>
 
 
@@ -33,7 +33,7 @@
             android:layout_gravity="center_horizontal"
             android:lines="1"
             android:ellipsize="marquee"
-            android:text="37" />
+            android:text="@{String.valueOf(rating)}" />
 
         <ImageButton
             android:id="@+id/ibRateDown"
