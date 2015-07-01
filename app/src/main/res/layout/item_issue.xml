@@ -10,36 +10,68 @@
 
         <LinearLayout
             android:orientation="vertical"
-            android:gravity="center_vertical"
-            android:layout_gravity="center_vertical"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <ImageButton
-                android:id="@+id/rateUp"
+                android:id="@+id/ibRateUp"
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_action_up"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
-                android:id="@+id/rating"
+                android:id="@+id/tvRating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:layout_gravity="center_horizontal"
                 android:lines="1"
                 android:ellipsize="marquee"
                 android:text="37"/>
             <ImageButton
-                android:id="@+id/rateDown"
+                android:id="@+id/ibRateDown"
                 android:background="@android:color/transparent"
                 android:src="@drawable/ic_action_down"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
+        <ImageView
+            android:id="@+id/ivAvatar"
+            android:layout_gravity="center_vertical"
+            android:layout_width="@dimen/list_photo_size"
+            android:layout_height="@dimen/list_photo_size"
+            android:src="@drawable/sample_picture"
+            android:scaleType="centerCrop"/>
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="2"
+                android:ellipsize="end"
+                android:text="Zespsuta ławka w parku. Chyba jacyś wandale połamali szczeble."/>
+
+            <TextView
+                android:id="@+id/tvDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="2"
+                android:ellipsize="end"
+                android:text="Nie można sobie teraz spokojnie usiąść i dokarmiać gołębi. Czy ktoś to zgłaszał do zarządu parku?"/>
+        </LinearLayout>
+
     </LinearLayout>
 
     <TextView
-        android:id="@+id/footerTv"
+        android:id="@+id/tvFooter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lines="1"
