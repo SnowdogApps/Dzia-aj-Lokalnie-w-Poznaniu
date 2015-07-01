@@ -2,8 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-        <variable name="rating" type="int"/>
-        <variable name="footer_text" type="String"/>
+        <variable name="issue" type="pl.snowdog.dzialajlokalnie.model.Issue"/>
     </data>
 
     <LinearLayout
@@ -33,7 +32,7 @@
                     style="@style/textView_item_title"
                     android:lines="2"
                     android:ellipsize="end"
-                    android:text="Zespsuta ławka w parku. Chyba jacyś wandale połamali szczeble."/>
+                    android:text="@{issue.title}"/>
 
                 <TextView
                     android:id="@+id/tvDesc"
@@ -42,7 +41,7 @@
                     style="@style/textView_item_desc"
                     android:lines="3"
                     android:ellipsize="end"
-                    android:text="Nie można sobie teraz spokojnie usiąść i dokarmiać gołębi. Czy ktoś to zgłaszał do zarządu parku?"/>
+                    android:text="@{issue.description}"/>
             </LinearLayout>
 
             <ImageView
