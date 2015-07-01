@@ -2,7 +2,8 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
+        <variable name="rating" type="int"/>
+        <variable name="footer_text" type="String"/>
     </data>
 
     <LinearLayout
@@ -16,39 +17,7 @@
             android:paddingTop="@dimen/item_padding"
             android:paddingBottom="@dimen/item_padding">
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:gravity="center_horizontal"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <ImageButton
-                    android:id="@+id/ibRateUp"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/ic_action_up"
-                    android:paddingLeft="@dimen/rating_button_padding"
-                    android:paddingRight="@dimen/rating_button_padding"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:id="@+id/tvRating"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/textView_item_title"
-                    android:gravity="center"
-                    android:layout_gravity="center_horizontal"
-                    android:lines="1"
-                    android:ellipsize="marquee"
-                    android:text="37"/>
-                <ImageButton
-                    android:id="@+id/ibRateDown"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/ic_action_down"
-                    android:paddingLeft="@dimen/rating_button_padding"
-                    android:paddingRight="@dimen/rating_button_padding"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
+            <include layout="@layout/rating_widget"/>
 
             <LinearLayout
                 android:orientation="vertical"
@@ -86,13 +55,6 @@
                 android:scaleType="centerCrop"/>
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvFooter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/textView_footer"
-            android:lines="1"
-            android:ellipsize="end"
-            android:text="57 głosów, 24 komentarze, Tagi: wandalizm, złe zachowanie, pilne"/>
+        <include layout="@layout/item_footer"/>
     </LinearLayout>
 </layout>
