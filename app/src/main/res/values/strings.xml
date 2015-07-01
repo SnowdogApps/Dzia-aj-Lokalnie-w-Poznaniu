@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Dzialaj Lokalnie</string>
 
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="title_section1">Wpisy</string>
+    <string name="title_section2">Mapa</string>
+    <string name="title_section3">Wydarzenia</string>
 
     <string name="hello_world">Hello world!</string>
 
