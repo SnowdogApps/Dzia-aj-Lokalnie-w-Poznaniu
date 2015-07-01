@@ -9,6 +9,17 @@
 
     <string name="action_settings">Settings</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tags">Tagi: %s</string>
+
+    <plurals name="votes">
+        <item quantity="one">%d głos</item>
+        <item quantity="few">%d głosy</item>
+        <item quantity="other">%d głosów</item>
+    </plurals>
+
+    <plurals name="comments">
+        <item quantity="one">%d komentarz</item>
+        <item quantity="few">%d komentarze</item>
+        <item quantity="other">%d komentarzy</item>
+    </plurals>
 </resources>

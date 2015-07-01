@@ -7,13 +7,16 @@
     </data>
 
     <LinearLayout
-        android:orientation="vertical" android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/item_padding">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/item_padding">
+            android:paddingTop="@dimen/item_padding"
+            android:paddingBottom="@dimen/item_padding">
             >
 
             <!--<include layout="@layout/rating_widget"-->
@@ -96,13 +99,22 @@
                 android:layout_centerVertical="true"
                 android:layout_width="@dimen/list_photo_size"
                 android:layout_height="@dimen/list_photo_size"
+                android:layout_marginLeft="@dimen/item_padding"
                 android:layout_marginRight="@dimen/item_padding"
-                android:layout_gravity="center_vertical"
                 android:src="@drawable/sample_picture"
                 android:scaleType="centerCrop"/>
         </RelativeLayout>
 
         <include layout="@layout/item_footer"
-            bind:footerText="@{issue.address}"/>
+            bind:footerText='@{@plurals/votes(issue.categoryID, issue.categoryID) + ", " + @plurals/comments(issue.categoryID, issue.categoryID) + ", " + @string/tags(issue.address)}'/>
+
+        <!--<TextView-->
+            <!--android:id="@+id/tvFooter"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--style="@style/textView_footer"-->
+            <!--android:lines="1"-->
+            <!--android:ellipsize="end"-->
+            <!--android:text="@{@plurals/comments(issue.categoryID)}" />-->
     </LinearLayout>
 </layout>
