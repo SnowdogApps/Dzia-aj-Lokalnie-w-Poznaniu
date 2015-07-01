@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <variable name="issue" type="pl.snowdog.dzialajlokalnie.model.Issue"/>
+        <variable name="footerText" type="String"/>
     </data>
 
     <LinearLayout
@@ -18,7 +18,7 @@
             style="@style/textView_footer"
             android:lines="1"
             android:ellipsize="end"
-            android:text="@{issue.address}"
+            android:text="@{footerText}"
             tools:showIn="@layout/item_issue" />
     </LinearLayout>
 
