@@ -10,4 +10,5 @@
     <dimen name="title_text">20sp</dimen>
     <dimen name="description_text">12sp</dimen>
     <dimen name="comment_photo_size">24dp</dimen>
+    <dimen name="comment_indent">16dp</dimen>
 </resources>
