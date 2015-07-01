@@ -22,6 +22,8 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
+import pl.snowdog.dzialajlokalnie.fragment.ListFragment;
+import pl.snowdog.dzialajlokalnie.fragment.ListFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.MapFragment;
 
 @EActivity(R.layout.activity_main)
@@ -133,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch (position) {
                 case 0:
-                    break;
+                    return new ListFragment_();
                 case 1:
                     return new MapFragment();
                 case 2:
