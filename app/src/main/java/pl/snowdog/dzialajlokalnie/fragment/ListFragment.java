@@ -12,18 +12,16 @@ import org.androidannotations.annotations.ViewById;
 import pl.snowdog.dzialajlokalnie.R;
 
 @EFragment(R.layout.fragment_list)
-public class ListFragment extends Fragment {
+public abstract class ListFragment extends Fragment {
 
     @ViewById(R.id.recyclerView)
     RecyclerView recyclerView;
 
-    public ListFragment() {
-        // Required empty public constructor
-    }
-
-
     @AfterViews
-    void afterViews() {
+    protected void afterTestBaseFragmentViews() {
+        afterView();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
+
+    protected abstract void afterView();
 }

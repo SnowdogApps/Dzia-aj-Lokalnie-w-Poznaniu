@@ -22,10 +22,7 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
-import pl.snowdog.dzialajlokalnie.fragment.IssuesFragment;
 import pl.snowdog.dzialajlokalnie.fragment.IssuesFragment_;
-import pl.snowdog.dzialajlokalnie.fragment.ListFragment;
-import pl.snowdog.dzialajlokalnie.fragment.ListFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.MapFragment;
 
 @EActivity(R.layout.activity_main)
