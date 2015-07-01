@@ -4,8 +4,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
+import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.databinding.ItemIssueBinding;
 import pl.snowdog.dzialajlokalnie.model.Issue;
 
@@ -29,7 +32,11 @@ public class IssuesAdapter extends RecyclerView.Adapter<IssuesAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
-        viewHolder.binding.setIssue(issues.get(i));
+        Issue issue = issues.get(i);
+        viewHolder.binding.setIssue(issue);
+
+        Picasso.with(viewHolder.binding.getRoot().getContext()).load(issue.getPhotoIssueUri()).error(
+                R.drawable.ic_editor_insert_emoticon).into(viewHolder.binding.ivAvatar);
     }
 
     @Override
