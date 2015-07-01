@@ -18,6 +18,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
+
+@EActivity(R.layout.activity_main)
 public class MainActivity extends AppCompatActivity implements ActionBar.TabListener {
 
     /**
@@ -33,14 +38,12 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
     /**
      * The {@link ViewPager} that will host the section contents.
      */
+    @ViewById(R.id.pager)
     ViewPager mViewPager;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        // Set up the action bar.
+    @AfterViews
+    void afterViews() {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
@@ -49,7 +52,6 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         // When swiping between different sections, select the corresponding
