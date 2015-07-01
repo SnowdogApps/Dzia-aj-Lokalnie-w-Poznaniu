@@ -28,6 +28,7 @@
                 android:id="@+id/tvRating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                style="@style/textView_item_title"
                 android:gravity="center"
                 android:layout_gravity="center_horizontal"
                 android:lines="1"
@@ -45,7 +46,6 @@
 
         <ImageView
             android:id="@+id/ivAvatar"
-            android:layout_gravity="center_vertical"
             android:layout_width="@dimen/list_photo_size"
             android:layout_height="@dimen/list_photo_size"
             android:src="@drawable/sample_picture"
