@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            bind:rating="@{issue.issueStatus}"
+            bind:rating="@{issue.issueRating}"
             />
 
         <LinearLayout
