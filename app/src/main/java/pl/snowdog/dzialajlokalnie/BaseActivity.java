@@ -1,9 +1,6 @@
 package pl.snowdog.dzialajlokalnie;
 
-import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 
 import com.activeandroid.ActiveAndroid;
@@ -30,6 +27,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @AfterViews
     protected void afterBaseActivityViews() {
+        //TODO move init call for constant data to splash or other dedicated activity
         getCategories();
         getDistricts();
         afterView();
