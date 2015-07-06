@@ -1,5 +1,7 @@
 package pl.snowdog.dzialajlokalnie.api;
 
+import java.util.List;
+
 import pl.snowdog.dzialajlokalnie.model.Category;
 import retrofit.Callback;
 import retrofit.http.GET;
@@ -12,6 +14,6 @@ public class DlApi {
     public interface Categories {
 
         @GET("/categories")
-        void getCategories(Callback<Category> cb);
+        void getCategories(Callback<List<Category>> cb);
     }
 }

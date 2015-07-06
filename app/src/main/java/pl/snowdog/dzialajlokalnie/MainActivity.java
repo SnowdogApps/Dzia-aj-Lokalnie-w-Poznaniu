@@ -1,5 +1,6 @@
 package pl.snowdog.dzialajlokalnie;
 
+import java.util.List;
 import java.util.Locale;
 
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -24,10 +26,15 @@ import org.androidannotations.annotations.ViewById;
 
 import pl.snowdog.dzialajlokalnie.fragment.IssuesFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.MapFragment;
+import pl.snowdog.dzialajlokalnie.model.Category;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 @EActivity(R.layout.activity_main)
-public class MainActivity extends AppCompatActivity implements ActionBar.TabListener {
+public class MainActivity extends BaseActivity implements ActionBar.TabListener {
 
+    private static final String TAG = "MainActivity";
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -78,6 +85,18 @@ public class MainActivity extends AppCompatActivity implements ActionBar.TabList
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
+
+        DlApplication.categoriesApi.getCategories(new Callback<List<Category>>() {
+            @Override
+            public void success(List<Category> categories, Response response) {
+                Log.d(TAG, "categories success: " + categories);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d(TAG, "categories failure: " + error);
+            }
+        });
     }
 
 
