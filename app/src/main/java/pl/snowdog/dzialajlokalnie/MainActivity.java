@@ -86,19 +86,13 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener 
                             .setTabListener(this));
         }
 
-        DlApplication.categoriesApi.getCategories(new Callback<List<Category>>() {
-            @Override
-            public void success(List<Category> categories, Response response) {
-                Log.d(TAG, "categories success: " + categories);
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d(TAG, "categories failure: " + error);
-            }
-        });
+        getCategories();
     }
 
+    @Override
+    protected void categoriesResult(List<Category> categories) {
+        Log.d(TAG, "categoriesResult ");
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
