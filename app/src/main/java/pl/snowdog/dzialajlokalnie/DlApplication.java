@@ -18,6 +18,7 @@ public class DlApplication extends Application {
     private static final String API_URL = "http://192.168.1.95/dzialaj-lokalnie-api/index.php/";
     public static RestAdapter restAdapter;
     public static DlApi.Base baseApi;
+    public static DlApi.IssueApi issueApi;
 
     @Override
     public void onCreate() {
@@ -36,5 +37,6 @@ public class DlApplication extends Application {
                 .build();
 
         baseApi = restAdapter.create(DlApi.Base.class);
+        issueApi = restAdapter.create(DlApi.IssueApi.class);
     }
 }
