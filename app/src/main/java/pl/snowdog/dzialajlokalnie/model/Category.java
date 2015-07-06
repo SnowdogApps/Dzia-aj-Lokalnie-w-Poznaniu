@@ -3,7 +3,7 @@ package pl.snowdog.dzialajlokalnie.model;
 import java.util.Date;
 
 
-public class Categories {
+public class Category {
 
     private int categoryID;
     private String name;
@@ -11,7 +11,7 @@ public class Categories {
     private Date createdAt;
     private Date updatedAt;
 
-    public Categories(int categoryID, String name, int categoryType, Date createdAt, Date updatedAt) {
+    public Category(int categoryID, String name, int categoryType, Date createdAt, Date updatedAt) {
         this.categoryID = categoryID;
         this.name = name;
         this.categoryType = categoryType;
