@@ -1,8 +1,5 @@
 package pl.snowdog.dzialajlokalnie.model;
 
-import java.util.Date;
-
-
 public class District {
 
     private int districtID;
