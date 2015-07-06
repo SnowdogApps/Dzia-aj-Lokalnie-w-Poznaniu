@@ -1,35 +1,25 @@
 package pl.snowdog.dzialajlokalnie;
 
-import java.util.List;
-import java.util.Locale;
-
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.ActionBar;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.view.Gravity;
+import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.Locale;
+
 import pl.snowdog.dzialajlokalnie.fragment.IssuesFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.MapFragment;
-import pl.snowdog.dzialajlokalnie.model.Category;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends BaseActivity implements ActionBar.TabListener {
@@ -52,8 +42,8 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener 
     ViewPager mViewPager;
 
 
-    @AfterViews
-    void afterViews() {
+    @Override
+    protected void afterView() {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 

@@ -26,6 +26,17 @@ public class Category extends Model {
         this.updatedAt = updatedAt;
     }
 
+    @Override
+    public String toString() {
+        return "Category{" +
+                "categoryID=" + categoryID +
+                ", name='" + name + '\'' +
+                ", categoryType=" + categoryType +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
+
     public int getCategoryID() {
         return categoryID;
     }

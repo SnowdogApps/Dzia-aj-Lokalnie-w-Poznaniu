@@ -1,9 +1,10 @@
 package pl.snowdog.dzialajlokalnie.model;
 
+import com.activeandroid.Model;
 import com.activeandroid.annotation.Table;
 
 @Table(name = "Districts")
-public class District {
+public class District extends Model {
 
     private int districtID;
     private String name;
@@ -22,6 +23,18 @@ public class District {
         this.lon = lon;
         this.lat = lat;
         this.cityID = cityID;
+    }
+
+    @Override
+    public String toString() {
+        return "District{" +
+                "districtID=" + districtID +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", lon=" + lon +
+                ", lat=" + lat +
+                ", cityID=" + cityID +
+                '}';
     }
 
     public int getDistrictID() {
