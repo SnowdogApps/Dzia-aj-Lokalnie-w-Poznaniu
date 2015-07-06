@@ -12,7 +12,7 @@ import org.androidannotations.annotations.ViewById;
 import pl.snowdog.dzialajlokalnie.R;
 
 @EFragment(R.layout.fragment_list)
-public abstract class ListFragment extends Fragment {
+public abstract class ListFragment extends BaseFragment {
 
     @ViewById(R.id.recyclerView)
     RecyclerView recyclerView;

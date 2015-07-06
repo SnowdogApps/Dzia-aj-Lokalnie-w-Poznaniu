@@ -30,6 +30,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         //TODO move init call for constant data to splash or other dedicated activity
         getCategories();
         getDistricts();
+
+        //you can call there everything for all descendant activities that you normally call in onCreate method
         afterView();
     }
 

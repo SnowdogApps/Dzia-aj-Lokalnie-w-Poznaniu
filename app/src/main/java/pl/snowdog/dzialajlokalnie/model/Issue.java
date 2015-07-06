@@ -1,9 +1,13 @@
 package pl.snowdog.dzialajlokalnie.model;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Table;
+
 import java.util.Date;
 
 
-public class Issue {
+@Table(name = "Issues")
+public class Issue extends Model {
 
     private int issueID;
     private int parentID;
@@ -24,6 +28,9 @@ public class Issue {
     private int commentsCount;
     private int votesCount;
 
+    public Issue() {
+    }
+
     public Issue(int issueID, int parentID, int userID, String title, String description, int districtID, double lon, double lat, String address, String facebookUrl, String issueUrl, Date createdAt, int issueStatus, String categoryID, String photoIssueUri, int issueRating, int commentsCount, int votesCount) {
         this.issueID = issueID;
         this.parentID = parentID;
@@ -43,6 +50,30 @@ public class Issue {
         this.issueRating = issueRating;
         this.commentsCount = commentsCount;
         this.votesCount = votesCount;
+    }
+
+    @Override
+    public String toString() {
+        return "Issue{" +
+                "issueID=" + issueID +
+                ", parentID=" + parentID +
+                ", userID=" + userID +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", districtID=" + districtID +
+                ", lon=" + lon +
+                ", lat=" + lat +
+                ", address='" + address + '\'' +
+                ", facebookUrl='" + facebookUrl + '\'' +
+                ", issueUrl='" + issueUrl + '\'' +
+                ", createdAt=" + createdAt +
+                ", issueStatus=" + issueStatus +
+                ", categoryID='" + categoryID + '\'' +
+                ", photoIssueUri='" + photoIssueUri + '\'' +
+                ", issueRating=" + issueRating +
+                ", commentsCount=" + commentsCount +
+                ", votesCount=" + votesCount +
+                '}';
     }
 
     public int getIssueID() {
