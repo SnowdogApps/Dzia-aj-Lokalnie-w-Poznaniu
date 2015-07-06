@@ -37,6 +37,14 @@ public class IssuesFragment extends ListFragment {
                 "- Kochanie, co oznacza ta szklanka na opakowaniu?\n" +
                 "- To znaczy, że zakup trzeba opić.", 0, 12.13, 12.14, "Naramowicka 143", null, null, new Date(), 178, "57", "http://i.wp.pl/a/f/jpeg/29034/thstck_grill_jedzenie_600.jpeg", 5, 3, 34));
 
+//        adapter = new IssuesAdapter(issues);
+//        recyclerView.setAdapter(adapter);
+
+        getIssues();
+    }
+
+    @Override
+    protected void issuesResult(List<Issue> issues) {
         adapter = new IssuesAdapter(issues);
         recyclerView.setAdapter(adapter);
     }
