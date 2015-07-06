@@ -30,7 +30,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     protected void getCategories() {
-        DlApplication.categoriesApi.getCategories(new Callback<List<Category>>() {
+        DlApplication.baseApi.getCategories(new Callback<List<Category>>() {
             @Override
             public void success(List<Category> categories, Response response) {
                 Log.d(TAG, "categories success: " + categories);
@@ -59,4 +59,6 @@ public class BaseActivity extends AppCompatActivity {
     protected void categoriesResult(List<Category> categories) {
         // implement by override
     }
+
+
 }

@@ -17,7 +17,7 @@ public class DlApplication extends Application {
 
     private static final String API_URL = "http://192.168.1.95/dzialaj-lokalnie-api/index.php/";
     public static RestAdapter restAdapter;
-    public static DlApi.Categories categoriesApi;
+    public static DlApi.Base baseApi;
 
     @Override
     public void onCreate() {
@@ -35,6 +35,6 @@ public class DlApplication extends Application {
                 .setConverter(new GsonConverter(gson))
                 .build();
 
-        categoriesApi = restAdapter.create(DlApi.Categories.class);
+        baseApi = restAdapter.create(DlApi.Base.class);
     }
 }
