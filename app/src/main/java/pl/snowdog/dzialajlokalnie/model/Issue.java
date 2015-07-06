@@ -18,13 +18,13 @@ public class Issue {
     private String issueUrl;
     private Date createdAt;
     private int issueStatus;
-
-
-    private int categoryID;
+    private String categoryID;
     private String photoIssueUri;
     private int issueRating;
+    private int commentsCount;
+    private int votesCount;
 
-    public Issue(int issueID, int parentID, int userID, String title, String description, int districtID, double lon, double lat, String address, String facebookUrl, String issueUrl, Date createdAt, int issueStatus, int categoryID, String photoIssueUri, int issueRating) {
+    public Issue(int issueID, int parentID, int userID, String title, String description, int districtID, double lon, double lat, String address, String facebookUrl, String issueUrl, Date createdAt, int issueStatus, String categoryID, String photoIssueUri, int issueRating, int commentsCount, int votesCount) {
         this.issueID = issueID;
         this.parentID = parentID;
         this.userID = userID;
@@ -41,12 +41,9 @@ public class Issue {
         this.categoryID = categoryID;
         this.photoIssueUri = photoIssueUri;
         this.issueRating = issueRating;
+        this.commentsCount = commentsCount;
+        this.votesCount = votesCount;
     }
-
-    public String getPhotoIssueUri() {
-        return photoIssueUri;
-    }
-
 
     public int getIssueID() {
         return issueID;
@@ -152,12 +149,16 @@ public class Issue {
         this.issueStatus = issueStatus;
     }
 
-    public int getCategoryID() {
+    public String getCategoryID() {
         return categoryID;
     }
 
-    public void setCategoryID(int categoryID) {
+    public void setCategoryID(String categoryID) {
         this.categoryID = categoryID;
+    }
+
+    public String getPhotoIssueUri() {
+        return photoIssueUri;
     }
 
     public void setPhotoIssueUri(String photoIssueUri) {
@@ -170,5 +171,21 @@ public class Issue {
 
     public void setIssueRating(int issueRating) {
         this.issueRating = issueRating;
+    }
+
+    public int getCommentsCount() {
+        return commentsCount;
+    }
+
+    public void setCommentsCount(int commentsCount) {
+        this.commentsCount = commentsCount;
+    }
+
+    public int getVotesCount() {
+        return votesCount;
+    }
+
+    public void setVotesCount(int votesCount) {
+        this.votesCount = votesCount;
     }
 }

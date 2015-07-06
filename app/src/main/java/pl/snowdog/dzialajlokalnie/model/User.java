@@ -18,6 +18,7 @@ public class User {
     private int enablePushNotifications;
     private String pushRegId;
     private String avatarUri;
+    private String apiKey;
     private Date lastLoginDate;
     private Date lastFailedLoginDate;
     private int failedLoginCount;
@@ -25,7 +26,7 @@ public class User {
     private Date createdAt;
     private Date updatedAt;
 
-    public User(int userID, int userLevel, String username, String email, String password, String description, String name, String surname, int districtID, int enableEmailNotifications, int enablePushNotifications, String pushRegId, String avatarUri, Date lastLoginDate, Date lastFailedLoginDate, int failedLoginCount, int accountStatus, Date createdAt, Date updatedAt) {
+    public User(int userID, int userLevel, String username, String email, String password, String description, String name, String surname, int districtID, int enableEmailNotifications, int enablePushNotifications, String pushRegId, String avatarUri, String apiKey, Date lastLoginDate, Date lastFailedLoginDate, int failedLoginCount, int accountStatus, Date createdAt, Date updatedAt) {
         this.userID = userID;
         this.userLevel = userLevel;
         this.username = username;
@@ -39,6 +40,7 @@ public class User {
         this.enablePushNotifications = enablePushNotifications;
         this.pushRegId = pushRegId;
         this.avatarUri = avatarUri;
+        this.apiKey = apiKey;
         this.lastLoginDate = lastLoginDate;
         this.lastFailedLoginDate = lastFailedLoginDate;
         this.failedLoginCount = failedLoginCount;

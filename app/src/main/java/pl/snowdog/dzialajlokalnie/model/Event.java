@@ -22,8 +22,10 @@ public class Event {
     private int eventStatus;
     private int categoryID;
     private String photoEventUri;
+    private int commentsCount;
+    private int votesCount;
 
-    public Event(int eventID, int parentID, int userID, String title, String description, int districtID, double lon, double lat, String address, Date startDate, Date endDate, String facebookUrl, String eventUrl, Date createdAt, int eventStatus, int categoryID, String photoEventUri) {
+    public Event(int eventID, int parentID, int userID, String title, String description, int districtID, double lon, double lat, String address, Date startDate, Date endDate, String facebookUrl, String eventUrl, Date createdAt, int eventStatus, int categoryID, String photoEventUri, int commentsCount, int votesCount) {
         this.eventID = eventID;
         this.parentID = parentID;
         this.userID = userID;
@@ -41,5 +43,7 @@ public class Event {
         this.eventStatus = eventStatus;
         this.categoryID = categoryID;
         this.photoEventUri = photoEventUri;
+        this.commentsCount = commentsCount;
+        this.votesCount = votesCount;
     }
 }
