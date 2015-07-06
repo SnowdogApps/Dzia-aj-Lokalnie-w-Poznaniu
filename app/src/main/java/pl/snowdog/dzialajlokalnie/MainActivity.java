@@ -86,12 +86,6 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener 
                             .setTabListener(this));
         }
 
-        getCategories();
-    }
-
-    @Override
-    protected void categoriesResult(List<Category> categories) {
-        Log.d(TAG, "categoriesResult ");
     }
 
     @Override
