@@ -11,4 +11,5 @@
     <dimen name="description_text">12sp</dimen>
     <dimen name="comment_photo_size">24dp</dimen>
     <dimen name="comment_indent">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 </resources>

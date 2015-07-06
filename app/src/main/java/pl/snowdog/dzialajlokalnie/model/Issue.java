@@ -11,21 +11,28 @@ public class Issue {
     private String title;
     private String description;
     private int districtID;
+    private double lon;
+    private double lat;
     private String address;
     private String facebookUrl;
     private String issueUrl;
     private Date createdAt;
     private int issueStatus;
+
+
     private int categoryID;
     private String photoIssueUri;
+    private int issueRating;
 
-    public Issue(int issueID, int parentID, int userID, String title, String description, int districtID, String address, String facebookUrl, String issueUrl, Date createdAt, int issueStatus, int categoryID, String photoIssueUri) {
+    public Issue(int issueID, int parentID, int userID, String title, String description, int districtID, double lon, double lat, String address, String facebookUrl, String issueUrl, Date createdAt, int issueStatus, int categoryID, String photoIssueUri, int issueRating) {
         this.issueID = issueID;
         this.parentID = parentID;
         this.userID = userID;
         this.title = title;
         this.description = description;
         this.districtID = districtID;
+        this.lon = lon;
+        this.lat = lat;
         this.address = address;
         this.facebookUrl = facebookUrl;
         this.issueUrl = issueUrl;
@@ -33,7 +40,13 @@ public class Issue {
         this.issueStatus = issueStatus;
         this.categoryID = categoryID;
         this.photoIssueUri = photoIssueUri;
+        this.issueRating = issueRating;
     }
+
+    public String getPhotoIssueUri() {
+        return photoIssueUri;
+    }
+
 
     public int getIssueID() {
         return issueID;
@@ -81,6 +94,22 @@ public class Issue {
 
     public void setDistrictID(int districtID) {
         this.districtID = districtID;
+    }
+
+    public double getLon() {
+        return lon;
+    }
+
+    public void setLon(double lon) {
+        this.lon = lon;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
     }
 
     public String getAddress() {
@@ -131,11 +160,15 @@ public class Issue {
         this.categoryID = categoryID;
     }
 
-    public String getPhotoIssueUri() {
-        return photoIssueUri;
-    }
-
     public void setPhotoIssueUri(String photoIssueUri) {
         this.photoIssueUri = photoIssueUri;
+    }
+
+    public int getIssueRating() {
+        return issueRating;
+    }
+
+    public void setIssueRating(int issueRating) {
+        this.issueRating = issueRating;
     }
 }

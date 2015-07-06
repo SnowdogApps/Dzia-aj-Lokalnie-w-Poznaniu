@@ -11,6 +11,8 @@ public class Event {
     private String title;
     private String description;
     private int districtID;
+    private double lon;
+    private double lat;
     private String address;
     private Date startDate;
     private Date endDate;
@@ -21,13 +23,15 @@ public class Event {
     private int categoryID;
     private String photoEventUri;
 
-    public Event(int eventID, int parentID, int userID, String title, String description, int districtID, String address, Date startDate, Date endDate, String facebookUrl, String eventUrl, Date createdAt, int eventStatus, int categoryID, String photoEventUri) {
+    public Event(int eventID, int parentID, int userID, String title, String description, int districtID, double lon, double lat, String address, Date startDate, Date endDate, String facebookUrl, String eventUrl, Date createdAt, int eventStatus, int categoryID, String photoEventUri) {
         this.eventID = eventID;
         this.parentID = parentID;
         this.userID = userID;
         this.title = title;
         this.description = description;
         this.districtID = districtID;
+        this.lon = lon;
+        this.lat = lat;
         this.address = address;
         this.startDate = startDate;
         this.endDate = endDate;

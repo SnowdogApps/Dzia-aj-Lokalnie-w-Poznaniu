@@ -1,5 +1,8 @@
 package pl.snowdog.dzialajlokalnie.model;
 
+import java.util.Date;
+
+
 public class Alert_org {
 
     private int alertOrgID;
