@@ -24,6 +24,11 @@ android {
     }
 }
 
+repositories {
+    mavenCentral()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+}
+
 dependencies {
     apt "org.androidannotations:androidannotations:$AAVersion"
     apt "com.android.databinding:compiler:1.0-rc0"
@@ -40,6 +45,7 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.1.0'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.1.0'
     compile 'com.google.code.gson:gson:2.3'
+    compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
 }
 
 
