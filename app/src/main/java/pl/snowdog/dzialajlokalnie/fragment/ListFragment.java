@@ -2,6 +2,7 @@ package pl.snowdog.dzialajlokalnie.fragment;
 
 
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -14,6 +15,9 @@ import pl.snowdog.dzialajlokalnie.R;
 @EFragment(R.layout.fragment_list)
 public abstract class ListFragment extends BaseFragment {
 
+    @ViewById(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout swipeRefreshLayout;
+
     @ViewById(R.id.recyclerView)
     RecyclerView recyclerView;
 
@@ -21,7 +25,20 @@ public abstract class ListFragment extends BaseFragment {
     protected void afterTestBaseFragmentViews() {
         afterView();
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshItems();
+            }
+        });
     }
 
     protected abstract void afterView();
+
+    protected abstract void refreshItems();
+
+    protected void onItemsLoadComplete() {
+        swipeRefreshLayout.setRefreshing(false);
+    };
 }

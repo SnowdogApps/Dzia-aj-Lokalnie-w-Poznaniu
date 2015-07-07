@@ -15,7 +15,8 @@ import retrofit.converter.GsonConverter;
  */
 public class DlApplication extends Application {
 
-    private static final String API_URL = "http://192.168.1.95/dzialaj-lokalnie-api/index.php/";
+//    private static final String API_URL = "http://192.168.1.95/dzialaj-lokalnie-api/index.php/";
+    private static final String API_URL = "http://dzialajlokalnie.snowdog.pro";
     public static RestAdapter restAdapter;
     public static DlApi.Base baseApi;
     public static DlApi.IssueApi issueApi;

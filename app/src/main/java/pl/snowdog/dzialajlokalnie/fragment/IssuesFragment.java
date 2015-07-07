@@ -44,8 +44,15 @@ public class IssuesFragment extends ListFragment {
     }
 
     @Override
+    protected void refreshItems() {
+        getIssues();
+    }
+
+    @Override
     protected void issuesResult(List<Issue> issues) {
         adapter = new IssuesAdapter(issues);
         recyclerView.setAdapter(adapter);
+
+        onItemsLoadComplete();
     }
 }
