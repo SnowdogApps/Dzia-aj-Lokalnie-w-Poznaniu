@@ -54,6 +54,31 @@ public class Event extends Model {
         this.votesCount = votesCount;
     }
 
+    @Override
+    public String toString() {
+        return "Event{" +
+                "eventID=" + eventID +
+                ", parentID=" + parentID +
+                ", userID=" + userID +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", districtID=" + districtID +
+                ", lon=" + lon +
+                ", lat=" + lat +
+                ", address='" + address + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", facebookUrl='" + facebookUrl + '\'' +
+                ", eventUrl='" + eventUrl + '\'' +
+                ", createdAt=" + createdAt +
+                ", eventStatus=" + eventStatus +
+                ", categoryID=" + categoryID +
+                ", photoEventUri='" + photoEventUri + '\'' +
+                ", commentsCount=" + commentsCount +
+                ", votesCount=" + votesCount +
+                '}';
+    }
+
     public int getEventID() {
         return eventID;
     }
