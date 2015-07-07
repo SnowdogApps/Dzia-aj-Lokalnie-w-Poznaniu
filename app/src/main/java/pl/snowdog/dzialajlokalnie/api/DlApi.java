@@ -4,6 +4,7 @@ import java.util.List;
 
 import pl.snowdog.dzialajlokalnie.model.Category;
 import pl.snowdog.dzialajlokalnie.model.District;
+import pl.snowdog.dzialajlokalnie.model.Event;
 import pl.snowdog.dzialajlokalnie.model.Issue;
 import retrofit.Callback;
 import retrofit.http.GET;
@@ -24,5 +25,10 @@ public class DlApi {
     public interface IssueApi {
         @GET("/issues")
         void getIssues(Callback<List<Issue>> cb);
+    }
+
+    public interface EventApi {
+        @GET("/events")
+        void getEvents(Callback<List<Event>> cb);
     }
 }

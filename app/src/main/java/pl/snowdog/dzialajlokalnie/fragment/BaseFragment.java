@@ -9,7 +9,7 @@ import com.activeandroid.query.Delete;
 import java.util.List;
 
 import pl.snowdog.dzialajlokalnie.DlApplication;
-import pl.snowdog.dzialajlokalnie.model.District;
+import pl.snowdog.dzialajlokalnie.model.Event;
 import pl.snowdog.dzialajlokalnie.model.Issue;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -51,5 +51,35 @@ public abstract class BaseFragment extends Fragment {
 
     protected void issuesResult(List<Issue> issues) {
         // implement by override
+    }
+
+    protected void getEvents() {
+        DlApplication.eventApi.getEvents(new Callback<List<Event>>() {
+            @Override
+            public void success(List<Event> events, Response response) {
+                Log.d(TAG, "getEvents success: " + events);
+                eventsResult(events);
+
+                new Delete().from(Issue.class).execute();
+
+                ActiveAndroid.beginTransaction();
+                try {
+                    for (Event event : events) {
+                        event.save();
+                    }
+                    ActiveAndroid.setTransactionSuccessful();
+                } finally {
+                    ActiveAndroid.endTransaction();
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d(TAG, "getEvents failure: " + error);
+            }
+        });
+    }
+
+    private void eventsResult(List<Event> events) {
     }
 }

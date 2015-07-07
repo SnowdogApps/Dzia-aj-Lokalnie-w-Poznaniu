@@ -10,9 +10,7 @@ import java.util.List;
 
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.databinding.ItemEventBinding;
-import pl.snowdog.dzialajlokalnie.databinding.ItemIssueBinding;
 import pl.snowdog.dzialajlokalnie.model.Event;
-import pl.snowdog.dzialajlokalnie.model.Issue;
 
 /**
  * Created by bartek on 01.07.15.

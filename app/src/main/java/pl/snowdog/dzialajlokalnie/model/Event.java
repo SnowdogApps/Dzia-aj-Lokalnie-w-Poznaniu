@@ -1,9 +1,13 @@
 package pl.snowdog.dzialajlokalnie.model;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Table;
+
 import java.util.Date;
 
 
-public class Event {
+@Table(name = "Events")
+public class Event extends Model {
 
     private int eventID;
     private int parentID;
