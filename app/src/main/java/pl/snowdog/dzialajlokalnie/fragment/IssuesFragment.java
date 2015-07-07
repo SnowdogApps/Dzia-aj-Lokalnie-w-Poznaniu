@@ -1,5 +1,7 @@
 package pl.snowdog.dzialajlokalnie.fragment;
 
+import android.util.Log;
+
 import org.androidannotations.annotations.EFragment;
 
 import java.util.ArrayList;
@@ -8,6 +10,7 @@ import java.util.List;
 
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.adapter.IssuesAdapter;
+import pl.snowdog.dzialajlokalnie.events.IssueRateEvent;
 import pl.snowdog.dzialajlokalnie.model.Issue;
 
 /**
@@ -17,6 +20,7 @@ import pl.snowdog.dzialajlokalnie.model.Issue;
 @EFragment(R.layout.fragment_list)
 public class IssuesFragment extends ListFragment {
 
+    private static final String TAG = "IssuesFragment";
     IssuesAdapter adapter;
 
     @Override
@@ -54,5 +58,14 @@ public class IssuesFragment extends ListFragment {
         recyclerView.setAdapter(adapter);
 
         onItemsLoadComplete();
+    }
+
+    @Override
+    protected boolean isImplementingEvents() {
+        return true;
+    }
+
+    public void onEvent(IssueRateEvent event) {
+        Log.d(TAG, "onEvent " + event);
     }
 }

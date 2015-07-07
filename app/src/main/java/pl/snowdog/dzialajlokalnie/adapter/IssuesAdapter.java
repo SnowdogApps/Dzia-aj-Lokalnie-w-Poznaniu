@@ -2,14 +2,17 @@ package pl.snowdog.dzialajlokalnie.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.databinding.ItemIssueBinding;
+import pl.snowdog.dzialajlokalnie.events.IssueRateEvent;
 import pl.snowdog.dzialajlokalnie.model.Issue;
 
 /**
@@ -34,6 +37,7 @@ public class IssuesAdapter extends RecyclerView.Adapter<IssuesAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         Issue issue = issues.get(i);
         viewHolder.binding.setIssue(issue);
+        viewHolder.issueId = issue.getIssueID();
 
         Picasso.with(viewHolder.binding.getRoot().getContext()).load(issue.getPhotoIssueUri()).error(
                 R.drawable.ic_editor_insert_emoticon).into(viewHolder.binding.ivAvatar);
@@ -47,9 +51,24 @@ public class IssuesAdapter extends RecyclerView.Adapter<IssuesAdapter.ViewHolder
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private ItemIssueBinding binding;
+        private int issueId;
 
         public ViewHolder(ItemIssueBinding binding) {
             super(binding.getRoot());
+
+            binding.ratingWidget.ibRateUp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EventBus.getDefault().post(new IssueRateEvent(issueId, IssueRateEvent.Vote.UP));
+                }
+            });
+
+            binding.ratingWidget.ibRateDown.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EventBus.getDefault().post(new IssueRateEvent(issueId, IssueRateEvent.Vote.DOWN));
+                }
+            });
 
             this.binding = binding;
         }

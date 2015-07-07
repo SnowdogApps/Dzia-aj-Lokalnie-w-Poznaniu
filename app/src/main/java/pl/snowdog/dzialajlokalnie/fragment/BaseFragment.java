@@ -8,6 +8,7 @@ import com.activeandroid.query.Delete;
 
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.DlApplication;
 import pl.snowdog.dzialajlokalnie.model.Event;
 import pl.snowdog.dzialajlokalnie.model.Issue;
@@ -21,6 +22,32 @@ import retrofit.client.Response;
 public abstract class BaseFragment extends Fragment {
 
     private static final String TAG = "BaseFragment";
+
+    /**
+     * Override this method to return true if you want to use EventBus and implemented onEvent method
+     * @return
+     */
+    protected boolean isImplementingEvents() {
+        return false;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        if (isImplementingEvents()) {
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    @Override
+    public void onStop() {
+        if (isImplementingEvents()) {
+            EventBus.getDefault().unregister(this);
+        }
+
+        super.onStop();
+    }
 
     protected void getIssues() {
         DlApplication.issueApi.getIssues(new Callback<List<Issue>>() {
