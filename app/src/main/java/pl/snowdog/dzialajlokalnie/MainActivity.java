@@ -18,6 +18,8 @@ import org.androidannotations.annotations.ViewById;
 
 import java.util.Locale;
 
+import pl.snowdog.dzialajlokalnie.fragment.EventsFragment;
+import pl.snowdog.dzialajlokalnie.fragment.EventsFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.IssuesFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.MapFragment;
 
@@ -76,6 +78,7 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener 
                             .setTabListener(this));
         }
 
+        mViewPager.setOffscreenPageLimit(3);
     }
 
     @Override
@@ -135,7 +138,7 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener 
                 case 1:
                     return new MapFragment();
                 case 2:
-                    break;
+                    return new EventsFragment_();
             }
             return PlaceholderFragment.newInstance(position + 1);
         }

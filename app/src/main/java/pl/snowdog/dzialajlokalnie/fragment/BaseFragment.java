@@ -80,6 +80,6 @@ public abstract class BaseFragment extends Fragment {
         });
     }
 
-    private void eventsResult(List<Event> events) {
+    protected void eventsResult(List<Event> events) {
     }
 }
