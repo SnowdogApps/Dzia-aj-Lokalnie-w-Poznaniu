@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="event" type="pl.snowdog.dzialajlokalnie.model.Event"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/item_padding">
+
+        <include layout="@layout/rating_widget"
+            android:id="@+id/ratingWidget"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            bind:rating="@{event.votesCount}"
+            />
+
+        <LinearLayout
+            android:id="@+id/textContent"
+            android:layout_toRightOf="@+id/ratingWidget"
+            android:layout_toLeftOf="@+id/ivAvatar"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/item_padding"
+            android:paddingTop="@dimen/item_padding"
+            android:paddingBottom="@dimen/item_padding">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/textView_item_title"
+                android:lines="2"
+                android:ellipsize="end"
+                android:text="@{event.title}"/>
+
+            <TextView
+                android:id="@+id/tvDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/textView_item_desc"
+                android:lines="3"
+                android:ellipsize="end"
+                android:text="@{event.description}"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/ivAvatar"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_width="@dimen/list_photo_size"
+            android:layout_height="@dimen/list_photo_size"
+            android:layout_marginLeft="@dimen/item_padding"
+            android:layout_marginRight="@dimen/item_padding"
+            android:layout_marginTop="@dimen/item_padding"
+            android:src="@drawable/sample_picture"
+            android:scaleType="centerCrop"/>
+
+        <include layout="@layout/item_footer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textContent"
+            bind:footerText='@{@plurals/votes(event.votesCount, event.votesCount) + ", " + @plurals/comments(event.commentsCount, event.commentsCount) + ", " + @string/tags(event.categoryID)}'/>
+
+    </RelativeLayout>
+</layout>
