@@ -3,10 +3,12 @@ package pl.snowdog.dzialajlokalnie;
 import android.app.Application;
 
 import com.activeandroid.ActiveAndroid;
+import com.activeandroid.query.Select;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import pl.snowdog.dzialajlokalnie.api.DlApi;
+import pl.snowdog.dzialajlokalnie.model.Session;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
@@ -22,6 +24,7 @@ public class DlApplication extends Application {
     public static DlApi.EventApi eventApi;
     public static DlApi.VoteApi voteApi;
     public static DlApi.UserApi userApi;
+    public static Session currentSession;
 
     @Override
     public void onCreate() {
@@ -33,10 +36,17 @@ public class DlApplication extends Application {
                 .setDateFormat("yyyy-MM-dd HH:mm:ss")
                 .create();
 
-        final RequestInterceptor requestInterceptor = new RequestInterceptor() {
+        RequestInterceptor requestInterceptor = new RequestInterceptor() {
             @Override
             public void intercept(RequestFacade request) {
                 request.addQueryParam("apikey", "wjk8regtrvv158mu3ekb");
+                if (currentSession == null) {
+                    currentSession = new Select().from(Session.class).executeSingle();
+                }
+
+                if (currentSession != null) {
+                    request.addQueryParam("ssid", currentSession.getSsid());
+                }
             }
         };
 
