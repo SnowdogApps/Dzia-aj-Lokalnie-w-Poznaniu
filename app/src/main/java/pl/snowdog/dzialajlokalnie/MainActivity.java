@@ -14,11 +14,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.activeandroid.Model;
 import com.activeandroid.query.Select;
 
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.List;
 import java.util.Locale;
 
 import pl.snowdog.dzialajlokalnie.fragment.EventsFragment;
@@ -92,8 +94,11 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener 
     @Override
     protected void loginResult(Session session) {
 
-        Session dbSession = new Select().from(Session.class).executeSingle();
-        Log.d(TAG, "loginResult " + dbSession);
+        List<Session> dbSessions = new Select().from(Session.class).execute();
+
+        for (Session s : dbSessions) {
+            Log.d(TAG, "loginResult " + s);
+        }
     }
 
     @Override

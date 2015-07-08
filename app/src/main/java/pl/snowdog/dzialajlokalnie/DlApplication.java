@@ -44,7 +44,7 @@ public class DlApplication extends Application {
                     refreshCurrentSession();
                 }
 
-                if (currentSession != null) {
+                if (currentSession != null && currentSession.getSsid() != null) {
                     request.addQueryParam("ssid", currentSession.getSsid());
                 }
             }

@@ -30,9 +30,11 @@ public class Event extends Model {
     private int votesCount;
 
     public Event() {
+        super();
     }
 
     public Event(int eventID, int parentID, int userID, String title, String description, int districtID, double lon, double lat, String address, Date startDate, Date endDate, String facebookUrl, String eventUrl, Date createdAt, int eventStatus, int categoryID, String photoEventUri, int commentsCount, int votesCount) {
+        super();
         this.eventID = eventID;
         this.parentID = parentID;
         this.userID = userID;

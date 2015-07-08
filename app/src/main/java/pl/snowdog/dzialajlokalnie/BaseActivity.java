@@ -123,7 +123,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void loginResult(Session session) { }
 
     protected boolean isLoggedIn() {
-        return DlApplication.currentSession != null;
+        return DlApplication.currentSession != null && DlApplication.currentSession.getSsid() != null;
     }
 
     protected void logout() {

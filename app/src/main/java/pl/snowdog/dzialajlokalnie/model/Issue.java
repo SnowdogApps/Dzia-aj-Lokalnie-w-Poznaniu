@@ -29,9 +29,11 @@ public class Issue extends Model {
     private int votesCount;
 
     public Issue() {
+        super();
     }
 
     public Issue(int issueID, int parentID, int userID, String title, String description, int districtID, double lon, double lat, String address, String facebookUrl, String issueUrl, Date createdAt, int issueStatus, String categoryID, String photoIssueUri, int issueRating, int commentsCount, int votesCount) {
+        super();
         this.issueID = issueID;
         this.parentID = parentID;
         this.userID = userID;
