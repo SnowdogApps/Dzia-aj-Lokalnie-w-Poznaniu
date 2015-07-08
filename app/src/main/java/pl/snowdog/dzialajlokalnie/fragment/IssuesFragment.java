@@ -12,6 +12,7 @@ import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.adapter.IssuesAdapter;
 import pl.snowdog.dzialajlokalnie.events.IssueRateEvent;
 import pl.snowdog.dzialajlokalnie.model.Issue;
+import pl.snowdog.dzialajlokalnie.model.Vote;
 
 /**
  * Created by bartek on 01.07.15.
@@ -67,5 +68,13 @@ public class IssuesFragment extends ListFragment {
 
     public void onEvent(IssueRateEvent event) {
         Log.d(TAG, "onEvent " + event);
+
+        Vote vote = new Vote(event.getVote() == IssueRateEvent.Vote.UP ? 1 : -1);
+        vote(Vote.ParentType.issues, event.getIssueId(), vote);
+    }
+
+    @Override
+    protected void voteResult(Vote vote) {
+
     }
 }

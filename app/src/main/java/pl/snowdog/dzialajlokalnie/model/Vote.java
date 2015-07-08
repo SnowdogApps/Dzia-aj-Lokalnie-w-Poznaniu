@@ -15,6 +15,10 @@ public class Vote {
     private Date createdAt;
     private Date updatedAt;
 
+    public Vote(int value) {
+        this.value = value;
+    }
+
     public Vote(int voteID, int authorID, int parentType, int parentID, int value, Date createdAt, Date updatedAt) {
         this.voteID = voteID;
         this.authorID = authorID;
