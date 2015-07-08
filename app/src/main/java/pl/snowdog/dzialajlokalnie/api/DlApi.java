@@ -6,6 +6,7 @@ import pl.snowdog.dzialajlokalnie.model.Category;
 import pl.snowdog.dzialajlokalnie.model.District;
 import pl.snowdog.dzialajlokalnie.model.Event;
 import pl.snowdog.dzialajlokalnie.model.Issue;
+import pl.snowdog.dzialajlokalnie.model.Session;
 import pl.snowdog.dzialajlokalnie.model.Vote;
 import retrofit.Callback;
 import retrofit.http.Body;
@@ -56,6 +57,7 @@ public class DlApi {
 
     public interface UserApi {
         @PUT("/login")
-        void login(@Field("username") String username, @Field("pass") String pass, @Field("isSessionAuthByAPIkey") int byApiKey);
+        void login(@Field("username") String username, @Field("pass") String pass,
+                   @Field("isSessionAuthByAPIkey") int byApiKey, Callback<Session> cb);
     }
 }

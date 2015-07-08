@@ -13,6 +13,7 @@ import java.util.List;
 
 import pl.snowdog.dzialajlokalnie.model.Category;
 import pl.snowdog.dzialajlokalnie.model.District;
+import pl.snowdog.dzialajlokalnie.model.Session;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -97,4 +98,18 @@ public abstract class BaseActivity extends AppCompatActivity {
         });
     }
 
+    protected void login(String username, String pass) {
+        DlApplication.userApi.login(username, pass, 2, new Callback<Session>() {
+            @Override
+            public void success(Session session, Response response) {
+                Log.d(TAG, "login success: " + session);
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d(TAG, "login failure: " + error);
+            }
+        });
+    }
 }
