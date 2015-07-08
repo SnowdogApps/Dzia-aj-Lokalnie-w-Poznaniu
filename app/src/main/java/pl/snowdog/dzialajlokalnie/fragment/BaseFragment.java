@@ -126,4 +126,6 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected void voteResult(Vote vote) { }
+
+
 }

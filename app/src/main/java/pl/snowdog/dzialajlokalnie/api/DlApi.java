@@ -9,6 +9,7 @@ import pl.snowdog.dzialajlokalnie.model.Issue;
 import pl.snowdog.dzialajlokalnie.model.Vote;
 import retrofit.Callback;
 import retrofit.http.Body;
+import retrofit.http.Field;
 import retrofit.http.GET;
 import retrofit.http.PUT;
 import retrofit.http.Path;
@@ -17,6 +18,10 @@ import retrofit.http.Path;
  * Created by bartek on 06.07.15.
  */
 public class DlApi {
+
+    //    private static final String API_URL = "http://192.168.1.95/dzialaj-lokalnie-api/index.php/";
+    public static final String API_URL = "http://dzialajlokalnie.snowdog.pro";
+    public static final String PHOTO_THUMB_URL = API_URL + "/photos/%s_thumb.jpeg";
 
     public interface Base {
         @GET("/categories")
@@ -47,5 +52,10 @@ public class DlApi {
          */
         @PUT("/{what}/{id}/vote")
         void vote(@Path("what") String what, @Path("id") int id, @Body Vote vote, Callback<Vote> cb);
+    }
+
+    public interface UserApi {
+        @PUT("/login")
+        void login(@Field("username") String username, @Field("pass") String pass, @Field("isSessionAuthByAPIkey") int byApiKey);
     }
 }

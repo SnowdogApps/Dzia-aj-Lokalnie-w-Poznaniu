@@ -15,13 +15,12 @@ import retrofit.converter.GsonConverter;
  */
 public class DlApplication extends Application {
 
-//    private static final String API_URL = "http://192.168.1.95/dzialaj-lokalnie-api/index.php/";
-    private static final String API_URL = "http://dzialajlokalnie.snowdog.pro";
     public static RestAdapter restAdapter;
     public static DlApi.Base baseApi;
     public static DlApi.IssueApi issueApi;
     public static DlApi.EventApi eventApi;
     public static DlApi.VoteApi voteApi;
+    public static DlApi.UserApi userApi;
 
     @Override
     public void onCreate() {
@@ -35,7 +34,7 @@ public class DlApplication extends Application {
 
         restAdapter = new RestAdapter.Builder()
                 .setLogLevel(RestAdapter.LogLevel.FULL)
-                .setEndpoint(API_URL)
+                .setEndpoint(DlApi.API_URL)
                 .setConverter(new GsonConverter(gson))
                 .build();
 
@@ -43,5 +42,6 @@ public class DlApplication extends Application {
         issueApi = restAdapter.create(DlApi.IssueApi.class);
         eventApi = restAdapter.create(DlApi.EventApi.class);
         voteApi = restAdapter.create(DlApi.VoteApi.class);
+        userApi = restAdapter.create(DlApi.UserApi.class);
     }
 }
