@@ -21,6 +21,7 @@ public class DlApplication extends Application {
     public static DlApi.Base baseApi;
     public static DlApi.IssueApi issueApi;
     public static DlApi.EventApi eventApi;
+    public static DlApi.VoteApi voteApi;
 
     @Override
     public void onCreate() {
@@ -41,5 +42,6 @@ public class DlApplication extends Application {
         baseApi = restAdapter.create(DlApi.Base.class);
         issueApi = restAdapter.create(DlApi.IssueApi.class);
         eventApi = restAdapter.create(DlApi.EventApi.class);
+        voteApi = restAdapter.create(DlApi.VoteApi.class);
     }
 }

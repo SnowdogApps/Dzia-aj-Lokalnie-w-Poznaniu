@@ -12,6 +12,7 @@ import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.DlApplication;
 import pl.snowdog.dzialajlokalnie.model.Event;
 import pl.snowdog.dzialajlokalnie.model.Issue;
+import pl.snowdog.dzialajlokalnie.model.Vote;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -107,6 +108,22 @@ public abstract class BaseFragment extends Fragment {
         });
     }
 
-    protected void eventsResult(List<Event> events) {
+    protected void eventsResult(List<Event> events) { }
+
+    protected void vote(Vote.ParentType parentType, int parentId, Vote vote) {
+        DlApplication.voteApi.vote(parentType.name(), parentId, vote, new Callback<Vote>() {
+            @Override
+            public void success(Vote vote, Response response) {
+                Log.d(TAG, "vote success: " + vote);
+                voteResult(vote);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d(TAG, "vote failure: " + error);
+            }
+        });
     }
+
+    protected void voteResult(Vote vote) { }
 }
