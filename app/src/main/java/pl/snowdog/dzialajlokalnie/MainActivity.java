@@ -7,11 +7,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.activeandroid.query.Select;
 
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
@@ -22,6 +25,7 @@ import pl.snowdog.dzialajlokalnie.fragment.EventsFragment;
 import pl.snowdog.dzialajlokalnie.fragment.EventsFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.IssuesFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.MapFragment;
+import pl.snowdog.dzialajlokalnie.model.Session;
 
 @EActivity(R.layout.activity_main)
 public class MainActivity extends BaseActivity implements ActionBar.TabListener {
@@ -79,6 +83,15 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener 
         }
 
         mViewPager.setOffscreenPageLimit(3);
+
+        login("Bartek", "bartek");
+    }
+
+    @Override
+    protected void loginResult(Session session) {
+
+        Session dbSession = new Select().from(Session.class).executeSingle();
+        Log.d(TAG, "loginResult " + dbSession);
     }
 
     @Override

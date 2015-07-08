@@ -104,6 +104,11 @@ public abstract class BaseActivity extends AppCompatActivity {
             public void success(Session session, Response response) {
                 Log.d(TAG, "login success: " + session);
 
+                new Delete().from(Session.class).execute();
+
+                session.save();
+
+                loginResult(session);
             }
 
             @Override
@@ -112,4 +117,6 @@ public abstract class BaseActivity extends AppCompatActivity {
             }
         });
     }
+
+    protected void loginResult(Session session) { }
 }

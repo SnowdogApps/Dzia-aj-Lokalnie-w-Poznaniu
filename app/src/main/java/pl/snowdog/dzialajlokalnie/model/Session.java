@@ -1,9 +1,13 @@
 package pl.snowdog.dzialajlokalnie.model;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Table;
+
 import java.util.Date;
 
 
-public class Session {
+@Table(name = "Sessions")
+public class Session extends Model {
 
     private String ssid;
     private int userID;
@@ -12,6 +16,9 @@ public class Session {
     private String ua;
     private Date createdAt;
     private Date expiredAt;
+
+    public Session() {
+    }
 
     public Session(String ssid, int userID, int deviceType, String ip, String ua, Date createdAt, Date expiredAt) {
         this.ssid = ssid;

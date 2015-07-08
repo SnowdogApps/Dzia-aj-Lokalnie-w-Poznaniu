@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import pl.snowdog.dzialajlokalnie.api.DlApi;
+import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
@@ -32,10 +33,18 @@ public class DlApplication extends Application {
                 .setDateFormat("yyyy-MM-dd HH:mm:ss")
                 .create();
 
+        final RequestInterceptor requestInterceptor = new RequestInterceptor() {
+            @Override
+            public void intercept(RequestFacade request) {
+                request.addQueryParam("apikey", "wjk8regtrvv158mu3ekb");
+            }
+        };
+
         restAdapter = new RestAdapter.Builder()
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .setEndpoint(DlApi.API_URL)
                 .setConverter(new GsonConverter(gson))
+                .setRequestInterceptor(requestInterceptor)
                 .build();
 
         baseApi = restAdapter.create(DlApi.Base.class);
