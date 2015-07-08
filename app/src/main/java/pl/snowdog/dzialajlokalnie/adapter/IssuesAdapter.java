@@ -75,4 +75,8 @@ public class IssuesAdapter extends RecyclerView.Adapter<IssuesAdapter.ViewHolder
             this.binding = binding;
         }
     }
+
+    public List<Issue> getIssues() {
+        return issues;
+    }
 }
