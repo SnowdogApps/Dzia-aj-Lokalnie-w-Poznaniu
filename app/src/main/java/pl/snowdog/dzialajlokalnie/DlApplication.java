@@ -41,7 +41,7 @@ public class DlApplication extends Application {
             public void intercept(RequestFacade request) {
                 request.addQueryParam("apikey", "wjk8regtrvv158mu3ekb");
                 if (currentSession == null) {
-                    currentSession = new Select().from(Session.class).executeSingle();
+                    refreshCurrentSession();
                 }
 
                 if (currentSession != null) {
@@ -62,5 +62,11 @@ public class DlApplication extends Application {
         eventApi = restAdapter.create(DlApi.EventApi.class);
         voteApi = restAdapter.create(DlApi.VoteApi.class);
         userApi = restAdapter.create(DlApi.UserApi.class);
+
+        refreshCurrentSession();
+    }
+
+    public static void refreshCurrentSession() {
+        currentSession = new Select().from(Session.class).executeSingle();
     }
 }

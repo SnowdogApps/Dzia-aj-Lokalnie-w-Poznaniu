@@ -108,6 +108,8 @@ public abstract class BaseActivity extends AppCompatActivity {
 
                 session.save();
 
+                DlApplication.refreshCurrentSession();
+
                 loginResult(session);
             }
 
@@ -119,4 +121,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void loginResult(Session session) { }
+
+    protected boolean isLoggedIn() {
+        return DlApplication.currentSession != null;
+    }
+
+    protected void logout() {
+        new Delete().from(Session.class).execute();
+        DlApplication.currentSession = null;
+    }
 }
