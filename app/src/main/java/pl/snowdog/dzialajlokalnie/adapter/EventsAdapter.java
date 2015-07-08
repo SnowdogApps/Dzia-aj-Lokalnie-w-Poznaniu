@@ -2,14 +2,17 @@ package pl.snowdog.dzialajlokalnie.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.databinding.ItemEventBinding;
+import pl.snowdog.dzialajlokalnie.events.EventAttendEvent;
 import pl.snowdog.dzialajlokalnie.model.Event;
 
 /**
@@ -50,6 +53,15 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
 
         public ViewHolder(ItemEventBinding binding) {
             super(binding.getRoot());
+
+            binding.attendingWidget.ibAttend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EventBus.getDefault().post(new EventAttendEvent(
+                            ViewHolder.this.binding.getEvent().getEventID()
+                    ));
+                }
+            });
 
             this.binding = binding;
         }

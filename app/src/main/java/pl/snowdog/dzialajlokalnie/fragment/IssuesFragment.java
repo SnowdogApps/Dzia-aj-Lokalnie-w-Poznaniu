@@ -61,7 +61,7 @@ public class IssuesFragment extends ListFragment {
     }
 
     @Override
-    protected boolean isImplementingEvents() {
+    protected boolean isImplementingEventBus() {
         return true;
     }
 

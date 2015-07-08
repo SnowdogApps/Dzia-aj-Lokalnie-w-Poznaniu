@@ -1,11 +1,14 @@
 package pl.snowdog.dzialajlokalnie.fragment;
 
+import android.util.Log;
+
 import org.androidannotations.annotations.EFragment;
 
 import java.util.List;
 
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.adapter.EventsAdapter;
+import pl.snowdog.dzialajlokalnie.events.EventAttendEvent;
 import pl.snowdog.dzialajlokalnie.model.Event;
 
 /**
@@ -14,6 +17,7 @@ import pl.snowdog.dzialajlokalnie.model.Event;
 @EFragment(R.layout.fragment_list)
 public class EventsFragment extends ListFragment {
 
+    private static final String TAG = "EventsFragment";
     EventsAdapter adapter;
 
     @Override
@@ -30,5 +34,14 @@ public class EventsFragment extends ListFragment {
     protected void eventsResult(List<Event> events) {
         adapter = new EventsAdapter(events);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    protected boolean isImplementingEventBus() {
+        return true;
+    }
+
+    public void onEvent(EventAttendEvent event) {
+        Log.d(TAG, "onEvent " + event);
     }
 }

@@ -37,7 +37,6 @@ public class IssuesAdapter extends RecyclerView.Adapter<IssuesAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         Issue issue = issues.get(i);
         viewHolder.binding.setIssue(issue);
-        viewHolder.issueId = issue.getIssueID();
 
         Picasso.with(viewHolder.binding.getRoot().getContext()).load(issue.getPhotoIssueUri()).error(
                 R.drawable.ic_editor_insert_emoticon).into(viewHolder.binding.ivAvatar);
@@ -51,7 +50,6 @@ public class IssuesAdapter extends RecyclerView.Adapter<IssuesAdapter.ViewHolder
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         private ItemIssueBinding binding;
-        private int issueId;
 
         public ViewHolder(ItemIssueBinding binding) {
             super(binding.getRoot());
@@ -59,14 +57,18 @@ public class IssuesAdapter extends RecyclerView.Adapter<IssuesAdapter.ViewHolder
             binding.ratingWidget.ibRateUp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EventBus.getDefault().post(new IssueRateEvent(issueId, IssueRateEvent.Vote.UP));
+                    EventBus.getDefault().post(new IssueRateEvent(
+                            ViewHolder.this.binding.getIssue().getIssueID(),
+                            IssueRateEvent.Vote.UP));
                 }
             });
 
             binding.ratingWidget.ibRateDown.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EventBus.getDefault().post(new IssueRateEvent(issueId, IssueRateEvent.Vote.DOWN));
+                    EventBus.getDefault().post(new IssueRateEvent(
+                            ViewHolder.this.binding.getIssue().getIssueID(),
+                            IssueRateEvent.Vote.DOWN));
                 }
             });
 

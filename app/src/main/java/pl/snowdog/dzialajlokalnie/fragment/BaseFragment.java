@@ -27,7 +27,7 @@ public abstract class BaseFragment extends Fragment {
      * Override this method to return true if you want to use EventBus and implemented onEvent method
      * @return
      */
-    protected boolean isImplementingEvents() {
+    protected boolean isImplementingEventBus() {
         return false;
     }
 
@@ -35,14 +35,14 @@ public abstract class BaseFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        if (isImplementingEvents()) {
+        if (isImplementingEventBus()) {
             EventBus.getDefault().register(this);
         }
     }
 
     @Override
     public void onStop() {
-        if (isImplementingEvents()) {
+        if (isImplementingEventBus()) {
             EventBus.getDefault().unregister(this);
         }
 
