@@ -14,8 +14,6 @@ import retrofit.client.Response;
  */
 public class GlobalErrorHandler implements ErrorHandler {
 
-
-
     @Override
     public Throwable handleError(RetrofitError cause) {
         if (cause == null) {

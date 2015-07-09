@@ -4,6 +4,7 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Delete;
@@ -62,12 +63,36 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void onEvent(NetworkErrorEvent event) {
         Log.d(TAG, "NetworkErrorEvent " + event);
-        Snackbar.make(coordinatorLayout, "NetworkErrorEvent " + event, Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(coordinatorLayout, getString(R.string.network_error), Snackbar.LENGTH_SHORT).show();
     }
 
     public void onEvent(ApiErrorEvent event) {
         Log.d(TAG, "ApiErrorEvent " + event);
-        Snackbar.make(coordinatorLayout, "ApiErrorEvent " + event, Snackbar.LENGTH_SHORT).show();
+
+        switch (event.getStatus()) {
+            case 401:
+                Snackbar.make(coordinatorLayout, getString(R.string.unauthorized_error), Snackbar.LENGTH_LONG).
+                        setAction(R.string.login_action, new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                //TODO go to login activity
+                                Log.d(TAG, "login_action from snackbar ");
+                            }
+                        });
+                break;
+            case 403:
+                Snackbar.make(coordinatorLayout, getString(R.string.forbidden_error), Snackbar.LENGTH_SHORT).show();
+                break;
+            case 404:
+                Snackbar.make(coordinatorLayout, getString(R.string.not_found_error), Snackbar.LENGTH_SHORT).show();
+                break;
+            default:
+                if (event.getStatus() >= 500) {
+                    Snackbar.make(coordinatorLayout, getString(R.string.server_error), Snackbar.LENGTH_SHORT).show();
+                } else {
+                    Snackbar.make(coordinatorLayout, getString(R.string.unknown_error), Snackbar.LENGTH_SHORT).show();
+                }
+        }
     }
 
     protected void getCategories() {
