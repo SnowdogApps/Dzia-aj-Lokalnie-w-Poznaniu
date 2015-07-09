@@ -34,6 +34,8 @@ public class EventsFragment extends ListFragment {
     protected void eventsResult(List<Event> events) {
         adapter = new EventsAdapter(events);
         recyclerView.setAdapter(adapter);
+
+        onItemsLoadComplete();
     }
 
     @Override
