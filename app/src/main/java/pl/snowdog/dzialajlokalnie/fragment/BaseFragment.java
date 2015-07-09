@@ -110,8 +110,8 @@ public abstract class BaseFragment extends Fragment {
 
     protected void eventsResult(List<Event> events) { }
 
-    protected void vote(Vote.ParentType parentType, int parentId, Vote vote) {
-        DlApplication.voteApi.vote(parentType.name(), parentId, vote, new Callback<Vote>() {
+    protected void vote(Vote.ParentType parentType, int parentId, int value) {
+        DlApplication.voteApi.vote(parentType.name(), parentId, value, new Callback<Vote>() {
             @Override
             public void success(Vote vote, Response response) {
                 Log.d(TAG, "vote success: " + vote);

@@ -49,11 +49,12 @@ public class DlApi {
          *
          * @param what issues or comments
          * @param id id of issue or comment
-         * @param vote vote object with value 1, 0, -1
+         * @param value value 1, 0, -1
          * @param cb callback
          */
+        @FormUrlEncoded
         @PUT("/{what}/{id}/vote")
-        void vote(@Path("what") String what, @Path("id") int id, @Body Vote vote, Callback<Vote> cb);
+        void vote(@Path("what") String what, @Path("id") int id, @Field("value") int value, Callback<Vote> cb);
     }
 
     public interface UserApi {

@@ -50,8 +50,7 @@ public class IssuesFragment extends ListFragment {
     public void onEvent(IssueRateEvent event) {
         Log.d(TAG, "onEvent " + event);
 
-        Vote vote = new Vote(event.getVote() == IssueRateEvent.Vote.UP ? 1 : -1);
-        vote(Vote.ParentType.issues, event.getIssueId(), vote);
+        vote(Vote.ParentType.issues, event.getIssueId(), event.getVote() == IssueRateEvent.Vote.UP ? 1 : -1);
     }
 
     @Override
