@@ -78,7 +78,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                                 //TODO go to login activity
                                 Log.d(TAG, "login_action from snackbar ");
                             }
-                        });
+                        }).show();
                 break;
             case 403:
                 Snackbar.make(coordinatorLayout, getString(R.string.forbidden_error), Snackbar.LENGTH_SHORT).show();

@@ -13,7 +13,7 @@ import retrofit.client.Response;
  * Created by bartek on 09.07.15.
  */
 public class GlobalErrorHandler implements ErrorHandler {
-
+    
     @Override
     public Throwable handleError(RetrofitError cause) {
         if (cause == null) {
