@@ -1,6 +1,7 @@
 package pl.snowdog.dzialajlokalnie.model;
 
 import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
 import java.util.Date;
@@ -9,31 +10,83 @@ import java.util.Date;
 @Table(name = "Events")
 public class Event extends Model {
 
+    @Column
     private int eventID;
+
+    @Column
     private int parentID;
+
+    @Column
     private int userID;
+
+    @Column
     private String title;
+
+    @Column
     private String description;
+
+    @Column
     private int districtID;
+
+    @Column
     private double lon;
+
+    @Column
     private double lat;
+
+    @Column
     private String address;
+
+    @Column
     private Date startDate;
+
+    @Column
     private Date endDate;
+
+    @Column
     private String facebookUrl;
+
+    @Column
     private String eventUrl;
+
+    @Column
     private Date createdAt;
+
+    @Column
     private int eventStatus;
+
+    @Column
     private int categoryID;
+
+    @Column
     private String photoEventUri;
+
+    @Column
     private int commentsCount;
+
+    @Column
     private int votesCount;
+
+    @Column
+    private int invitedCount;
+
+    @Column
+    private int attendingCount;
+
+    @Column
+    private int maybeCount;
+
+    @Column
+    private int declinedCount;
+
+    @Column
+    private int userStatus;
 
     public Event() {
         super();
     }
 
-    public Event(int eventID, int parentID, int userID, String title, String description, int districtID, double lon, double lat, String address, Date startDate, Date endDate, String facebookUrl, String eventUrl, Date createdAt, int eventStatus, int categoryID, String photoEventUri, int commentsCount, int votesCount) {
+    public Event(int eventID, int parentID, int userID, String title, String description, int districtID, double lon, double lat, String address, Date startDate, Date endDate, String facebookUrl, String eventUrl, Date createdAt, int eventStatus, int categoryID, String photoEventUri, int commentsCount, int votesCount, int invitedCount, int attendingCount, int maybeCount, int declinedCount, int userStatus) {
         super();
         this.eventID = eventID;
         this.parentID = parentID;
@@ -54,6 +107,11 @@ public class Event extends Model {
         this.photoEventUri = photoEventUri;
         this.commentsCount = commentsCount;
         this.votesCount = votesCount;
+        this.invitedCount = invitedCount;
+        this.attendingCount = attendingCount;
+        this.maybeCount = maybeCount;
+        this.declinedCount = declinedCount;
+        this.userStatus = userStatus;
     }
 
     @Override
@@ -78,7 +136,52 @@ public class Event extends Model {
                 ", photoEventUri='" + photoEventUri + '\'' +
                 ", commentsCount=" + commentsCount +
                 ", votesCount=" + votesCount +
+                ", invitedCount=" + invitedCount +
+                ", attendingCount=" + attendingCount +
+                ", maybeCount=" + maybeCount +
+                ", declinedCount=" + declinedCount +
+                ", userStatus=" + userStatus +
                 '}';
+    }
+
+    public int getInvitedCount() {
+        return invitedCount;
+    }
+
+    public void setInvitedCount(int invitedCount) {
+        this.invitedCount = invitedCount;
+    }
+
+    public int getAttendingCount() {
+        return attendingCount;
+    }
+
+    public void setAttendingCount(int attendingCount) {
+        this.attendingCount = attendingCount;
+    }
+
+    public int getMaybeCount() {
+        return maybeCount;
+    }
+
+    public void setMaybeCount(int maybeCount) {
+        this.maybeCount = maybeCount;
+    }
+
+    public int getDeclinedCount() {
+        return declinedCount;
+    }
+
+    public void setDeclinedCount(int declinedCount) {
+        this.declinedCount = declinedCount;
+    }
+
+    public int getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(int userStatus) {
+        this.userStatus = userStatus;
     }
 
     public int getEventID() {

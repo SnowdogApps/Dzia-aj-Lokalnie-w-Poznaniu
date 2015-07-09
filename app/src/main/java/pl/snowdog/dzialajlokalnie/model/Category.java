@@ -1,6 +1,7 @@
 package pl.snowdog.dzialajlokalnie.model;
 
 import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
 import java.util.Date;
@@ -8,10 +9,19 @@ import java.util.Date;
 @Table(name = "Categories")
 public class Category extends Model {
 
+    @Column
     private int categoryID;
+
+    @Column
     private String name;
+
+    @Column
     private int categoryType;
+
+    @Column
     private Date createdAt;
+
+    @Column
     private Date updatedAt;
 
     public Category() {

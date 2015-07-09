@@ -1,6 +1,7 @@
 package pl.snowdog.dzialajlokalnie.model;
 
 import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
 import java.util.Date;
@@ -9,31 +10,70 @@ import java.util.Date;
 @Table(name = "Issues")
 public class Issue extends Model {
 
+    @Column
     private int issueID;
+
+    @Column
     private int parentID;
+
+    @Column
     private int userID;
+
+    @Column
     private String title;
+
+    @Column
     private String description;
+
+    @Column
     private int districtID;
+
+    @Column
     private double lon;
+
+    @Column
     private double lat;
+
+    @Column
     private String address;
+
+    @Column
     private String facebookUrl;
+
+    @Column
     private String issueUrl;
+
+    @Column
     private Date createdAt;
+
+    @Column
     private int issueStatus;
+
+    @Column
     private String categoryID;
+
+    @Column
     private String photoIssueUri;
+
+    @Column
     private int issueRating;
+
+    @Column
     private int commentsCount;
+
+    @Column
     private int votesCount;
+
+    @Column
+    private boolean userVotedValue;
 
     public Issue() {
         super();
     }
 
-    public Issue(int issueID, int parentID, int userID, String title, String description, int districtID, double lon, double lat, String address, String facebookUrl, String issueUrl, Date createdAt, int issueStatus, String categoryID, String photoIssueUri, int issueRating, int commentsCount, int votesCount) {
+    public Issue(int issueID, int parentID, int userID, String title, String description, int districtID, double lon, double lat, String address, String facebookUrl, String issueUrl, Date createdAt, int issueStatus, String categoryID, String photoIssueUri, int issueRating, int commentsCount, int votesCount, boolean userVotedValue) {
         super();
+
         this.issueID = issueID;
         this.parentID = parentID;
         this.userID = userID;
@@ -52,6 +92,7 @@ public class Issue extends Model {
         this.issueRating = issueRating;
         this.commentsCount = commentsCount;
         this.votesCount = votesCount;
+        this.userVotedValue = userVotedValue;
     }
 
     @Override
@@ -75,7 +116,16 @@ public class Issue extends Model {
                 ", issueRating=" + issueRating +
                 ", commentsCount=" + commentsCount +
                 ", votesCount=" + votesCount +
+                ", userVotedValue=" + userVotedValue +
                 '}';
+    }
+
+    public boolean isUserVotedValue() {
+        return userVotedValue;
+    }
+
+    public void setUserVotedValue(boolean userVotedValue) {
+        this.userVotedValue = userVotedValue;
     }
 
     public int getIssueID() {

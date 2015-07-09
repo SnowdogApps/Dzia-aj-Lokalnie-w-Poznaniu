@@ -1,22 +1,36 @@
 package pl.snowdog.dzialajlokalnie.model;
 
 import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
 @Table(name = "Districts")
 public class District extends Model {
 
+    @Column
     private int districtID;
+
+    @Column
     private String name;
+
+    @Column
     private String description;
+
+    @Column
     private double lon;
+
+    @Column
     private double lat;
+
+    @Column
     private int cityID;
 
     public District() {
+        super();
     }
 
     public District(int districtID, String name, String description, double lon, double lat, int cityID) {
+        super();
         this.districtID = districtID;
         this.name = name;
         this.description = description;
