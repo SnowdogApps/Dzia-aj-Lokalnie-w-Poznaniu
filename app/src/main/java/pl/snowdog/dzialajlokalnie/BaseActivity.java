@@ -1,5 +1,6 @@
 package pl.snowdog.dzialajlokalnie;
 
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -9,6 +10,7 @@ import com.activeandroid.query.Delete;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
 
@@ -29,6 +31,9 @@ import retrofit.client.Response;
 public abstract class BaseActivity extends AppCompatActivity {
 
     private static final String TAG = "BaseActivity";
+
+    @ViewById(R.id.coordinatorLayout)
+    protected CoordinatorLayout coordinatorLayout;
 
     @AfterViews
     protected void afterBaseActivityViews() {
@@ -57,10 +62,12 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void onEvent(NetworkErrorEvent event) {
         Log.d(TAG, "NetworkErrorEvent " + event);
+        Snackbar.make(coordinatorLayout, "NetworkErrorEvent " + event, Snackbar.LENGTH_SHORT).show();
     }
 
     public void onEvent(ApiErrorEvent event) {
         Log.d(TAG, "ApiErrorEvent " + event);
+        Snackbar.make(coordinatorLayout, "ApiErrorEvent " + event, Snackbar.LENGTH_SHORT).show();
     }
 
     protected void getCategories() {
