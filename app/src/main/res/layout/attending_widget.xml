@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable name="count" type="int"/>
+    </data>
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:showIn="@layout/item_event">
+
+        <ImageButton
+            android:id="@+id/ibAttend"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_action_accept_dark"
+            android:paddingLeft="@dimen/rating_button_padding"
+            android:paddingRight="@dimen/rating_button_padding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/textView_item_title"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:lines="1"
+            android:ellipsize="marquee"
+            android:text="@{String.valueOf(count)}" />
+
+    </LinearLayout>
+</layout>

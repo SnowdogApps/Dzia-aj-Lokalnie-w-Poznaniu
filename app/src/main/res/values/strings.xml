@@ -10,6 +10,13 @@
     <string name="action_settings">Settings</string>
 
     <string name="tags">Tagi: %s</string>
+    <string name="network_error">Problem z połączeniem internetowym</string>
+    <string name="unauthorized_error">Musisz się zalogować</string>
+    <string name="login_action">Zaloguj</string>
+    <string name="forbidden_error">Nie mogę tego zrobić</string>
+    <string name="not_found_error">Nie mogę tego znaleźć</string>
+    <string name="server_error">Na serwerze wystąpił błąd.\nJuż sprawdzam co się stało</string>
+    <string name="unknown_error">Coś poszło nie tak</string>
 
     <plurals name="votes">
         <item quantity="one">%d głos</item>

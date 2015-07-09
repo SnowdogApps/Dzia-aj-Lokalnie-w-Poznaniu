@@ -3,7 +3,7 @@
     xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="issue" type="pl.snowdog.dzialajlokalnie.model.Issue"/>
+        <variable name="event" type="pl.snowdog.dzialajlokalnie.model.Event"/>
     </data>
 
     <RelativeLayout
@@ -11,18 +11,18 @@
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/item_padding">
 
-        <include layout="@layout/rating_widget"
-            android:id="@+id/ratingWidget"
+        <include layout="@layout/attending_widget"
+            android:id="@+id/attendingWidget"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            bind:rating="@{issue.issueRating}"
+            bind:count="@{event.votesCount}"
             />
 
         <LinearLayout
             android:id="@+id/textContent"
-            android:layout_toRightOf="@+id/ratingWidget"
+            android:layout_toRightOf="@+id/attendingWidget"
             android:layout_toLeftOf="@+id/ivAvatar"
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -38,7 +38,7 @@
                 style="@style/textView_item_title"
                 android:lines="2"
                 android:ellipsize="end"
-                android:text="@{issue.title}"/>
+                android:text="@{event.title}"/>
 
             <TextView
                 android:id="@+id/tvDesc"
@@ -47,7 +47,7 @@
                 style="@style/textView_item_desc"
                 android:lines="3"
                 android:ellipsize="end"
-                android:text="@{issue.description}"/>
+                android:text="@{event.description}"/>
         </LinearLayout>
 
         <ImageView
@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/textContent"
-            bind:footerText='@{@plurals/votes(issue.votesCount, issue.votesCount) + ", " + @plurals/comments(issue.commentsCount, issue.commentsCount) + ", " + @string/tags(issue.categoryID)}'/>
+            bind:footerText='@{@plurals/votes(event.votesCount, event.votesCount) + ", " + @plurals/comments(event.commentsCount, event.commentsCount) + ", " + @string/tags(event.categoryID)}'/>
 
     </RelativeLayout>
 </layout>

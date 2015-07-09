@@ -2,14 +2,18 @@ package pl.snowdog.dzialajlokalnie.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.R;
+import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.databinding.ItemIssueBinding;
+import pl.snowdog.dzialajlokalnie.events.IssueRateEvent;
 import pl.snowdog.dzialajlokalnie.model.Issue;
 
 /**
@@ -35,7 +39,8 @@ public class IssuesAdapter extends RecyclerView.Adapter<IssuesAdapter.ViewHolder
         Issue issue = issues.get(i);
         viewHolder.binding.setIssue(issue);
 
-        Picasso.with(viewHolder.binding.getRoot().getContext()).load(issue.getPhotoIssueUri()).error(
+        Picasso.with(viewHolder.binding.getRoot().getContext()).load(
+                String.format(DlApi.PHOTO_THUMB_URL, issue.getPhotoIssueUri())).error(
                 R.drawable.ic_editor_insert_emoticon).into(viewHolder.binding.ivAvatar);
     }
 
@@ -51,9 +56,29 @@ public class IssuesAdapter extends RecyclerView.Adapter<IssuesAdapter.ViewHolder
         public ViewHolder(ItemIssueBinding binding) {
             super(binding.getRoot());
 
+            binding.ratingWidget.ibRateUp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EventBus.getDefault().post(new IssueRateEvent(
+                            ViewHolder.this.binding.getIssue().getIssueID(),
+                            IssueRateEvent.Vote.UP));
+                }
+            });
+
+            binding.ratingWidget.ibRateDown.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EventBus.getDefault().post(new IssueRateEvent(
+                            ViewHolder.this.binding.getIssue().getIssueID(),
+                            IssueRateEvent.Vote.DOWN));
+                }
+            });
+
             this.binding = binding;
         }
     }
 
-
+    public List<Issue> getIssues() {
+        return issues;
+    }
 }
