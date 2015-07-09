@@ -102,6 +102,7 @@ public class MainActivity extends BaseActivity {
         adapter.addFragment(new MapFragment(), getString(R.string.title_section2).toUpperCase(l));
         adapter.addFragment(new EventsFragment_(), getString(R.string.title_section3).toUpperCase(l));
         viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(3);
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
