@@ -17,6 +17,7 @@
     <string name="not_found_error">Nie mogę tego znaleźć</string>
     <string name="server_error">Na serwerze wystąpił błąd.\nJuż sprawdzam co się stało</string>
     <string name="unknown_error">Coś poszło nie tak</string>
+    <string name="action_filter">Filtr</string>
 
     <plurals name="votes">
         <item quantity="one">%d głos</item>
