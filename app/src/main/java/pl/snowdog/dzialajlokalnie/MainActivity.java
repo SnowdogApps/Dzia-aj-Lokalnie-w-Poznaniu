@@ -86,6 +86,7 @@ public class MainActivity extends BaseActivity implements ActionBar.TabListener 
 
         mViewPager.setOffscreenPageLimit(3);
 
+        logout();
         if (!isLoggedIn()) {
             login("Bartek", "bartek");
         }

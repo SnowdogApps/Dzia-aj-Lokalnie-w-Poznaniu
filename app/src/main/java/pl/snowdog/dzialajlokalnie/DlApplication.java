@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import pl.snowdog.dzialajlokalnie.api.DlApi;
+import pl.snowdog.dzialajlokalnie.api.GlobalErrorHandler;
 import pl.snowdog.dzialajlokalnie.model.Session;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
@@ -55,6 +56,7 @@ public class DlApplication extends Application {
                 .setEndpoint(DlApi.API_URL)
                 .setConverter(new GsonConverter(gson))
                 .setRequestInterceptor(requestInterceptor)
+                .setErrorHandler(new GlobalErrorHandler())
                 .build();
 
         baseApi = restAdapter.create(DlApi.Base.class);

@@ -1,5 +1,6 @@
 package pl.snowdog.dzialajlokalnie;
 
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -11,6 +12,9 @@ import org.androidannotations.annotations.EActivity;
 
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
+import pl.snowdog.dzialajlokalnie.events.NetworkErrorEvent;
+import pl.snowdog.dzialajlokalnie.model.ApiErrorEvent;
 import pl.snowdog.dzialajlokalnie.model.Category;
 import pl.snowdog.dzialajlokalnie.model.District;
 import pl.snowdog.dzialajlokalnie.model.Session;
@@ -37,6 +41,27 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected abstract void afterView();
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    public void onEvent(NetworkErrorEvent event) {
+        Log.d(TAG, "NetworkErrorEvent " + event);
+    }
+
+    public void onEvent(ApiErrorEvent event) {
+        Log.d(TAG, "ApiErrorEvent " + event);
+    }
 
     protected void getCategories() {
         DlApplication.baseApi.getCategories(new Callback<List<Category>>() {
