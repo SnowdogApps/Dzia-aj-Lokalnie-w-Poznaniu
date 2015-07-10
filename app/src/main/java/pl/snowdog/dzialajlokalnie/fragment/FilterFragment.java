@@ -17,6 +17,7 @@ import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
 
+import pl.snowdog.dzialajlokalnie.DlApplication;
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.adapter.CategoryAdapter;
 import pl.snowdog.dzialajlokalnie.adapter.DistrictAdapter;
@@ -53,7 +54,11 @@ public class FilterFragment extends DialogFragment {
 
         List<District> districts = new Select().from(District.class).orderBy("name").execute();
         adapter = DistrictAdapter.build(getActivity(), districts);
+        if (DlApplication.filter.getDistrict() != null) {
+            adapter.setSelectionId(DlApplication.filter.getDistrict().getDistrictID());
+        }
         spinner.setAdapter(adapter);
+        spinner.setSelection(adapter.getSelection());
 
         List<Category> categories = new Select().from(Category.class).orderBy("name").execute();
         categoriesAdapter = new CategoryAdapter(categories);
@@ -63,6 +68,7 @@ public class FilterFragment extends DialogFragment {
 
     @Click(R.id.btSet)
     void setClick() {
+        DlApplication.filter.setDistrict(adapter.getSelectedItem());
         dismiss();
     }
 
