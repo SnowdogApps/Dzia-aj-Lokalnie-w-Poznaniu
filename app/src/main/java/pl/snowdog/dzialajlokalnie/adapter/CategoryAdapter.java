@@ -37,6 +37,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
         ItemCategoryBinding binding = ItemCategoryBinding.
                 inflate(LayoutInflater.from(viewGroup.getContext()));
 
+        //TODO how to color the checkbox box?
 //        binding.cbName.setHighlightColor(viewGroup.getContext().getResources().getColor(R.color.colorAccent));
         return new ViewHolder(binding);
     }

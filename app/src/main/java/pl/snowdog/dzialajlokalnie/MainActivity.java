@@ -173,7 +173,8 @@ public class MainActivity extends BaseActivity {
 
         if (id == R.id.action_filter) {
             FilterFragment fragment = FilterFragment_.builder().build();
-            fragment.show(getFragmentManager(), "filter");
+//            fragment.show(getFragmentManager(), "filter");
+            fragment.show(getSupportFragmentManager(), "filter");
 
             return true;
         }
