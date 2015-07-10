@@ -3,9 +3,6 @@
 
     <data>
         <variable name="category" type="pl.snowdog.dzialajlokalnie.model.Category"/>
-        <variable name="even" type="boolean"/>
-        <variable name="long_text" type="boolean"/>
-        <variable name="selected_item" type="boolean"/>
     </data>
 
     <CheckBox
@@ -14,7 +11,6 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/item_padding"
         style="@style/textView_item_title"
-        android:textSize="@{long_text ? @dimen/title_long_text : @dimen/title_text}"
         android:lines="1"
         android:ellipsize="end"
         android:text="@{category.name}" />
