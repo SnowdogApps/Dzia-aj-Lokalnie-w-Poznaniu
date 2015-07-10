@@ -8,6 +8,7 @@
     <dimen name="list_photo_size">84dp</dimen>
 
     <dimen name="title_text">20sp</dimen>
+    <dimen name="title_long_text">16sp</dimen>
     <dimen name="description_text">12sp</dimen>
     <dimen name="comment_photo_size">24dp</dimen>
     <dimen name="comment_indent">16dp</dimen>

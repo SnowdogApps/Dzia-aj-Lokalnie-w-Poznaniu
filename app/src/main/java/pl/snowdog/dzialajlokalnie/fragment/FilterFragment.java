@@ -5,6 +5,8 @@ import android.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -13,6 +15,8 @@ import com.activeandroid.query.Select;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.ItemClick;
+import org.androidannotations.annotations.ItemSelect;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
@@ -40,6 +44,8 @@ public class FilterFragment extends DialogFragment {
     @ViewById(R.id.btCancel)
     Button cancelButton;
 
+    private DistrictAdapter adapter;
+
 
     @AfterViews
     void afterViews() {
@@ -47,7 +53,19 @@ public class FilterFragment extends DialogFragment {
 
         List<District> districts = new Select().from(District.class).orderBy("name").execute();
 
-        DistrictAdapter adapter = DistrictAdapter.build(getActivity(), districts);
+        adapter = DistrictAdapter.build(getActivity(), districts);
         spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                adapter.setSelection(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 }

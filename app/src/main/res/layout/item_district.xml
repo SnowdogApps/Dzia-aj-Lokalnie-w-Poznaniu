@@ -4,6 +4,8 @@
     <data>
         <variable name="district" type="pl.snowdog.dzialajlokalnie.model.District"/>
         <variable name="even" type="boolean"/>
+        <variable name="long_text" type="boolean"/>
+        <variable name="selected_item" type="boolean"/>
     </data>
 
     <TextView
@@ -11,9 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/item_padding"
-        android:background="@{even ? @color/background : @color/background_even_item}"
+        android:background="@{selected_item ? @color/background_inverse : (even ? @color/background : @color/background_even_item)}"
+        android:textColor="@{selected_item ? @color/text_inverse : @color/text}"
         style="@style/textView_item_title"
-        android:textSize="@{even ? @dimen/title_text : @dimen/description_text}"
+        android:textSize="@{long_text ? @dimen/title_long_text : @dimen/title_text}"
         android:lines="1"
         android:ellipsize="end"
         android:text="@{district.name}" />
