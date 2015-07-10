@@ -61,6 +61,7 @@ public class FilterFragment extends DialogFragment {
 
         List<Category> categories = new Select().from(Category.class).orderBy("name").execute();
         categoriesAdapter = new CategoryAdapter(categories);
+        categoriesAdapter.setSelectedCategories(DlApplication.filter.getCategories());
         recyclerView.setAdapter(categoriesAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
@@ -68,6 +69,7 @@ public class FilterFragment extends DialogFragment {
     @Click(R.id.btSet)
     void setClick() {
         DlApplication.filter.setDistrict(adapter.getSelectedItem());
+        DlApplication.filter.setCategories(categoriesAdapter.getSelectedCategories());
         dismiss();
     }
 

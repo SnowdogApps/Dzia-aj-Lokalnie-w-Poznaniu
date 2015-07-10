@@ -8,6 +8,7 @@ import android.widget.CompoundButton;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,10 +27,8 @@ import pl.snowdog.dzialajlokalnie.model.Category;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
     private List<Category> categories;
-    private Set<Category> selected;
 
     public CategoryAdapter(List<Category> issues) {
-        selected = new HashSet<>();
         this.categories = issues;
     }
 
@@ -70,5 +69,30 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     public List<Category> getCategories() {
         return categories;
+    }
+
+    public void setSelectedCategories(List<Category> selectedCategories) {
+        for (Category c : categories) {
+            c.setSelected(false);
+        }
+
+        for (Category c1 : categories) {
+            for (Category c2 : selectedCategories) {
+                if (c1.getCategoryID() == c2.getCategoryID()) {
+                    c1.setSelected(true);
+                    break;
+                }
+            }
+        }
+    }
+
+    public List<Category> getSelectedCategories() {
+        List<Category> selectedCategories = new ArrayList<>();
+        for (Category c : categories) {
+            if (c.isSelected()) {
+                selectedCategories.add(c);
+            }
+        }
+        return selectedCategories;
     }
 }
