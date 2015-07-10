@@ -4,10 +4,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.R;
@@ -23,8 +26,10 @@ import pl.snowdog.dzialajlokalnie.model.Category;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
     private List<Category> categories;
+    private Set<Category> selected;
 
     public CategoryAdapter(List<Category> issues) {
+        selected = new HashSet<>();
         this.categories = issues;
     }
 
@@ -54,6 +59,12 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             super(binding.getRoot());
 
             this.binding = binding;
+            this.binding.cbName.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    ViewHolder.this.binding.getCategory().setSelected(isChecked);
+                }
+            });
         }
     }
 

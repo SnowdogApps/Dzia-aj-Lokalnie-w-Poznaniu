@@ -27,6 +27,7 @@
                 style="@style/textView_item_title"
                 android:lines="1"
                 android:ellipsize="end"
+                android:checked="@{category.selected}"
                 android:text="@{category.name}" />
         </RelativeLayout>
 

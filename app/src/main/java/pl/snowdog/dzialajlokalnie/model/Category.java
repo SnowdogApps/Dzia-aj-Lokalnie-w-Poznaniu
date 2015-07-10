@@ -24,6 +24,8 @@ public class Category extends Model {
     @Column
     private Date updatedAt;
 
+    private boolean selected;
+
     public Category() {
         super();
     }
@@ -45,6 +47,14 @@ public class Category extends Model {
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
     public int getCategoryID() {
