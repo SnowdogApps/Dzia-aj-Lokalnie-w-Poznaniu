@@ -36,6 +36,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         ItemCategoryBinding binding = ItemCategoryBinding.
                 inflate(LayoutInflater.from(viewGroup.getContext()));
+
+//        binding.cbName.setHighlightColor(viewGroup.getContext().getResources().getColor(R.color.colorAccent));
         return new ViewHolder(binding);
     }
 

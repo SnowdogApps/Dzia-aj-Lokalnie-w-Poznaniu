@@ -30,6 +30,7 @@ import pl.snowdog.dzialajlokalnie.model.District;
  * Created by bartek on 09.07.15.
  */
 //TODO support DialogFragment DialogStyle się wywala w AndroidAnnotations dlaczego?
+    // issue jest znane: https://github.com/excilys/androidannotations/issues/1435
 @EFragment(R.layout.fragment_filter)
 public class FilterFragment extends DialogFragment {
 
