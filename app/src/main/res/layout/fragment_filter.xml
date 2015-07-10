@@ -59,6 +59,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         style="?android:attr/borderlessButtonStyle"
+        android:textColor="@color/colorAccent"
         android:text="Ustaw" />
 
     <Button
@@ -68,5 +69,6 @@
         android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@+id/btSet"
         style="?android:attr/borderlessButtonStyle"
+        android:textColor="@color/text"
         android:text="Anuluj" />
 </RelativeLayout>

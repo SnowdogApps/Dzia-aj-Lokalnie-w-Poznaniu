@@ -36,12 +36,16 @@ public class DlApi {
 
     public interface IssueApi {
         @GET("/issues")
-        void getIssues(@Query("districts") String districts, @Query("categories") String categories, Callback<List<Issue>> cb);
+        void getIssues(@Query("districts") String districts,
+                       @Query("categories") String categories,
+                       Callback<List<Issue>> cb);
     }
 
     public interface EventApi {
         @GET("/events")
-        void getEvents(Callback<List<Event>> cb);
+        void getEvents(@Query("districts") String districts,
+                       @Query("categories") String categories,
+                       Callback<List<Event>> cb);
     }
 
     public interface VoteApi {

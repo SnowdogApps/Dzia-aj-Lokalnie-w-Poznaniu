@@ -86,7 +86,10 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected void getEvents() {
-        DlApplication.eventApi.getEvents(new Callback<List<Event>>() {
+        Filter filter = DlApplication.filter;
+
+        DlApplication.eventApi.getEvents(filter.getDistrictFilter(), filter.getCategoriesFilter(),
+                new Callback<List<Event>>() {
             @Override
             public void success(List<Event> events, Response response) {
                 Log.d(TAG, "getEvents success: " + events);
