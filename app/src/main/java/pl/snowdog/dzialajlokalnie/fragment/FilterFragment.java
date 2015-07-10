@@ -18,7 +18,9 @@ import org.androidannotations.annotations.ViewById;
 import java.util.List;
 
 import pl.snowdog.dzialajlokalnie.R;
+import pl.snowdog.dzialajlokalnie.adapter.CategoryAdapter;
 import pl.snowdog.dzialajlokalnie.adapter.DistrictAdapter;
+import pl.snowdog.dzialajlokalnie.model.Category;
 import pl.snowdog.dzialajlokalnie.model.District;
 
 /**
@@ -41,6 +43,7 @@ public class FilterFragment extends DialogFragment {
     Button cancelButton;
 
     private DistrictAdapter adapter;
+    private CategoryAdapter categoriesAdapter;
 
 
     @AfterViews
@@ -51,8 +54,10 @@ public class FilterFragment extends DialogFragment {
         adapter = DistrictAdapter.build(getActivity(), districts);
         spinner.setAdapter(adapter);
 
+        List<Category> categories = new Select().from(Category.class).orderBy("name").execute();
+        categoriesAdapter = new CategoryAdapter(categories);
+        recyclerView.setAdapter(categoriesAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
     }
 
     @Click(R.id.btSet)
