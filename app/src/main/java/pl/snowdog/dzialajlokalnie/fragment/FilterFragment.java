@@ -2,21 +2,16 @@ package pl.snowdog.dzialajlokalnie.fragment;
 
 
 import android.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
 import com.activeandroid.query.Select;
 
 import org.androidannotations.annotations.AfterViews;
-import org.androidannotations.annotations.CustomTitle;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.ItemClick;
 import org.androidannotations.annotations.ItemSelect;
 import org.androidannotations.annotations.ViewById;
 
@@ -52,12 +47,22 @@ public class FilterFragment extends DialogFragment {
     void afterViews() {
         getDialog().setTitle(R.string.action_filter);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
         List<District> districts = new Select().from(District.class).orderBy("name").execute();
-
         adapter = DistrictAdapter.build(getActivity(), districts);
         spinner.setAdapter(adapter);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+    }
+
+    @Click(R.id.btSet)
+    void setClick() {
+        dismiss();
+    }
+
+    @Click(R.id.btCancel)
+    void cancelClick() {
+        dismiss();
     }
 
     @ItemSelect(R.id.spDistrict)

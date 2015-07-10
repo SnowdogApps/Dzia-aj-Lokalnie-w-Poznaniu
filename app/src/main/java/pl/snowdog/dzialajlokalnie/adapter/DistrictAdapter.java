@@ -2,7 +2,6 @@ package pl.snowdog.dzialajlokalnie.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,6 @@ import pl.snowdog.dzialajlokalnie.model.District;
 public class DistrictAdapter extends ArrayAdapter<District> {
 
     private static final String TAG = "DistrictAdapter";
-    private List<District> districts;
     private int selection;
 
     public static DistrictAdapter build(Context context, List<District> districts) {
@@ -28,8 +26,6 @@ public class DistrictAdapter extends ArrayAdapter<District> {
 
     public DistrictAdapter(Context context, int resource, List<District> districts) {
         super(context, resource, districts);
-
-        this.districts = districts;
     }
 
     @Override
@@ -47,7 +43,10 @@ public class DistrictAdapter extends ArrayAdapter<District> {
         } else {
             binding = (ItemDistrictBinding) convertView.getTag();
         }
+
         binding.setDistrict(getItem(position));
+        binding.setLongText(getItem(position).getName().length() > 20);
+
         if (isDropDown) {
             binding.setEven(position % 2 == 0);
             binding.setSelectedItem(position == selection);
@@ -55,7 +54,7 @@ public class DistrictAdapter extends ArrayAdapter<District> {
             binding.setEven(true);
             binding.setSelectedItem(false);
         }
-        binding.setLongText(getItem(position).getName().length() > 20);
+
         return binding.getRoot();
     }
 
@@ -71,4 +70,19 @@ public class DistrictAdapter extends ArrayAdapter<District> {
     public int getSelection() {
         return selection;
     }
+
+    public void setSelectionId(int selectionId) {
+        for (int i = 0; i < getCount(); i++) {
+            if (selectionId == getItem(i).getDistrictID()) {
+                selection = i;
+                break;
+            }
+        }
+    }
+
+    public int getSelectionId() {
+        return getItem(selection).getDistrictID();
+    }
+
+
 }
