@@ -56,7 +56,7 @@ public class IssuesFragment extends ListFragment {
         for (int i = 0; i < adapter.getIssues().size(); i++) {
             Issue issue = adapter.getIssues().get(i);
             if (issue.getIssueID() == vote.getParentID()) {
-                issue.setVotesCount(issue.getVotesCount()+vote.getValue());
+                issue.setIssueRating(issue.getIssueRating()+vote.getValue());
                 adapter.notifyItemChanged(i);
                 break;
             }

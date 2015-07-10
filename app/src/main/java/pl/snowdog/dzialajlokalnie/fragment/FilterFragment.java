@@ -1,6 +1,8 @@
 package pl.snowdog.dzialajlokalnie.fragment;
 
-import android.support.v4.app.DialogFragment;
+
+import android.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -14,6 +16,7 @@ import pl.snowdog.dzialajlokalnie.R;
 /**
  * Created by bartek on 09.07.15.
  */
+//TODO DialogFragment DialogStyle się wywala w AndroidAnnotations dlaczego?
 @EFragment(R.layout.fragment_filter)
 public class FilterFragment extends DialogFragment {
 
