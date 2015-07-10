@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        card_view:cardBackgroundColor="@color/card_board_color"
         card_view:cardCornerRadius="5dp"
         card_view:cardUseCompatPadding="true" >
 

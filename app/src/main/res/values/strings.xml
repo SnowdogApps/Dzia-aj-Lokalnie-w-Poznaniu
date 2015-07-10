@@ -18,6 +18,8 @@
     <string name="server_error">Na serwerze wystąpił błąd.\nJuż sprawdzam co się stało</string>
     <string name="unknown_error">Coś poszło nie tak</string>
     <string name="action_filter">Filtr</string>
+    <string name="district_label">Dzielnica</string>
+    <string name="categories_label">Kategorie</string>
 
     <plurals name="votes">
         <item quantity="one">%d głos</item>
