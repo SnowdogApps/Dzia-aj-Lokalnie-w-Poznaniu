@@ -15,6 +15,7 @@ import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.PUT;
 import retrofit.http.Path;
+import retrofit.http.Query;
 
 /**
  * Created by bartek on 06.07.15.
@@ -35,7 +36,7 @@ public class DlApi {
 
     public interface IssueApi {
         @GET("/issues")
-        void getIssues(Callback<List<Issue>> cb);
+        void getIssues(@Query("districts") String districts, @Query("categories") String categories, Callback<List<Issue>> cb);
     }
 
     public interface EventApi {

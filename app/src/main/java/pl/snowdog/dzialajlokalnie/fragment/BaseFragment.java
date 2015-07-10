@@ -11,6 +11,7 @@ import java.util.List;
 import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.DlApplication;
 import pl.snowdog.dzialajlokalnie.model.Event;
+import pl.snowdog.dzialajlokalnie.model.Filter;
 import pl.snowdog.dzialajlokalnie.model.Issue;
 import pl.snowdog.dzialajlokalnie.model.Vote;
 import retrofit.Callback;
@@ -51,7 +52,10 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected void getIssues() {
-        DlApplication.issueApi.getIssues(new Callback<List<Issue>>() {
+        Filter filter = DlApplication.filter;
+
+        DlApplication.issueApi.getIssues(filter.getDistrictFilter(), filter.getCategoriesFilter(),
+                new Callback<List<Issue>>() {
             @Override
             public void success(List<Issue> issues, Response response) {
                 Log.d(TAG, "getIssues success: " + issues);

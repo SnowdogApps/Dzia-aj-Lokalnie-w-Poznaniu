@@ -27,6 +27,31 @@ public class Filter {
                 '}';
     }
 
+    public String getDistrictFilter() {
+        if (district == null) {
+            return null;
+        }
+
+        return String.valueOf(district.getDistrictID());
+    }
+
+    public String getCategoriesFilter() {
+        if (getCategories().size() == 0) {
+            return null;
+        }
+
+        String filter = "";
+
+        for (int i = 0; i < categories.size(); i++) {
+            if (i != 0) {
+                filter += ",";
+            }
+            filter += categories.get(i).getCategoryID();
+        }
+
+        return filter;
+    }
+
     public District getDistrict() {
         return district;
     }

@@ -10,6 +10,7 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
 import pl.snowdog.dzialajlokalnie.R;
+import pl.snowdog.dzialajlokalnie.events.FilterChangedEvent;
 
 @EFragment(R.layout.fragment_list)
 public abstract class ListFragment extends BaseFragment {
@@ -40,4 +41,8 @@ public abstract class ListFragment extends BaseFragment {
     protected void onItemsLoadComplete() {
         swipeRefreshLayout.setRefreshing(false);
     };
+
+    public void onEvent(FilterChangedEvent event) {
+        refreshItems();
+    }
 }
