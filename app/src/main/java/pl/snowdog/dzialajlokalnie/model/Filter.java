@@ -1,5 +1,6 @@
 package pl.snowdog.dzialajlokalnie.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,6 +10,9 @@ public class Filter {
 
     private District district;
     private List<Category> categories;
+
+    public Filter() {
+    }
 
     public Filter(District district, List<Category> categories) {
         this.district = district;
@@ -32,6 +36,9 @@ public class Filter {
     }
 
     public List<Category> getCategories() {
+        if (categories == null) {
+            categories = new ArrayList<>();
+        }
         return categories;
     }
 

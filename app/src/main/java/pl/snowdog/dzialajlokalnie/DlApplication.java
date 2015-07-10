@@ -9,6 +9,7 @@ import com.google.gson.GsonBuilder;
 
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.api.GlobalErrorHandler;
+import pl.snowdog.dzialajlokalnie.model.Filter;
 import pl.snowdog.dzialajlokalnie.model.Session;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
@@ -26,6 +27,7 @@ public class DlApplication extends Application {
     public static DlApi.VoteApi voteApi;
     public static DlApi.UserApi userApi;
     public static Session currentSession;
+    public static Filter filter;
 
     @Override
     public void onCreate() {
@@ -66,6 +68,8 @@ public class DlApplication extends Application {
         userApi = restAdapter.create(DlApi.UserApi.class);
 
         refreshCurrentSession();
+
+        filter = new Filter();
     }
 
     public static void refreshCurrentSession() {

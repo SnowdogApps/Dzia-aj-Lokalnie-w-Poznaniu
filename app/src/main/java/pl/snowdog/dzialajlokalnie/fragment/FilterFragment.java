@@ -22,6 +22,7 @@ import pl.snowdog.dzialajlokalnie.adapter.CategoryAdapter;
 import pl.snowdog.dzialajlokalnie.adapter.DistrictAdapter;
 import pl.snowdog.dzialajlokalnie.model.Category;
 import pl.snowdog.dzialajlokalnie.model.District;
+import pl.snowdog.dzialajlokalnie.model.Filter;
 
 /**
  * Created by bartek on 09.07.15.

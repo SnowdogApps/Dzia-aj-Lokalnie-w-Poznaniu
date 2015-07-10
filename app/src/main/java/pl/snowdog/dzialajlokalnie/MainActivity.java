@@ -52,7 +52,6 @@ public class MainActivity extends BaseActivity {
     @ViewById(R.id.fab)
     FloatingActionButton fab;
 
-
     @Override
     protected void afterView() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
