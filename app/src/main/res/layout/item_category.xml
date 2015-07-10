@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable name="category" type="pl.snowdog.dzialajlokalnie.model.Category"/>
+        <variable name="even" type="boolean"/>
+        <variable name="long_text" type="boolean"/>
+        <variable name="selected_item" type="boolean"/>
+    </data>
+
+    <CheckBox
+        android:id="@+id/cbName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/item_padding"
+        android:background="@{selected_item ? @color/background_inverse : (even ? @color/background : @color/background_even_item)}"
+        android:textColor="@{selected_item ? @color/text_inverse : @color/text}"
+        style="@style/textView_item_title"
+        android:textSize="@{long_text ? @dimen/title_long_text : @dimen/title_text}"
+        android:lines="1"
+        android:ellipsize="end"
+        android:text="@{category.name}" />
+</layout>

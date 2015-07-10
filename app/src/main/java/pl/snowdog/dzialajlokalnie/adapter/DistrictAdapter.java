@@ -83,6 +83,4 @@ public class DistrictAdapter extends ArrayAdapter<District> {
     public int getSelectionId() {
         return getItem(selection).getDistrictID();
     }
-
-
 }
