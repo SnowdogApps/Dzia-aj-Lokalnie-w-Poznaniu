@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import com.activeandroid.query.Select;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.CustomTitle;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ItemClick;
 import org.androidannotations.annotations.ItemSelect;
@@ -28,7 +29,7 @@ import pl.snowdog.dzialajlokalnie.model.District;
 /**
  * Created by bartek on 09.07.15.
  */
-//TODO DialogFragment DialogStyle się wywala w AndroidAnnotations dlaczego?
+//TODO support DialogFragment DialogStyle się wywala w AndroidAnnotations dlaczego?
 @EFragment(R.layout.fragment_filter)
 public class FilterFragment extends DialogFragment {
 
@@ -49,23 +50,20 @@ public class FilterFragment extends DialogFragment {
 
     @AfterViews
     void afterViews() {
+        getDialog().setTitle(R.string.action_filter);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         List<District> districts = new Select().from(District.class).orderBy("name").execute();
 
         adapter = DistrictAdapter.build(getActivity(), districts);
         spinner.setAdapter(adapter);
+    }
 
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                adapter.setSelection(position);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+    @ItemSelect(R.id.spDistrict)
+    void districtSelected(boolean selected, int position) {
+        if (selected) {
+            adapter.setSelection(position);
+        }
     }
 }
