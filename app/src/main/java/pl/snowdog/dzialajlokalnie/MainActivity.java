@@ -27,6 +27,8 @@ import java.util.List;
 import java.util.Locale;
 
 import pl.snowdog.dzialajlokalnie.fragment.EventsFragment_;
+import pl.snowdog.dzialajlokalnie.fragment.FilterFragment;
+import pl.snowdog.dzialajlokalnie.fragment.FilterFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.IssuesFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.MapFragment;
 import pl.snowdog.dzialajlokalnie.model.Session;
@@ -167,6 +169,13 @@ public class MainActivity extends BaseActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+
+        if (id == R.id.action_filter) {
+            FilterFragment fragment = FilterFragment_.builder().build();
+            fragment.show(getFragmentManager(), "filter");
+
             return true;
         }
 
