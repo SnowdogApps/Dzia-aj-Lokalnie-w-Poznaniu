@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable name="district" type="pl.snowdog.dzialajlokalnie.model.District"/>
+        <variable name="even" type="boolean"/>
+    </data>
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/item_padding"
+        android:background="@{even ? @color/background : @color/background_even_item}"
+        style="@style/textView_item_title"
+        android:textSize="@{even ? @dimen/title_text : @dimen/description_text}"
+        android:lines="1"
+        android:ellipsize="end"
+        android:text="@{district.name}" />
+</layout>

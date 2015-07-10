@@ -18,6 +18,7 @@ import org.androidannotations.annotations.ViewById;
 import java.util.List;
 
 import pl.snowdog.dzialajlokalnie.R;
+import pl.snowdog.dzialajlokalnie.adapter.DistrictAdapter;
 import pl.snowdog.dzialajlokalnie.model.District;
 
 /**
@@ -46,7 +47,7 @@ public class FilterFragment extends DialogFragment {
 
         List<District> districts = new Select().from(District.class).orderBy("name").execute();
 
-        ArrayAdapter<District> adapter = new ArrayAdapter<District>(getActivity(), android.R.layout.simple_spinner_item, districts);
+        DistrictAdapter adapter = DistrictAdapter.build(getActivity(), districts);
         spinner.setAdapter(adapter);
     }
 }

@@ -4,6 +4,7 @@
     <color name="text_inverse">#efefef</color>
     <color name="background">#ececec</color>
     <color name="background_inverse">#717171</color>
+    <color name="background_even_item">#cacaca</color>
     <color name="window_background">#FFF5F5F5</color>
 
     <color name="colorPrimary">#673AB7</color>
