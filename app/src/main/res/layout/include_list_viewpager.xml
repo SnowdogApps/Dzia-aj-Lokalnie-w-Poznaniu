@@ -17,6 +17,8 @@
 
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -48,12 +50,74 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <android.support.design.widget.FloatingActionButton
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_action_new" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fab_icon="@drawable/ic_action_new"
+        fab:fab_addButtonColorNormal="@color/colorAccent"
+        fab:fab_addButtonColorPressed="@color/white_pressed"
+        fab:fab_addButtonPlusIconColor="@color/white"
+        fab:fab_labelStyle="@style/menu_labels_style"
+        fab:fab_labelsPosition="left"
+        >
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_new_issue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_size="mini"
+            fab:fab_colorNormal="@color/white"
+            fab:fab_title="@string/new_issue"
+            fab:fab_colorPressed="@color/white_pressed"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_new_event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/white"
+            fab:fab_size="mini"
+            fab:fab_title="@string/new_event"
+            fab:fab_colorPressed="@color/white_pressed"/>
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
+
 
 </android.support.design.widget.CoordinatorLayout>
+<!--
+
+<com.getbase.floatingactionbutton.FloatingActionsMenu
+android:id="@+id/fab"
+android:layout_gravity="end|bottom"
+android:layout_margin="@dimen/fab_margin"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+app:fab_icon="@drawable/ic_done"
+fab:fab_addButtonColorNormal="@color/accent"
+fab:fab_addButtonColorPressed="@color/white_pressed"
+fab:fab_addButtonPlusIconColor="@color/half_black"
+fab:fab_labelStyle="@style/menu_labels_style"
+fab:fab_labelsPosition="left"
+    >
+
+<com.getbase.floatingactionbutton.FloatingActionButton
+    android:id="@+id/action_a"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+
+    fab:fab_colorNormal="@color/white"
+    fab:fab_title="Action A"
+    fab:fab_colorPressed="@color/white_pressed"/>
+
+<com.getbase.floatingactionbutton.FloatingActionButton
+    android:id="@+id/action_b"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    fab:fab_colorNormal="@color/white"
+    fab:fab_title="Action with a very long name that won\'t fit on the screen"
+    fab:fab_colorPressed="@color/white_pressed"/>
+
+</com.getbase.floatingactionbutton.FloatingActionsMenu>-->

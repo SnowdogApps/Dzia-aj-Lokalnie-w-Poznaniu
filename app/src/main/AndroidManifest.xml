@@ -15,6 +15,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
 
     <!-- Maps API needs OpenGL ES 2.0. -->
     <uses-feature
@@ -35,6 +37,27 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".AddIssueActivity_"
+            android:label="@string/new_issue"
+            android:parentActivityName=".MainActivity_"
+            android:windowSoftInputMode="stateVisible|adjustResize">
+        </activity>
+
+        <activity
+            android:name=".AddEventActivity_"
+            android:label="@string/new_event"
+            android:parentActivityName=".MainActivity_"
+            android:windowSoftInputMode="stateVisible|adjustResize">
+        </activity>
+
+        <activity
+            android:name=".AddBaseActivity_"
+            android:label="@string/new_event"
+            android:parentActivityName=".MainActivity_"
+            android:windowSoftInputMode="stateVisible|adjustResize">
         </activity>
 
 

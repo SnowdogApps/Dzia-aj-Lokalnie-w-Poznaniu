@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import android.support.design.widget.FloatingActionButton;
+import android.animation.AnimatorInflater;
+import android.animation.ObjectAnimator;
+import android.support.annotation.AnimatorRes;
+
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -27,11 +30,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
+
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.res.AnimationRes;
 
 import pl.snowdog.dzialajlokalnie.fragment.IssuesFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.MapFragment;
@@ -52,8 +59,7 @@ public class MainActivity extends AppCompatActivity {
     TabLayout mTabLayout;
 
     @ViewById(R.id.fab)
-    FloatingActionButton fab;
-
+    FloatingActionsMenu fab;
 
     @AfterViews
     void afterViews() {
@@ -77,10 +83,26 @@ public class MainActivity extends AppCompatActivity {
 
         mTabLayout.setupWithViewPager(mViewPager);
 
+
     }
 
-    @Click(R.id.fab)
-    void onFabClicked() {
+
+
+    @Click(R.id.fab_new_event)
+    void onFabNewEventClicked() {
+
+        fab.collapse();
+        AddEventActivity_.intent(this).start();
+
+    }
+
+    @Click(R.id.fab_new_issue)
+    void onFabNewIssueClicked() {
+        fab.collapse();
+        //fab.performClick();
+        AddIssueActivity_.intent(this).start();
+
+
         /*Snackbar.make(fab, "Here's a Snackbar", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();*/
 

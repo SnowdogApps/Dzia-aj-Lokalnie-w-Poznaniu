@@ -14,6 +14,11 @@
         <item name="android:textColor">@color/text</item>
     </style>
 
+    <style name="menu_labels_style">
+        <item name="android:background">@drawable/fab_label_background</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
     <style name="textView_item_desc">
         <item name="android:textSize">@dimen/description_text</item>
         <item name="android:textColor">@color/text</item>

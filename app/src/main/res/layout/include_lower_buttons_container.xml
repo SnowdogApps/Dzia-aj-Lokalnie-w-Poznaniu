@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:showIn="@layout/fragment_add_issue_first">
+
+    <View
+        android:layout_above="@+id/lower_buttons_container"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/dividerVertical" />
+
+    <RelativeLayout
+        android:id="@+id/lower_buttons_container"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btnPrev"
+            style="?android:attr/borderlessButtonStyle"
+            android:textColor="@color/colorAccent"
+            android:layout_toLeftOf="@+id/btnNext"
+            android:text="@string/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btnNext"
+            android:textColor="@color/colorAccent"
+            android:text="@string/next"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?android:attr/borderlessButtonStyle" />
+    </RelativeLayout>
+
+
+</merge>
