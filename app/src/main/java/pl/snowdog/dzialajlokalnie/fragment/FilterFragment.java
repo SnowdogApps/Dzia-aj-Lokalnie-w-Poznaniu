@@ -17,10 +17,12 @@ import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.DlApplication;
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.adapter.CategoryAdapter;
 import pl.snowdog.dzialajlokalnie.adapter.DistrictAdapter;
+import pl.snowdog.dzialajlokalnie.events.FilterChangedEvent;
 import pl.snowdog.dzialajlokalnie.model.Category;
 import pl.snowdog.dzialajlokalnie.model.District;
 
@@ -70,6 +72,8 @@ public class FilterFragment extends DialogFragment {
     void setClick() {
         DlApplication.filter.setDistrict(adapter.getSelectedItem());
         DlApplication.filter.setCategories(categoriesAdapter.getSelectedCategories());
+
+        EventBus.getDefault().post(new FilterChangedEvent());
         dismiss();
     }
 
