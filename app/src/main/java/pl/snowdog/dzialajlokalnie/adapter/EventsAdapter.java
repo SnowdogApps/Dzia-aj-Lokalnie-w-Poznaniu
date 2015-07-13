@@ -11,6 +11,7 @@ import java.util.List;
 
 import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.R;
+import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.databinding.ItemEventBinding;
 import pl.snowdog.dzialajlokalnie.events.EventAttendEvent;
 import pl.snowdog.dzialajlokalnie.model.Event;
@@ -38,8 +39,10 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         Event event = events.get(i);
         viewHolder.binding.setEvent(event);
 
-        Picasso.with(viewHolder.binding.getRoot().getContext()).load(event.getPhotoEventUri()).error(
-                R.drawable.ic_editor_insert_emoticon).into(viewHolder.binding.ivAvatar);
+        Picasso.with(viewHolder.binding.getRoot().getContext()).
+                load(String.format(DlApi.PHOTO_THUMB_URL, event.getPhotoEventUri())).
+                error(R.drawable.ic_editor_insert_emoticon).
+                into(viewHolder.binding.ivAvatar);
     }
 
     @Override
