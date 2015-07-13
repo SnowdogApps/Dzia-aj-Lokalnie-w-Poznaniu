@@ -32,12 +32,23 @@ public class Filter {
         this.sort = sort;
     }
 
-    public String getSort() {
+    public String getSortForIssues() {
         switch (sort) {
             case newest:
                 return "issue.issueID DESC";
             case top:
                 return "issue.issueRating DESC";
+            default:
+                return null;
+        }
+    }
+
+    public String getSortForEvents() {
+        switch (sort) {
+            case newest:
+                return "event.eventID DESC";
+            case top:
+                return "event.attendingCount DESC";
             default:
                 return null;
         }

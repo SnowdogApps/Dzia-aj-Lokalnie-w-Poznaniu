@@ -56,7 +56,7 @@ public abstract class BaseFragment extends Fragment {
 
         DlApplication.issueApi.getIssues(filter.getDistrictFilter(),
                 filter.getCategoriesFilter(),
-                filter.getSort(),
+                filter.getSortForIssues(),
                 new Callback<List<Issue>>() {
             @Override
             public void success(List<Issue> issues, Response response) {
@@ -92,7 +92,7 @@ public abstract class BaseFragment extends Fragment {
 
         DlApplication.eventApi.getEvents(filter.getDistrictFilter(),
                 filter.getCategoriesFilter(),
-                filter.getSort(),
+                filter.getSortForEvents(),
                 new Callback<List<Event>>() {
             @Override
             public void success(List<Event> events, Response response) {
