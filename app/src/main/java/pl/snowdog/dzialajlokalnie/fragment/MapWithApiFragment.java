@@ -6,6 +6,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -61,7 +62,8 @@ public class MapWithApiFragment extends BaseFragment implements OnMapReadyCallba
         for (Issue issue : issues) {
             map.addMarker(new MarkerOptions().
                 position(new LatLng(issue.getLat(), issue.getLon())).
-                title(issue.getTitle()));
+                title(issue.getTitle()).
+                icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_issue_marker)));
         }
     }
 
@@ -70,7 +72,8 @@ public class MapWithApiFragment extends BaseFragment implements OnMapReadyCallba
         for (Event event : events) {
             map.addMarker(new MarkerOptions().
                 position(new LatLng(event.getLat(), event.getLon())).
-                title(event.getTitle()));
+                title(event.getTitle()).
+                icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_event_marker)));
         }
     }
 
