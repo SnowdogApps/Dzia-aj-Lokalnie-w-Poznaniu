@@ -20,6 +20,7 @@
     <string name="action_filter">Filtr</string>
     <string name="district_label">Dzielnica</string>
     <string name="categories_label">Kategorie</string>
+    <string name="all_districts_filter">Cały Poznań</string>
 
     <plurals name="votes">
         <item quantity="one">%d głos</item>

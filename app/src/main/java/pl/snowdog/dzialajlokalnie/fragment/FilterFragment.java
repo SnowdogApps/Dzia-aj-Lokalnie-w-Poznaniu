@@ -55,6 +55,7 @@ public class FilterFragment extends DialogFragment {
         getDialog().setTitle(R.string.action_filter);
 
         List<District> districts = new Select().from(District.class).orderBy("name").execute();
+        districts.add(0, new District(-1, getString(R.string.all_districts_filter), null, 16.934167, 52.408333, -1));
         adapter = DistrictAdapter.build(getActivity(), districts);
         if (DlApplication.filter.getDistrict() != null) {
             adapter.setSelectionId(DlApplication.filter.getDistrict().getDistrictID());
@@ -71,7 +72,11 @@ public class FilterFragment extends DialogFragment {
 
     @Click(R.id.btSet)
     void setClick() {
-        DlApplication.filter.setDistrict(adapter.getSelectedItem());
+        if (adapter.getSelectedItem().getDistrictID() != -1) {
+            DlApplication.filter.setDistrict(adapter.getSelectedItem());
+        } else {
+            DlApplication.filter.setDistrict(null);
+        }
         DlApplication.filter.setCategories(categoriesAdapter.getSelectedCategories());
 
         EventBus.getDefault().post(new FilterChangedEvent());
