@@ -32,8 +32,6 @@ import pl.snowdog.dzialajlokalnie.fragment.EventsFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.FilterFragment;
 import pl.snowdog.dzialajlokalnie.fragment.FilterFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.IssuesFragment_;
-import pl.snowdog.dzialajlokalnie.fragment.MapFragment;
-import pl.snowdog.dzialajlokalnie.fragment.MapWithApiFragment;
 import pl.snowdog.dzialajlokalnie.fragment.MapWithApiFragment_;
 import pl.snowdog.dzialajlokalnie.model.Filter;
 import pl.snowdog.dzialajlokalnie.model.Session;
