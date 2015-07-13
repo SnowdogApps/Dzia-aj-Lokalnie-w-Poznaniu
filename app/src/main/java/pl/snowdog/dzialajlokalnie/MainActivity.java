@@ -33,6 +33,8 @@ import pl.snowdog.dzialajlokalnie.fragment.FilterFragment;
 import pl.snowdog.dzialajlokalnie.fragment.FilterFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.IssuesFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.MapFragment;
+import pl.snowdog.dzialajlokalnie.fragment.MapWithApiFragment;
+import pl.snowdog.dzialajlokalnie.fragment.MapWithApiFragment_;
 import pl.snowdog.dzialajlokalnie.model.Filter;
 import pl.snowdog.dzialajlokalnie.model.Session;
 
@@ -103,7 +105,7 @@ public class MainActivity extends BaseActivity {
         Locale l = Locale.getDefault();
         Adapter adapter = new Adapter(getSupportFragmentManager());
         adapter.addFragment(new IssuesFragment_(), getString(R.string.title_section1).toUpperCase(l));
-        adapter.addFragment(new MapFragment(), getString(R.string.title_section2).toUpperCase(l));
+        adapter.addFragment(new MapWithApiFragment_(), getString(R.string.title_section2).toUpperCase(l));
         adapter.addFragment(new EventsFragment_(), getString(R.string.title_section3).toUpperCase(l));
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(3);
