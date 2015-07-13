@@ -8,11 +8,16 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 
+import java.util.List;
+
 import pl.snowdog.dzialajlokalnie.R;
+import pl.snowdog.dzialajlokalnie.model.Event;
+import pl.snowdog.dzialajlokalnie.model.Issue;
 
 /**
  * Created by bartek on 13.07.15.
@@ -46,6 +51,27 @@ public class MapWithApiFragment extends BaseFragment implements OnMapReadyCallba
 
         map.setOnMyLocationChangeListener(this);
         map.setOnCameraChangeListener(this);
+
+        getIssues();
+        getEvents();
+    }
+
+    @Override
+    protected void issuesResult(List<Issue> issues) {
+        for (Issue issue : issues) {
+            map.addMarker(new MarkerOptions().
+                position(new LatLng(issue.getLat(), issue.getLon())).
+                title(issue.getTitle()));
+        }
+    }
+
+    @Override
+    protected void eventsResult(List<Event> events) {
+        for (Event event : events) {
+            map.addMarker(new MarkerOptions().
+                position(new LatLng(event.getLat(), event.getLon())).
+                title(event.getTitle()));
+        }
     }
 
     @Override
