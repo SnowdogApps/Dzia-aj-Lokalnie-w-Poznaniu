@@ -21,7 +21,7 @@ apt {
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "23 rc2"
+    buildToolsVersion "23 rc3"
 
     defaultConfig {
         applicationId "pl.snowdog.dzialajlokalnie"
