@@ -38,6 +38,7 @@ public class DlApi {
         @GET("/issues")
         void getIssues(@Query("districts") String districts,
                        @Query("categories") String categories,
+                       @Query("orderBy") String sort,
                        Callback<List<Issue>> cb);
     }
 
@@ -45,6 +46,7 @@ public class DlApi {
         @GET("/events")
         void getEvents(@Query("districts") String districts,
                        @Query("categories") String categories,
+                       @Query("orderBy") String sort,
                        Callback<List<Event>> cb);
     }
 

@@ -5,18 +5,19 @@ import java.util.List;
 
 /**
  * Created by bartek on 10.07.15.
+ *
+ * Contains filter and sort settings for api
  */
 public class Filter {
 
+    public enum Sort {popular, newest, top}
+
     private District district;
     private List<Category> categories;
+    private Sort sort;
 
     public Filter() {
-    }
-
-    public Filter(District district, List<Category> categories) {
-        this.district = district;
-        this.categories = categories;
+        this.sort = Sort.popular;
     }
 
     @Override
@@ -25,6 +26,21 @@ public class Filter {
                 "district=" + district +
                 ", categories=" + categories +
                 '}';
+    }
+
+    public void setSort(Sort sort) {
+        this.sort = sort;
+    }
+
+    public String getSort() {
+        switch (sort) {
+            case newest:
+                return "issue.issueID DESC";
+            case top:
+                return "issue.issueRating DESC";
+            default:
+                return null;
+        }
     }
 
     public String getDistrictFilter() {
