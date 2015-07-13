@@ -1,8 +1,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+
+    <item android:id="@+id/action_sort" android:title="@string/action_sort"
+        android:orderInCategory="1" app:showAsAction="always" >
+        <menu>
+            <group>
+                <item android:id="@+id/action_sort_popular" android:title="@string/action_sort_popular"
+                    android:orderInCategory="2" app:showAsAction="never" />
+
+                <item android:id="@+id/action_sort_newest" android:title="@string/action_sort_newest"
+                    android:orderInCategory="3" app:showAsAction="never" />
+
+                <item android:id="@+id/action_sort_top" android:title="@string/action_sort_top"
+                    android:orderInCategory="4" app:showAsAction="never" />
+            </group>
+        </menu>
+    </item>
+
     <item android:id="@+id/action_filter" android:title="@string/action_filter"
-        android:orderInCategory="1" app:showAsAction="always" />
+        android:orderInCategory="2" app:showAsAction="always" />
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>
