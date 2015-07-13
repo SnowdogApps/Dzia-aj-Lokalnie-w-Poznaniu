@@ -178,14 +178,17 @@ public class MainActivity extends BaseActivity {
                 return true;
             case R.id.action_sort_popular:
                 DlApplication.filter.setSort(Filter.Sort.popular);
+                item.setChecked(true);
                 EventBus.getDefault().post(new FilterChangedEvent());
                 return true;
             case R.id.action_sort_newest:
                 DlApplication.filter.setSort(Filter.Sort.newest);
+                item.setChecked(true);
                 EventBus.getDefault().post(new FilterChangedEvent());
                 return true;
             case R.id.action_sort_top:
                 DlApplication.filter.setSort(Filter.Sort.top);
+                item.setChecked(true);
                 EventBus.getDefault().post(new FilterChangedEvent());
                 return true;
         }

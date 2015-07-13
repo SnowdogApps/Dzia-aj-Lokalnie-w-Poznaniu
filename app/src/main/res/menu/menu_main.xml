@@ -5,9 +5,9 @@
     <item android:id="@+id/action_sort" android:title="@string/action_sort"
         android:orderInCategory="1" app:showAsAction="always" >
         <menu>
-            <group>
+            <group  android:checkableBehavior="single">
                 <item android:id="@+id/action_sort_popular" android:title="@string/action_sort_popular"
-                    android:orderInCategory="2" app:showAsAction="never" />
+                    android:orderInCategory="2" app:showAsAction="never" android:checked="true"/>
 
                 <item android:id="@+id/action_sort_newest" android:title="@string/action_sort_newest"
                     android:orderInCategory="3" app:showAsAction="never" />
