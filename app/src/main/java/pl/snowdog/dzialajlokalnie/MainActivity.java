@@ -177,23 +177,21 @@ public class MainActivity extends BaseActivity {
                 fragment.show(getSupportFragmentManager(), "filter");
                 return true;
             case R.id.action_sort_popular:
-                DlApplication.filter.setSort(Filter.Sort.popular);
-                item.setChecked(true);
-                EventBus.getDefault().post(new FilterChangedEvent());
-                return true;
+                return applySort(item, Filter.Sort.popular);
             case R.id.action_sort_newest:
-                DlApplication.filter.setSort(Filter.Sort.newest);
-                item.setChecked(true);
-                EventBus.getDefault().post(new FilterChangedEvent());
-                return true;
+                return applySort(item, Filter.Sort.newest);
             case R.id.action_sort_top:
-                DlApplication.filter.setSort(Filter.Sort.top);
-                item.setChecked(true);
-                EventBus.getDefault().post(new FilterChangedEvent());
-                return true;
+                return applySort(item, Filter.Sort.top);
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean applySort(MenuItem item, Filter.Sort popular) {
+        DlApplication.filter.setSort(popular);
+        item.setChecked(true);
+        EventBus.getDefault().post(new FilterChangedEvent());
+        return true;
     }
 
 }
