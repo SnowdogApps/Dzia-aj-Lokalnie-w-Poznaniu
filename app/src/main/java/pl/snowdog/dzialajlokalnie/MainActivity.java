@@ -26,11 +26,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import de.greenrobot.event.EventBus;
+import pl.snowdog.dzialajlokalnie.events.FilterChangedEvent;
 import pl.snowdog.dzialajlokalnie.fragment.EventsFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.FilterFragment;
 import pl.snowdog.dzialajlokalnie.fragment.FilterFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.IssuesFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.MapFragment;
+import pl.snowdog.dzialajlokalnie.model.Filter;
 import pl.snowdog.dzialajlokalnie.model.Session;
 
 @EActivity(R.layout.activity_main)
@@ -166,17 +169,25 @@ public class MainActivity extends BaseActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        if (id == R.id.action_filter) {
-            FilterFragment fragment = FilterFragment_.builder().build();
-//            fragment.show(getFragmentManager(), "filter");
-            fragment.show(getSupportFragmentManager(), "filter");
-
-            return true;
+        switch (id) {
+            case R.id.action_settings:
+                return true;
+            case R.id.action_filter:
+                FilterFragment fragment = FilterFragment_.builder().build();
+                fragment.show(getSupportFragmentManager(), "filter");
+                return true;
+            case R.id.action_sort_popular:
+                DlApplication.filter.setSort(Filter.Sort.popular);
+                EventBus.getDefault().post(new FilterChangedEvent());
+                return true;
+            case R.id.action_sort_newest:
+                DlApplication.filter.setSort(Filter.Sort.newest);
+                EventBus.getDefault().post(new FilterChangedEvent());
+                return true;
+            case R.id.action_sort_top:
+                DlApplication.filter.setSort(Filter.Sort.top);
+                EventBus.getDefault().post(new FilterChangedEvent());
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
