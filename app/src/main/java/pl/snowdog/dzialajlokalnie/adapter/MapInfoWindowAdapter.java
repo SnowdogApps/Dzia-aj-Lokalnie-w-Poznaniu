@@ -11,10 +11,13 @@ import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
+import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.databinding.ItemEventBinding;
 import pl.snowdog.dzialajlokalnie.databinding.ItemIssueBinding;
+import pl.snowdog.dzialajlokalnie.events.EventClickedOnMapEvent;
+import pl.snowdog.dzialajlokalnie.events.IssueClickedOnMapEvent;
 import pl.snowdog.dzialajlokalnie.model.Event;
 import pl.snowdog.dzialajlokalnie.model.Issue;
 
@@ -23,10 +26,34 @@ import pl.snowdog.dzialajlokalnie.model.Issue;
  */
 public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
-    Context context;
-    Resources res;
-    HashMap<String, Event> markerEventMap;
-    HashMap<String, Issue> markerIssueMap;
+    public static class OnClickListener implements GoogleMap.OnInfoWindowClickListener {
+
+        private HashMap<String, Event> markerEventMap;
+        private HashMap<String, Issue> markerIssueMap;
+
+        public OnClickListener(HashMap<String, Event> markerEventMap,
+                               HashMap<String, Issue> markerIssueMap) {
+            this.markerEventMap = markerEventMap;
+            this.markerIssueMap = markerIssueMap;
+        }
+
+        @Override
+        public void onInfoWindowClick(Marker marker) {
+            if (markerIssueMap.containsKey(marker.getId())) {
+                EventBus.getDefault().post(new IssueClickedOnMapEvent(
+                        markerIssueMap.get(marker.getId()).getIssueID()));
+            } else if (markerEventMap.containsKey(marker.getId())) {
+                EventBus.getDefault().post(new EventClickedOnMapEvent(
+                        markerEventMap.get(marker.getId()).getEventID()));
+            }
+        }
+    }
+
+    private Context context;
+    private Resources res;
+    private HashMap<String, Event> markerEventMap;
+    private HashMap<String, Issue> markerIssueMap;
+    private OnClickListener onClickListener;
 
     public MapInfoWindowAdapter(Context context) {
 
@@ -34,6 +61,11 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         this.res = context.getResources();
         markerEventMap = new HashMap<>();
         markerIssueMap = new HashMap<>();
+        onClickListener = new OnClickListener(markerEventMap, markerIssueMap);
+    }
+
+    public OnClickListener getOnClickListener() {
+        return onClickListener;
     }
 
     public void putIssue(Marker marker, Issue issue) {

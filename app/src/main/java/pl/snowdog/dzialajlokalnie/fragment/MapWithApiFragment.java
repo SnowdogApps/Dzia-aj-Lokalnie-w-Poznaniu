@@ -1,6 +1,7 @@
 package pl.snowdog.dzialajlokalnie.fragment;
 
 import android.location.Location;
+import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -19,6 +20,8 @@ import java.util.List;
 
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.adapter.MapInfoWindowAdapter;
+import pl.snowdog.dzialajlokalnie.events.EventClickedOnMapEvent;
+import pl.snowdog.dzialajlokalnie.events.IssueClickedOnMapEvent;
 import pl.snowdog.dzialajlokalnie.model.Event;
 import pl.snowdog.dzialajlokalnie.model.Issue;
 
@@ -28,6 +31,7 @@ import pl.snowdog.dzialajlokalnie.model.Issue;
 @EFragment(R.layout.fragment_map)
 public class MapWithApiFragment extends BaseFragment implements OnMapReadyCallback, GoogleMap.OnMyLocationChangeListener, GoogleMap.OnCameraChangeListener {
 
+    private static final String TAG = "MapWithApiFragment";
     SupportMapFragment mapFragment;
 
     private GoogleMap map;
@@ -58,6 +62,7 @@ public class MapWithApiFragment extends BaseFragment implements OnMapReadyCallba
         map.setOnCameraChangeListener(this);
 
         map.setInfoWindowAdapter(adapter);
+        map.setOnInfoWindowClickListener(adapter.getOnClickListener());
 
         getIssues();
         getEvents();
@@ -83,6 +88,19 @@ public class MapWithApiFragment extends BaseFragment implements OnMapReadyCallba
                 icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_event_marker)));
             adapter.putEvent(marker, event);
         }
+    }
+
+    @Override
+    protected boolean isImplementingEventBus() {
+        return true;
+    }
+
+    public void onEvent(IssueClickedOnMapEvent event) {
+        Log.d(TAG, "onEvent " + event);
+    }
+
+    public void onEvent(EventClickedOnMapEvent event) {
+        Log.d(TAG, "onEvent " + event);
     }
 
     @Override
