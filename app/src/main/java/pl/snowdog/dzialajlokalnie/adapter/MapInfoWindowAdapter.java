@@ -32,8 +32,8 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
         this.context = context;
         this.res = context.getResources();
-        markerEventMap = new HashMap<String, Event>();
-        markerIssueMap = new HashMap<String, Issue>();
+        markerEventMap = new HashMap<>();
+        markerIssueMap = new HashMap<>();
     }
 
     public void putIssue(Marker marker, Issue issue) {
