@@ -12,10 +12,14 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.TileProvider;
+import com.google.android.gms.maps.model.UrlTileProvider;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 import pl.snowdog.dzialajlokalnie.R;
@@ -63,6 +67,11 @@ public class MapWithApiFragment extends BaseFragment implements OnMapReadyCallba
 
         map.setInfoWindowAdapter(adapter);
         map.setOnInfoWindowClickListener(adapter.getOnClickListener());
+
+        // TODO turn on poznan tiles if needed
+//        map.setMapType(GoogleMap.MAP_TYPE_NONE);
+//        TileOverlay tileOverlay = map.addTileOverlay(new TileOverlayOptions()
+//                .tileProvider(tileProvider));
 
         getIssues();
         getEvents();
@@ -121,4 +130,34 @@ public class MapWithApiFragment extends BaseFragment implements OnMapReadyCallba
     public void onCameraChange(CameraPosition cameraPosition) {
         centerOnUser = false;
     }
+
+    TileProvider tileProvider = new UrlTileProvider(256, 256) {
+
+        @Override
+        public URL getTileUrl(int x, int y, int zoom) {
+            String s = String.format("http://www.poznan.pl/tilecache/tilecache.cgi/1.0.0/poznan_plan_SM/%d/%d/%d.png",
+                    zoom, x, y);
+
+            Log.d(TAG, "getTileUrl "+s);
+            if (!checkTileExists(x, y, zoom)) {
+                return null;
+            }
+
+            try {
+                return new URL(s);
+            } catch (MalformedURLException e) {
+                throw new AssertionError(e);
+            }
+        }
+        private boolean checkTileExists(int x, int y, int zoom) {
+            int minZoom = 12;
+            int maxZoom = 16;
+
+//            if ((zoom < minZoom || zoom > maxZoom)) {
+//                return false;
+//            }
+
+            return true;
+        }
+    };
 }
