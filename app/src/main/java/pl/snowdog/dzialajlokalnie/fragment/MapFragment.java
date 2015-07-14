@@ -33,9 +33,9 @@ import pl.snowdog.dzialajlokalnie.model.Issue;
  * Created by bartek on 13.07.15.
  */
 @EFragment(R.layout.fragment_map)
-public class MapWithApiFragment extends BaseFragment implements OnMapReadyCallback, GoogleMap.OnMyLocationChangeListener, GoogleMap.OnCameraChangeListener {
+public class MapFragment extends BaseFragment implements OnMapReadyCallback, GoogleMap.OnMyLocationChangeListener, GoogleMap.OnCameraChangeListener {
 
-    private static final String TAG = "MapWithApiFragment";
+    private static final String TAG = "MapFragment";
 
     private SupportMapFragment mapFragment;
     private GoogleMap map;
