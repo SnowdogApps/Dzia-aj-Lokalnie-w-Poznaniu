@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            bind:count="@{event.votesCount}"
+            bind:count="@{event.attendingCount}"
             />
 
         <LinearLayout
@@ -63,11 +63,12 @@
             android:scaleType="centerCrop"/>
 
         <include layout="@layout/item_footer"
+            android:id="@+id/footerWidget"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/textContent"
-            bind:footerText='@{@plurals/votes(event.votesCount, event.votesCount) + ", " + @plurals/comments(event.commentsCount, event.commentsCount) + ", " + @string/tags(event.categoryID)}'/>
+            bind:footerText='@{@plurals/invited(event.invitedCount, event.invitedCount) + ", " + @plurals/comments(event.commentsCount, event.commentsCount) + ", " + @string/tags(event.categoryID)}'/>
 
     </RelativeLayout>
 </layout>

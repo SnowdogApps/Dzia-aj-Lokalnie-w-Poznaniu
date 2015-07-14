@@ -1,5 +1,6 @@
 package pl.snowdog.dzialajlokalnie.fragment;
 
+import android.content.res.Resources;
 import android.location.Location;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,7 +74,9 @@ public class MapWithApiFragment extends BaseFragment implements OnMapReadyCallba
             @Override
             public View getInfoContents(final Marker marker) {
 
-                if (markerIssueMap.containsKey(marker.getTitle())) {
+                Resources res = getResources();
+
+                if (markerIssueMap.containsKey(marker.getId())) {
                     Issue issue = markerIssueMap.get(marker.getId());
 
                     final ItemIssueBinding binding = ItemIssueBinding.
@@ -85,17 +88,24 @@ public class MapWithApiFragment extends BaseFragment implements OnMapReadyCallba
                             error(R.drawable.ic_editor_insert_emoticon).
                             into(binding.ivAvatar);
 
-                    binding.getRoot().post(new Runnable() {
-                        @Override
-                        public void run() {
-                            marker.showInfoWindow();
-                        }
-                    });
+                    binding.tvTitle.setText(issue.getTitle());
+                    binding.tvDesc.setText(issue.getDescription());
+                    binding.ratingWidget.ibRateUp.setVisibility(View.INVISIBLE);
+                    binding.ratingWidget.ibRateDown.setVisibility(View.INVISIBLE);
+                    binding.ratingWidget.tvRating.setText(String.valueOf(issue.getIssueRating()));
+
+                    StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.append(res.getQuantityString(R.plurals.votes, issue.getVotesCount(), issue.getVotesCount()));
+                    stringBuilder.append(", ");
+                    stringBuilder.append(res.getQuantityString(R.plurals.comments, issue.getCommentsCount(), issue.getCommentsCount()));
+                    stringBuilder.append(", ");
+                    stringBuilder.append(res.getString(R.string.tags, issue.getCategoryID()));
+                    binding.footerWidget.tvFooter.setText(stringBuilder.toString());
 
                     //TODO problem with rendering because view is rendered as an image and does not update itself. Data binding won't work
                     // https://developers.google.com/maps/documentation/android/infowindows#info_window_events
                     return binding.getRoot();
-                } else {
+                } else if (markerEventMap.containsKey(marker.getId())) {
                     Event event = markerEventMap.get(marker.getId());
 
                     final ItemEventBinding binding = ItemEventBinding.
@@ -107,14 +117,23 @@ public class MapWithApiFragment extends BaseFragment implements OnMapReadyCallba
                             error(R.drawable.ic_editor_insert_emoticon).
                             into(binding.ivAvatar);
 
-                    binding.getRoot().post(new Runnable() {
-                        @Override
-                        public void run() {
-                            marker.showInfoWindow();
-                        }
-                    });
+                    binding.tvTitle.setText(event.getTitle());
+                    binding.tvDesc.setText(event.getDescription());
+                    binding.attendingWidget.ibAttend.setVisibility(View.INVISIBLE);
+                    binding.attendingWidget.tvCount.setText(String.valueOf(event.getAttendingCount()));
+
+                    StringBuilder stringBuilder = new StringBuilder();
+                    stringBuilder.append(res.getQuantityString(R.plurals.invited, event.getInvitedCount(), event.getInvitedCount()));
+                    stringBuilder.append(", ");
+                    stringBuilder.append(res.getQuantityString(R.plurals.comments, event.getCommentsCount(), event.getCommentsCount()));
+                    stringBuilder.append(", ");
+                    stringBuilder.append(res.getString(R.string.tags, event.getCategoryID()));
+                    binding.footerWidget.tvFooter.setText(stringBuilder.toString());
+
                     return binding.getRoot();
                 }
+
+                return null;
             }
         });
 

@@ -63,6 +63,7 @@
             android:scaleType="centerCrop"/>
 
         <include layout="@layout/item_footer"
+            android:id="@+id/footerWidget"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"

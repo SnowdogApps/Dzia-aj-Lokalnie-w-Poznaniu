@@ -37,4 +37,10 @@
         <item quantity="few">%d komentarze</item>
         <item quantity="other">%d komentarzy</item>
     </plurals>
+
+    <plurals name="invited">
+        <item quantity="one">%d zaproszona</item>
+        <item quantity="few">%d zaproszone</item>
+        <item quantity="other">%d zaproszonych</item>
+    </plurals>
 </resources>
