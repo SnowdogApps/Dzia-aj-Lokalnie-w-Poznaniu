@@ -53,6 +53,28 @@ public abstract class BaseFragment extends Fragment {
         super.onStop();
     }
 
+    protected String parseCategories(String categoryID, List<Category> categories) {
+        if (categoryID == null) {
+            return null;
+        }
+
+        String[] catIds = categoryID.split(",");
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < catIds.length; i++) {
+            if (i > 0) {
+                stringBuilder.append(", ");
+            }
+
+            for (Category category : categories) {
+                if (category.getCategoryID() == Integer.valueOf(catIds[i])) {
+                    stringBuilder.append(category.getName());
+                }
+            }
+        }
+
+        return stringBuilder.toString();
+    }
+
     protected void getIssues() {
         Filter filter = DlApplication.filter;
 
@@ -65,23 +87,8 @@ public abstract class BaseFragment extends Fragment {
                 Log.d(TAG, "getIssues success: " + issues);
 
                 List<Category> categories = new Select().from(Category.class).execute();
-
                 for (Issue issue : issues) {
-                    String[] catIds = issue.getCategoryID().split(",");
-                    StringBuilder stringBuilder = new StringBuilder();
-                    for (int i = 0; i < catIds.length; i++) {
-                        if (i > 0) {
-                            stringBuilder.append(", ");
-                        }
-
-                        for (Category category : categories) {
-                            if (category.getCategoryID() == Integer.valueOf(catIds[i])) {
-                                stringBuilder.append(category.getName());
-                            }
-                        }
-                    }
-
-                    issue.setCategoriesText(stringBuilder.toString());
+                    issue.setCategoriesText(parseCategories(issue.getCategoryID(), categories));
                 }
 
                 issuesResult(issues);
@@ -120,6 +127,12 @@ public abstract class BaseFragment extends Fragment {
             @Override
             public void success(List<Event> events, Response response) {
                 Log.d(TAG, "getEvents success: " + events);
+
+                List<Category> categories = new Select().from(Category.class).execute();
+                for (Event event : events) {
+                    event.setCategoriesText(parseCategories(event.getCategoryID(), categories));
+                }
+
                 eventsResult(events);
 
                 new Delete().from(Issue.class).execute();

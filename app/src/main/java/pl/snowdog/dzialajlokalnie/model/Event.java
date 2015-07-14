@@ -56,7 +56,7 @@ public class Event extends Model {
     private int eventStatus;
 
     @Column
-    private int categoryID;
+    private String categoryID;
 
     @Column
     private String photoEventUri;
@@ -82,11 +82,14 @@ public class Event extends Model {
     @Column
     private int userStatus;
 
+    private String categoriesText;
+
+
     public Event() {
         super();
     }
 
-    public Event(int eventID, int parentID, int userID, String title, String description, int districtID, double lon, double lat, String address, Date startDate, Date endDate, String facebookUrl, String eventUrl, Date createdAt, int eventStatus, int categoryID, String photoEventUri, int commentsCount, int votesCount, int invitedCount, int attendingCount, int maybeCount, int declinedCount, int userStatus) {
+    public Event(int eventID, int parentID, int userID, String title, String description, int districtID, double lon, double lat, String address, Date startDate, Date endDate, String facebookUrl, String eventUrl, Date createdAt, int eventStatus, String categoryID, String photoEventUri, int commentsCount, int votesCount, int invitedCount, int attendingCount, int maybeCount, int declinedCount, int userStatus) {
         super();
         this.eventID = eventID;
         this.parentID = parentID;
@@ -142,6 +145,14 @@ public class Event extends Model {
                 ", declinedCount=" + declinedCount +
                 ", userStatus=" + userStatus +
                 '}';
+    }
+
+    public String getCategoriesText() {
+        return categoriesText;
+    }
+
+    public void setCategoriesText(String categoriesText) {
+        this.categoriesText = categoriesText;
     }
 
     public int getInvitedCount() {
@@ -304,11 +315,11 @@ public class Event extends Model {
         this.eventStatus = eventStatus;
     }
 
-    public int getCategoryID() {
+    public String getCategoryID() {
         return categoryID;
     }
 
-    public void setCategoryID(int categoryID) {
+    public void setCategoryID(String categoryID) {
         this.categoryID = categoryID;
     }
 

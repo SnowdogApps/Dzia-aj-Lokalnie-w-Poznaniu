@@ -32,8 +32,8 @@ import pl.snowdog.dzialajlokalnie.model.Issue;
 public class MapWithApiFragment extends BaseFragment implements OnMapReadyCallback, GoogleMap.OnMyLocationChangeListener, GoogleMap.OnCameraChangeListener {
 
     private static final String TAG = "MapWithApiFragment";
-    SupportMapFragment mapFragment;
 
+    private SupportMapFragment mapFragment;
     private GoogleMap map;
     private boolean centerOnUser;
     private MapInfoWindowAdapter adapter;

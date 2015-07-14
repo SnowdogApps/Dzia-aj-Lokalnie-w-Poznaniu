@@ -93,7 +93,7 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
             Picasso.with(binding.getRoot().getContext()).
                     load(String.format(DlApi.PHOTO_THUMB_URL, issue.getPhotoIssueUri())).
-//                    error(R.drawable.ic_editor_insert_emoticon).
+                    error(R.drawable.ic_editor_insert_emoticon).
                     into(binding.ivAvatar);
 
             binding.tvTitle.setText(issue.getTitle());
@@ -122,7 +122,7 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
             Picasso.with(binding.getRoot().getContext()).
                     load(String.format(DlApi.PHOTO_THUMB_URL, event.getPhotoEventUri())).
-//                    error(R.drawable.ic_editor_insert_emoticon).
+                    error(R.drawable.ic_editor_insert_emoticon).
                     into(binding.ivAvatar);
 
             binding.tvTitle.setText(event.getTitle());
@@ -135,7 +135,7 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
             stringBuilder.append(", ");
             stringBuilder.append(res.getQuantityString(R.plurals.comments, event.getCommentsCount(), event.getCommentsCount()));
             stringBuilder.append(", ");
-            stringBuilder.append(res.getString(R.string.tags, event.getCategoryID()));
+            stringBuilder.append(res.getString(R.string.tags, event.getCategoriesText()));
             binding.footerWidget.tvFooter.setText(stringBuilder.toString());
 
             return binding.getRoot();
