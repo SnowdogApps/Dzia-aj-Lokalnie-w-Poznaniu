@@ -93,7 +93,7 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
             Picasso.with(binding.getRoot().getContext()).
                     load(String.format(DlApi.PHOTO_THUMB_URL, issue.getPhotoIssueUri())).
-                    error(R.drawable.ic_editor_insert_emoticon).
+//                    error(R.drawable.ic_editor_insert_emoticon).
                     into(binding.ivAvatar);
 
             binding.tvTitle.setText(issue.getTitle());
@@ -107,7 +107,7 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
             stringBuilder.append(", ");
             stringBuilder.append(res.getQuantityString(R.plurals.comments, issue.getCommentsCount(), issue.getCommentsCount()));
             stringBuilder.append(", ");
-            stringBuilder.append(res.getString(R.string.tags, issue.getCategoryID()));
+            stringBuilder.append(res.getString(R.string.tags, issue.getCategoriesText()));
             binding.footerWidget.tvFooter.setText(stringBuilder.toString());
 
             //TODO problem with rendering because view is rendered as an image and does not update itself. Data binding won't work
@@ -122,7 +122,7 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
             Picasso.with(binding.getRoot().getContext()).
                     load(String.format(DlApi.PHOTO_THUMB_URL, event.getPhotoEventUri())).
-                    error(R.drawable.ic_editor_insert_emoticon).
+//                    error(R.drawable.ic_editor_insert_emoticon).
                     into(binding.ivAvatar);
 
             binding.tvTitle.setText(event.getTitle());

@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/textContent"
-            bind:footerText='@{@plurals/votes(issue.votesCount, issue.votesCount) + ", " + @plurals/comments(issue.commentsCount, issue.commentsCount) + ", " + @string/tags(issue.categoryID)}'/>
+            bind:footerText='@{@plurals/votes(issue.votesCount, issue.votesCount) + ", " + @plurals/comments(issue.commentsCount, issue.commentsCount) + ", " + @string/tags(issue.categoriesText)}'/>
 
     </RelativeLayout>
 </layout>

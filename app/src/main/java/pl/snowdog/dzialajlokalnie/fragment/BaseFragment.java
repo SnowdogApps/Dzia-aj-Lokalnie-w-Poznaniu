@@ -5,11 +5,13 @@ import android.util.Log;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Delete;
+import com.activeandroid.query.Select;
 
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.DlApplication;
+import pl.snowdog.dzialajlokalnie.model.Category;
 import pl.snowdog.dzialajlokalnie.model.Event;
 import pl.snowdog.dzialajlokalnie.model.Filter;
 import pl.snowdog.dzialajlokalnie.model.Issue;
@@ -61,6 +63,27 @@ public abstract class BaseFragment extends Fragment {
             @Override
             public void success(List<Issue> issues, Response response) {
                 Log.d(TAG, "getIssues success: " + issues);
+
+                List<Category> categories = new Select().from(Category.class).execute();
+
+                for (Issue issue : issues) {
+                    String[] catIds = issue.getCategoryID().split(",");
+                    StringBuilder stringBuilder = new StringBuilder();
+                    for (int i = 0; i < catIds.length; i++) {
+                        if (i > 0) {
+                            stringBuilder.append(", ");
+                        }
+
+                        for (Category category : categories) {
+                            if (category.getCategoryID() == Integer.valueOf(catIds[i])) {
+                                stringBuilder.append(category.getName());
+                            }
+                        }
+                    }
+
+                    issue.setCategoriesText(stringBuilder.toString());
+                }
+
                 issuesResult(issues);
 
                 new Delete().from(Issue.class).execute();

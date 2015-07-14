@@ -67,6 +67,9 @@ public class Issue extends Model {
     @Column
     private boolean userVotedValue;
 
+
+    private String categoriesText;
+
     public Issue() {
         super();
     }
@@ -118,6 +121,14 @@ public class Issue extends Model {
                 ", votesCount=" + votesCount +
                 ", userVotedValue=" + userVotedValue +
                 '}';
+    }
+
+    public String getCategoriesText() {
+        return categoriesText;
+    }
+
+    public void setCategoriesText(String categoriesText) {
+        this.categoriesText = categoriesText;
     }
 
     public boolean isUserVotedValue() {
