@@ -6,9 +6,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.maps.SupportMapFragment;
+
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
+
+import pl.snowdog.dzialajlokalnie.fragment.IssuesFragment_;
 
 @EActivity(R.layout.activity_issue)
 public class DetailsActivity extends BaseActivity {
@@ -31,6 +35,9 @@ public class DetailsActivity extends BaseActivity {
         ab.setDisplayHomeAsUpEnabled(true);
 
         Log.d(TAG, "afterView " + objType + " " + objId);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.topContent, new SupportMapFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.bottomContent, new IssuesFragment_()).commit();
     }
 
     @Override
