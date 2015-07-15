@@ -82,38 +82,66 @@ public abstract class BaseFragment extends Fragment {
                 filter.getCategoriesFilter(),
                 filter.getSortForIssues(),
                 new Callback<List<Issue>>() {
-            @Override
-            public void success(List<Issue> issues, Response response) {
-                Log.d(TAG, "getIssues success: " + issues);
+                    @Override
+                    public void success(List<Issue> issues, Response response) {
+                        Log.d(TAG, "getIssues success: " + issues);
 
-                List<Category> categories = new Select().from(Category.class).execute();
-                for (Issue issue : issues) {
-                    issue.setCategoriesText(parseCategories(issue.getCategoryID(), categories));
-                }
+                        List<Category> categories = new Select().from(Category.class).execute();
+                        for (Issue issue : issues) {
+                            issue.setCategoriesText(parseCategories(issue.getCategoryID(), categories));
+                        }
 
-                issuesResult(issues);
+                        issuesResult(issues);
 
-                new Delete().from(Issue.class).execute();
+                        new Delete().from(Issue.class).execute();
 
-                ActiveAndroid.beginTransaction();
-                try {
-                    for (Issue issue : issues) {
-                        issue.save();
+                        ActiveAndroid.beginTransaction();
+                        try {
+                            for (Issue issue : issues) {
+                                issue.save();
+                            }
+                            ActiveAndroid.setTransactionSuccessful();
+                        } finally {
+                            ActiveAndroid.endTransaction();
+                        }
                     }
-                    ActiveAndroid.setTransactionSuccessful();
-                } finally {
-                    ActiveAndroid.endTransaction();
-                }
-            }
 
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d(TAG, "getIssues failure: " + error);
-            }
-        });
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.d(TAG, "getIssues failure: " + error);
+                    }
+                });
     }
 
     protected void issuesResult(List<Issue> issues) {
+        // implement by override
+    }
+
+    protected void getIssue(int id) {
+
+        DlApplication.issueApi.getIssue(id,
+                new Callback<Issue>() {
+                    @Override
+                    public void success(Issue issue, Response response) {
+                        Log.d(TAG, "getIssue success: " + issue);
+
+                        List<Category> categories = new Select().from(Category.class).execute();
+                        issue.setCategoriesText(parseCategories(issue.getCategoryID(), categories));
+
+                        issueResult(issue);
+
+                        new Delete().from(Issue.class).where("issueID = ?", issue.getIssueID()).execute();
+                        issue.save();
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.d(TAG, "getIssue failure: " + error);
+                    }
+                });
+    }
+
+    protected void issueResult(Issue issue) {
         // implement by override
     }
 

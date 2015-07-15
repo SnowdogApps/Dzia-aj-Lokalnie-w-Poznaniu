@@ -8,6 +8,7 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
+import pl.snowdog.dzialajlokalnie.fragment.IssueFragment;
 import pl.snowdog.dzialajlokalnie.fragment.IssueFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.IssuesFragment_;
 
@@ -33,7 +34,9 @@ public class DetailsActivity extends BaseActivity {
 
         Log.d(TAG, "afterView " + objType + " " + objId);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.topContent, new IssueFragment_()).commit();
+        IssueFragment issueFragment = IssueFragment_.builder().arg("objId", objId).build();
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.topContent, issueFragment).commit();
         getSupportFragmentManager().beginTransaction().replace(R.id.bottomContent, new IssuesFragment_()).commit();
     }
 }

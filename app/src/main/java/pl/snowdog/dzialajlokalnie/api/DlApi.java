@@ -40,6 +40,10 @@ public class DlApi {
                        @Query("categories") String categories,
                        @Query("orderBy") String sort,
                        Callback<List<Issue>> cb);
+
+        @GET("/issues/{id}")
+        void getIssue(@Path("id") int id,
+                       Callback<Issue> cb);
     }
 
     public interface EventApi {
