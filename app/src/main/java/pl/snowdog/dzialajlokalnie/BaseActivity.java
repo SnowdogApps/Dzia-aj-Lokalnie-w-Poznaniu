@@ -111,7 +111,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     private void startDetailsActivity(int type, int id) {
-        Intent intent = new Intent(this, IssueActivity_.class);
+        Intent intent = new Intent(this, DetailsActivity_.class);
         intent.putExtra("objType", type);
         intent.putExtra("objId", id);
         startActivity(intent);

@@ -50,7 +50,7 @@
             android:value="AIzaSyDEAHUJBu41zIFpk-kdVXMhCOw-DEAVzAQ" />
 
         <activity
-            android:name=".IssueActivity_"
+            android:name=".DetailsActivity_"
             android:label="@string/title_activity_issue"
             android:parentActivityName=".MainActivity_" >
             <meta-data

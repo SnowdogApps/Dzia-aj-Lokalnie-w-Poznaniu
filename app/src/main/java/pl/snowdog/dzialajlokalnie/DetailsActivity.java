@@ -11,9 +11,9 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
 @EActivity(R.layout.activity_issue)
-public class IssueActivity  extends BaseActivity {
+public class DetailsActivity extends BaseActivity {
 
-    private static final String TAG = "IssueActivity";
+    private static final String TAG = "DetailsActivity";
     @ViewById(R.id.toolbar)
     Toolbar toolbar;
 
