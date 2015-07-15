@@ -25,6 +25,7 @@
     <string name="action_sort_popular">Najpopularniejsze</string>
     <string name="action_sort_newest">Najnowsze</string>
     <string name="action_sort_top">Top</string>
+    <string name="empty_list">Lista jest pusta\nPrzeciągnij w dół aby odświeżyć\nlub ustaw inny Filtr</string>
 
     <plurals name="votes">
         <item quantity="one">%d głos</item>
