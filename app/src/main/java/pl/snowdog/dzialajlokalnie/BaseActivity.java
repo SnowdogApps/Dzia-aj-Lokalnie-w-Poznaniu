@@ -99,6 +99,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void onEvent(IssueClickedEvent event) {
         Log.d(TAG, "onEvent " + event);
+
     }
 
     public void onEvent(EventClickedEvent event) {

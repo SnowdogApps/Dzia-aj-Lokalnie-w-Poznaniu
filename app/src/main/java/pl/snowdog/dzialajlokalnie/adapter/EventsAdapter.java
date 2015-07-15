@@ -14,6 +14,7 @@ import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.databinding.ItemEventBinding;
 import pl.snowdog.dzialajlokalnie.events.EventAttendEvent;
+import pl.snowdog.dzialajlokalnie.events.EventClickedEvent;
 import pl.snowdog.dzialajlokalnie.model.Event;
 
 /**
@@ -63,6 +64,14 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                     EventBus.getDefault().post(new EventAttendEvent(
                             ViewHolder.this.binding.getEvent().getEventID()
                     ));
+                }
+            });
+
+            binding.getRoot().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EventBus.getDefault().post(new EventClickedEvent(
+                            ViewHolder.this.binding.getEvent().getEventID()));
                 }
             });
 
