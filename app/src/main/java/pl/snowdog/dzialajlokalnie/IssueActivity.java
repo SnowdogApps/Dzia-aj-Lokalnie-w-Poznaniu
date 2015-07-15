@@ -1,18 +1,25 @@
 package pl.snowdog.dzialajlokalnie;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.ViewById;
 
 @EActivity(R.layout.activity_issue)
 public class IssueActivity  extends BaseActivity {
 
+    @ViewById(R.id.toolbar)
+    Toolbar toolbar;
+
     @Override
     protected void afterView() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        final ActionBar ab = getSupportActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

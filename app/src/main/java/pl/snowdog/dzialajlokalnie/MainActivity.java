@@ -12,7 +12,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import com.activeandroid.query.Select;
@@ -20,6 +19,7 @@ import com.activeandroid.query.Select;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OptionsItem;
+import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
@@ -37,6 +37,7 @@ import pl.snowdog.dzialajlokalnie.model.Filter;
 import pl.snowdog.dzialajlokalnie.model.Session;
 
 @EActivity(R.layout.activity_main)
+@OptionsMenu(R.menu.menu_main)
 public class MainActivity extends BaseActivity {
 
     private static final String TAG = "MainActivity";
@@ -150,41 +151,30 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
     @OptionsItem(android.R.id.home)
     void homeSelected() {
         mDrawerLayout.openDrawer(GravityCompat.START);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    @OptionsItem(R.id.action_filter)
+    void filterSelected() {
+        FilterFragment fragment = FilterFragment_.builder().build();
+        fragment.show(getSupportFragmentManager(), "filter");
+    }
 
-        switch (id) {
-            case R.id.action_settings:
-                return true;
-            case R.id.action_filter:
-                FilterFragment fragment = FilterFragment_.builder().build();
-                fragment.show(getSupportFragmentManager(), "filter");
-                return true;
-            case R.id.action_sort_popular:
-                return applySort(item, Filter.Sort.popular);
-            case R.id.action_sort_newest:
-                return applySort(item, Filter.Sort.newest);
-            case R.id.action_sort_top:
-                return applySort(item, Filter.Sort.top);
-        }
+    @OptionsItem(R.id.action_sort_popular)
+    void sortPopular(MenuItem item) {
+        applySort(item, Filter.Sort.popular);
+    }
 
-        return super.onOptionsItemSelected(item);
+    @OptionsItem(R.id.action_sort_newest)
+    void sortNewest(MenuItem item) {
+        applySort(item, Filter.Sort.newest);
+    }
+
+    @OptionsItem(R.id.action_sort_top)
+    void sortTop(MenuItem item) {
+        applySort(item, Filter.Sort.top);
     }
 
     private boolean applySort(MenuItem item, Filter.Sort popular) {
@@ -193,5 +183,4 @@ public class MainActivity extends BaseActivity {
         EventBus.getDefault().post(new FilterChangedEvent());
         return true;
     }
-
 }
