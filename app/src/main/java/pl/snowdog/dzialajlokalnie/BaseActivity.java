@@ -1,5 +1,6 @@
 package pl.snowdog.dzialajlokalnie;
 
+import android.content.Intent;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -99,11 +100,18 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void onEvent(IssueClickedEvent event) {
         Log.d(TAG, "onEvent " + event);
-
+        Intent intent = new Intent(this, IssueActivity_.class);
+        intent.putExtra("type", "issue");
+        intent.putExtra("type", event.getId());
+        startActivity(intent);
     }
 
     public void onEvent(EventClickedEvent event) {
         Log.d(TAG, "onEvent " + event);
+        Intent intent = new Intent(this, IssueActivity_.class);
+        intent.putExtra("type", "event");
+        intent.putExtra("type", event.getId());
+        startActivity(intent);
     }
 
     protected void getCategories() {
