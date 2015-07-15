@@ -27,6 +27,7 @@ public class EventsFragment extends ListFragment {
 
     @Override
     protected void refreshItems() {
+        super.refreshItems();
         getEvents();
     }
 

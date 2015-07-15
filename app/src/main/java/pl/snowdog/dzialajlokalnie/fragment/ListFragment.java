@@ -41,7 +41,9 @@ public abstract class ListFragment extends BaseFragment {
 
     protected abstract void afterView();
 
-    protected abstract void refreshItems();
+    protected void refreshItems() {
+        emptyView.setVisibility(View.GONE);
+    }
 
     protected void onItemsLoadComplete() {
         if (recyclerView.getAdapter().getItemCount() == 0) {

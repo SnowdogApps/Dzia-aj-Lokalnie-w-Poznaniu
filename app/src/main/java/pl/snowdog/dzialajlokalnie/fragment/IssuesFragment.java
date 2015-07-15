@@ -29,6 +29,7 @@ public class IssuesFragment extends ListFragment {
 
     @Override
     protected void refreshItems() {
+        super.refreshItems();
         getIssues();
     }
 
