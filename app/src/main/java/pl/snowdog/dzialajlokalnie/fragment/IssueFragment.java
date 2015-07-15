@@ -1,7 +1,6 @@
 package pl.snowdog.dzialajlokalnie.fragment;
 
 import android.databinding.DataBindingUtil;
-import android.databinding.layouts.DataBindingInfo;
 import android.util.Log;
 import android.view.View;
 
@@ -35,7 +34,6 @@ public class IssueFragment extends BaseFragment {
 
     @AfterViews
     void afterViews() {
-//        binding = FragmentIssueBinding.inflate(getLayoutInflater(null));
         binding = DataBindingUtil.bind(rootView);
 
         getIssue(objId);
