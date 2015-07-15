@@ -35,6 +35,8 @@ import retrofit.client.Response;
 public abstract class BaseActivity extends AppCompatActivity {
 
     private static final String TAG = "BaseActivity";
+    protected static final int ISSUE = 1;
+    protected static final int EVENT = 2;
 
     @ViewById(R.id.main_content)
     protected CoordinatorLayout coordinatorLayout;
@@ -100,17 +102,18 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void onEvent(IssueClickedEvent event) {
         Log.d(TAG, "onEvent " + event);
-        Intent intent = new Intent(this, IssueActivity_.class);
-        intent.putExtra("type", "issue");
-        intent.putExtra("type", event.getId());
-        startActivity(intent);
+        startDetailsActivity(ISSUE, event.getId());
     }
 
     public void onEvent(EventClickedEvent event) {
         Log.d(TAG, "onEvent " + event);
+        startDetailsActivity(EVENT, event.getId());
+    }
+
+    private void startDetailsActivity(int type, int id) {
         Intent intent = new Intent(this, IssueActivity_.class);
-        intent.putExtra("type", "event");
-        intent.putExtra("type", event.getId());
+        intent.putExtra("objType", type);
+        intent.putExtra("objId", id);
         startActivity(intent);
     }
 

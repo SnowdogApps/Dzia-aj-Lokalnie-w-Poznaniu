@@ -177,8 +177,8 @@ public class MainActivity extends BaseActivity {
         applySort(item, Filter.Sort.top);
     }
 
-    private boolean applySort(MenuItem item, Filter.Sort popular) {
-        DlApplication.filter.setSort(popular);
+    private boolean applySort(MenuItem item, Filter.Sort sotyType) {
+        DlApplication.filter.setSort(sotyType);
         item.setChecked(true);
         EventBus.getDefault().post(new FilterChangedEvent());
         return true;

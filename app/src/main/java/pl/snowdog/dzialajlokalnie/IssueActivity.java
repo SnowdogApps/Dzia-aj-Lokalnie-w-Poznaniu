@@ -2,17 +2,26 @@ package pl.snowdog.dzialajlokalnie;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
 @EActivity(R.layout.activity_issue)
 public class IssueActivity  extends BaseActivity {
 
+    private static final String TAG = "IssueActivity";
     @ViewById(R.id.toolbar)
     Toolbar toolbar;
+
+    @Extra
+    int objType;
+
+    @Extra
+    int objId;
 
     @Override
     protected void afterView() {
@@ -20,6 +29,8 @@ public class IssueActivity  extends BaseActivity {
 
         final ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
+
+        Log.d(TAG, "afterView " + objType + " " + objId);
     }
 
     @Override
