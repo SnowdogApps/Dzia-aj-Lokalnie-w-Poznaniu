@@ -12,7 +12,7 @@ import pl.snowdog.dzialajlokalnie.fragment.IssueFragment;
 import pl.snowdog.dzialajlokalnie.fragment.IssueFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.IssuesFragment_;
 
-@EActivity(R.layout.activity_issue)
+@EActivity(R.layout.activity_details)
 public class DetailsActivity extends BaseActivity {
 
     private static final String TAG = "DetailsActivity";
@@ -37,6 +37,6 @@ public class DetailsActivity extends BaseActivity {
         IssueFragment issueFragment = IssueFragment_.builder().arg("objId", objId).build();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.topContent, issueFragment).commit();
-        getSupportFragmentManager().beginTransaction().replace(R.id.bottomContent, new IssuesFragment_()).commit();
+//        getSupportFragmentManager().beginTransaction().replace(R.id.bottomContent, new IssuesFragment_()).commit();
     }
 }
