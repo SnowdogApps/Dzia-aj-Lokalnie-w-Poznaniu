@@ -3,17 +3,17 @@ package pl.snowdog.dzialajlokalnie.events;
 /**
  * Created by bartek on 14.07.15.
  */
-public class IssueClickedOnMapEvent {
+public class EventClickedEvent {
 
     int id;
 
-    public IssueClickedOnMapEvent(int id) {
+    public EventClickedEvent(int id) {
         this.id = id;
     }
 
     @Override
     public String toString() {
-        return "IssueClickedOnMapEvent{" +
+        return "EventClickedEvent{" +
                 "id=" + id +
                 '}';
     }

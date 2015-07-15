@@ -16,6 +16,8 @@ import org.androidannotations.annotations.ViewById;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
+import pl.snowdog.dzialajlokalnie.events.EventClickedEvent;
+import pl.snowdog.dzialajlokalnie.events.IssueClickedEvent;
 import pl.snowdog.dzialajlokalnie.events.NetworkErrorEvent;
 import pl.snowdog.dzialajlokalnie.model.ApiErrorEvent;
 import pl.snowdog.dzialajlokalnie.model.Category;
@@ -93,6 +95,14 @@ public abstract class BaseActivity extends AppCompatActivity {
                     Snackbar.make(coordinatorLayout, getString(R.string.unknown_error), Snackbar.LENGTH_SHORT).show();
                 }
         }
+    }
+
+    public void onEvent(IssueClickedEvent event) {
+        Log.d(TAG, "onEvent " + event);
+    }
+
+    public void onEvent(EventClickedEvent event) {
+        Log.d(TAG, "onEvent " + event);
     }
 
     protected void getCategories() {

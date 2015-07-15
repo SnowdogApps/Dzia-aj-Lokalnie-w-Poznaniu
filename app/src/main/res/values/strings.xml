@@ -44,4 +44,5 @@
         <item quantity="few">%d zaproszone</item>
         <item quantity="other">%d zaproszonych</item>
     </plurals>
+    <string name="title_activity_issue">Wpis</string>
 </resources>

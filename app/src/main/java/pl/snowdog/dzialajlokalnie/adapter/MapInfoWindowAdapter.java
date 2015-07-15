@@ -16,8 +16,8 @@ import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.databinding.ItemEventBinding;
 import pl.snowdog.dzialajlokalnie.databinding.ItemIssueBinding;
-import pl.snowdog.dzialajlokalnie.events.EventClickedOnMapEvent;
-import pl.snowdog.dzialajlokalnie.events.IssueClickedOnMapEvent;
+import pl.snowdog.dzialajlokalnie.events.EventClickedEvent;
+import pl.snowdog.dzialajlokalnie.events.IssueClickedEvent;
 import pl.snowdog.dzialajlokalnie.model.Event;
 import pl.snowdog.dzialajlokalnie.model.Issue;
 
@@ -40,10 +40,10 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         @Override
         public void onInfoWindowClick(Marker marker) {
             if (markerIssueMap.containsKey(marker.getId())) {
-                EventBus.getDefault().post(new IssueClickedOnMapEvent(
+                EventBus.getDefault().post(new IssueClickedEvent(
                         markerIssueMap.get(marker.getId()).getIssueID()));
             } else if (markerEventMap.containsKey(marker.getId())) {
-                EventBus.getDefault().post(new EventClickedOnMapEvent(
+                EventBus.getDefault().post(new EventClickedEvent(
                         markerEventMap.get(marker.getId()).getEventID()));
             }
         }
