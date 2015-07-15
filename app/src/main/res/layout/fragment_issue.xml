@@ -7,23 +7,31 @@
     </data>
 
     <RelativeLayout
+        android:id="@+id/issueDetails"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/item_padding">
+        android:layout_height="@dimen/photo_size">
+
+
+        <ImageView
+            android:id="@+id/ivAvatar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/photo_size"
+            android:src="@drawable/sample_picture"
+            android:scaleType="centerCrop"/>
 
         <include layout="@layout/rating_widget"
             android:id="@+id/ratingWidget"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
+            android:layout_above="@+id/footerWidget"
             bind:rating="@{issue.issueRating}"
             />
 
         <LinearLayout
             android:id="@+id/textContent"
             android:layout_toRightOf="@+id/ratingWidget"
-            android:layout_toLeftOf="@+id/ivAvatar"
+            android:layout_above="@+id/footerWidget"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,24 +58,12 @@
                 android:text="@{issue.description}"/>
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/ivAvatar"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:layout_width="@dimen/list_photo_size"
-            android:layout_height="@dimen/list_photo_size"
-            android:layout_marginLeft="@dimen/item_padding"
-            android:layout_marginRight="@dimen/item_padding"
-            android:layout_marginTop="@dimen/item_padding"
-            android:src="@drawable/sample_picture"
-            android:scaleType="centerCrop"/>
-
         <include layout="@layout/item_footer"
             android:id="@+id/footerWidget"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_below="@+id/textContent"
+            android:layout_alignParentBottom="true"
             bind:footerText='@{@plurals/votes(issue.votesCount, issue.votesCount) + ", " + @plurals/comments(issue.commentsCount, issue.commentsCount) + ", " + @string/tags(issue.categoriesText)}'/>
 
     </RelativeLayout>
