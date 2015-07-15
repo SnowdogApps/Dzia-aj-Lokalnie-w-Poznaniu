@@ -9,6 +9,11 @@
         <item name="android:windowBackground">@color/window_background</item>
     </style>
 
+    <style name="textView_item_title_bold">
+        <item name="android:textSize">@dimen/title_text</item>
+        <item name="android:textColor">@color/text</item>
+        <item name="android:textStyle">bold</item>
+    </style>
     <style name="textView_item_title">
         <item name="android:textSize">@dimen/title_text</item>
         <item name="android:textColor">@color/text</item>

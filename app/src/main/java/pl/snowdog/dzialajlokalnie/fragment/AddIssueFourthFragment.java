@@ -1,14 +1,10 @@
 package pl.snowdog.dzialajlokalnie.fragment;
 
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
-import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
@@ -16,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 import pl.snowdog.dzialajlokalnie.R;
-import pl.snowdog.dzialajlokalnie.model.Categories;
+import pl.snowdog.dzialajlokalnie.model.Category;
 
 /**
  * Created by chomi3 on 2015-07-06.
@@ -27,7 +23,7 @@ public class AddIssueFourthFragment extends AddIssueBaseFragment {
     @ViewById(R.id.lvCategories)
     ListView lvCategories;
 
-    List<Categories> lCategories = new ArrayList<>();
+    List<Category> lCategories = new ArrayList<>();
     ArrayList<String> lCategoriesLabels = new ArrayList<>();;
 
     @Override
@@ -38,13 +34,13 @@ public class AddIssueFourthFragment extends AddIssueBaseFragment {
     @AfterViews
     void afterViewsCreated() {
         btnNext.setText(R.string.add);
-        lCategories.add(new Categories(0, "Zgloszenia", 0, new Date(), new Date()));
-        lCategories.add(new Categories(1, "Pomoc sasiedzka", 0, new Date(), new Date()));
-        lCategories.add(new Categories(2, "Wspolne dzialanie", 0, new Date(), new Date()));
-        lCategories.add(new Categories(3, "Wandalizm", 0, new Date(), new Date()));
-        lCategories.add(new Categories(4, "Zmiany", 0, new Date(), new Date()));
+        lCategories.add(new Category(0, "Zgloszenia", 0, new Date(), new Date()));
+        lCategories.add(new Category(1, "Pomoc sasiedzka", 0, new Date(), new Date()));
+        lCategories.add(new Category(2, "Wspolne dzialanie", 0, new Date(), new Date()));
+        lCategories.add(new Category(3, "Wandalizm", 0, new Date(), new Date()));
+        lCategories.add(new Category(4, "Zmiany", 0, new Date(), new Date()));
 
-        for(Categories c : lCategories) {
+        for(Category c : lCategories) {
             lCategoriesLabels.add(c.getName());
         }
 

@@ -1,36 +1,21 @@
 package pl.snowdog.dzialajlokalnie;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
-import android.animation.AnimatorInflater;
-import android.animation.ObjectAnimator;
-import android.support.annotation.AnimatorRes;
 
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.os.Bundle;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.activeandroid.query.Select;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
 import org.androidannotations.annotations.AfterViews;
@@ -38,14 +23,25 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.res.AnimationRes;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
+import de.greenrobot.event.EventBus;
+import pl.snowdog.dzialajlokalnie.events.FilterChangedEvent;
+import pl.snowdog.dzialajlokalnie.fragment.EventsFragment_;
+import pl.snowdog.dzialajlokalnie.fragment.FilterFragment;
+import pl.snowdog.dzialajlokalnie.fragment.FilterFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.IssuesFragment_;
-import pl.snowdog.dzialajlokalnie.fragment.MapFragment;
+import pl.snowdog.dzialajlokalnie.fragment.MapFragment_;
+import pl.snowdog.dzialajlokalnie.model.Filter;
+import pl.snowdog.dzialajlokalnie.model.Session;
 
 @EActivity(R.layout.activity_main)
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
+    private static final String TAG = "MainActivity";
     @ViewById(R.id.pager)
     ViewPager mViewPager;
 
@@ -62,15 +58,14 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionsMenu fab;
 
     @AfterViews
-    void afterViews() {
+    protected void afterView() {
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         final ActionBar ab = getSupportActionBar();
         ab.setHomeAsUpIndicator(R.drawable.ic_menu);
         ab.setDisplayHomeAsUpEnabled(true);
-
-
 
         if (mNavigationView != null) {
             setupDrawerContent(mNavigationView);
@@ -80,9 +75,12 @@ public class MainActivity extends AppCompatActivity {
             setupViewPager(mViewPager);
         }
 
-
         mTabLayout.setupWithViewPager(mViewPager);
-
+        // TODO move login to login activity
+        logout();
+        if (!isLoggedIn()) {
+            login("Bartek", "bartek");
+        }
 
     }
 
@@ -101,21 +99,29 @@ public class MainActivity extends AppCompatActivity {
         fab.collapse();
         //fab.performClick();
         AddIssueActivity_.intent(this).start();
-
-
-        /*Snackbar.make(fab, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();*/
-
     }
+
+    @Override
+    protected void loginResult(Session session) {
+
+        List<Session> dbSessions = new Select().from(Session.class).execute();
+
+        for (Session s : dbSessions) {
+            Log.d(TAG, "loginResult " + s);
+        }
+    }
+
+
 
 
     private void setupViewPager(ViewPager viewPager) {
         Locale l = Locale.getDefault();
         Adapter adapter = new Adapter(getSupportFragmentManager());
         adapter.addFragment(new IssuesFragment_(), getString(R.string.title_section1).toUpperCase(l));
-        adapter.addFragment(new MapFragment(), getString(R.string.title_section2).toUpperCase(l));
-        adapter.addFragment(new IssuesFragment_(), getString(R.string.title_section3).toUpperCase(l));
+        adapter.addFragment(new MapFragment_(), getString(R.string.title_section2).toUpperCase(l));
+        adapter.addFragment(new EventsFragment_(), getString(R.string.title_section3).toUpperCase(l));
         viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(3);
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
@@ -178,12 +184,29 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_settings:
+                return true;
+            case R.id.action_filter:
+                FilterFragment fragment = FilterFragment_.builder().build();
+                fragment.show(getSupportFragmentManager(), "filter");
+                return true;
+            case R.id.action_sort_popular:
+                return applySort(item, Filter.Sort.popular);
+            case R.id.action_sort_newest:
+                return applySort(item, Filter.Sort.newest);
+            case R.id.action_sort_top:
+                return applySort(item, Filter.Sort.top);
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean applySort(MenuItem item, Filter.Sort popular) {
+        DlApplication.filter.setSort(popular);
+        item.setChecked(true);
+        EventBus.getDefault().post(new FilterChangedEvent());
+        return true;
     }
 
 }

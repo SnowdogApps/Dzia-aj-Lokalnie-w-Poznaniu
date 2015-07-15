@@ -1,44 +1,56 @@
 package pl.snowdog.dzialajlokalnie.fragment;
 
-
 import android.location.Location;
-import android.os.Bundle;
-import android.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.TileProvider;
+import com.google.android.gms.maps.model.UrlTileProvider;
+
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.EFragment;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
+
+import pl.snowdog.dzialajlokalnie.R;
+import pl.snowdog.dzialajlokalnie.adapter.MapInfoWindowAdapter;
+import pl.snowdog.dzialajlokalnie.events.EventClickedOnMapEvent;
+import pl.snowdog.dzialajlokalnie.events.IssueClickedOnMapEvent;
+import pl.snowdog.dzialajlokalnie.model.Event;
+import pl.snowdog.dzialajlokalnie.model.Issue;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Created by bartek on 13.07.15.
  */
-public class MapFragment extends com.google.android.gms.maps.SupportMapFragment implements OnMapReadyCallback, GoogleMap.OnMyLocationChangeListener, GoogleMap.OnCameraChangeListener {
+@EFragment(R.layout.fragment_map)
+public class MapFragment extends BaseFragment implements OnMapReadyCallback, GoogleMap.OnMyLocationChangeListener, GoogleMap.OnCameraChangeListener {
 
     private static final String TAG = "MapFragment";
+
+    private SupportMapFragment mapFragment;
     private GoogleMap map;
     private boolean centerOnUser;
+    private MapInfoWindowAdapter adapter;
 
-    public MapFragment() {
-        // Required empty public constructor
-    }
+    @AfterViews
+    public void afterViews() {
+        centerOnUser = false;
+        adapter = new MapInfoWindowAdapter(getActivity());
 
+        mapFragment = new SupportMapFragment();
+        getChildFragmentManager().beginTransaction().add(R.id.rl_container, mapFragment).commit();
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        centerOnUser = true;
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        getMapAsync(this);
+        mapFragment.getMapAsync(this);
     }
 
     @Override
@@ -52,6 +64,52 @@ public class MapFragment extends com.google.android.gms.maps.SupportMapFragment 
 
         map.setOnMyLocationChangeListener(this);
         map.setOnCameraChangeListener(this);
+
+        map.setInfoWindowAdapter(adapter);
+        map.setOnInfoWindowClickListener(adapter.getOnClickListener());
+
+        // TODO turn on poznan tiles if needed
+//        map.setMapType(GoogleMap.MAP_TYPE_NONE);
+//        TileOverlay tileOverlay = map.addTileOverlay(new TileOverlayOptions()
+//                .tileProvider(tileProvider));
+
+        getIssues();
+        getEvents();
+    }
+
+    @Override
+    protected void issuesResult(List<Issue> issues) {
+        for (Issue issue : issues) {
+            Marker marker = map.addMarker(new MarkerOptions().
+                position(new LatLng(issue.getLat(), issue.getLon())).
+                title(issue.getTitle()).
+                icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_issue_marker)));
+            adapter.putIssue(marker, issue);
+        }
+    }
+
+    @Override
+    protected void eventsResult(List<Event> events) {
+        for (Event event : events) {
+            Marker marker = map.addMarker(new MarkerOptions().
+                position(new LatLng(event.getLat(), event.getLon())).
+                title(event.getTitle()).
+                icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_event_marker)));
+            adapter.putEvent(marker, event);
+        }
+    }
+
+    @Override
+    protected boolean isImplementingEventBus() {
+        return true;
+    }
+
+    public void onEvent(IssueClickedOnMapEvent event) {
+        Log.d(TAG, "onEvent " + event);
+    }
+
+    public void onEvent(EventClickedOnMapEvent event) {
+        Log.d(TAG, "onEvent " + event);
     }
 
     @Override
@@ -72,4 +130,34 @@ public class MapFragment extends com.google.android.gms.maps.SupportMapFragment 
     public void onCameraChange(CameraPosition cameraPosition) {
         centerOnUser = false;
     }
+
+    TileProvider tileProvider = new UrlTileProvider(256, 256) {
+
+        @Override
+        public URL getTileUrl(int x, int y, int zoom) {
+            String s = String.format("http://www.poznan.pl/tilecache/tilecache.cgi/1.0.0/poznan_plan_SM/%d/%d/%d.png",
+                    zoom, x, y);
+
+            Log.d(TAG, "getTileUrl "+s);
+            if (!checkTileExists(x, y, zoom)) {
+                return null;
+            }
+
+            try {
+                return new URL(s);
+            } catch (MalformedURLException e) {
+                throw new AssertionError(e);
+            }
+        }
+        private boolean checkTileExists(int x, int y, int zoom) {
+            int minZoom = 12;
+            int maxZoom = 16;
+
+//            if ((zoom < minZoom || zoom > maxZoom)) {
+//                return false;
+//            }
+
+            return true;
+        }
+    };
 }

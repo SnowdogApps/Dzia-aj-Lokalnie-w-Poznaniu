@@ -25,10 +25,18 @@
 
 
     <application
+        android:name=".DlApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
+        <meta-data android:name="AA_DB_NAME" android:value="dzialajlokalnie.db" />
+        <meta-data android:name="AA_DB_VERSION" android:value="9" />
+        <meta-data
+            android:name="AA_MODELS"
+            android:value="pl.snowdog.dzialajlokalnie.model.Category, pl.snowdog.dzialajlokalnie.model.Comment, pl.snowdog.dzialajlokalnie.model.District, pl.snowdog.dzialajlokalnie.model.Event, pl.snowdog.dzialajlokalnie.model.Issue, pl.snowdog.dzialajlokalnie.model.Session" />
+
         <activity
             android:name=".MainActivity_"
             android:label="@string/app_name" >

@@ -1,22 +1,60 @@
 package pl.snowdog.dzialajlokalnie.model;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+
 import java.util.Date;
 
+@Table(name = "Categories")
+public class Category extends Model {
 
-public class Categories {
-
+    @Column
     private int categoryID;
+
+    @Column
     private String name;
+
+    @Column
     private int categoryType;
+
+    @Column
     private Date createdAt;
+
+    @Column
     private Date updatedAt;
 
-    public Categories(int categoryID, String name, int categoryType, Date createdAt, Date updatedAt) {
+    private boolean selected;
+
+    public Category() {
+        super();
+    }
+
+    public Category(int categoryID, String name, int categoryType, Date createdAt, Date updatedAt) {
         this.categoryID = categoryID;
         this.name = name;
         this.categoryType = categoryType;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "categoryID=" + categoryID +
+                ", name='" + name + '\'' +
+                ", categoryType=" + categoryType +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
     public int getCategoryID() {

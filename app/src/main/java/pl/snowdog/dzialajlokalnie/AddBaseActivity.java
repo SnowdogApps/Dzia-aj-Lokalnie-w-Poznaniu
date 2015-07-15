@@ -1,19 +1,14 @@
 package pl.snowdog.dzialajlokalnie;
 
 import android.content.Context;
-import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -24,15 +19,6 @@ import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-
-import pl.snowdog.dzialajlokalnie.fragment.AddIssueFirstFragment;
-import pl.snowdog.dzialajlokalnie.fragment.AddIssueFirstFragment_;
-import pl.snowdog.dzialajlokalnie.fragment.AddIssueFourthFragment_;
-import pl.snowdog.dzialajlokalnie.fragment.AddIssueSecondFragment_;
-import pl.snowdog.dzialajlokalnie.fragment.AddIssueThirdFragment_;
-import pl.snowdog.dzialajlokalnie.fragment.IssuesFragment_;
-import pl.snowdog.dzialajlokalnie.fragment.MapFragment;
 
 /**
  * Created by chomi3 on 2015-07-06.

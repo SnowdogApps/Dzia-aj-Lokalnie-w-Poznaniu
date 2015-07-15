@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="category" type="pl.snowdog.dzialajlokalnie.model.Category"/>
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        card_view:cardBackgroundColor="@color/card_board_color"
+        card_view:cardCornerRadius="5dp"
+        card_view:cardUseCompatPadding="true" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/cbName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:padding="@dimen/item_padding"
+                style="@style/textView_item_title"
+                android:lines="1"
+                android:ellipsize="end"
+                android:checked="@{category.selected}"
+                android:text="@{category.name}" />
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</layout>
