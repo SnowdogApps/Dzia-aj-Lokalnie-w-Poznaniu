@@ -65,6 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/ivAvatar"
+            android:lines="3"
             android:padding="@dimen/item_padding"
             android:background="@color/background"
             style="@style/textView_item_desc"

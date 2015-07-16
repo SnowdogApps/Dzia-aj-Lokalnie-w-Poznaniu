@@ -7,6 +7,14 @@
     android:layout_height="match_parent"
     tools:context="pl.snowdog.dzialajlokalnie.DetailsActivity">
 
+    <RelativeLayout
+        android:id="@+id/bottomContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    </RelativeLayout>
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
@@ -18,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|enterAlways"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         <RelativeLayout
@@ -28,13 +36,5 @@
             app:layout_scrollFlags="scroll|enterAlwaysCollapsed"/>
 
     </android.support.design.widget.AppBarLayout>
-
-    <RelativeLayout
-        android:id="@+id/bottomContent"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-    </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>
