@@ -26,7 +26,7 @@ public class DlApi {
     public static final String API_URL = "http://dzialajlokalnie.snowdog.pro";
     public static final String PHOTO_THUMB_URL = API_URL + "/photos/%s_thumb.jpeg";
 
-    public enum ParentType {issues, comments}
+    public enum ParentType {issues, events, comments}
 
     public interface Base {
         @GET("/categories")

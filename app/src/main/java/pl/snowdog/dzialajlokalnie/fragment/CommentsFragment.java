@@ -3,6 +3,7 @@ package pl.snowdog.dzialajlokalnie.fragment;
 import android.util.Log;
 
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.FragmentArg;
 
 import java.util.List;
 
@@ -24,21 +25,24 @@ public class CommentsFragment extends ListFragment {
     private static final String TAG = "CommentsFragment";
     CommentsAdapter adapter;
 
+    @FragmentArg
+    DlApi.ParentType objType;
+
+    @FragmentArg
+    int objId;
+
     @Override
     protected void afterView() {
-        // TODO implement
-//        getComments();
+        getComments(objType, objId);
     }
 
     @Override
     protected void refreshItems() {
         super.refreshItems();
-        // TODO implement
-//        getComments();
+        getComments(objType, objId);
     }
 
-    // TODO implement
-//    @Override
+    @Override
     protected void commentsResult(List<Comment> comments) {
         adapter = new CommentsAdapter(comments);
         recyclerView.setAdapter(adapter);
