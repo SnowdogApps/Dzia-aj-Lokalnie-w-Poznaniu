@@ -14,6 +14,7 @@ import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.databinding.ItemCommentBinding;
 import pl.snowdog.dzialajlokalnie.databinding.ItemIssueBinding;
+import pl.snowdog.dzialajlokalnie.events.CommentClickedEvent;
 import pl.snowdog.dzialajlokalnie.events.IssueClickedEvent;
 import pl.snowdog.dzialajlokalnie.events.IssueVoteEvent;
 import pl.snowdog.dzialajlokalnie.model.Comment;
@@ -80,8 +81,8 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
             binding.getRoot().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EventBus.getDefault().post(new IssueClickedEvent(
-                            ViewHolder.this.binding.getIssue().getIssueID()));
+                    EventBus.getDefault().post(new CommentClickedEvent(
+                            ViewHolder.this.binding.getComment().getCommentID()));
                 }
             });
 

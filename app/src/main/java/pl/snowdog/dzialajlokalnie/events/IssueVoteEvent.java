@@ -5,30 +5,30 @@ package pl.snowdog.dzialajlokalnie.events;
  */
 public class IssueVoteEvent {
 
-    public enum Vote {UP, DOWN};
+    public enum Vote {UP, DOWN}
 
-    private int issueId;
+    private int id;
     private Vote vote;
 
-    public IssueVoteEvent(int issueId, Vote vote) {
-        this.issueId = issueId;
+    public IssueVoteEvent(int id, Vote vote) {
+        this.id = id;
         this.vote = vote;
     }
 
     @Override
     public String toString() {
         return "IssueVoteEvent{" +
-                "issueId=" + issueId +
+                "id=" + id +
                 ", vote=" + vote +
                 '}';
     }
 
-    public int getIssueId() {
-        return issueId;
+    public int getId() {
+        return id;
     }
 
-    public void setIssueId(int issueId) {
-        this.issueId = issueId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Vote getVote() {

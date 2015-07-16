@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Vote {
 
-    public enum ParentType {issues, comments};
+    public enum ParentType {issues, comments}
 
     private int voteID;
     private int authorID;
