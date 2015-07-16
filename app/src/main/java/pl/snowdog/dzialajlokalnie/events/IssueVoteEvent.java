@@ -3,21 +3,21 @@ package pl.snowdog.dzialajlokalnie.events;
 /**
  * Created by bartek on 07.07.15.
  */
-public class IssueRateEvent {
+public class IssueVoteEvent {
 
     public enum Vote {UP, DOWN};
 
     private int issueId;
     private Vote vote;
 
-    public IssueRateEvent(int issueId, Vote vote) {
+    public IssueVoteEvent(int issueId, Vote vote) {
         this.issueId = issueId;
         this.vote = vote;
     }
 
     @Override
     public String toString() {
-        return "IssueRateEvent{" +
+        return "IssueVoteEvent{" +
                 "issueId=" + issueId +
                 ", vote=" + vote +
                 '}';

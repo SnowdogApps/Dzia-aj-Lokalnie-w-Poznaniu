@@ -20,7 +20,7 @@
         <ImageButton
             android:id="@+id/ibRateUp"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_action_up"
+            android:src="@{bgcolor ? @drawable/ic_action_up : @drawable/ic_action_up}"
             android:paddingLeft="@dimen/rating_button_padding"
             android:paddingRight="@dimen/rating_button_padding"
             android:layout_width="wrap_content"
@@ -31,6 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/textView_item_title"
+            android:textColor="@{bgcolor ? @color/text_inverse : @color/text}"
             android:gravity="center"
             android:layout_gravity="center_horizontal"
             android:lines="1"
@@ -40,7 +41,7 @@
         <ImageButton
             android:id="@+id/ibRateDown"
             android:background="@android:color/transparent"
-            android:src="@drawable/ic_action_down"
+            android:src="@{bgcolor ? @drawable/ic_action_down : @drawable/ic_action_down}"
             android:paddingLeft="@dimen/rating_button_padding"
             android:paddingRight="@dimen/rating_button_padding"
             android:layout_width="wrap_content"
