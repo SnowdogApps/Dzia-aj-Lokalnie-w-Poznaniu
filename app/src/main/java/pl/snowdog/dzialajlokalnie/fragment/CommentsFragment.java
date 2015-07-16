@@ -10,6 +10,7 @@ import java.util.List;
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.adapter.CommentsAdapter;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
+import pl.snowdog.dzialajlokalnie.events.CommentClickedEvent;
 import pl.snowdog.dzialajlokalnie.events.IssueVoteEvent;
 import pl.snowdog.dzialajlokalnie.events.VoteEvent;
 import pl.snowdog.dzialajlokalnie.model.Comment;
@@ -35,6 +36,7 @@ public class CommentsFragment extends ListFragment {
     protected void afterView() {
         getComments(objType, objId);
         swipeRefreshLayout.setEnabled(false);
+        emptyListText = R.string.empty_comment_list;
     }
 
     @Override
@@ -54,6 +56,10 @@ public class CommentsFragment extends ListFragment {
     @Override
     protected boolean isImplementingEventBus() {
         return true;
+    }
+
+    public void onEvent(CommentClickedEvent event) {
+        Log.d(TAG, "onEvent " + event);
     }
 
     public void onEvent(IssueVoteEvent event) {

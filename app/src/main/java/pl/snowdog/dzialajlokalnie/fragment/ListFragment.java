@@ -26,9 +26,12 @@ public abstract class ListFragment extends BaseFragment {
     @ViewById(R.id.emptyView)
     TextView emptyView;
 
+    int emptyListText = R.string.empty_list;
+
     @AfterViews
     protected void afterTestBaseFragmentViews() {
         afterView();
+        emptyView.setText(emptyListText);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
