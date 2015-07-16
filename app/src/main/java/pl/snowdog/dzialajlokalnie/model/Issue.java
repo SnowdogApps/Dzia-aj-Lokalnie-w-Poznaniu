@@ -65,7 +65,7 @@ public class Issue extends Model {
     private int votesCount;
 
     @Column
-    private boolean userVotedValue;
+    private int userVotedValue;
 
 
     private String categoriesText;
@@ -74,7 +74,7 @@ public class Issue extends Model {
         super();
     }
 
-    public Issue(int issueID, int parentID, int userID, String title, String description, int districtID, double lon, double lat, String address, String facebookUrl, String issueUrl, Date createdAt, int issueStatus, String categoryID, String photoIssueUri, int issueRating, int commentsCount, int votesCount, boolean userVotedValue) {
+    public Issue(int issueID, int parentID, int userID, String title, String description, int districtID, double lon, double lat, String address, String facebookUrl, String issueUrl, Date createdAt, int issueStatus, String categoryID, String photoIssueUri, int issueRating, int commentsCount, int votesCount, int userVotedValue) {
         super();
 
         this.issueID = issueID;
@@ -131,11 +131,11 @@ public class Issue extends Model {
         this.categoriesText = categoriesText;
     }
 
-    public boolean isUserVotedValue() {
+    public int isUserVotedValue() {
         return userVotedValue;
     }
 
-    public void setUserVotedValue(boolean userVotedValue) {
+    public void setUserVotedValue(int userVotedValue) {
         this.userVotedValue = userVotedValue;
     }
 
