@@ -1,4 +1,4 @@
-package pl.snowdog.dzialajlokalnie.model;
+package pl.snowdog.dzialajlokalnie.events;
 
 /**
  * Created by bartek on 09.07.15.

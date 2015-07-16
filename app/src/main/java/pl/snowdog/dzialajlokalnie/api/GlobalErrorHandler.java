@@ -1,10 +1,8 @@
 package pl.snowdog.dzialajlokalnie.api;
 
-import android.util.Log;
-
 import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.events.NetworkErrorEvent;
-import pl.snowdog.dzialajlokalnie.model.ApiErrorEvent;
+import pl.snowdog.dzialajlokalnie.events.ApiErrorEvent;
 import retrofit.ErrorHandler;
 import retrofit.RetrofitError;
 import retrofit.client.Response;

@@ -20,7 +20,7 @@ import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.events.EventClickedEvent;
 import pl.snowdog.dzialajlokalnie.events.IssueClickedEvent;
 import pl.snowdog.dzialajlokalnie.events.NetworkErrorEvent;
-import pl.snowdog.dzialajlokalnie.model.ApiErrorEvent;
+import pl.snowdog.dzialajlokalnie.events.ApiErrorEvent;
 import pl.snowdog.dzialajlokalnie.model.Category;
 import pl.snowdog.dzialajlokalnie.model.District;
 import pl.snowdog.dzialajlokalnie.model.Session;
