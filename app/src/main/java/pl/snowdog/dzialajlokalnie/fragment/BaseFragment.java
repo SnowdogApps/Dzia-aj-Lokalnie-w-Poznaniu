@@ -61,13 +61,14 @@ public abstract class BaseFragment extends Fragment {
         String[] catIds = categoryID.split(",");
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < catIds.length; i++) {
-            if (i > 0) {
-                stringBuilder.append(", ");
-            }
-
             for (Category category : categories) {
                 if (category.getCategoryID() == Integer.valueOf(catIds[i])) {
+                    if (i > 0) {
+                        stringBuilder.append(", ");
+                    }
+
                     stringBuilder.append(category.getName());
+                    break;
                 }
             }
         }
