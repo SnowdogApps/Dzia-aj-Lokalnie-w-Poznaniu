@@ -25,11 +25,13 @@
             android:layout_alignParentLeft="true"
             android:layout_above="@+id/footerWidget"
             bind:rating="@{issue.issueRating}"
+            bind:bgcolor="@{true}"
             />
 
         <LinearLayout
             android:id="@+id/textContent"
             android:layout_toRightOf="@+id/ratingWidget"
+            android:layout_alignTop="@+id/ratingWidget"
             android:layout_above="@+id/footerWidget"
             android:orientation="vertical"
             android:layout_width="match_parent"
