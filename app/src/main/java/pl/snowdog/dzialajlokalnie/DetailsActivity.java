@@ -24,7 +24,7 @@ public class DetailsActivity extends BaseActivity {
     Toolbar toolbar;
 
     @Extra
-    int objType;
+    DlApi.ParentType objType;
 
     @Extra
     int objId;
@@ -41,8 +41,8 @@ public class DetailsActivity extends BaseActivity {
         IssueFragment issueFragment = IssueFragment_.builder().arg("objId", objId).build();
 
         CommentsFragment commentsFragment = CommentsFragment_.builder().arg("objId", objId).
-                arg("objType", objType == ISSUE ? DlApi.ParentType.issues : DlApi.ParentType.events).
-                build();
+                arg("objType", objType).build();
+
         getSupportFragmentManager().beginTransaction().replace(R.id.topContent, issueFragment).commit();
         getSupportFragmentManager().beginTransaction().replace(R.id.bottomContent, commentsFragment).commit();
     }

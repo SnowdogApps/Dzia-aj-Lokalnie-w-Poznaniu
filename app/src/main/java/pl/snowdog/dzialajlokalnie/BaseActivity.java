@@ -17,6 +17,7 @@ import org.androidannotations.annotations.ViewById;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
+import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.events.EventClickedEvent;
 import pl.snowdog.dzialajlokalnie.events.IssueClickedEvent;
 import pl.snowdog.dzialajlokalnie.events.NetworkErrorEvent;
@@ -35,8 +36,6 @@ import retrofit.client.Response;
 public abstract class BaseActivity extends AppCompatActivity {
 
     private static final String TAG = "BaseActivity";
-    protected static final int ISSUE = 1;
-    protected static final int EVENT = 2;
 
     @ViewById(R.id.main_content)
     protected CoordinatorLayout coordinatorLayout;
@@ -102,15 +101,15 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void onEvent(IssueClickedEvent event) {
         Log.d(TAG, "onEvent " + event);
-        startDetailsActivity(ISSUE, event.getId());
+        startDetailsActivity(DlApi.ParentType.issues, event.getId());
     }
 
     public void onEvent(EventClickedEvent event) {
         Log.d(TAG, "onEvent " + event);
-        startDetailsActivity(EVENT, event.getId());
+        startDetailsActivity(DlApi.ParentType.events, event.getId());
     }
 
-    private void startDetailsActivity(int type, int id) {
+    private void startDetailsActivity(DlApi.ParentType type, int id) {
         Intent intent = new Intent(this, DetailsActivity_.class);
         intent.putExtra("objType", type);
         intent.putExtra("objId", id);
@@ -154,7 +153,6 @@ public abstract class BaseActivity extends AppCompatActivity {
             @Override
             public void success(List<District> districts, Response response) {
                 Log.d(TAG, "getDistricts success: " + districts);
-
 
                 new Delete().from(District.class).execute();
 
