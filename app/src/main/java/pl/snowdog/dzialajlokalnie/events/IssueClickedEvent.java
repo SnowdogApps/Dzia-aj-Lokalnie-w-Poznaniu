@@ -3,26 +3,9 @@ package pl.snowdog.dzialajlokalnie.events;
 /**
  * Created by bartek on 14.07.15.
  */
-public class IssueClickedEvent {
-
-    int id;
+public class IssueClickedEvent extends ClickedEvent {
 
     public IssueClickedEvent(int id) {
-        this.id = id;
-    }
-
-    @Override
-    public String toString() {
-        return "IssueClickedEvent{" +
-                "id=" + id +
-                '}';
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+        super(id);
     }
 }
