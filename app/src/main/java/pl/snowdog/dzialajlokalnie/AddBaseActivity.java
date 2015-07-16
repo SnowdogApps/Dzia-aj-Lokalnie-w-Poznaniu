@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -20,11 +21,14 @@ import org.androidannotations.annotations.ViewById;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
+import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
+
 /**
  * Created by chomi3 on 2015-07-06.
  */
 @EActivity
-public abstract class AddBaseActivity extends AppCompatActivity {
+public abstract class AddBaseActivity extends BaseActivity {
 
     @ViewById(R.id.pager)
     protected ViewPager mViewPager;
@@ -32,8 +36,19 @@ public abstract class AddBaseActivity extends AppCompatActivity {
     @ViewById(R.id.tabs)
     protected TabLayout mTabLayout;
 
-    @AfterViews
-    void afterViews() {
+    //Common fields for creation of new object
+    String title;
+    String description;
+    int districtID;
+    double lat;
+    double lon;
+    String address;
+    String categoryIDs;
+    String PHOTO; //// TODO: 2015-07-15
+
+
+    @Override
+    protected void afterView() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -51,26 +66,6 @@ public abstract class AddBaseActivity extends AppCompatActivity {
     }
 
     abstract void setupViewPager(ViewPager viewPager);
-
-/*    protected void setupViewPager(ViewPager viewPager) {
-        Locale l = Locale.getDefault();
-        Adapter adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(new AddIssueFirstFragment_(), getString(R.string.title_section1).toUpperCase(l));
-        adapter.addFragment(new AddIssueSecondFragment_(), getString(R.string.title_section2).toUpperCase(l));
-        adapter.addFragment(new AddIssueThirdFragment_(), getString(R.string.title_section3).toUpperCase(l));
-        adapter.addFragment(new AddIssueFourthFragment_(), getString(R.string.title_section3).toUpperCase(l));
-        viewPager.setAdapter(adapter);
-
-        //Disable swipe events for viewpager
-        viewPager.setOnTouchListener(new View.OnTouchListener()
-        {
-            @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                return true;
-            }
-        });
-    }*/
 
     public void goToNextPage() {
         mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
@@ -108,6 +103,34 @@ public abstract class AddBaseActivity extends AppCompatActivity {
     private void updateSubtitle() {
         getSupportActionBar().setSubtitle(getString(R.string.add_issue_step)+ " "+(mViewPager.getCurrentItem()+1)+ "/"+mViewPager.getAdapter().getCount());
     }
+
+    public void onEvent(CreateNewObjectEvent event) {
+        switch (event.getType()) {
+            case title:
+                title = event.getTitle();
+                description = event.getDescription();
+                goToNextPage();
+                break;
+            case location:
+                lat = event.getLat();
+                lon = event.getLon();
+                districtID = event.getDistrictID();
+                goToNextPage();
+                break;
+            case photo:
+                PHOTO = event.getPHOTO();
+                goToNextPage();
+                break;
+            case category:
+                categoryIDs = event.getCategoryIDs();
+
+                break;
+
+
+        }
+    }
+
+    public abstract void onObjectCreated();
 
     static class Adapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragments = new ArrayList<>();

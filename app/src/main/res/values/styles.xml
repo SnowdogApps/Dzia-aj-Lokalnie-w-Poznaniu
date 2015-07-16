@@ -7,6 +7,14 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/window_background</item>
+        <item name="styleCaldroidViewLayout">@style/CaldroidDefaultCalendarViewLayout</item>
+        <item name="styleCaldroidLeftArrow">@style/CaldroidDefaultLeftButton</item>
+        <item name="styleCaldroidRightArrow">@style/CaldroidDefaultRightButton</item>
+        <item name="styleCaldroidMonthName">@style/CaldroidDefaultMonthName</item>
+        <item name="styleCaldroidGridView">@style/CaldroidDefaultGridView</item>
+        <item name="styleCaldroidNormalCell">@style/CaldroidDefaultNormalCell</item>
+        <item name="styleCaldroidSquareCell">@style/CaldroidDefaultSquareCell</item>
+        <item name="styleCaldroidWeekdayView">@style/CaldroidDefaultWeekday</item>
     </style>
 
     <style name="textView_item_title_bold">

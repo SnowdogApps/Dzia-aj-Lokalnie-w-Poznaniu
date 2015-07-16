@@ -1,5 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".AddIssueActivity">
 
@@ -16,28 +19,9 @@
             android:text="@string/choose_photo_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-        <RelativeLayout
-            android:id="@+id/ui_buttons_container"
-            android:layout_below="@+id/tvDesc"
-            android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            >
-            <ImageButton
-                android:id="@+id/btnTakePhoto"
-                android:src="@drawable/ic_action_camera"
-                android:layout_width="96dp"
-                android:layout_height="96dp" />
-            <ImageButton
-                android:id="@+id/btnGallery"
-                android:layout_toRightOf="@id/btnTakePhoto"
-                android:src="@drawable/ic_photo_library_white_48dp"
-                android:layout_width="96dp"
-                android:layout_height="96dp" />
-        </RelativeLayout>
         <ImageView
             android:id="@+id/ivPreview"
-            android:layout_below="@+id/ui_buttons_container"
+            android:layout_below="@+id/tvDesc"
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"
             android:src="@drawable/sample_picture"
@@ -46,6 +30,42 @@
             android:layout_height="wrap_content"
             />
     </RelativeLayout>
+
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/fab"
+        android:layout_alignParentRight="true"
+        android:layout_above="@+id/lower_buttons_container"
+        android:layout_margin="@dimen/fab_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fab_icon="@drawable/ic_action_camera"
+        fab:fab_addButtonColorNormal="@color/colorAccent"
+        fab:fab_addButtonColorPressed="@color/white_pressed"
+        fab:fab_labelStyle="@style/menu_labels_style"
+        fab:fab_labelsPosition="left"
+        >
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_new_photo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_size="mini"
+            app:fab_icon="@drawable/ic_action_camera"
+            fab:fab_colorNormal="@color/white"
+            fab:fab_title="@string/take_photo"
+            fab:fab_colorPressed="@color/white_pressed"/>
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_gallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_colorNormal="@color/white"
+            fab:fab_size="mini"
+            app:fab_icon="@drawable/ic_photo_library_white_48dp"
+            fab:fab_title="@string/from_gallery"
+            fab:fab_colorPressed="@color/white_pressed"/>
+
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
     <include
         android:id="@+id/lower_buttons_container"
         layout="@layout/include_lower_buttons_container" />

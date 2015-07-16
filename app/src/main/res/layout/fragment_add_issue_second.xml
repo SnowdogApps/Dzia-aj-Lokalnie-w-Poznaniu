@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".AddIssueActivity">
@@ -16,9 +17,26 @@
             android:text="@string/choose_place_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <android.support.v7.widget.CardView
+            android:id="@+id/spinner_container"
+            android:layout_below="@id/tvHint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="horizontal"
+            card_view:cardBackgroundColor="@color/card_board_color"
+            card_view:cardCornerRadius="5dp"
+            card_view:cardUseCompatPadding="true" >
+            <Spinner
+                android:id="@+id/spDistrict"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </android.support.v7.widget.CardView>
         <com.google.android.gms.maps.MapView
             android:id="@+id/mapView"
-            android:layout_below="@id/tvHint"
+            android:layout_below="@id/spinner_container"
+            android:layout_marginTop="@dimen/item_padding"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </RelativeLayout>

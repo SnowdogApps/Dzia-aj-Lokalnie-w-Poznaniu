@@ -16,6 +16,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 import com.squareup.picasso.Picasso;
 
 import org.androidannotations.annotations.AfterViews;
@@ -47,10 +48,14 @@ public class AddIssueThirdFragment extends AddIssueBaseFragment {
     @ViewById(R.id.ivPreview)
     ImageView ivPreview;
 
+    @ViewById(R.id.fab)
+    FloatingActionsMenu fab;
+
     private Uri mFileUri;
 
-    @Click(R.id.btnTakePhoto)
+    @Click(R.id.fab_new_photo)
     void onTakePhotoClicked() {
+        fab.collapse();
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         Random generator = new Random();
         int n = 10000;
@@ -64,13 +69,14 @@ public class AddIssueThirdFragment extends AddIssueBaseFragment {
         startActivityForResult(intent, TAKE_PICTURE);
     }
 
-    @Click(R.id.btnGallery)
+    @Click(R.id.fab_gallery)
     void onGalleryButtonClicked() {
-            startActivityForResult(
-                    Intent.createChooser(
-                            new Intent(Intent.ACTION_GET_CONTENT)
-                                    .setType("image/*"), "Choose an image"),
-                    PICK_FROM_FILE);
+        fab.collapse();
+        startActivityForResult(
+                Intent.createChooser(
+                        new Intent(Intent.ACTION_GET_CONTENT)
+                                .setType("image/*"), "Choose an image"),
+                PICK_FROM_FILE);
 
     }
 

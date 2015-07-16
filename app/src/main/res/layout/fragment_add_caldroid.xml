@@ -1,0 +1,35 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+
+    tools:context=".AddIssueActivity"
+    >
+    <LinearLayout
+        android:id="@+id/caldroid"
+        android:layout_alignParentTop="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:orientation="horizontal" />
+    <Button
+        android:id="@+id/btnCancel"
+        android:text="@string/cancel"
+        android:layout_below="@+id/caldroid"
+        android:layout_toLeftOf="@+id/btnDone"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/btnDone"
+        android:text="@string/set"
+        android:layout_below="@+id/caldroid"
+        android:textColor="@color/colorAccent"
+        android:layout_alignParentRight="true"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

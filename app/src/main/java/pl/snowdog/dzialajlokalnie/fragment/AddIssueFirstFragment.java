@@ -1,37 +1,44 @@
 package pl.snowdog.dzialajlokalnie.fragment;
 
-import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.roomorama.caldroid.CaldroidFragment;
-import com.roomorama.caldroid.CaldroidListener;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.ViewById;
-import org.androidannotations.annotations.res.StringRes;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
+import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.R;
+import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
+import pl.snowdog.dzialajlokalnie.events.DateSetEvent;
+import pl.snowdog.dzialajlokalnie.events.EventAttendEvent;
+import pl.snowdog.dzialajlokalnie.events.FilterChangedEvent;
+import pl.snowdog.dzialajlokalnie.model.DateWrapper;
 
 /**
  * Created by chomi3 on 2015-07-06.
  */
 @EFragment(R.layout.fragment_add_issue_first)
 public class AddIssueFirstFragment extends AddIssueBaseFragment {
+    private static final String TAG = "AddIssueFirstFragment";
+
     public static final int MODE_EVENT = 0;
     public static final int MODE_ISSUE = 1;
+
+    @ViewById(R.id.tvDateStatus)
+    TextView tvDateStatus;
 
     @ViewById(R.id.etTitle)
     EditText etTitle;
@@ -45,10 +52,34 @@ public class AddIssueFirstFragment extends AddIssueBaseFragment {
     @ViewById(R.id.etDescriptionWrapper)
     TextInputLayout etDescriptionWrapper;
 
+    @ViewById(R.id.event_container)
+    View vEventContainer;
+
     @FragmentArg
     int mAddingMode;
 
     CaldroidFragment caldroidFragment;
+
+
+    private DateWrapper startDate;
+    private DateWrapper endDate;
+
+    @Click(R.id.btnNext)
+    void onNextButtonClicked() {
+        if(validateInput()) {
+            CreateNewObjectEvent.Builder builder = new CreateNewObjectEvent.Builder()
+                    .title(etTitle.getText().toString())
+                    .description(etDescription.getText().toString())
+                    .type(CreateNewObjectEvent.Type.title);
+            if(mAddingMode == MODE_EVENT) {
+                builder.startDate(startDate);
+                builder.endDate(endDate);
+                builder.type(CreateNewObjectEvent.Type.date);
+            }
+            EventBus.getDefault().post(builder.build());
+            //((AddBaseActivity)getActivity()).goToNextPage();
+        }
+    }
 
     @Override
     boolean validateInput() {
@@ -66,7 +97,7 @@ public class AddIssueFirstFragment extends AddIssueBaseFragment {
     private boolean validateDate() {
         boolean validDate = true;
         if(mAddingMode == MODE_EVENT) {
-            if(oldDate == null) {
+            if(startDate == null) {
                 validDate = false;
                 Snackbar.make(getView(), getString(R.string.warning_fill_date), Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show();
@@ -115,89 +146,46 @@ public class AddIssueFirstFragment extends AddIssueBaseFragment {
 
     @AfterViews
     void afterViewsCreated() {
+
         if(mAddingMode == MODE_EVENT) {
-            setupCaldroid();
+            vEventContainer.setVisibility(View.VISIBLE);
         }
         btnPrev.setVisibility(View.GONE);
         //updateNextButton();
     }
 
-    private Date oldDate;
-    private Date newDate;
+    @Click(R.id.btnCaldroid)
+    void onCaldroidClicked() {
+        AddCaldroidFragment_.builder().startDate(startDate).endDate(endDate).build().show(getChildFragmentManager(), AddCaldroidFragment.TAG);
+    }
 
-    private void setupCaldroid() {
-        final SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy");
 
-        if (caldroidFragment == null) {
-            caldroidFragment = new CaldroidFragment();
-            Bundle args = new Bundle();
-            Calendar cal = Calendar.getInstance();
-            args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
-            args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
-            args.putBoolean(CaldroidFragment.ENABLE_SWIPE, true);
-            args.putBoolean(CaldroidFragment.SIX_WEEKS_IN_CALENDAR, true);
+    public void onEvent(DateSetEvent event) {
+        if(event.getEndDate() != null) {
+            if(endDate == null) {
+                endDate = new DateWrapper(new Date());
+            }
+            endDate.setDate(event.getEndDate());
 
-            // Uncomment this to customize startDayOfWeek
-            // args.putInt(CaldroidFragment.START_DAY_OF_WEEK,
-            // CaldroidFragment.TUESDAY); // Tuesday
-
-            // Uncomment this line to use Caldroid in compact mode
-            // args.putBoolean(CaldroidFragment.SQUARE_TEXT_VIEW_CELL, false);
-
-            // Uncomment this line to use dark theme
-//            args.putInt(CaldroidFragment.THEME_RESOURCE, com.caldroid.R.style.CaldroidDefaultDark);
-
-            caldroidFragment.setArguments(args);
         }
-        FragmentTransaction t = getChildFragmentManager().beginTransaction();
-        t.replace(R.id.caldroid, caldroidFragment);
-        t.commit();
-
-
-        // Setup listener
-        final CaldroidListener listener = new CaldroidListener() {
-
-            @Override
-            public void onSelectDate(Date date, View view) {
-                Toast.makeText(getActivity(), formatter.format(date),
-                        Toast.LENGTH_SHORT).show();
-
-                //First touch or touch when range is selected - reset
-                if(oldDate == null || oldDate.compareTo(newDate) != 0) {
-                    oldDate = date;
-                    newDate = date;
-                }
-
-                //Second touch - add second date to range
-                if(oldDate.compareTo(newDate) == 0) {
-                    if(date.after(oldDate)) {
-                        newDate = date;
-                    } else {
-                        newDate = oldDate;
-                        oldDate = date;
-                    }
-                }
-                caldroidFragment.setSelectedDates(oldDate, newDate);
-                caldroidFragment.refreshView();
-                //caldroidFragment.setSelectedDates(oldDate, newDate);
+        if(event.getStartDate() != null) {
+            if(startDate== null) {
+                startDate = new DateWrapper(new Date());
             }
+            startDate.setDate(event.getStartDate());
+        }
+        if(startDate.getDate().compareTo(endDate.getDate()) != 0) {
+            tvDateStatus.setText(getString(R.string.date)+ " "+startDate.getDateString(getActivity())+ " - "+endDate.getDateString(getActivity()));
+        } else {
+            tvDateStatus.setText(getString(R.string.date)+ " "+startDate.getDateString(getActivity()));
+        }
+        /*Toast.makeText(getActivity(),"onDateSet: "+event.toString(),
+                Toast.LENGTH_SHORT).show();*/
+    }
 
-            @Override
-            public void onChangeMonth(int month, int year) {
 
-            }
-
-            @Override
-            public void onLongClickDate(Date date, View view) {
-            }
-
-            @Override
-            public void onCaldroidViewCreated() {
-            }
-
-        };
-
-        // Setup Caldroid
-        caldroidFragment.setCaldroidListener(listener);
+    @Override
+    protected boolean isImplementingEventBus() {
+        return true;
     }
 }

@@ -4,11 +4,13 @@ import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import org.androidannotations.annotations.EActivity;
 
 import java.util.Locale;
 
+import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
 import pl.snowdog.dzialajlokalnie.fragment.AddIssueFirstFragment;
 import pl.snowdog.dzialajlokalnie.fragment.AddIssueFirstFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.AddIssueFourthFragment_;
@@ -21,6 +23,11 @@ import pl.snowdog.dzialajlokalnie.fragment.AddIssueThirdFragment_;
 @EActivity(R.layout.activity_add_issue)
 public class AddEventActivity extends AddBaseActivity {
     private static final String TAG = "AddEventActivity";
+
+    //Event specific fields:
+    String startDate;
+    String endDate;
+    String facebookURL;
 
     @Override
     void setupViewPager(ViewPager viewPager) {
@@ -40,6 +47,30 @@ public class AddEventActivity extends AddBaseActivity {
                 return true;
             }
         });
+    }
+
+
+
+    public void onEvent(CreateNewObjectEvent event) {
+        switch (event.getType()) {
+            case date:
+                //Consume Date setting
+                title = event.getTitle();
+                description = event.getDescription();
+                endDate = event.getEndDate().getDateString(this);
+                startDate = event.getStartDate().getDateString(this);
+                goToNextPage();
+                onObjectCreated();
+                return;
+
+        }
+        super.onEvent(event);
+    }
+
+    @Override
+    public void onObjectCreated() {
+
+        Toast.makeText(this, "We have working object yeah! "+title, Toast.LENGTH_SHORT).show();
     }
 
 }

@@ -42,12 +42,56 @@
                 android:hint="@string/description" />
 
         </android.support.design.widget.TextInputLayout>
-        <LinearLayout
-            android:id="@+id/caldroid"
+        <RelativeLayout
+            android:id="@+id/event_container"
+            android:visibility="gone"
             android:layout_below="@id/etDescriptionWrapper"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content">
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/etFacebookEventWrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/etFacebookEvent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapSentences"
+                    android:hint="@string/facebook_event" />
+
+            </android.support.design.widget.TextInputLayout>
+            <RelativeLayout
+                android:layout_below="@id/etFacebookEventWrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/ivDate"
+                    android:layout_alignParentLeft="true"
+                    android:src="@drawable/ic_event_white_36dp"
+                    android:tint="@color/colorAccent"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/item_padding"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/tvDateStatus"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/ivDate"
+                    android:text="@string/date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <Button
+                    android:id="@+id/btnCaldroid"
+                    android:text="@string/set"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </RelativeLayout>
+        </RelativeLayout>
+
     </RelativeLayout>
     <include
         android:layout_below="@+id/top_container"

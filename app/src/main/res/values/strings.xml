@@ -21,6 +21,8 @@
     <string name="warning_fill_title">Uzupełnij tytuł zgłoszenia</string>
     <string name="warning_fill_description">Uzupełnij opis zgłoszenia</string>
     <string name="warning_fill_date">Ustaw datę wydarzenia</string>
+    <string name="warning_choose_category">Wybierz kategorię</string>
+    <string name="warning_set_place">Kliknij na mapie i ustaw miejsce zgłoszenia</string>
     <string name="add">Dodaj</string>
     <string name="choose_category_info">Wybierz pasujące kategorie zgłoszenia:</string>
     <string name="choose_place_info">Zaznacz miejsce na mapie, bądź wybierz dzielnice zgłoszenia</string>
@@ -41,6 +43,16 @@
     <string name="action_sort_popular">Najpopularniejsze</string>
     <string name="action_sort_newest">Najnowsze</string>
     <string name="action_sort_top">Top</string>
+    <string name="set_date">Ustaw datę</string>
+    <string name="cancel">Anuluj</string>
+    <string name="set">Ustaw</string>
+    <string name="date">Data:</string>
+    <string name="simple_date_format">dd MMM yyyy</string>
+    <string name="facebook_event">Wydarzenie na Facebooku (opcjonalnie)</string>
+
+    <string name="choose">Wybierz</string>
+    <string name="from_gallery">Z galerii</string>
+    <string name="take_photo">Nowe zdjęcie</string>
 
 
     <plurals name="votes">

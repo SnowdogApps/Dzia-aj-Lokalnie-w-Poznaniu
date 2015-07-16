@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
@@ -23,11 +24,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
+import pl.snowdog.dzialajlokalnie.events.NetworkErrorEvent;
 import pl.snowdog.dzialajlokalnie.fragment.AddIssueFirstFragment;
 import pl.snowdog.dzialajlokalnie.fragment.AddIssueFirstFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.AddIssueFourthFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.AddIssueSecondFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.AddIssueThirdFragment_;
+
+import static pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent.Type.title;
 
 /**
  * Created by chomi3 on 2015-07-06.
@@ -54,6 +59,12 @@ public class AddIssueActivity extends AddBaseActivity {
                 return true;
             }
         });
+    }
+
+
+    @Override
+    public void onObjectCreated() {
+        Toast.makeText(this, "We have working object yeah!", Toast.LENGTH_SHORT).show();
     }
 
 }

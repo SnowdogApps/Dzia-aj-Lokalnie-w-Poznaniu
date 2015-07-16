@@ -1,9 +1,13 @@
 package pl.snowdog.dzialajlokalnie.fragment;
 
+import android.support.design.widget.Snackbar;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.activeandroid.query.Select;
+
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
 
@@ -11,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import pl.snowdog.dzialajlokalnie.AddBaseActivity;
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.model.Category;
 
@@ -25,26 +30,35 @@ public class AddIssueFourthFragment extends AddIssueBaseFragment {
 
     List<Category> lCategories = new ArrayList<>();
     ArrayList<String> lCategoriesLabels = new ArrayList<>();;
+    ArrayAdapter<String> adapter;
+
+    @Click(R.id.btnNext)
+    void onNextButtonClicked() {
+        if(validateInput()) {
+            ((AddBaseActivity)getActivity()).onObjectCreated();
+        }
+    }
 
     @Override
     boolean validateInput() {
-        return true;
+        if(lvCategories.getCheckedItemCount() > 0) {
+            return true;
+        } else {
+            Snackbar.make(getView(), getString(R.string.warning_choose_category), Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+            return false;
+        }
     }
 
     @AfterViews
     void afterViewsCreated() {
         btnNext.setText(R.string.add);
-        lCategories.add(new Category(0, "Zgloszenia", 0, new Date(), new Date()));
-        lCategories.add(new Category(1, "Pomoc sasiedzka", 0, new Date(), new Date()));
-        lCategories.add(new Category(2, "Wspolne dzialanie", 0, new Date(), new Date()));
-        lCategories.add(new Category(3, "Wandalizm", 0, new Date(), new Date()));
-        lCategories.add(new Category(4, "Zmiany", 0, new Date(), new Date()));
-
+        lCategories = new Select().from(Category.class).orderBy("name").execute();
         for(Category c : lCategories) {
             lCategoriesLabels.add(c.getName());
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_multiple_choice, lCategoriesLabels);
+        adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_multiple_choice, lCategoriesLabels);
         lvCategories.setAdapter(adapter);
 
     }

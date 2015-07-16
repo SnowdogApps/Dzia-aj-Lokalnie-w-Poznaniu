@@ -28,13 +28,13 @@ import retrofit.client.Response;
 /**
  * Created by bartek on 06.07.15.
  */
-@EActivity(R.layout.activity_main)
+@EActivity//(R.layout.activity_main)
 public abstract class BaseActivity extends AppCompatActivity {
 
     private static final String TAG = "BaseActivity";
 
     @ViewById(R.id.main_content)
-    protected CoordinatorLayout coordinatorLayout;
+    protected View coordinatorLayout;
 
     @AfterViews
     protected void afterBaseActivityViews() {
