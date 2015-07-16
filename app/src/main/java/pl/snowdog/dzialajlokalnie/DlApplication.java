@@ -26,6 +26,7 @@ public class DlApplication extends Application {
     public static DlApi.EventApi eventApi;
     public static DlApi.VoteApi voteApi;
     public static DlApi.UserApi userApi;
+    public static DlApi.CommentApi commentApi;
     public static Session currentSession;
     public static Filter filter;
 
@@ -66,6 +67,7 @@ public class DlApplication extends Application {
         eventApi = restAdapter.create(DlApi.EventApi.class);
         voteApi = restAdapter.create(DlApi.VoteApi.class);
         userApi = restAdapter.create(DlApi.UserApi.class);
+        commentApi = restAdapter.create(DlApi.CommentApi.class);
 
         refreshCurrentSession();
 

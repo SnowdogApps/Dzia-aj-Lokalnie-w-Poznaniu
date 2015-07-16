@@ -8,6 +8,7 @@ import java.util.List;
 
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.adapter.IssuesAdapter;
+import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.events.IssueVoteEvent;
 import pl.snowdog.dzialajlokalnie.events.VoteEvent;
 import pl.snowdog.dzialajlokalnie.model.Issue;
@@ -50,7 +51,7 @@ public class IssuesFragment extends ListFragment {
     public void onEvent(IssueVoteEvent event) {
         Log.d(TAG, "onEvent " + event);
 
-        vote(Vote.ParentType.issues, event.getId(), event.getVote() == VoteEvent.Vote.UP ? 1 : -1);
+        vote(DlApi.ParentType.issues, event.getId(), event.getVote() == VoteEvent.Vote.UP ? 1 : -1);
     }
 
     @Override

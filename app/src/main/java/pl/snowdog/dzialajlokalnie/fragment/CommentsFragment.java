@@ -8,6 +8,7 @@ import java.util.List;
 
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.adapter.CommentsAdapter;
+import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.events.IssueVoteEvent;
 import pl.snowdog.dzialajlokalnie.events.VoteEvent;
 import pl.snowdog.dzialajlokalnie.model.Comment;
@@ -53,7 +54,7 @@ public class CommentsFragment extends ListFragment {
     public void onEvent(IssueVoteEvent event) {
         Log.d(TAG, "onEvent " + event);
 
-        vote(Vote.ParentType.comments, event.getId(), event.getVote() == VoteEvent.Vote.UP ? 1 : -1);
+        vote(DlApi.ParentType.comments, event.getId(), event.getVote() == VoteEvent.Vote.UP ? 1 : -1);
     }
 
     @Override

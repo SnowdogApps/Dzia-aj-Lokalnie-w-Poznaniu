@@ -25,6 +25,8 @@ public class DlApi {
     public static final String API_URL = "http://dzialajlokalnie.snowdog.pro";
     public static final String PHOTO_THUMB_URL = API_URL + "/photos/%s_thumb.jpeg";
 
+    public enum ParentType {issues, comments}
+
     public interface Base {
         @GET("/categories")
         void getCategories(Callback<List<Category>> cb);
@@ -53,6 +55,12 @@ public class DlApi {
                        Callback<List<Event>> cb);
     }
 
+    public interface CommentApi {
+        @GET("/comments/{parentType}/{id}")
+        void getComments(@Path("parentType") String parentType,
+                       @Path("id") int id,
+                       Callback<List<Issue>> cb);
+    }
     public interface VoteApi {
 
         /**

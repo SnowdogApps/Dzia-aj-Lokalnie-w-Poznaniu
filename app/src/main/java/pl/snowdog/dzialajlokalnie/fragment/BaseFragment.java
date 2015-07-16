@@ -11,6 +11,7 @@ import java.util.List;
 
 import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.DlApplication;
+import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.model.Category;
 import pl.snowdog.dzialajlokalnie.model.Event;
 import pl.snowdog.dzialajlokalnie.model.Filter;
@@ -186,7 +187,9 @@ public abstract class BaseFragment extends Fragment {
 
     protected void eventsResult(List<Event> events) { }
 
-    protected void vote(Vote.ParentType parentType, int parentId, int value) {
+//    protected
+
+    protected void vote(DlApi.ParentType parentType, int parentId, int value) {
         DlApplication.voteApi.vote(parentType.name(), parentId, value, new Callback<Vote>() {
             @Override
             public void success(Vote vote, Response response) {

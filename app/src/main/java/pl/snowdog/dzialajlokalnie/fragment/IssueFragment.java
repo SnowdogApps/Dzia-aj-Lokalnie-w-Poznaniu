@@ -85,7 +85,7 @@ public class IssueFragment extends BaseFragment {
     public void onEvent(IssueVoteEvent event) {
         Log.d(TAG, "onEvent " + event);
 
-        vote(Vote.ParentType.issues, event.getId(), event.getVote() == VoteEvent.Vote.UP ? 1 : -1);
+        vote(DlApi.ParentType.issues, event.getId(), event.getVote() == VoteEvent.Vote.UP ? 1 : -1);
     }
 
     @Override
