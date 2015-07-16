@@ -133,6 +133,7 @@ public class AddIssueSecondFragment extends AddIssueBaseFragment implements OnMa
         }
         spinner.setAdapter(adapter);
         spinner.setSelection(adapter.getSelection());
+
     }
 
     @ItemSelect(R.id.spDistrict)
@@ -207,6 +208,8 @@ public class AddIssueSecondFragment extends AddIssueBaseFragment implements OnMa
                 Log.d(TAG, "mpdbg markerLat: " + point.latitude + " marker.lon: " + point.longitude);
                 getAddressForLocation(point.latitude, point.longitude);
 
+                //TODO change temp Polygon data to district sorted by distance to marker click
+
                 Polygon polygon = new Polygon();
                 List<Point> points = new ArrayList<Point>();
                 points.add(new Point(52.41797158475524, 16.9185671210289));
@@ -221,6 +224,22 @@ public class AddIssueSecondFragment extends AddIssueBaseFragment implements OnMa
             }
         });
 
+        map.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+            @Override
+            public void onMarkerDragStart(Marker marker) {
+
+            }
+
+            @Override
+            public void onMarkerDrag(Marker marker) {
+
+            }
+
+            @Override
+            public void onMarkerDragEnd(Marker marker) {
+                getAddressForLocation(marker.getPosition().latitude, marker.getPosition().longitude);
+            }
+        });
     }
 
     @Override
