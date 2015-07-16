@@ -11,6 +11,7 @@ import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.adapter.CommentsAdapter;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.events.CommentClickedEvent;
+import pl.snowdog.dzialajlokalnie.events.CommentVoteEvent;
 import pl.snowdog.dzialajlokalnie.events.IssueVoteEvent;
 import pl.snowdog.dzialajlokalnie.events.VoteEvent;
 import pl.snowdog.dzialajlokalnie.model.Comment;
@@ -62,7 +63,7 @@ public class CommentsFragment extends ListFragment {
         Log.d(TAG, "onEvent " + event);
     }
 
-    public void onEvent(IssueVoteEvent event) {
+    public void onEvent(CommentVoteEvent event) {
         Log.d(TAG, "onEvent " + event);
 
         vote(DlApi.ParentType.comments, event.getId(), event.getVote() == VoteEvent.Vote.UP ? 1 : -1);

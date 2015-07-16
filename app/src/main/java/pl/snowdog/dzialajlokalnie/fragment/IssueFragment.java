@@ -16,6 +16,7 @@ import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.databinding.FragmentIssueBinding;
 import pl.snowdog.dzialajlokalnie.events.IssueVoteEvent;
+import pl.snowdog.dzialajlokalnie.events.SetTitleEvent;
 import pl.snowdog.dzialajlokalnie.events.VoteEvent;
 import pl.snowdog.dzialajlokalnie.model.Issue;
 import pl.snowdog.dzialajlokalnie.model.Vote;
@@ -75,6 +76,8 @@ public class IssueFragment extends BaseFragment {
                 load(String.format(DlApi.PHOTO_THUMB_URL, issue.getPhotoIssueUri())).
                 error(R.drawable.ic_editor_insert_emoticon).
                 into(binding.ivAvatar);
+
+        EventBus.getDefault().post(new SetTitleEvent(issue.getTitle()));
     }
 
     @Override

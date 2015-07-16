@@ -1,5 +1,6 @@
 package pl.snowdog.dzialajlokalnie;
 
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -9,6 +10,7 @@ import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
 import pl.snowdog.dzialajlokalnie.api.DlApi;
+import pl.snowdog.dzialajlokalnie.events.SetTitleEvent;
 import pl.snowdog.dzialajlokalnie.fragment.CommentsFragment;
 import pl.snowdog.dzialajlokalnie.fragment.CommentsFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.IssueFragment;
@@ -20,6 +22,10 @@ import pl.snowdog.dzialajlokalnie.model.Issue;
 public class DetailsActivity extends BaseActivity {
 
     private static final String TAG = "DetailsActivity";
+
+    @ViewById(R.id.collapsingToolbarLayout)
+    CollapsingToolbarLayout collapsingToolbarLayout;
+
     @ViewById(R.id.toolbar)
     Toolbar toolbar;
 
@@ -45,5 +51,10 @@ public class DetailsActivity extends BaseActivity {
 
         getSupportFragmentManager().beginTransaction().replace(R.id.topContent, issueFragment).commit();
         getSupportFragmentManager().beginTransaction().replace(R.id.bottomContent, commentsFragment).commit();
+    }
+
+    public void onEvent(SetTitleEvent event) {
+        getSupportActionBar().setTitle(event.getTitle());
+//        toolbar.setTitle(event.getTitle());
     }
 }

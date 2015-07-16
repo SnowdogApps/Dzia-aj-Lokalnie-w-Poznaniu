@@ -57,7 +57,7 @@ public class DlApi {
     }
 
     public interface CommentApi {
-        @GET("/comments/{parentType}/{id}")
+        @GET("/{parentType}/{id}/comments")
         void getComments(@Path("parentType") String parentType,
                        @Path("id") int id,
                        Callback<List<Comment>> cb);
