@@ -9,7 +9,6 @@ import pl.snowdog.dzialajlokalnie.model.Issue;
 import pl.snowdog.dzialajlokalnie.model.Session;
 import pl.snowdog.dzialajlokalnie.model.Vote;
 import retrofit.Callback;
-import retrofit.http.Body;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
@@ -22,7 +21,7 @@ import retrofit.http.Query;
  */
 public class DlApi {
 
-    //    private static final String API_URL = "http://192.168.1.95/dzialaj-lokalnie-api/index.php/";
+//        public static final String API_URL = "http://192.168.1.96/dzialaj-lokalnie-api/index.php/";
     public static final String API_URL = "http://dzialajlokalnie.snowdog.pro";
     public static final String PHOTO_THUMB_URL = API_URL + "/photos/%s_thumb.jpeg";
 

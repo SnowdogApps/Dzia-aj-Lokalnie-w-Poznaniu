@@ -7,10 +7,10 @@ import org.androidannotations.annotations.EFragment;
 import java.util.List;
 
 import pl.snowdog.dzialajlokalnie.R;
-import pl.snowdog.dzialajlokalnie.adapter.IssuesAdapter;
+import pl.snowdog.dzialajlokalnie.adapter.CommentsAdapter;
 import pl.snowdog.dzialajlokalnie.events.IssueVoteEvent;
 import pl.snowdog.dzialajlokalnie.events.VoteEvent;
-import pl.snowdog.dzialajlokalnie.model.Issue;
+import pl.snowdog.dzialajlokalnie.model.Comment;
 import pl.snowdog.dzialajlokalnie.model.Vote;
 
 /**
@@ -18,25 +18,28 @@ import pl.snowdog.dzialajlokalnie.model.Vote;
  */
 
 @EFragment(R.layout.fragment_list)
-public class IssuesFragment extends ListFragment {
+public class CommentsFragment extends ListFragment {
 
-    private static final String TAG = "IssuesFragment";
-    IssuesAdapter adapter;
+    private static final String TAG = "CommentsFragment";
+    CommentsAdapter adapter;
 
     @Override
     protected void afterView() {
-        getIssues();
+        // TODO implement
+//        getComments();
     }
 
     @Override
     protected void refreshItems() {
         super.refreshItems();
-        getIssues();
+        // TODO implement
+//        getComments();
     }
 
-    @Override
-    protected void issuesResult(List<Issue> issues) {
-        adapter = new IssuesAdapter(issues);
+    // TODO implement
+//    @Override
+    protected void commentsResult(List<Comment> comments) {
+        adapter = new CommentsAdapter(comments);
         recyclerView.setAdapter(adapter);
 
         onItemsLoadComplete();
@@ -50,15 +53,15 @@ public class IssuesFragment extends ListFragment {
     public void onEvent(IssueVoteEvent event) {
         Log.d(TAG, "onEvent " + event);
 
-        vote(Vote.ParentType.issues, event.getId(), event.getVote() == VoteEvent.Vote.UP ? 1 : -1);
+        vote(Vote.ParentType.comments, event.getId(), event.getVote() == VoteEvent.Vote.UP ? 1 : -1);
     }
 
     @Override
     protected void voteResult(Vote vote) {
-        for (int i = 0; i < adapter.getIssues().size(); i++) {
-            Issue issue = adapter.getIssues().get(i);
-            if (issue.getIssueID() == vote.getParentID()) {
-                issue.setIssueRating(issue.getIssueRating()+vote.getValue());
+        for (int i = 0; i < adapter.getComments().size(); i++) {
+            Comment issue = adapter.getComments().get(i);
+            if (issue.getCommentID() == vote.getParentID()) {
+                issue.setCommentRating(issue.getCommentRating() + vote.getValue());
                 adapter.notifyItemChanged(i);
                 break;
             }
