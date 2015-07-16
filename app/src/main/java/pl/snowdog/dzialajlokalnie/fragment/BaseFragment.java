@@ -13,6 +13,7 @@ import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.DlApplication;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.model.Category;
+import pl.snowdog.dzialajlokalnie.model.Comment;
 import pl.snowdog.dzialajlokalnie.model.Event;
 import pl.snowdog.dzialajlokalnie.model.Filter;
 import pl.snowdog.dzialajlokalnie.model.Issue;
@@ -95,8 +96,6 @@ public abstract class BaseFragment extends Fragment {
 
                         issuesResult(issues);
 
-                        new Delete().from(Issue.class).execute();
-
                         ActiveAndroid.beginTransaction();
                         try {
                             for (Issue issue : issues) {
@@ -132,7 +131,6 @@ public abstract class BaseFragment extends Fragment {
 
                         issueResult(issue);
 
-                        new Delete().from(Issue.class).where("issueID = ?", issue.getIssueID()).execute();
                         issue.save();
                     }
 
@@ -165,8 +163,6 @@ public abstract class BaseFragment extends Fragment {
 
                 eventsResult(events);
 
-                new Delete().from(Issue.class).execute();
-
                 ActiveAndroid.beginTransaction();
                 try {
                     for (Event event : events) {
@@ -187,7 +183,33 @@ public abstract class BaseFragment extends Fragment {
 
     protected void eventsResult(List<Event> events) { }
 
-//    protected
+    protected void getComments(DlApi.ParentType parentType, int parentId) {
+        DlApplication.commentApi.getComments(parentType.name(), parentId, new Callback<List<Comment>>() {
+            @Override
+            public void success(List<Comment> comments, Response response) {
+                Log.d(TAG, "getComments success: " + comments);
+
+                commentsResult(comments);
+
+                ActiveAndroid.beginTransaction();
+                try {
+                    for (Comment comment : comments) {
+                        comment.save();
+                    }
+                    ActiveAndroid.setTransactionSuccessful();
+                } finally {
+                    ActiveAndroid.endTransaction();
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d(TAG, "getComments failure: " + error);
+            }
+        });
+    }
+
+    protected void commentsResult(List<Comment> comments) { }
 
     protected void vote(DlApi.ParentType parentType, int parentId, int value) {
         DlApplication.voteApi.vote(parentType.name(), parentId, value, new Callback<Vote>() {

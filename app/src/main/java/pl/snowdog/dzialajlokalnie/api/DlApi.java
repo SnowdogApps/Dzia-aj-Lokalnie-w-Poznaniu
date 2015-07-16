@@ -3,6 +3,7 @@ package pl.snowdog.dzialajlokalnie.api;
 import java.util.List;
 
 import pl.snowdog.dzialajlokalnie.model.Category;
+import pl.snowdog.dzialajlokalnie.model.Comment;
 import pl.snowdog.dzialajlokalnie.model.District;
 import pl.snowdog.dzialajlokalnie.model.Event;
 import pl.snowdog.dzialajlokalnie.model.Issue;
@@ -59,7 +60,7 @@ public class DlApi {
         @GET("/comments/{parentType}/{id}")
         void getComments(@Path("parentType") String parentType,
                        @Path("id") int id,
-                       Callback<List<Issue>> cb);
+                       Callback<List<Comment>> cb);
     }
     public interface VoteApi {
 

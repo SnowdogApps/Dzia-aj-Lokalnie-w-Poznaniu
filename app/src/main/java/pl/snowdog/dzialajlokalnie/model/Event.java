@@ -10,7 +10,7 @@ import java.util.Date;
 @Table(name = "Events")
 public class Event extends Model {
 
-    @Column
+    @Column(unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
     private int eventID;
 
     @Column

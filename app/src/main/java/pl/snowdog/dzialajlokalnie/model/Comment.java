@@ -1,5 +1,6 @@
 package pl.snowdog.dzialajlokalnie.model;
 
+import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
@@ -7,10 +8,10 @@ import java.util.Date;
 
 
 @Table(name = "Comments")
-public class Comment {
+public class Comment extends Model{
 
 
-    @Column
+    @Column(unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
     private int commentID;
 
     @Column

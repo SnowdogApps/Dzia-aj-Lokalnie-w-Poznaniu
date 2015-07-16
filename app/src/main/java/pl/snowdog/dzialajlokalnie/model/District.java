@@ -7,7 +7,7 @@ import com.activeandroid.annotation.Table;
 @Table(name = "Districts")
 public class District extends Model {
 
-    @Column
+    @Column(unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
     private int districtID;
 
     @Column

@@ -10,7 +10,7 @@ import java.util.Date;
 @Table(name = "Sessions")
 public class Session extends Model {
 
-    @Column (name = "Ssid")
+    @Column(name = "Ssid", unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
     private String ssid;
     private int userID;
     private int deviceType;
