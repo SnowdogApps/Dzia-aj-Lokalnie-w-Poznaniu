@@ -49,12 +49,15 @@ public class Comment {
     @Column
     private String authorName;
 
+    @Column
+    private String authorAvatar;
+
 
     public Comment() {
         super();
     }
 
-    public Comment(int commentID, int userID, int parentId, int parentType, int solution, String text, Date createdAt, Date updatedAt, String commentHashtags, String commentMentioned, int commentRating, int authorID, String authorName) {
+    public Comment(int commentID, int userID, int parentId, int parentType, int solution, String text, Date createdAt, Date updatedAt, String commentHashtags, String commentMentioned, int commentRating, int authorID, String authorName, String authorAvatar) {
         super();
         this.commentID = commentID;
         this.userID = userID;
@@ -69,6 +72,7 @@ public class Comment {
         this.commentRating = commentRating;
         this.authorID = authorID;
         this.authorName = authorName;
+        this.authorAvatar = authorAvatar;
     }
 
     @Override
@@ -87,7 +91,16 @@ public class Comment {
                 ", commentRating=" + commentRating +
                 ", authorID=" + authorID +
                 ", authorName='" + authorName + '\'' +
+                ", authorAvatar='" + authorAvatar + '\'' +
                 '}';
+    }
+
+    public String getAuthorAvatar() {
+        return authorAvatar;
+    }
+
+    public void setAuthorAvatar(String authorAvatar) {
+        this.authorAvatar = authorAvatar;
     }
 
     public int getAuthorID() {
