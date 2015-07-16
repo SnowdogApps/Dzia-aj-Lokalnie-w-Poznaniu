@@ -34,6 +34,7 @@ public class CommentsFragment extends ListFragment {
     @Override
     protected void afterView() {
         getComments(objType, objId);
+        swipeRefreshLayout.setEnabled(false);
     }
 
     @Override
