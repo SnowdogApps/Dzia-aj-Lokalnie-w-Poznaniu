@@ -92,6 +92,8 @@ public class IssueFragment extends BaseFragment {
         Issue issue = binding.getIssue();
         if (issue.getIssueID() == vote.getParentID()) {
             issue.setIssueRating(issue.getIssueRating()+vote.getValue());
+            //TODO - this is dirty implementation. Observables shoud be used but it requires extending BaseObservable - conflict with Model
+            binding.setIssue(issue);
         }
     }
 }
