@@ -37,6 +37,7 @@ import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,10 +49,15 @@ import pl.snowdog.dzialajlokalnie.adapter.DistrictAdapter;
 import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
 import pl.snowdog.dzialajlokalnie.model.District;
 import pl.snowdog.dzialajlokalnie.model.Event;
+import pl.snowdog.dzialajlokalnie.model.Point;
+import pl.snowdog.dzialajlokalnie.model.Polygon;
 import pl.snowdog.dzialajlokalnie.model.ReverseGeocoding;
+import pl.snowdog.dzialajlokalnie.util.PolygonUtil;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+
+import static pl.snowdog.dzialajlokalnie.util.PolygonUtil.*;
 
 /**
  * Created by chomi3 on 2015-07-06.
@@ -198,7 +204,19 @@ public class AddIssueSecondFragment extends AddIssueBaseFragment implements OnMa
                 //We allow only one marker
                 map.clear();
                 mMarker = map.addMarker(new MarkerOptions().position(point).draggable(true));
+                Log.d(TAG, "mpdbg markerLat: " + point.latitude + " marker.lon: " + point.longitude);
                 getAddressForLocation(point.latitude, point.longitude);
+
+                Polygon polygon = new Polygon();
+                List<Point> points = new ArrayList<Point>();
+                points.add(new Point(52.41797158475524, 16.9185671210289));
+                points.add(new Point(52.41683382234121, 16.942223533988));
+                points.add(new Point(52.39988905872178, 16.935108974575996));
+                points.add(new Point(52.404284384274376, 16.912309862673283));
+                polygon.setPointsList(points);
+
+                Log.d(TAG, "mpdbg inPolygon: " + PolygonUtil.isPointInPolygon(point, polygon));
+
                 spinner.setSelection(0);
             }
         });
