@@ -20,7 +20,7 @@ public class Comment {
     private int parentId;
 
     @Column
-    private String parentType;
+    private int parentType;
 
     @Column
     private int solution;
@@ -40,11 +40,21 @@ public class Comment {
     @Column
     private String commentMentioned;
 
+    @Column
+    private int commentRating;
+
+    @Column
+    private int authorID;
+
+    @Column
+    private String authorName;
+
+
     public Comment() {
         super();
     }
 
-    public Comment(int commentID, int userID, int parentId, String parentType, int solution, String text, Date createdAt, Date updatedAt, String commentHashtags, String commentMentioned) {
+    public Comment(int commentID, int userID, int parentId, int parentType, int solution, String text, Date createdAt, Date updatedAt, String commentHashtags, String commentMentioned, int commentRating, int authorID, String authorName) {
         super();
         this.commentID = commentID;
         this.userID = userID;
@@ -56,6 +66,9 @@ public class Comment {
         this.updatedAt = updatedAt;
         this.commentHashtags = commentHashtags;
         this.commentMentioned = commentMentioned;
+        this.commentRating = commentRating;
+        this.authorID = authorID;
+        this.authorName = authorName;
     }
 
     @Override
@@ -64,14 +77,41 @@ public class Comment {
                 "commentID=" + commentID +
                 ", userID=" + userID +
                 ", parentId=" + parentId +
-                ", parentType='" + parentType + '\'' +
+                ", parentType=" + parentType +
                 ", solution=" + solution +
                 ", text='" + text + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 ", commentHashtags='" + commentHashtags + '\'' +
                 ", commentMentioned='" + commentMentioned + '\'' +
+                ", commentRating=" + commentRating +
+                ", authorID=" + authorID +
+                ", authorName='" + authorName + '\'' +
                 '}';
+    }
+
+    public int getAuthorID() {
+        return authorID;
+    }
+
+    public void setAuthorID(int authorID) {
+        this.authorID = authorID;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public int getCommentRating() {
+        return commentRating;
+    }
+
+    public void setCommentRating(int commentRating) {
+        this.commentRating = commentRating;
     }
 
     public int getCommentID() {
@@ -98,11 +138,11 @@ public class Comment {
         this.parentId = parentId;
     }
 
-    public String getParentType() {
+    public int getParentType() {
         return parentType;
     }
 
-    public void setParentType(String parentType) {
+    public void setParentType(int parentType) {
         this.parentType = parentType;
     }
 
