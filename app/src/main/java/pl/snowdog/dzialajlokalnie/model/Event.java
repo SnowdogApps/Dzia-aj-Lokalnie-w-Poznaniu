@@ -346,4 +346,16 @@ public class Event extends Model {
     public void setVotesCount(int votesCount) {
         this.votesCount = votesCount;
     }
+
+    public class EventWrapper {
+        private Event event;
+
+        public Event getEvent() {
+            return event;
+        }
+
+        public void setEvent(Event event) {
+            this.event = event;
+        }
+    }
 }

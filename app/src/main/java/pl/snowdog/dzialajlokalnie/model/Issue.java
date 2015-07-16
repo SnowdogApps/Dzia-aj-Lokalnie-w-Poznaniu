@@ -282,4 +282,16 @@ public class Issue extends Model {
     public void setVotesCount(int votesCount) {
         this.votesCount = votesCount;
     }
+
+    public class IssueWrapper {
+        private Issue issue;
+
+        public Issue getIssue() {
+            return issue;
+        }
+
+        public void setIssue(Issue issue) {
+            this.issue = issue;
+        }
+    }
 }

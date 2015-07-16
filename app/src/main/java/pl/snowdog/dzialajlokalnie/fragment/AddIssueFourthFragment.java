@@ -1,6 +1,7 @@
 package pl.snowdog.dzialajlokalnie.fragment;
 
 import android.support.design.widget.Snackbar;
+import android.util.SparseBooleanArray;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -15,8 +16,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.AddBaseActivity;
 import pl.snowdog.dzialajlokalnie.R;
+import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
 import pl.snowdog.dzialajlokalnie.model.Category;
 
 /**
@@ -35,8 +38,24 @@ public class AddIssueFourthFragment extends AddIssueBaseFragment {
     @Click(R.id.btnNext)
     void onNextButtonClicked() {
         if(validateInput()) {
-            ((AddBaseActivity)getActivity()).onObjectCreated();
+            CreateNewObjectEvent.Builder builder = new CreateNewObjectEvent.Builder()
+                    .categoryIDs(getSelectedCategoriesList())
+                    .type(CreateNewObjectEvent.Type.category);
+
+            EventBus.getDefault().post(builder.build());
+            //((AddBaseActivity)getActivity()).goToNextPage();
         }
+    }
+
+    private List<Integer> getSelectedCategoriesList() {
+        SparseBooleanArray checked = lvCategories.getCheckedItemPositions();
+        List<Integer> lSelectedCategoriesIds = new ArrayList<>(lvCategories.getCheckedItemCount());
+        for (int i = 0; i < lvCategories.getAdapter().getCount(); i++) {
+            if (checked.get(i)) {
+                lSelectedCategoriesIds.add(lCategories.get(i).getCategoryID());
+            }
+        }
+        return lSelectedCategoriesIds;
     }
 
     @Override

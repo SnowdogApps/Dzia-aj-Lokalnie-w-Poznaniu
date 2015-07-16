@@ -7,8 +7,10 @@ import com.activeandroid.query.Select;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import pl.snowdog.dzialajlokalnie.api.CityApi;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.api.GlobalErrorHandler;
+import pl.snowdog.dzialajlokalnie.model.City;
 import pl.snowdog.dzialajlokalnie.model.Filter;
 import pl.snowdog.dzialajlokalnie.model.Session;
 import retrofit.RequestInterceptor;
@@ -21,11 +23,13 @@ import retrofit.converter.GsonConverter;
 public class DlApplication extends Application {
 
     public static RestAdapter restAdapter;
+    public static RestAdapter restCityAdapter;
     public static DlApi.Base baseApi;
     public static DlApi.IssueApi issueApi;
     public static DlApi.EventApi eventApi;
     public static DlApi.VoteApi voteApi;
     public static DlApi.UserApi userApi;
+    public static CityApi.PoznanApi poznanApi;
     public static Session currentSession;
     public static Filter filter;
 
@@ -66,6 +70,15 @@ public class DlApplication extends Application {
         eventApi = restAdapter.create(DlApi.EventApi.class);
         voteApi = restAdapter.create(DlApi.VoteApi.class);
         userApi = restAdapter.create(DlApi.UserApi.class);
+
+        restCityAdapter = new RestAdapter.Builder()
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setEndpoint(DlApi.CITY_API_URL)
+                .setConverter(new GsonConverter(gson))
+                .setErrorHandler(new GlobalErrorHandler())
+                .build();
+
+        poznanApi = restCityAdapter.create(CityApi.PoznanApi.class);
 
         refreshCurrentSession();
 

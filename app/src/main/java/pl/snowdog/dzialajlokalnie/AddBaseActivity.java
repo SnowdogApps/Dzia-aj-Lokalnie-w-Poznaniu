@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
@@ -30,6 +31,7 @@ import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
 @EActivity
 public abstract class AddBaseActivity extends BaseActivity {
 
+    private static final String TAG = "AddBaseActivity";
     @ViewById(R.id.pager)
     protected ViewPager mViewPager;
 
@@ -43,7 +45,7 @@ public abstract class AddBaseActivity extends BaseActivity {
     double lat;
     double lon;
     String address;
-    String categoryIDs;
+    List<Integer> categoryIDs;
     String PHOTO; //// TODO: 2015-07-15
 
 
@@ -104,6 +106,12 @@ public abstract class AddBaseActivity extends BaseActivity {
         getSupportActionBar().setSubtitle(getString(R.string.add_issue_step)+ " "+(mViewPager.getCurrentItem()+1)+ "/"+mViewPager.getAdapter().getCount());
     }
 
+    /**
+     * Handles gathering informations from fragments
+     * NOTE: final step (category) is handled by child activities (AddIssue / AddEvent)
+     * as we need to create different objects from the data
+     * @param event
+     */
     public void onEvent(CreateNewObjectEvent event) {
         switch (event.getType()) {
             case title:
@@ -114,6 +122,7 @@ public abstract class AddBaseActivity extends BaseActivity {
             case location:
                 lat = event.getLat();
                 lon = event.getLon();
+                address = event.getAddress();
                 districtID = event.getDistrictID();
                 goToNextPage();
                 break;
@@ -121,16 +130,16 @@ public abstract class AddBaseActivity extends BaseActivity {
                 PHOTO = event.getPHOTO();
                 goToNextPage();
                 break;
-            case category:
-                categoryIDs = event.getCategoryIDs();
-
-                break;
-
 
         }
     }
 
-    public abstract void onObjectCreated();
+
+    public void onObjectCreated() {
+        Log.d(TAG, "title: "+title+" description: "+description+ " lat: "+lat+ " lon: "+lon+ " districtID: "+districtID
+        +" categories: "+categoryIDs.toString());
+    }
+
 
     static class Adapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragments = new ArrayList<>();

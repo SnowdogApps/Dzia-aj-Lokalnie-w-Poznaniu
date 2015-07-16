@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,18 +28,30 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.EditorAction;
 import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.ItemSelect;
+import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
+import org.apache.commons.lang3.StringUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.DlApplication;
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.adapter.DistrictAdapter;
+import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
 import pl.snowdog.dzialajlokalnie.model.District;
+import pl.snowdog.dzialajlokalnie.model.Event;
+import pl.snowdog.dzialajlokalnie.model.ReverseGeocoding;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by chomi3 on 2015-07-06.
@@ -45,6 +59,7 @@ import pl.snowdog.dzialajlokalnie.model.District;
 @EFragment(R.layout.fragment_add_issue_second)
 public class AddIssueSecondFragment extends AddIssueBaseFragment implements OnMapReadyCallback, GoogleMap.OnMyLocationChangeListener, GoogleMap.OnCameraChangeListener {
 
+    private static final String TAG = "AddIssueSecondFragment";
     @ViewById
     MapView mapView;
     GoogleMap map;
@@ -57,6 +72,8 @@ public class AddIssueSecondFragment extends AddIssueBaseFragment implements OnMa
     private DistrictAdapter adapter;
 
     private Bundle mSavedInstanceState;
+
+    String address;
 
 
     @Nullable
@@ -78,6 +95,21 @@ public class AddIssueSecondFragment extends AddIssueBaseFragment implements OnMa
             return false;
         } else {
             return true;
+        }
+    }
+
+    @Click(R.id.btnNext)
+    void onNextButtonClicked() {
+        if(validateInput()) {
+            CreateNewObjectEvent.Builder builder = new CreateNewObjectEvent.Builder()
+                    .lat(mMarker.getPosition().latitude)
+                    .lon(mMarker.getPosition().longitude)
+                    .address(address)
+                    .districtID(adapter.getSelectedItem().getDistrictID())
+                    .type(CreateNewObjectEvent.Type.location);
+
+            EventBus.getDefault().post(builder.build());
+            //((AddBaseActivity)getActivity()).goToNextPage();
         }
     }
 
@@ -109,8 +141,44 @@ public class AddIssueSecondFragment extends AddIssueBaseFragment implements OnMa
                         new MarkerOptions()
                                 .position(new LatLng(adapter.getSelectedItem().getLat(), adapter.getSelectedItem().getLon()))
                                 .draggable(true));
+                getAddressForLocation(adapter.getSelectedItem().getLat(), adapter.getSelectedItem().getLon());
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(adapter.getSelectedItem().getLat(), adapter.getSelectedItem().getLon()), 12));
             }
         }
+    }
+
+    private void getAddressForLocation(double lat, double lon) {
+        Map<String, String> options = new HashMap<String, String>();
+        options.put("x", Double.toString(lon));
+        options.put("y", Double.toString(lat));
+        options.put("n", "1");
+        DlApplication.poznanApi.getAddressForLocation(options, new Callback<ReverseGeocoding>() {
+            @Override
+            public void success(ReverseGeocoding reverseGeocodings, Response response) {
+                if(reverseGeocodings.getFeatures() != null && reverseGeocodings.getFeatures().size() > 0) {
+                    if(reverseGeocodings.getFeatures().get(0).getProperty() != null) {
+                        ReverseGeocoding.Property property = reverseGeocodings.getFeatures().get(0).getProperty();
+                        Log.d(TAG, "cityApi get success: " + response + " getAddressForLocation: " + reverseGeocodings.getFeatures().get(0).getProperty().toString());
+                        updateMarkerWithAddress(property);
+                    }
+                }
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d(TAG, "cityApi get error: " + error.toString());
+            }
+        });
+    }
+
+    @UiThread
+    void updateMarkerWithAddress(ReverseGeocoding.Property property) {
+        String streetName = property.getImie() != null ? property.getImie() : property.getNazwisko();
+        streetName = String.valueOf(streetName.charAt(0)).toUpperCase() + streetName.substring(1, streetName.length());
+        address = property.getTyp()+streetName +" "+ property.getNr();
+        mMarker.setTitle(address);
+        mMarker.showInfoWindow();
     }
 
     @Override
@@ -130,6 +198,7 @@ public class AddIssueSecondFragment extends AddIssueBaseFragment implements OnMa
                 //We allow only one marker
                 map.clear();
                 mMarker = map.addMarker(new MarkerOptions().position(point).draggable(true));
+                getAddressForLocation(point.latitude, point.longitude);
                 spinner.setSelection(0);
             }
         });

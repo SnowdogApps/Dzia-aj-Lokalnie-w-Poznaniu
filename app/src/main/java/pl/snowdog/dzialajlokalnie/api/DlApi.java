@@ -6,6 +6,8 @@ import pl.snowdog.dzialajlokalnie.model.Category;
 import pl.snowdog.dzialajlokalnie.model.District;
 import pl.snowdog.dzialajlokalnie.model.Event;
 import pl.snowdog.dzialajlokalnie.model.Issue;
+import pl.snowdog.dzialajlokalnie.model.NewEvent;
+import pl.snowdog.dzialajlokalnie.model.NewIssue;
 import pl.snowdog.dzialajlokalnie.model.Session;
 import pl.snowdog.dzialajlokalnie.model.Vote;
 import retrofit.Callback;
@@ -13,6 +15,7 @@ import retrofit.http.Body;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
+import retrofit.http.POST;
 import retrofit.http.PUT;
 import retrofit.http.Path;
 import retrofit.http.Query;
@@ -24,7 +27,9 @@ public class DlApi {
 
     //    private static final String API_URL = "http://192.168.1.95/dzialaj-lokalnie-api/index.php/";
     public static final String API_URL = "http://dzialajlokalnie.snowdog.pro";
+    public static final String CITY_API_URL = "http://www.poznan.pl/";
     public static final String PHOTO_THUMB_URL = API_URL + "/photos/%s_thumb.jpeg";
+
 
     public interface Base {
         @GET("/categories")
@@ -40,6 +45,10 @@ public class DlApi {
                        @Query("categories") String categories,
                        @Query("orderBy") String sort,
                        Callback<List<Issue>> cb);
+
+        @POST("/issues/new")
+        void postIssue(@Body NewIssue issue,
+                       Callback<Issue.IssueWrapper> cb);
     }
 
     public interface EventApi {
@@ -48,7 +57,12 @@ public class DlApi {
                        @Query("categories") String categories,
                        @Query("orderBy") String sort,
                        Callback<List<Event>> cb);
+
+        @POST("/events/new")
+        void postEvent(@Body NewEvent event,
+                       Callback<Event.EventWrapper> cb);
     }
+
 
     public interface VoteApi {
 

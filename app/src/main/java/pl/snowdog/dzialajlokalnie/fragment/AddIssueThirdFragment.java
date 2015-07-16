@@ -32,7 +32,9 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Random;
 
+import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.R;
+import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
 import pl.snowdog.dzialajlokalnie.util.FileChooserUtil;
 
 /**
@@ -52,6 +54,18 @@ public class AddIssueThirdFragment extends AddIssueBaseFragment {
     FloatingActionsMenu fab;
 
     private Uri mFileUri;
+
+    @Click(R.id.btnNext)
+    void onNextButtonClicked() {
+        if(validateInput()) {
+            CreateNewObjectEvent.Builder builder = new CreateNewObjectEvent.Builder()
+                    .PHOTO("abc")
+                    .type(CreateNewObjectEvent.Type.photo);
+
+            EventBus.getDefault().post(builder.build());
+            //((AddBaseActivity)getActivity()).goToNextPage();
+        }
+    }
 
     @Click(R.id.fab_new_photo)
     void onTakePhotoClicked() {

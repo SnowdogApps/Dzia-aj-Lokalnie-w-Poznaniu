@@ -15,6 +15,10 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.activeandroid.ActiveAndroid;
+import com.activeandroid.query.Delete;
+import com.activeandroid.query.Select;
+
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OptionsItem;
@@ -31,6 +35,15 @@ import pl.snowdog.dzialajlokalnie.fragment.AddIssueFirstFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.AddIssueFourthFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.AddIssueSecondFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.AddIssueThirdFragment_;
+import pl.snowdog.dzialajlokalnie.model.Category;
+import pl.snowdog.dzialajlokalnie.model.Event;
+import pl.snowdog.dzialajlokalnie.model.Filter;
+import pl.snowdog.dzialajlokalnie.model.Issue;
+import pl.snowdog.dzialajlokalnie.model.NewEvent;
+import pl.snowdog.dzialajlokalnie.model.NewIssue;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 import static pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent.Type.title;
 
@@ -61,10 +74,40 @@ public class AddIssueActivity extends AddBaseActivity {
         });
     }
 
-
-    @Override
-    public void onObjectCreated() {
-        Toast.makeText(this, "We have working object yeah!", Toast.LENGTH_SHORT).show();
+    public void onEvent(CreateNewObjectEvent event) {
+        switch (event.getType()) {
+            case category:
+                categoryIDs = event.getCategoryIDs();
+                postIssue();
+                return;
+        }
+        super.onEvent(event);
     }
+
+    private void postIssue() {
+        NewIssue newIssue = new NewIssue();
+        newIssue.setTitle(title);
+        newIssue.setDescription(description);
+        newIssue.setAddress(address);
+        newIssue.setLocation(Double.toString(lat) + "," + Double.toString(lon));
+        newIssue.setCategoryID(categoryIDs);
+        newIssue.setDistrictID(districtID);
+
+
+        DlApplication.issueApi.postIssue(newIssue, new Callback<Issue.IssueWrapper>() {
+            @Override
+            public void success(Issue.IssueWrapper issueWrapper, Response response) {
+                Log.d(TAG, "issueApi post success: " + response + " newIssueFromApi: " + issueWrapper.toString());
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d(TAG, "issueApi post error: " + error);
+            }
+        });
+
+
+    }
+
 
 }

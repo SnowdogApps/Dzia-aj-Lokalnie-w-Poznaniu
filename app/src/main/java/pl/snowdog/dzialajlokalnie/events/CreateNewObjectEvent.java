@@ -1,5 +1,7 @@
 package pl.snowdog.dzialajlokalnie.events;
 
+import java.util.List;
+
 import pl.snowdog.dzialajlokalnie.model.DateWrapper;
 
 /**
@@ -16,7 +18,7 @@ public class CreateNewObjectEvent {
     DateWrapper startDate;
     DateWrapper endDate;
     String address;
-    String categoryIDs;
+    List<Integer> categoryIDs;
     String PHOTO; //// TODO: 2015-07-15
 
     public static class Builder {
@@ -29,7 +31,7 @@ public class CreateNewObjectEvent {
         double lat;
         double lon;
         String address;
-        String categoryIDs;
+        List<Integer> categoryIDs;
         String PHOTO;
 
         public Builder type(Type type) {this.type = type; return this;}
@@ -41,7 +43,7 @@ public class CreateNewObjectEvent {
         public Builder lat(double lat) {this.lat = lat; return this;}
         public Builder lon(double lon) {this.lon = lon; return this;}
         public Builder address(String address) {this.address = address; return this;}
-        public Builder categoryIDs(String categoryIDs) {this.categoryIDs = categoryIDs; return this;}
+        public Builder categoryIDs(List<Integer> categoryIDs) {this.categoryIDs = categoryIDs; return this;}
         public Builder PHOTO(String PHOTO) {this.PHOTO = PHOTO; return this;}
 
         //return fully build object
@@ -139,11 +141,11 @@ public class CreateNewObjectEvent {
         this.address = address;
     }
 
-    public String getCategoryIDs() {
+    public List<Integer> getCategoryIDs() {
         return categoryIDs;
     }
 
-    public void setCategoryIDs(String categoryIDs) {
+    public void setCategoryIDs(List<Integer> categoryIDs) {
         this.categoryIDs = categoryIDs;
     }
 
