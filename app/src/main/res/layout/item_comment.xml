@@ -7,23 +7,24 @@
         <variable name="comment" type="pl.snowdog.dzialajlokalnie.model.Comment"/>
     </data>
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="@{comment.parentType > 0 ? View.VISIBLE : View.GONE}"
         >
 
         <View
+            android:id="@+id/indent"
             android:layout_width="@dimen/comment_indent"
             android:layout_height="1dp"
+            android:layout_alignParentLeft="true"
             android:visibility="@{comment.parentType == 3 ? View.VISIBLE : View.GONE}"/>
 
         <include layout="@layout/rating_widget"
             android:id="@+id/ratingWidget"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_toRightOf="@+id/indent"
             android:layout_alignParentTop="true"
             bind:rating="@{comment.commentRating}"
             />
@@ -32,6 +33,8 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/ratingWidget"
+            android:layout_alignParentRight="true"
             android:paddingLeft="@dimen/item_padding">
 
             <LinearLayout
@@ -71,5 +74,5 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 </layout>
