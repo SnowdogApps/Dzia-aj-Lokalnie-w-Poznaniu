@@ -13,6 +13,7 @@ import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.events.CommentClickedEvent;
 import pl.snowdog.dzialajlokalnie.events.CommentVoteEvent;
 import pl.snowdog.dzialajlokalnie.events.NewCommentEvent;
+import pl.snowdog.dzialajlokalnie.events.RefreshEvent;
 import pl.snowdog.dzialajlokalnie.events.VoteEvent;
 import pl.snowdog.dzialajlokalnie.model.Comment;
 import pl.snowdog.dzialajlokalnie.model.Vote;
@@ -62,6 +63,11 @@ public class CommentsFragment extends ListFragment {
 
     public void onEvent(CommentClickedEvent event) {
         Log.d(TAG, "onEvent " + event);
+    }
+
+    public void onEvent(RefreshEvent event) {
+        Log.d(TAG, "onEvent " + event);
+        refreshItems();
     }
 
     public void onEvent(CommentVoteEvent event) {

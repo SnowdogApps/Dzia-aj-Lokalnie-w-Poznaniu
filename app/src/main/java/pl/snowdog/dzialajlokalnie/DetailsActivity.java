@@ -16,6 +16,8 @@ import com.squareup.picasso.Picasso;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.OptionsItem;
+import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
 
 import de.greenrobot.event.EventBus;
@@ -23,6 +25,7 @@ import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.databinding.AddCommentWidgetBinding;
 import pl.snowdog.dzialajlokalnie.events.CommentClickedEvent;
 import pl.snowdog.dzialajlokalnie.events.NewCommentEvent;
+import pl.snowdog.dzialajlokalnie.events.RefreshEvent;
 import pl.snowdog.dzialajlokalnie.events.SetTitleEvent;
 import pl.snowdog.dzialajlokalnie.fragment.CommentsFragment;
 import pl.snowdog.dzialajlokalnie.fragment.CommentsFragment_;
@@ -31,6 +34,7 @@ import pl.snowdog.dzialajlokalnie.fragment.IssueFragment_;
 import pl.snowdog.dzialajlokalnie.model.Comment;
 
 @EActivity(R.layout.activity_details)
+@OptionsMenu(R.menu.menu_issue)
 public class DetailsActivity extends BaseActivity {
 
     private static final String TAG = "DetailsActivity";
@@ -160,5 +164,10 @@ public class DetailsActivity extends BaseActivity {
     protected void commentResult(Comment comment) {
         binding.etComment.setText("");
         EventBus.getDefault().post(new NewCommentEvent(comment));
+    }
+
+    @OptionsItem(R.id.action_refresh)
+    void refresh() {
+        EventBus.getDefault().post(new RefreshEvent());
     }
 }

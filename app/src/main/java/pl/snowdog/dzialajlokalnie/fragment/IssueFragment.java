@@ -16,6 +16,7 @@ import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.databinding.FragmentIssueBinding;
 import pl.snowdog.dzialajlokalnie.events.IssueVoteEvent;
+import pl.snowdog.dzialajlokalnie.events.RefreshEvent;
 import pl.snowdog.dzialajlokalnie.events.SetTitleEvent;
 import pl.snowdog.dzialajlokalnie.events.VoteEvent;
 import pl.snowdog.dzialajlokalnie.model.Issue;
@@ -83,6 +84,11 @@ public class IssueFragment extends BaseFragment {
     @Override
     protected boolean isImplementingEventBus() {
         return true;
+    }
+
+    public void onEvent(RefreshEvent event) {
+        Log.d(TAG, "onEvent " + event);
+        getIssue(objId);
     }
 
     public void onEvent(IssueVoteEvent event) {
