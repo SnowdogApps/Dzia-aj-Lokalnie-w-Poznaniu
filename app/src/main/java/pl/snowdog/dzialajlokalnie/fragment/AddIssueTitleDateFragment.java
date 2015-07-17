@@ -1,8 +1,13 @@
 package pl.snowdog.dzialajlokalnie.fragment;
 
+import android.databinding.DataBindingUtil;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -19,6 +24,7 @@ import java.util.Date;
 
 import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.R;
+import pl.snowdog.dzialajlokalnie.databinding.FragmentAddIssueTitleDateBinding;
 import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
 import pl.snowdog.dzialajlokalnie.events.DateSetEvent;
 import pl.snowdog.dzialajlokalnie.model.DateWrapper;
@@ -32,6 +38,10 @@ public class AddIssueTitleDateFragment extends AddIssueBaseFragment {
 
     public static final int MODE_EVENT = 0;
     public static final int MODE_ISSUE = 1;
+
+
+    @ViewById(R.id.rootView)
+    View rootView;
 
     @ViewById(R.id.tvDateStatus)
     TextView tvDateStatus;
@@ -59,6 +69,9 @@ public class AddIssueTitleDateFragment extends AddIssueBaseFragment {
 
     private DateWrapper startDate;
     private DateWrapper endDate;
+
+    @FragmentArg
+    CreateNewObjectEvent mEditedObject;
 
     @Click(R.id.btnNext)
     void onNextButtonClicked() {
@@ -140,6 +153,7 @@ public class AddIssueTitleDateFragment extends AddIssueBaseFragment {
         }
     }
 
+
     @AfterViews
     void afterViewsCreated() {
 
@@ -147,6 +161,13 @@ public class AddIssueTitleDateFragment extends AddIssueBaseFragment {
             vEventContainer.setVisibility(View.VISIBLE);
         }
         btnPrev.setVisibility(View.GONE);
+
+        FragmentAddIssueTitleDateBinding binding = DataBindingUtil.bind(rootView);
+        binding.setNewObject(mEditedObject);
+
+        if(mEditedObject != null) {
+            updateDateTextView();
+        }
         //updateNextButton();
     }
 
@@ -170,13 +191,19 @@ public class AddIssueTitleDateFragment extends AddIssueBaseFragment {
             }
             startDate.setDate(event.getStartDate());
         }
+        updateDateTextView();
+        /*Toast.makeText(getActivity(),"onDateSet: "+event.toString(),
+                Toast.LENGTH_SHORT).show();*/
+    }
+
+    private void updateDateTextView() {
+        if(startDate == null) return;
+
         if(startDate.getDate().compareTo(endDate.getDate()) != 0) {
             tvDateStatus.setText(getString(R.string.date)+ " "+startDate.getDateString(getActivity())+ " - "+endDate.getDateString(getActivity()));
         } else {
             tvDateStatus.setText(getString(R.string.date)+ " "+startDate.getDateString(getActivity()));
         }
-        /*Toast.makeText(getActivity(),"onDateSet: "+event.toString(),
-                Toast.LENGTH_SHORT).show();*/
     }
 
 

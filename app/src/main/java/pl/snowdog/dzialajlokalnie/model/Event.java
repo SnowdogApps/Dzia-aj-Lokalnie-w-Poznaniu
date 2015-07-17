@@ -4,11 +4,12 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
+import java.io.Serializable;
 import java.util.Date;
 
 
 @Table(name = "Events")
-public class Event extends Model {
+public class Event extends Model implements Serializable {
 
     @Column
     private int eventID;

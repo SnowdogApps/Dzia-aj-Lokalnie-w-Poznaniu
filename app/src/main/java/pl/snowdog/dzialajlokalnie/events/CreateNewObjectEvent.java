@@ -1,5 +1,6 @@
 package pl.snowdog.dzialajlokalnie.events;
 
+import java.io.Serializable;
 import java.util.List;
 
 import pl.snowdog.dzialajlokalnie.model.DateWrapper;
@@ -7,7 +8,7 @@ import pl.snowdog.dzialajlokalnie.model.DateWrapper;
 /**
  * Created by chomi3 on 2015-07-15.
  */
-public class CreateNewObjectEvent {
+public class CreateNewObjectEvent implements Serializable {
     public enum Type{title, date, location, image, category};
     Type type;
     String title;

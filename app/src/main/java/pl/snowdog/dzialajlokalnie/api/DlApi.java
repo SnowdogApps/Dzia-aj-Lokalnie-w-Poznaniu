@@ -49,6 +49,11 @@ public class DlApi {
         @POST("/issues/new")
         void postIssue(@Body NewIssue issue,
                        Callback<Issue.IssueWrapper> cb);
+
+        @PUT("/issues/{id}/edit")
+        void putIssue(@Body NewIssue issue,
+                      @Path("id") int issueId,
+                      Callback<Issue.IssueWrapper> cb);
     }
 
     public interface EventApi {
@@ -61,6 +66,11 @@ public class DlApi {
         @POST("/events/new")
         void postEvent(@Body NewEvent event,
                        Callback<Event.EventWrapper> cb);
+
+        @POST("/events/{id}/edit")
+        void putEvent(@Body NewEvent event,
+                      @Path("id") int issueId,
+                      Callback<Event.EventWrapper> cb);
     }
 
 

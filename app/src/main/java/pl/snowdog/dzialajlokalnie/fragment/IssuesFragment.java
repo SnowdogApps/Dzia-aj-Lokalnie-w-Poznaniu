@@ -1,11 +1,13 @@
 package pl.snowdog.dzialajlokalnie.fragment;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import org.androidannotations.annotations.EFragment;
 
 import java.util.List;
 
+import pl.snowdog.dzialajlokalnie.AddIssueActivity_;
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.adapter.IssuesAdapter;
 import pl.snowdog.dzialajlokalnie.events.IssueRateEvent;
@@ -47,8 +49,8 @@ public class IssuesFragment extends ListFragment {
 
     public void onEvent(IssueRateEvent event) {
         Log.d(TAG, "onEvent " + event);
-
-        vote(Vote.ParentType.issues, event.getIssueId(), event.getVote() == IssueRateEvent.Vote.UP ? 1 : -1);
+        AddIssueActivity_.intent(this).mEditedIssue(adapter.getIssues().get(0)).start();
+        //vote(Vote.ParentType.issues, event.getIssueId(), event.getVote() == IssueRateEvent.Vote.UP ? 1 : -1);
     }
 
     @Override

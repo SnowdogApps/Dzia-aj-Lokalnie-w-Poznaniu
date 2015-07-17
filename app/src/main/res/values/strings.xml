@@ -53,6 +53,8 @@
     <string name="choose">Wybierz</string>
     <string name="from_gallery">Z galerii</string>
     <string name="take_photo">Nowe zdjęcie</string>
+    <string name="edit_issue">Edycja zgłoszenia</string>
+    <string name="edit_event">Edycja wydarzenia</string>
 
 
     <plurals name="votes">

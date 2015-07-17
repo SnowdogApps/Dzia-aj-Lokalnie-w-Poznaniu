@@ -10,6 +10,7 @@ import com.activeandroid.query.Select;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
@@ -32,6 +33,9 @@ public class AddIssueCategoriesFragment extends AddIssueBaseFragment {
     List<Category> lCategories = new ArrayList<>();
     ArrayList<String> lCategoriesLabels = new ArrayList<>();;
     ArrayAdapter<String> adapter;
+
+    @FragmentArg
+    CreateNewObjectEvent mEditedObject;
 
     @Click(R.id.btnNext)
     void onNextButtonClicked() {
@@ -78,5 +82,10 @@ public class AddIssueCategoriesFragment extends AddIssueBaseFragment {
         adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_multiple_choice, lCategoriesLabels);
         lvCategories.setAdapter(adapter);
 
+        //EDIT MODE
+        if(mEditedObject != null) {
+
+            //TODO set selected categories in spinner
+        }
     }
 }

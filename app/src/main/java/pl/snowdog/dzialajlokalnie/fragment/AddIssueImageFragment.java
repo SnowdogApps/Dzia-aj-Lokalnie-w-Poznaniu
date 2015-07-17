@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
@@ -14,6 +15,7 @@ import com.squareup.picasso.Picasso;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.ViewById;
 
@@ -24,6 +26,7 @@ import java.util.Random;
 
 import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.R;
+import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
 import pl.snowdog.dzialajlokalnie.util.FileChooserUtil;
 
@@ -34,6 +37,7 @@ import pl.snowdog.dzialajlokalnie.util.FileChooserUtil;
 public class AddIssueImageFragment extends AddIssueBaseFragment {
     public static final int PICK_FROM_FILE = 1231;
     public static final int TAKE_PICTURE = 1234;
+    private static final String TAG = "AddIssueImageFr";
 
     private String mTmpGalleryPicturePath;
 
@@ -44,6 +48,9 @@ public class AddIssueImageFragment extends AddIssueBaseFragment {
     FloatingActionsMenu fab;
 
     private Uri mFileUri;
+
+    @FragmentArg
+    CreateNewObjectEvent mEditedObject;
 
     @Click(R.id.btnNext)
     void onNextButtonClicked() {
@@ -125,6 +132,13 @@ public class AddIssueImageFragment extends AddIssueBaseFragment {
 
     @AfterViews
     void afterViews() {
-
+        //EDIT MODE
+        if(mEditedObject != null) {
+            Picasso.with(getActivity())
+                    .load(String.format(DlApi.PHOTO_THUMB_URL, mEditedObject.getImage()))
+                    .error(
+                    R.drawable.ic_editor_insert_emoticon).into(ivPreview);
+            Log.d(TAG, "edtdbg image: "+mEditedObject.getImage());
+        }
     }
 }

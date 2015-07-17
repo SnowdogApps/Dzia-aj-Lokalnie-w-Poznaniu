@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.ItemSelect;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
@@ -53,7 +54,7 @@ import retrofit.client.Response;
 @EFragment(R.layout.fragment_add_issue_location)
 public class AddIssueLocationFragment extends AddIssueBaseFragment implements OnMapReadyCallback, GoogleMap.OnMyLocationChangeListener, GoogleMap.OnCameraChangeListener {
 
-    private static final String TAG = "AddIssueLocationFragment";
+    private static final String TAG = "AddIssueLocationFr";
     @ViewById
     MapView mapView;
     GoogleMap map;
@@ -68,6 +69,9 @@ public class AddIssueLocationFragment extends AddIssueBaseFragment implements On
     private Bundle mSavedInstanceState;
 
     String address;
+
+    @FragmentArg
+    CreateNewObjectEvent mEditedObject;
 
 
     @Nullable
@@ -228,6 +232,15 @@ public class AddIssueLocationFragment extends AddIssueBaseFragment implements On
                 getAddressForLocation(marker.getPosition().latitude, marker.getPosition().longitude);
             }
         });
+
+        //EDIT Mode
+        if(mEditedObject != null) {
+            //TODO set district in spinner
+            mMarker = map.addMarker(new MarkerOptions().position(new LatLng(mEditedObject.getLat(), mEditedObject.getLat())).draggable(true));
+            getAddressForLocation(mEditedObject.getLat(), mEditedObject.getLat());
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mEditedObject.getLat(), mEditedObject.getLat()), 12));
+            Log.d(TAG, "edtdbg location: lat: "+mEditedObject.getLat()+ " lon: "+mEditedObject.getLon());
+        }
     }
 
     @Override

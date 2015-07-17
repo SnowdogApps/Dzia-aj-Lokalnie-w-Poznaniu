@@ -1,12 +1,15 @@
 package pl.snowdog.dzialajlokalnie;
 
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
@@ -29,17 +32,41 @@ import retrofit.client.Response;
 public class AddIssueActivity extends AddBaseActivity {
     private static final String TAG = "AddIssueActivity";
 
+    @Extra
+    Issue mEditedIssue;
+
     @Override
     protected void setupViewPager(ViewPager viewPager) {
         Log.d(TAG, "setupViewPager");
         Locale l = Locale.getDefault();
         Adapter adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(new AddIssueTitleDateFragment_().builder().mAddingMode(AddIssueTitleDateFragment.MODE_ISSUE).build(), getString(R.string.title_section1).toUpperCase(l));
-        adapter.addFragment(new AddIssueLocationFragment_(), getString(R.string.title_section2).toUpperCase(l));
-        adapter.addFragment(new AddIssueImageFragment_(), getString(R.string.title_section3).toUpperCase(l));
-        adapter.addFragment(new AddIssueCategoriesFragment_(), getString(R.string.title_section3).toUpperCase(l));
+        adapter.addFragment(new AddIssueTitleDateFragment_().builder()
+                .mEditedObject(mEditedIssue != null ? new CreateNewObjectEvent.Builder()
+                        .title(mEditedIssue.getTitle())
+                        .description(mEditedIssue.getDescription())
+                        .build() : null)
+                .mAddingMode(AddIssueTitleDateFragment.MODE_ISSUE)
+                .build(), getString(R.string.title_section1).toUpperCase(l));
+        adapter.addFragment(new AddIssueLocationFragment_().builder()
+                .mEditedObject(mEditedIssue != null ? new CreateNewObjectEvent.Builder()
+                        .lat(mEditedIssue.getLat())
+                        .lon(mEditedIssue.getLon())
+                        .districtID(mEditedIssue.getDistrictID())
+                        .address(mEditedIssue.getAddress())
+                        .build() : null)
+                .build(), getString(R.string.title_section2).toUpperCase(l));
+        adapter.addFragment(new AddIssueImageFragment_().builder()
+                .mEditedObject(mEditedIssue != null ? new CreateNewObjectEvent.Builder()
+                        .image(mEditedIssue.getPhotoIssueUri())
+                        .build() : null)
+                .build(), getString(R.string.title_section3).toUpperCase(l));
+        adapter.addFragment(new AddIssueCategoriesFragment_().builder()
+                .mEditedObject(mEditedIssue != null ? new CreateNewObjectEvent.Builder()
+                        .categoryIDs(new ArrayList<Integer>())
+                        .build() : null)
+                .build(), getString(R.string.title_section3).toUpperCase(l));
         viewPager.setAdapter(adapter);
-
+        Log.d(TAG, "edtdbg categories: "+mEditedIssue.getCategoriesText()+ " ids: "+mEditedIssue.getCategoryID());
         //Disable swipe events for viewpager
         viewPager.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -49,26 +76,30 @@ public class AddIssueActivity extends AddBaseActivity {
         });
     }
 
+    @Override
+    protected void afterView() {
+        super.afterView();
+        if(mEditedIssue != null) {
+            getSupportActionBar().setTitle(getString(R.string.edit_issue));
+        }
+    }
+
     public void onEvent(CreateNewObjectEvent event) {
         switch (event.getType()) {
             case category:
                 categoryIDs = event.getCategoryIDs();
-                postIssue();
+                if(mEditedIssue != null) {
+                    putIssue();
+                } else {
+                    postIssue();
+                }
                 return;
         }
         super.onEvent(event);
     }
 
     private void postIssue() {
-        NewIssue newIssue = new NewIssue();
-        newIssue.setTitle(title);
-        newIssue.setDescription(description);
-        newIssue.setAddress(address);
-        newIssue.setLocation(Double.toString(lat) + "," + Double.toString(lon));
-        newIssue.setCategoryID(categoryIDs);
-        newIssue.setDistrictID(districtID);
-
-
+        NewIssue newIssue = createNewIssueObject();
         DlApplication.issueApi.postIssue(newIssue, new Callback<Issue.IssueWrapper>() {
             @Override
             public void success(Issue.IssueWrapper issueWrapper, Response response) {
@@ -80,8 +111,33 @@ public class AddIssueActivity extends AddBaseActivity {
                 Log.d(TAG, "issueApi post error: " + error);
             }
         });
+    }
 
+    private void putIssue() {
+        NewIssue newIssue = createNewIssueObject();
+        DlApplication.issueApi.putIssue(newIssue, mEditedIssue.getIssueID(), new Callback<Issue.IssueWrapper>() {
+            @Override
+            public void success(Issue.IssueWrapper issueWrapper, Response response) {
+                Log.d(TAG, "issueApi post success: " + response + " newIssueFromApi: " + issueWrapper.toString());
+            }
 
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d(TAG, "issueApi post error: " + error);
+            }
+        });
+    }
+
+    @NonNull
+    private NewIssue createNewIssueObject() {
+        NewIssue newIssue = new NewIssue();
+        newIssue.setTitle(title);
+        newIssue.setDescription(description);
+        newIssue.setAddress(address);
+        newIssue.setLocation(Double.toString(lat) + "," + Double.toString(lon));
+        newIssue.setCategoryID(categoryIDs);
+        newIssue.setDistrictID(districtID);
+        return newIssue;
     }
 
 
