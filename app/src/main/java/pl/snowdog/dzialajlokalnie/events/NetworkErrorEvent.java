@@ -7,4 +7,9 @@ public class NetworkErrorEvent {
 
     public NetworkErrorEvent() {
     }
+
+    @Override
+    public String toString() {
+        return "NetworkErrorEvent{}";
+    }
 }

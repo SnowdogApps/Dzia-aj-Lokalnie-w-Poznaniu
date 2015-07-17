@@ -47,8 +47,17 @@
                 android:layout_height="wrap_content"
                 style="@style/textView_title"
                 android:ellipsize="end"
-                android:text="@{issue.title}"/>
+                android:text="@{issue.title}"
+                android:visibility="gone"/>
 
+            <TextView
+                android:id="@+id/tvDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="3"
+                style="@style/textView_desc"
+                android:ellipsize="end"
+                android:text="@{issue.description}"/>
         </LinearLayout>
 
         <include layout="@layout/item_footer"
@@ -59,17 +68,12 @@
             android:layout_alignBottom="@+id/ivAvatar"
             bind:footerText='@{@plurals/votes(issue.votesCount, issue.votesCount) + ", " + @plurals/comments(issue.commentsCount, issue.commentsCount) + ", " + @string/tags(issue.categoriesText)}'/>
 
-        <TextView
-            android:id="@+id/tvDesc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+
+        <View
             android:layout_below="@+id/ivAvatar"
-            android:lines="3"
-            android:padding="@dimen/item_padding"
-            android:background="@color/background"
-            style="@style/textView_item_desc"
-            android:ellipsize="end"
-            android:text="@{issue.description}"/>
+            android:background="?attr/colorPrimary"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            />
     </RelativeLayout>
 </layout>

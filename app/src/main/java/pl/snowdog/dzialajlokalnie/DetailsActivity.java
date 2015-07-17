@@ -67,6 +67,6 @@ public class DetailsActivity extends BaseActivity {
         //TODO only collapsingToolbarLayout works but title is at the bottom (should be sticked to the top)
 //        getSupportActionBar().setTitle(event.getTitle());
 //        toolbar.setTitle(event.getTitle());
-//        collapsingToolbarLayout.setTitle(event.getTitle());
+        collapsingToolbarLayout.setTitle(event.getTitle());
     }
 }

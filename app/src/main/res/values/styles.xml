@@ -14,6 +14,11 @@
         <item name="android:textColor">@color/text_inverse</item>
     </style>
 
+    <style name="textView_desc">
+        <item name="android:textSize">@dimen/title_text</item>
+        <item name="android:textColor">@color/text_inverse</item>
+    </style>
+
     <style name="textView_item_title_bold">
         <item name="android:textSize">@dimen/title_text</item>
         <item name="android:textColor">@color/text</item>
