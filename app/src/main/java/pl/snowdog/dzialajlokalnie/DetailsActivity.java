@@ -6,7 +6,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 import org.androidannotations.annotations.Click;
@@ -21,8 +20,6 @@ import pl.snowdog.dzialajlokalnie.fragment.CommentsFragment;
 import pl.snowdog.dzialajlokalnie.fragment.CommentsFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.IssueFragment;
 import pl.snowdog.dzialajlokalnie.fragment.IssueFragment_;
-import pl.snowdog.dzialajlokalnie.fragment.IssuesFragment_;
-import pl.snowdog.dzialajlokalnie.model.Issue;
 
 @EActivity(R.layout.activity_details)
 public class DetailsActivity extends BaseActivity {
@@ -93,5 +90,16 @@ public class DetailsActivity extends BaseActivity {
 //        getSupportActionBar().setTitle(event.getTitle());
 //        toolbar.setTitle(event.getTitle());
         collapsingToolbarLayout.setTitle(event.getTitle());
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.d(TAG, "back button pressed");
+        if (binding.etComment.hasFocus()) {
+            binding.etComment.clearFocus();
+            focusBackground.setVisibility(View.INVISIBLE);
+        } else {
+            super.onBackPressed();
+        }
     }
 }
