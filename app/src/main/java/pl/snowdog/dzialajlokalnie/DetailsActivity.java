@@ -5,8 +5,11 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
@@ -76,6 +79,20 @@ public class DetailsActivity extends BaseActivity {
                 }
             }
         });
+
+        binding.etComment.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                Log.d(TAG, "onEditorAction " + actionId);
+                if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    unfocus();
+                    focusBackground.setVisibility(View.INVISIBLE);
+                    return true;
+                }
+
+                return false;
+            }
+        });
     }
 
     @Click(R.id.focus_background)
@@ -95,6 +112,8 @@ public class DetailsActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         Log.d(TAG, "back button pressed");
+
+        //TODO onBackPressed does not catch closing the soft keyboard. Possible solution: http://tech.leolink.net/2014/02/a-hack-to-catch-soft-keyboard-showhide.html
         if (binding.etComment.hasFocus()) {
             binding.etComment.clearFocus();
             focusBackground.setVisibility(View.INVISIBLE);
