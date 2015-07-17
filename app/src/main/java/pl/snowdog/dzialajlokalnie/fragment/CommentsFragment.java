@@ -13,6 +13,7 @@ import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.events.CommentClickedEvent;
 import pl.snowdog.dzialajlokalnie.events.CommentVoteEvent;
 import pl.snowdog.dzialajlokalnie.events.IssueVoteEvent;
+import pl.snowdog.dzialajlokalnie.events.NewCommentEvent;
 import pl.snowdog.dzialajlokalnie.events.VoteEvent;
 import pl.snowdog.dzialajlokalnie.model.Comment;
 import pl.snowdog.dzialajlokalnie.model.Vote;
@@ -67,6 +68,12 @@ public class CommentsFragment extends ListFragment {
         Log.d(TAG, "onEvent " + event);
 
         vote(DlApi.ParentType.comments, event.getId(), event.getVote() == VoteEvent.Vote.UP ? 1 : -1);
+    }
+
+    public void onEvent(NewCommentEvent event) {
+        adapter.getComments().add(event.getComment());
+        adapter.notifyItemInserted(adapter.getItemCount() - 1);
+        recyclerView.scrollToPosition(adapter.getItemCount()-1);
     }
 
     @Override

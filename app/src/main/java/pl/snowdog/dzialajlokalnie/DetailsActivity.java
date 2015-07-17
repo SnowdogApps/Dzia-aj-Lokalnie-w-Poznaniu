@@ -16,13 +16,16 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
 
+import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.databinding.AddCommentWidgetBinding;
+import pl.snowdog.dzialajlokalnie.events.NewCommentEvent;
 import pl.snowdog.dzialajlokalnie.events.SetTitleEvent;
 import pl.snowdog.dzialajlokalnie.fragment.CommentsFragment;
 import pl.snowdog.dzialajlokalnie.fragment.CommentsFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.IssueFragment;
 import pl.snowdog.dzialajlokalnie.fragment.IssueFragment_;
+import pl.snowdog.dzialajlokalnie.model.Comment;
 
 @EActivity(R.layout.activity_details)
 public class DetailsActivity extends BaseActivity {
@@ -85,6 +88,7 @@ public class DetailsActivity extends BaseActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 Log.d(TAG, "onEditorAction " + actionId);
                 if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    send();
                     unfocus();
                     return true;
                 }
@@ -113,6 +117,12 @@ public class DetailsActivity extends BaseActivity {
         imm.hideSoftInputFromWindow(binding.etComment.getWindowToken(), 0);
     }
 
+    @Click(R.id.bt_send)
+    protected void send() {
+        comment(objType, objId, 0, binding.etComment.getText().toString());
+        unfocus();
+    }
+
     public void onEvent(SetTitleEvent event) {
         //TODO only collapsingToolbarLayout works but title is at the bottom (should be sticked to the top)
 //        getSupportActionBar().setTitle(event.getTitle());
@@ -120,4 +130,9 @@ public class DetailsActivity extends BaseActivity {
         collapsingToolbarLayout.setTitle(event.getTitle());
     }
 
+    @Override
+    protected void commentResult(Comment comment) {
+        binding.etComment.setText("");
+        EventBus.getDefault().post(new NewCommentEvent(comment));
+    }
 }

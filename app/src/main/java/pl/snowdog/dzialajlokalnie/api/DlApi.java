@@ -13,6 +13,7 @@ import retrofit.Callback;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
+import retrofit.http.POST;
 import retrofit.http.PUT;
 import retrofit.http.Path;
 import retrofit.http.Query;
@@ -61,6 +62,12 @@ public class DlApi {
         void getComments(@Path("parentType") String parentType,
                        @Path("id") int id,
                        Callback<List<Comment>> cb);
+
+        @FormUrlEncoded
+        @POST("/comments/new")
+        void comment(@Field("parentType") int parentType, @Field("parentID") int parentID,
+                     @Field("solution") int solution, @Field("text") String text,
+                     Callback<Comment> cb);
     }
     public interface VoteApi {
 
