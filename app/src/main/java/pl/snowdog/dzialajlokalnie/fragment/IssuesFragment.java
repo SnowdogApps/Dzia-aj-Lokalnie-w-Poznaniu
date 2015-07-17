@@ -49,8 +49,8 @@ public class IssuesFragment extends ListFragment {
 
     public void onEvent(IssueRateEvent event) {
         Log.d(TAG, "onEvent " + event);
-        AddIssueActivity_.intent(this).mEditedIssue(adapter.getIssues().get(0)).start();
-        //vote(Vote.ParentType.issues, event.getIssueId(), event.getVote() == IssueRateEvent.Vote.UP ? 1 : -1);
+        //AddIssueActivity_.intent(this).mEditedIssue(adapter.getIssues().get(0)).start();
+        vote(Vote.ParentType.issues, event.getIssueId(), event.getVote() == IssueRateEvent.Vote.UP ? 1 : -1);
     }
 
     @Override

@@ -40,13 +40,15 @@ public class AddIssueActivity extends AddBaseActivity {
         Log.d(TAG, "setupViewPager");
         Locale l = Locale.getDefault();
         Adapter adapter = new Adapter(getSupportFragmentManager());
+
         adapter.addFragment(new AddIssueTitleDateFragment_().builder()
                 .mEditedObject(mEditedIssue != null ? new CreateNewObjectEvent.Builder()
                         .title(mEditedIssue.getTitle())
                         .description(mEditedIssue.getDescription())
                         .build() : null)
                 .mAddingMode(AddIssueTitleDateFragment.MODE_ISSUE)
-                .build(), getString(R.string.title_section1).toUpperCase(l));
+                .build());
+
         adapter.addFragment(new AddIssueLocationFragment_().builder()
                 .mEditedObject(mEditedIssue != null ? new CreateNewObjectEvent.Builder()
                         .lat(mEditedIssue.getLat())
@@ -54,21 +56,22 @@ public class AddIssueActivity extends AddBaseActivity {
                         .districtID(mEditedIssue.getDistrictID())
                         .address(mEditedIssue.getAddress())
                         .build() : null)
-                .build(), getString(R.string.title_section2).toUpperCase(l));
+                .build());
+
         adapter.addFragment(new AddIssueImageFragment_().builder()
                 .mEditedObject(mEditedIssue != null ? new CreateNewObjectEvent.Builder()
                         .image(mEditedIssue.getPhotoIssueUri())
                         .build() : null)
-                .build(), getString(R.string.title_section3).toUpperCase(l));
+                .build());
+
         adapter.addFragment(new AddIssueCategoriesFragment_().builder()
                 .mEditedObject(mEditedIssue != null ? new CreateNewObjectEvent.Builder()
-                        .categoryIDs(new ArrayList<Integer>())
+                        .categoryIDs(mEditedIssue.getCategoryIdsList())
                         .build() : null)
-                .build(), getString(R.string.title_section3).toUpperCase(l));
+                .build());
+
         viewPager.setAdapter(adapter);
-        if(mEditedIssue != null) {
-            Log.d(TAG, "edtdbg categories: " + mEditedIssue.getCategoriesText() + " ids: " + mEditedIssue.getCategoryID());
-        }
+
         //Disable swipe events for viewpager
         viewPager.setOnTouchListener(new View.OnTouchListener() {
             @Override

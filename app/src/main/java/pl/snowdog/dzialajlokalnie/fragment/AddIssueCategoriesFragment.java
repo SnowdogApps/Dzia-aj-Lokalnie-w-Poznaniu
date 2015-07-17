@@ -1,6 +1,7 @@
 package pl.snowdog.dzialajlokalnie.fragment;
 
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -84,7 +85,19 @@ public class AddIssueCategoriesFragment extends AddIssueBaseFragment {
 
         //EDIT MODE
         if(mEditedObject != null) {
+            for(Integer i : mEditedObject.getCategoryIDs()) {
 
+                int counter = 0;
+                for(Category c : lCategories) {
+                    if(c.getCategoryID() == i) {
+                        lvCategories.setItemChecked(counter, true);
+                        Log.d("issue", "create categoryId category: " + c.getCategoryID());
+                    } else {
+                       // lvCategories.setItemChecked(counter, false);
+                    }
+                    counter++;
+                }
+            }
             //TODO set selected categories in spinner
         }
     }

@@ -145,9 +145,9 @@ public abstract class AddBaseActivity extends BaseActivity {
             super(fm);
         }
 
-        public void addFragment(Fragment fragment, String title) {
+        public void addFragment(Fragment fragment) {
             mFragments.add(fragment);
-            mFragmentTitles.add(title);
+            mFragmentTitles.add("");
         }
 
         @Override

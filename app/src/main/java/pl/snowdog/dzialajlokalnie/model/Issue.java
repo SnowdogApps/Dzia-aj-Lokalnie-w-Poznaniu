@@ -1,11 +1,20 @@
 package pl.snowdog.dzialajlokalnie.model;
 
 import com.activeandroid.Model;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
+import android.support.annotation.NonNull;
+import android.util.Log;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
+import pl.snowdog.dzialajlokalnie.AddEventActivity_;
+import pl.snowdog.dzialajlokalnie.util.ListHelper;
 
 
 @Table(name = "Issues")
@@ -283,6 +292,12 @@ public class Issue extends Model implements Serializable {
     public void setVotesCount(int votesCount) {
         this.votesCount = votesCount;
     }
+
+    public List<Integer> getCategoryIdsList() {
+        return ListHelper.parseCategoryListFromString(categoryID);
+    }
+
+
 
     public class IssueWrapper {
         private Issue issue;

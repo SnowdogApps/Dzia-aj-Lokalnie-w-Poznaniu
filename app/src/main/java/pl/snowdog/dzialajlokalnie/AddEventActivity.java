@@ -49,6 +49,7 @@ public class AddEventActivity extends AddBaseActivity {
         Log.d(TAG, "setupViewPager");
         Locale l = Locale.getDefault();
         Adapter adapter = new Adapter(getSupportFragmentManager());
+
         adapter.addFragment(new AddIssueTitleDateFragment_().builder()
                 .mEditedObject(mEditedEvent != null ? new CreateNewObjectEvent.Builder()
                         .title(mEditedEvent.getTitle())
@@ -57,7 +58,8 @@ public class AddEventActivity extends AddBaseActivity {
                         .endDate(new DateWrapper(mEditedEvent.getEndDate()))
                         .build() : null)
                 .mAddingMode(AddIssueTitleDateFragment.MODE_EVENT)
-                .build(), getString(R.string.title_section1).toUpperCase(l));
+                .build());
+
         adapter.addFragment(new AddIssueLocationFragment_().builder()
                 .mEditedObject(mEditedEvent != null ? new CreateNewObjectEvent.Builder()
                         .lat(mEditedEvent.getLat())
@@ -65,17 +67,20 @@ public class AddEventActivity extends AddBaseActivity {
                         .districtID(mEditedEvent.getDistrictID())
                         .address(mEditedEvent.getAddress())
                         .build() : null)
-                .build(), getString(R.string.title_section2).toUpperCase(l));
+                .build());
+
         adapter.addFragment(new AddIssueImageFragment_().builder()
                 .mEditedObject(mEditedEvent != null ? new CreateNewObjectEvent.Builder()
                         .image(mEditedEvent.getPhotoEventUri())
                         .build() : null)
-                .build(), getString(R.string.title_section3).toUpperCase(l));
+                .build());
+
         adapter.addFragment(new AddIssueCategoriesFragment_().builder()
                 .mEditedObject(mEditedEvent != null ? new CreateNewObjectEvent.Builder()
-                        .categoryIDs(new ArrayList<Integer>())
+                        .categoryIDs(mEditedEvent.getCategoryIdsList())
                         .build() : null)
-                .build(), getString(R.string.title_section3).toUpperCase(l));
+                .build());
+
         viewPager.setAdapter(adapter);
 
         //Disable swipe events for viewpager

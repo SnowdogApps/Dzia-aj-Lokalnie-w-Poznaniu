@@ -6,6 +6,9 @@ import com.activeandroid.annotation.Table;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
+import pl.snowdog.dzialajlokalnie.util.ListHelper;
 
 
 @Table(name = "Events")
@@ -346,6 +349,10 @@ public class Event extends Model implements Serializable {
 
     public void setVotesCount(int votesCount) {
         this.votesCount = votesCount;
+    }
+
+    public List<Integer> getCategoryIdsList() {
+        return ListHelper.parseCategoryListFromString(categoryID);
     }
 
     public class EventWrapper {
