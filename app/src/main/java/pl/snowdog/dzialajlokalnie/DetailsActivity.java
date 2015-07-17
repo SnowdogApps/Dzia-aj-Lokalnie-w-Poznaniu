@@ -1,11 +1,15 @@
 package pl.snowdog.dzialajlokalnie;
 
+import android.content.Context;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 import org.androidannotations.annotations.ViewById;
@@ -30,6 +34,9 @@ public class DetailsActivity extends BaseActivity {
 
     @ViewById(R.id.toolbar)
     Toolbar toolbar;
+
+    @ViewById(R.id.focus_background)
+    View focusBackground;
 
     @ViewById(R.id.add_comment_widget)
     View addCommentWidget;
@@ -61,6 +68,24 @@ public class DetailsActivity extends BaseActivity {
 
         binding = AddCommentWidgetBinding.bind(addCommentWidget);
         binding.itemComment.getRoot().setVisibility(View.GONE);
+
+        binding.etComment.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    focusBackground.setVisibility(View.VISIBLE);
+                } else {
+                    focusBackground.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+    }
+
+    @Click(R.id.focus_background)
+    protected void unfocus() {
+        binding.etComment.clearFocus();
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(binding.etComment.getWindowToken(), 0);
     }
 
     public void onEvent(SetTitleEvent event) {
