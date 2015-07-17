@@ -46,5 +46,6 @@
         <item quantity="other">%d zaproszonych</item>
     </plurals>
     <string name="title_activity_issue">Wpis</string>
-    <string name="comment_hint">Komentarz...</string>
+    <string name="comment_hint">Dodaj komentarz...</string>
+    <string name="response_hint">Odpowiedz...</string>
 </resources>
