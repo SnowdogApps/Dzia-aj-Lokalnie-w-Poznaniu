@@ -13,6 +13,6 @@
 
 <!-- updated these colors (add 99 alpha) after updating main app colors-->
     <color name="colorPrimarySemi">#99673AB7</color>
-    <color name="colorPrimaryDarkSemi">#CC512DA8</color>
+    <color name="focus_background">#CC000000</color>
     <color name="transparent">#00000000</color>
 </resources>

@@ -7,6 +7,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
@@ -85,9 +87,37 @@ public class DetailsActivity extends BaseActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    focusBackground.setVisibility(View.VISIBLE);
+                    final AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
+                    anim.setDuration(300);
+                    anim.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) { }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            focusBackground.setVisibility(View.VISIBLE);
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) { }
+                    });
+                    focusBackground.startAnimation(anim);
                 } else {
-                    focusBackground.setVisibility(View.INVISIBLE);
+                    final AlphaAnimation anim = new AlphaAnimation(1.0f, 0.0f);
+                    anim.setDuration(300);
+                    anim.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) { }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            focusBackground.setVisibility(View.INVISIBLE);
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) { }
+                    });
+                    focusBackground.startAnimation(anim);
                 }
             }
         });
