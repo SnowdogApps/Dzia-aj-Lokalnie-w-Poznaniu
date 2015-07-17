@@ -8,7 +8,7 @@ import pl.snowdog.dzialajlokalnie.model.DateWrapper;
  * Created by chomi3 on 2015-07-15.
  */
 public class CreateNewObjectEvent {
-    public enum Type{title, date, location, photo, category};
+    public enum Type{title, date, location, image, category};
     Type type;
     String title;
     String description;
@@ -19,7 +19,7 @@ public class CreateNewObjectEvent {
     DateWrapper endDate;
     String address;
     List<Integer> categoryIDs;
-    String PHOTO; //// TODO: 2015-07-15
+    String image; //// TODO: 2015-07-15
 
     public static class Builder {
         Type type;
@@ -32,7 +32,7 @@ public class CreateNewObjectEvent {
         double lon;
         String address;
         List<Integer> categoryIDs;
-        String PHOTO;
+        String image;
 
         public Builder type(Type type) {this.type = type; return this;}
         public Builder title(String title) {this.title = title; return this;}
@@ -44,7 +44,7 @@ public class CreateNewObjectEvent {
         public Builder lon(double lon) {this.lon = lon; return this;}
         public Builder address(String address) {this.address = address; return this;}
         public Builder categoryIDs(List<Integer> categoryIDs) {this.categoryIDs = categoryIDs; return this;}
-        public Builder PHOTO(String PHOTO) {this.PHOTO = PHOTO; return this;}
+        public Builder image(String image) {this.image = image; return this;}
 
         //return fully build object
         public CreateNewObjectEvent build() {
@@ -66,7 +66,7 @@ public class CreateNewObjectEvent {
         this.lon = builder.lon;
         this.address = builder.address;
         this.categoryIDs = builder.categoryIDs;
-        this.PHOTO = builder.PHOTO;
+        this.image = builder.image;
     }
 
     public Type getType() {
@@ -149,11 +149,11 @@ public class CreateNewObjectEvent {
         this.categoryIDs = categoryIDs;
     }
 
-    public String getPHOTO() {
-        return PHOTO;
+    public String getImage() {
+        return image;
     }
 
-    public void setPHOTO(String PHOTO) {
-        this.PHOTO = PHOTO;
+    public void setImage(String image) {
+        this.image = image;
     }
 }

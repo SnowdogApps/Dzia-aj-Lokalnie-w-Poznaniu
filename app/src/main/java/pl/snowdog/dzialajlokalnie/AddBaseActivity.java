@@ -7,14 +7,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 
-import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.ViewById;
@@ -22,7 +19,6 @@ import org.androidannotations.annotations.ViewById;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
 
 /**
@@ -126,8 +122,8 @@ public abstract class AddBaseActivity extends BaseActivity {
                 districtID = event.getDistrictID();
                 goToNextPage();
                 break;
-            case photo:
-                PHOTO = event.getPHOTO();
+            case image:
+                PHOTO = event.getImage();
                 goToNextPage();
                 break;
 
