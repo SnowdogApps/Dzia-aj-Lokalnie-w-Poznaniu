@@ -109,8 +109,6 @@ public class DetailsActivity extends BaseActivity {
 
         //TODO onBackPressed does not catch closing the soft keyboard. Possible solution: http://tech.leolink.net/2014/02/a-hack-to-catch-soft-keyboard-showhide.html
         if (binding.etComment.hasFocus()) {
-//            binding.etComment.clearFocus();
-//            focusBackground.setVisibility(View.INVISIBLE);
             unfocus();
         } else {
             super.onBackPressed();
@@ -140,8 +138,6 @@ public class DetailsActivity extends BaseActivity {
 
     public void onEvent(SetTitleEvent event) {
         //TODO only collapsingToolbarLayout works but title is at the bottom (should be sticked to the top)
-//        getSupportActionBar().setTitle(event.getTitle());
-//        toolbar.setTitle(event.getTitle());
         collapsingToolbarLayout.setTitle(event.getTitle());
     }
 
