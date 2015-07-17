@@ -25,8 +25,14 @@ public class District extends Model {
     @Column
     private int cityID;
 
+    @Column
+    private String coordinates;
+
+    private Polygon polygon;
+
     public District() {
         super();
+
     }
 
     public District(int districtID, String name, String description, double lon, double lat, int cityID) {
@@ -47,6 +53,7 @@ public class District extends Model {
                 ", description='" + description + '\'' +
                 ", lon=" + lon +
                 ", lat=" + lat +
+                ", coordinates=" + coordinates +
                 ", cityID=" + cityID +
                 '}';
     }
@@ -97,5 +104,26 @@ public class District extends Model {
 
     public void setCityID(int cityID) {
         this.cityID = cityID;
+    }
+
+    public Polygon getPolygon() {
+        return polygon;
+    }
+
+    public void setPolygon(Polygon polygon) {
+        this.polygon = polygon;
+    }
+
+    public String getCoordinates() {
+        return coordinates;
+    }
+
+    public void setCoordinates(String coordinates) {
+        this.coordinates = coordinates;
+
+    }
+
+    public void createPolygonFromCoordinates() {
+        this.polygon = new Polygon(coordinates);
     }
 }

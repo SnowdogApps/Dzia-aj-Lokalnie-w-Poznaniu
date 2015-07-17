@@ -1,5 +1,7 @@
 package pl.snowdog.dzialajlokalnie.fragment;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -20,6 +22,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolygonOptions;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -73,6 +76,13 @@ public class AddIssueLocationFragment extends AddIssueBaseFragment implements On
     @FragmentArg
     CreateNewObjectEvent mEditedObject;
 
+    List<District> districts;
+
+    /**
+     * When we do manual marker operations (drag, create) we mark it so the adapter.setSelected()
+     * won't override it with it's own marker that is created when we pick District from the spinner
+     */
+    private boolean isMarkerChange = false;
 
     @Nullable
     @Override
@@ -117,7 +127,10 @@ public class AddIssueLocationFragment extends AddIssueBaseFragment implements On
         mapView.onCreate(mSavedInstanceState);
         mapView.getMapAsync(this);
 
-        List<District> districts = new Select().from(District.class).orderBy("name").execute();
+        districts = new Select().from(District.class).orderBy("name").execute();
+        for(District d : districts) {
+            d.createPolygonFromCoordinates();
+        }
         districts.add(0, new District(-1, getString(R.string.all_districts_filter), null, 16.934167, 52.408333, -1));
         adapter = DistrictAdapter.build(getActivity(), districts);
         if (DlApplication.filter.getDistrict() != null) {
@@ -133,7 +146,7 @@ public class AddIssueLocationFragment extends AddIssueBaseFragment implements On
         if (selected) {
             adapter.setSelection(position);
 
-            if(position != 0) {
+            if(position != 0 && !isMarkerChange) {
                 Toast.makeText(getActivity(), "district latlng: "+adapter.getSelectedItem().getLat(), Toast.LENGTH_SHORT).show();
                 map.clear();
                 mMarker = map.addMarker(
@@ -141,8 +154,12 @@ public class AddIssueLocationFragment extends AddIssueBaseFragment implements On
                                 .position(new LatLng(adapter.getSelectedItem().getLat(), adapter.getSelectedItem().getLon()))
                                 .draggable(true));
                 getAddressForLocation(adapter.getSelectedItem().getLat(), adapter.getSelectedItem().getLon());
+
+                PolygonUtil.createDistrictShapeOnMap(map, adapter.getSelectedItem(), getActivity());
+
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(adapter.getSelectedItem().getLat(), adapter.getSelectedItem().getLon()), 12));
             }
+            isMarkerChange = false;
         }
     }
 
@@ -154,8 +171,8 @@ public class AddIssueLocationFragment extends AddIssueBaseFragment implements On
         DlApplication.poznanApi.getAddressForLocation(options, new Callback<ReverseGeocoding>() {
             @Override
             public void success(ReverseGeocoding reverseGeocodings, Response response) {
-                if(reverseGeocodings.getFeatures() != null && reverseGeocodings.getFeatures().size() > 0) {
-                    if(reverseGeocodings.getFeatures().get(0).getProperty() != null) {
+                if (reverseGeocodings.getFeatures() != null && reverseGeocodings.getFeatures().size() > 0) {
+                    if (reverseGeocodings.getFeatures().get(0).getProperty() != null) {
                         ReverseGeocoding.Property property = reverseGeocodings.getFeatures().get(0).getProperty();
                         Log.d(TAG, "cityApi get success: " + response + " getAddressForLocation: " + reverseGeocodings.getFeatures().get(0).getProperty().toString());
                         updateMarkerWithAddress(property);
@@ -200,19 +217,9 @@ public class AddIssueLocationFragment extends AddIssueBaseFragment implements On
                 Log.d(TAG, "mpdbg markerLat: " + point.latitude + " marker.lon: " + point.longitude);
                 getAddressForLocation(point.latitude, point.longitude);
 
-                //TODO change temp Polygon data to district sorted by distance to marker click
+                findDistrictAndSetSpinner(point);
 
-                Polygon polygon = new Polygon();
-                List<Point> points = new ArrayList<Point>();
-                points.add(new Point(52.41797158475524, 16.9185671210289));
-                points.add(new Point(52.41683382234121, 16.942223533988));
-                points.add(new Point(52.39988905872178, 16.935108974575996));
-                points.add(new Point(52.404284384274376, 16.912309862673283));
-                polygon.setPointsList(points);
 
-                Log.d(TAG, "mpdbg inPolygon: " + PolygonUtil.isPointInPolygon(point, polygon));
-
-                spinner.setSelection(0);
             }
         });
 
@@ -230,18 +237,36 @@ public class AddIssueLocationFragment extends AddIssueBaseFragment implements On
             @Override
             public void onMarkerDragEnd(Marker marker) {
                 getAddressForLocation(marker.getPosition().latitude, marker.getPosition().longitude);
+                findDistrictAndSetSpinner(new LatLng(marker.getPosition().latitude, marker.getPosition().longitude));
             }
         });
 
         //EDIT Mode
         if(mEditedObject != null) {
-            //TODO set district in spinner
             mMarker = map.addMarker(new MarkerOptions().position(new LatLng(mEditedObject.getLat(), mEditedObject.getLat())).draggable(true));
             getAddressForLocation(mEditedObject.getLat(), mEditedObject.getLat());
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mEditedObject.getLat(), mEditedObject.getLat()), 12));
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mEditedObject.getLat(), mEditedObject.getLat()), 11));
+            findDistrictAndSetSpinner(new LatLng(mEditedObject.getLat(), mEditedObject.getLat()));
             Log.d(TAG, "edtdbg location: lat: "+mEditedObject.getLat()+ " lon: "+mEditedObject.getLon());
         }
     }
+
+    private void findDistrictAndSetSpinner(LatLng point) {
+        int counter = 0;
+        for(District d : districts) {
+            if(d.getPolygon() != null) {
+                if (PolygonUtil.isPointInPolygon(point, d.getPolygon())) {
+                    isMarkerChange = true;
+                    spinner.setSelection(counter);
+                    PolygonUtil.createDistrictShapeOnMap(map, d, getActivity());
+                    break;
+                }
+            }
+            counter++;
+        }
+    }
+
+
 
     @Override
     public void onMyLocationChange(Location location) {

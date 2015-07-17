@@ -66,7 +66,9 @@ public class AddIssueActivity extends AddBaseActivity {
                         .build() : null)
                 .build(), getString(R.string.title_section3).toUpperCase(l));
         viewPager.setAdapter(adapter);
-        Log.d(TAG, "edtdbg categories: "+mEditedIssue.getCategoriesText()+ " ids: "+mEditedIssue.getCategoryID());
+        if(mEditedIssue != null) {
+            Log.d(TAG, "edtdbg categories: " + mEditedIssue.getCategoriesText() + " ids: " + mEditedIssue.getCategoryID());
+        }
         //Disable swipe events for viewpager
         viewPager.setOnTouchListener(new View.OnTouchListener() {
             @Override
