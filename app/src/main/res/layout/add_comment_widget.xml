@@ -13,13 +13,6 @@
         android:layout_height="wrap_content"
         android:background="@color/background">
 
-        <!--TODO this is hardcoded divider -> change it!-->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/background_inverse"
-            />
-
         <include layout="@layout/item_comment"
             android:id="@+id/item_comment"
             android:layout_width="match_parent"

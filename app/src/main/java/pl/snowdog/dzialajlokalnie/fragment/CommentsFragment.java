@@ -12,7 +12,6 @@ import pl.snowdog.dzialajlokalnie.adapter.CommentsAdapter;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.events.CommentClickedEvent;
 import pl.snowdog.dzialajlokalnie.events.CommentVoteEvent;
-import pl.snowdog.dzialajlokalnie.events.IssueVoteEvent;
 import pl.snowdog.dzialajlokalnie.events.NewCommentEvent;
 import pl.snowdog.dzialajlokalnie.events.VoteEvent;
 import pl.snowdog.dzialajlokalnie.model.Comment;
@@ -36,9 +35,10 @@ public class CommentsFragment extends ListFragment {
 
     @Override
     protected void afterView() {
-        getComments(objType, objId);
         swipeRefreshLayout.setEnabled(false);
         emptyListText = R.string.empty_comment_list;
+
+        getComments(objType, objId);
     }
 
     @Override
@@ -81,7 +81,7 @@ public class CommentsFragment extends ListFragment {
                 }
             }
         } else { //comment to issue or event -> add to the end
-            position = adapter.getItemCount() - 1;
+            position = adapter.getItemCount();
         }
 
         if (position == -1) {
