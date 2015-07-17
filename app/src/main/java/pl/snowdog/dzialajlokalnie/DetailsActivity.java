@@ -86,27 +86,12 @@ public class DetailsActivity extends BaseActivity {
                 Log.d(TAG, "onEditorAction " + actionId);
                 if (actionId == EditorInfo.IME_ACTION_SEND) {
                     unfocus();
-                    focusBackground.setVisibility(View.INVISIBLE);
                     return true;
                 }
 
                 return false;
             }
         });
-    }
-
-    @Click(R.id.focus_background)
-    protected void unfocus() {
-        binding.etComment.clearFocus();
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(binding.etComment.getWindowToken(), 0);
-    }
-
-    public void onEvent(SetTitleEvent event) {
-        //TODO only collapsingToolbarLayout works but title is at the bottom (should be sticked to the top)
-//        getSupportActionBar().setTitle(event.getTitle());
-//        toolbar.setTitle(event.getTitle());
-        collapsingToolbarLayout.setTitle(event.getTitle());
     }
 
     @Override
@@ -121,4 +106,18 @@ public class DetailsActivity extends BaseActivity {
             super.onBackPressed();
         }
     }
+    @Click(R.id.focus_background)
+    protected void unfocus() {
+        binding.etComment.clearFocus();
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(binding.etComment.getWindowToken(), 0);
+    }
+
+    public void onEvent(SetTitleEvent event) {
+        //TODO only collapsingToolbarLayout works but title is at the bottom (should be sticked to the top)
+//        getSupportActionBar().setTitle(event.getTitle());
+//        toolbar.setTitle(event.getTitle());
+        collapsingToolbarLayout.setTitle(event.getTitle());
+    }
+
 }
