@@ -34,6 +34,8 @@ import pl.snowdog.dzialajlokalnie.fragment.CommentsFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.IssueFragment;
 import pl.snowdog.dzialajlokalnie.fragment.IssueFragment_;
 import pl.snowdog.dzialajlokalnie.model.Comment;
+import pl.snowdog.dzialajlokalnie.util.FadeInAnimation;
+import pl.snowdog.dzialajlokalnie.util.FadeOutAnimation;
 
 @EActivity(R.layout.activity_details)
 @OptionsMenu(R.menu.menu_issue)
@@ -87,36 +89,10 @@ public class DetailsActivity extends BaseActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    final AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
-                    anim.setDuration(300);
-                    anim.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation animation) { }
-
-                        @Override
-                        public void onAnimationEnd(Animation animation) {
-                            focusBackground.setVisibility(View.VISIBLE);
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animation animation) { }
-                    });
+                    final FadeInAnimation anim = new FadeInAnimation(focusBackground);
                     focusBackground.startAnimation(anim);
                 } else {
-                    final AlphaAnimation anim = new AlphaAnimation(1.0f, 0.0f);
-                    anim.setDuration(300);
-                    anim.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation animation) { }
-
-                        @Override
-                        public void onAnimationEnd(Animation animation) {
-                            focusBackground.setVisibility(View.INVISIBLE);
-                        }
-
-                        @Override
-                        public void onAnimationRepeat(Animation animation) { }
-                    });
+                    final FadeOutAnimation anim = new FadeOutAnimation(focusBackground);
                     focusBackground.startAnimation(anim);
                 }
             }
