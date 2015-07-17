@@ -11,6 +11,8 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
@@ -72,6 +74,8 @@ public class DetailsActivity extends BaseActivity {
 
         binding = AddCommentWidgetBinding.bind(addCommentWidget);
         binding.itemComment.getRoot().setVisibility(View.GONE);
+        binding.itemComment.ratingWidget.ibRateUp.setVisibility(View.INVISIBLE);
+        binding.itemComment.ratingWidget.ibRateDown.setVisibility(View.INVISIBLE);
 
         binding.etComment.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -120,6 +124,7 @@ public class DetailsActivity extends BaseActivity {
 
         binding.setComment(null);
         binding.itemComment.getRoot().setVisibility(View.GONE);
+        binding.etComment.setHint(R.string.comment_hint);
     }
 
     @Click(R.id.bt_send)
@@ -144,6 +149,12 @@ public class DetailsActivity extends BaseActivity {
         binding.setComment(event.getComment());
         binding.itemComment.getRoot().setVisibility(View.VISIBLE);
         binding.etComment.requestFocus();
+        binding.etComment.setHint(R.string.response_hint);
+
+        Picasso.with(binding.getRoot().getContext()).
+                load(String.format(DlApi.PHOTO_THUMB_URL, event.getComment().getAuthorAvatar())).
+                error(R.drawable.ic_editor_insert_emoticon).
+                into(binding.itemComment.ivAvatar);
 
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
