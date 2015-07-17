@@ -51,7 +51,7 @@
 
         <View
             android:id="@+id/focus_background"
-            android:background="@color/colorPrimarySemi"
+            android:background="@color/colorPrimaryDarkSemi"
             android:visibility="invisible"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
