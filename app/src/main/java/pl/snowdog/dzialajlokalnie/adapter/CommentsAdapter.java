@@ -81,7 +81,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
                 @Override
                 public void onClick(View v) {
                     EventBus.getDefault().post(new CommentClickedEvent(
-                            ViewHolder.this.binding.getComment().getCommentID()));
+                            ViewHolder.this.binding.getComment()));
                 }
             });
 

@@ -71,9 +71,26 @@ public class CommentsFragment extends ListFragment {
     }
 
     public void onEvent(NewCommentEvent event) {
-        adapter.getComments().add(event.getComment());
-        adapter.notifyItemInserted(adapter.getItemCount() - 1);
-        recyclerView.scrollToPosition(adapter.getItemCount()-1);
+        int position = -1;
+
+        if (event.getComment().getParentType() == 3) { //comment to comment -> add under commented
+            for (int i = 0; i < adapter.getItemCount(); i++) {
+                if (adapter.getComments().get(i).getCommentID() == event.getComment().getParentId()) {
+                    position = i+1;
+                    break;
+                }
+            }
+        } else { //comment to issue or event -> add to the end
+            position = adapter.getItemCount() - 1;
+        }
+
+        if (position == -1) {
+            position = 0;
+        }
+
+        adapter.getComments().add(position, event.getComment());
+        adapter.notifyItemInserted(position);
+        recyclerView.scrollToPosition(position);
     }
 
     @Override

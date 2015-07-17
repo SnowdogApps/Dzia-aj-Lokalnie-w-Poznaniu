@@ -19,6 +19,7 @@ import org.androidannotations.annotations.ViewById;
 import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.databinding.AddCommentWidgetBinding;
+import pl.snowdog.dzialajlokalnie.events.CommentClickedEvent;
 import pl.snowdog.dzialajlokalnie.events.NewCommentEvent;
 import pl.snowdog.dzialajlokalnie.events.SetTitleEvent;
 import pl.snowdog.dzialajlokalnie.fragment.CommentsFragment;
@@ -104,8 +105,9 @@ public class DetailsActivity extends BaseActivity {
 
         //TODO onBackPressed does not catch closing the soft keyboard. Possible solution: http://tech.leolink.net/2014/02/a-hack-to-catch-soft-keyboard-showhide.html
         if (binding.etComment.hasFocus()) {
-            binding.etComment.clearFocus();
-            focusBackground.setVisibility(View.INVISIBLE);
+//            binding.etComment.clearFocus();
+//            focusBackground.setVisibility(View.INVISIBLE);
+            unfocus();
         } else {
             super.onBackPressed();
         }
@@ -115,11 +117,19 @@ public class DetailsActivity extends BaseActivity {
         binding.etComment.clearFocus();
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(binding.etComment.getWindowToken(), 0);
+
+        binding.setComment(null);
+        binding.itemComment.getRoot().setVisibility(View.GONE);
     }
 
     @Click(R.id.bt_send)
     protected void send() {
-        comment(objType, objId, 0, binding.etComment.getText().toString());
+        if (binding.getComment() != null) {
+            comment(DlApi.ParentType.comments, binding.getComment().getCommentID(), 0,
+                    binding.etComment.getText().toString());
+        } else {
+            comment(objType, objId, 0, binding.etComment.getText().toString());
+        }
         unfocus();
     }
 
@@ -128,6 +138,15 @@ public class DetailsActivity extends BaseActivity {
 //        getSupportActionBar().setTitle(event.getTitle());
 //        toolbar.setTitle(event.getTitle());
         collapsingToolbarLayout.setTitle(event.getTitle());
+    }
+
+    public void onEvent(CommentClickedEvent event) {
+        binding.setComment(event.getComment());
+        binding.itemComment.getRoot().setVisibility(View.VISIBLE);
+        binding.etComment.requestFocus();
+
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
     @Override
