@@ -7,6 +7,7 @@ import pl.snowdog.dzialajlokalnie.model.Comment;
 import pl.snowdog.dzialajlokalnie.model.District;
 import pl.snowdog.dzialajlokalnie.model.Event;
 import pl.snowdog.dzialajlokalnie.model.Issue;
+import pl.snowdog.dzialajlokalnie.model.Login;
 import pl.snowdog.dzialajlokalnie.model.NewEvent;
 import pl.snowdog.dzialajlokalnie.model.NewIssue;
 import pl.snowdog.dzialajlokalnie.model.Session;
@@ -109,9 +110,7 @@ public class DlApi {
     }
 
     public interface UserApi {
-        @FormUrlEncoded
         @PUT("/login")
-        void login(@Field("username") String username, @Field("pass") String pass,
-                   @Field("isSessionAuthByAPIkey") int byApiKey, Callback<Session> cb);
+        void login(@Body Login login, Callback<Session> cb);
     }
 }
