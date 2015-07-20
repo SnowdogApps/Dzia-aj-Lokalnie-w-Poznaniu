@@ -20,7 +20,7 @@ import pl.snowdog.dzialajlokalnie.model.Polygon;
  * Created by chomi3 on 2015-07-16.
  */
 public class PolygonUtil {
-    private static final float STROKE_WIDTH = 1.5f;
+    private static final float STROKE_WIDTH = 3f;
 
     public static boolean isPointInPolygon(LatLng point, Polygon polygon) {
         List<Point> points = polygon.getPoints();
