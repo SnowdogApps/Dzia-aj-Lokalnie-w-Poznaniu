@@ -74,7 +74,7 @@ public class IssueFragment extends BaseFragment {
         binding.setIssue(issue);
 
         Picasso.with(binding.getRoot().getContext()).
-                load(String.format(DlApi.PHOTO_THUMB_URL, issue.getPhotoIssueUri())).
+                load(String.format(DlApi.PHOTO_NORMAL_URL, issue.getPhotoIssueUri())).
                 error(R.drawable.ic_editor_insert_emoticon).
                 into(binding.ivAvatar);
 
@@ -102,6 +102,7 @@ public class IssueFragment extends BaseFragment {
         Issue issue = binding.getIssue();
         if (issue.getIssueID() == vote.getParentID()) {
             issue.setIssueRating(issue.getIssueRating()+vote.getValue());
+            issue.setUserVotedValue(vote.getValue());
             //TODO - this is dirty implementation. Observables shoud be used but it requires extending BaseObservable - conflict with Model
             binding.setIssue(issue);
         }

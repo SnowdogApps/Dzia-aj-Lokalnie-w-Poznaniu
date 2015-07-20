@@ -26,6 +26,7 @@ public class DlApi {
 //        public static final String API_URL = "http://192.168.1.96/dzialaj-lokalnie-api/index.php/";
     public static final String API_URL = "http://dzialajlokalnie.snowdog.pro";
     public static final String PHOTO_THUMB_URL = API_URL + "/photos/%s_thumb.jpeg";
+    public static final String PHOTO_NORMAL_URL = API_URL + "/photos/%s_normal.jpeg";
 
     public enum ParentType {issues, events, comments}
 

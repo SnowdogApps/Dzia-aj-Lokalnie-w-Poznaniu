@@ -28,6 +28,7 @@
             android:layout_toRightOf="@+id/indent"
             android:layout_alignParentTop="true"
             bind:rating="@{comment.commentRating}"
+            bind:votedvalue="@{comment.userVotedValue}"
             />
 
         <LinearLayout

@@ -53,6 +53,9 @@ public class Comment extends Model{
     @Column
     private String authorAvatar;
 
+    @Column
+    private int userVotedValue;
+
 
     public Comment() {
         super();
@@ -206,5 +209,13 @@ public class Comment extends Model{
 
     public void setCommentMentioned(String commentMentioned) {
         this.commentMentioned = commentMentioned;
+    }
+
+    public void setUserVotedValue(int userVotedValue) {
+        this.userVotedValue = userVotedValue;
+    }
+
+    public int getUserVotedValue() {
+        return userVotedValue;
     }
 }

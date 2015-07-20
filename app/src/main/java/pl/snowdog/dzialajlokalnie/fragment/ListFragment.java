@@ -79,6 +79,9 @@ public abstract class ListFragment extends BaseFragment {
     }
 
     private void stopRefreshing() {
+        if (!isAdded()) {
+            return;
+        }
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

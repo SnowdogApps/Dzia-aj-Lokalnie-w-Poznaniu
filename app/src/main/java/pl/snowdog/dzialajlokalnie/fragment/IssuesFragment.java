@@ -60,6 +60,7 @@ public class IssuesFragment extends ListFragment {
             Issue issue = adapter.getIssues().get(i);
             if (issue.getIssueID() == vote.getParentID()) {
                 issue.setIssueRating(issue.getIssueRating()+vote.getValue());
+                issue.setUserVotedValue(vote.getValue());
                 adapter.notifyItemChanged(i);
                 break;
             }

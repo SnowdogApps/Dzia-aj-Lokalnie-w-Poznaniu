@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable name="votedvalue" type="int"/>
         <variable name="rating" type="int"/>
         <variable name="bgcolor" type="boolean"/>
     </data>
@@ -19,12 +20,13 @@
 
         <ImageButton
             android:id="@+id/ibRateUp"
-            android:background="@android:color/transparent"
+            android:background="@{votedvalue == 1 ? @drawable/vote_bg_selected : @drawable/vote_bg}"
             android:src="@{bgcolor ? @drawable/ic_action_up_inverse : @drawable/ic_action_up}"
-            android:paddingLeft="@dimen/rating_button_padding"
-            android:paddingRight="@dimen/rating_button_padding"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:scaleType="centerCrop"
+            android:layout_marginLeft="@dimen/rating_button_padding"
+            android:layout_marginRight="@dimen/rating_button_padding"
+            android:layout_width="32dp"
+            android:layout_height="32dp" />
 
         <TextView
             android:id="@+id/tvRating"
@@ -40,11 +42,12 @@
 
         <ImageButton
             android:id="@+id/ibRateDown"
-            android:background="@android:color/transparent"
+            android:background="@{votedvalue == -1 ? @drawable/vote_bg_selected : @drawable/vote_bg}"
             android:src="@{bgcolor ? @drawable/ic_action_down_inverse : @drawable/ic_action_down}"
-            android:paddingLeft="@dimen/rating_button_padding"
-            android:paddingRight="@dimen/rating_button_padding"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:scaleType="centerCrop"
+            android:layout_marginLeft="@dimen/rating_button_padding"
+            android:layout_marginRight="@dimen/rating_button_padding"
+            android:layout_width="32dp"
+            android:layout_height="32dp" />
     </LinearLayout>
 </layout>

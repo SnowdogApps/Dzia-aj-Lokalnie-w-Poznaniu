@@ -102,9 +102,10 @@ public class CommentsFragment extends ListFragment {
     @Override
     protected void voteResult(Vote vote) {
         for (int i = 0; i < adapter.getComments().size(); i++) {
-            Comment issue = adapter.getComments().get(i);
-            if (issue.getCommentID() == vote.getParentID()) {
-                issue.setCommentRating(issue.getCommentRating() + vote.getValue());
+            Comment comment = adapter.getComments().get(i);
+            if (comment.getCommentID() == vote.getParentID()) {
+                comment.setCommentRating(comment.getCommentRating() + vote.getValue());
+                comment.setUserVotedValue(vote.getValue());
                 adapter.notifyItemChanged(i);
                 break;
             }

@@ -18,6 +18,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             bind:rating="@{issue.issueRating}"
+            bind:votedvalue="@{issue.userVotedValue}"
             />
 
         <LinearLayout
