@@ -3,6 +3,7 @@ package pl.snowdog.dzialajlokalnie.api;
 import java.util.List;
 
 import pl.snowdog.dzialajlokalnie.model.Category;
+import pl.snowdog.dzialajlokalnie.model.Comment;
 import pl.snowdog.dzialajlokalnie.model.District;
 import pl.snowdog.dzialajlokalnie.model.Event;
 import pl.snowdog.dzialajlokalnie.model.Issue;
@@ -25,10 +26,13 @@ import retrofit.http.Query;
  */
 public class DlApi {
 
-    //    private static final String API_URL = "http://192.168.1.95/dzialaj-lokalnie-api/index.php/";
+//        public static final String API_URL = "http://192.168.1.96/dzialaj-lokalnie-api/index.php/";
     public static final String API_URL = "http://dzialajlokalnie.snowdog.pro";
     public static final String CITY_API_URL = "http://www.poznan.pl/";
     public static final String PHOTO_THUMB_URL = API_URL + "/photos/%s_thumb.jpeg";
+    public static final String PHOTO_NORMAL_URL = API_URL + "/photos/%s_normal.jpeg";
+
+    public enum ParentType {issues, events, comments}
 
 
     public interface Base {
@@ -45,6 +49,10 @@ public class DlApi {
                        @Query("categories") String categories,
                        @Query("orderBy") String sort,
                        Callback<List<Issue>> cb);
+
+        @GET("/issues/{id}")
+        void getIssue(@Path("id") int id,
+                      Callback<Issue> cb);
 
         @POST("/issues/new")
         void postIssue(@Body NewIssue issue,
@@ -73,6 +81,18 @@ public class DlApi {
                       Callback<Event.EventWrapper> cb);
     }
 
+    public interface CommentApi {
+        @GET("/{parentType}/{id}/comments")
+        void getComments(@Path("parentType") String parentType,
+                       @Path("id") int id,
+                       Callback<List<Comment>> cb);
+
+        @FormUrlEncoded
+        @POST("/comments/new")
+        void comment(@Field("parentType") int parentType, @Field("parentID") int parentID,
+                     @Field("solution") int solution, @Field("text") String text,
+                     Callback<Comment> cb);
+    }
 
     public interface VoteApi {
 

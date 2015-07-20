@@ -14,7 +14,7 @@ import pl.snowdog.dzialajlokalnie.util.ListHelper;
 @Table(name = "Events")
 public class Event extends Model implements Serializable {
 
-    @Column
+    @Column(unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
     private int eventID;
 
     @Column

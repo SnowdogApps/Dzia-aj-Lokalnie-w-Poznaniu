@@ -9,7 +9,7 @@ import java.util.Date;
 @Table(name = "Categories")
 public class Category extends Model {
 
-    @Column
+    @Column(unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
     private int categoryID;
 
     @Column

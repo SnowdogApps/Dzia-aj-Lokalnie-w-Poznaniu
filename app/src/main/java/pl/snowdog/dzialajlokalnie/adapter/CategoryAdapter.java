@@ -2,23 +2,13 @@ package pl.snowdog.dzialajlokalnie.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
-import com.squareup.picasso.Picasso;
-
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import de.greenrobot.event.EventBus;
-import pl.snowdog.dzialajlokalnie.R;
-import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.databinding.ItemCategoryBinding;
-import pl.snowdog.dzialajlokalnie.databinding.ItemIssueBinding;
-import pl.snowdog.dzialajlokalnie.events.IssueRateEvent;
 import pl.snowdog.dzialajlokalnie.model.Category;
 
 /**

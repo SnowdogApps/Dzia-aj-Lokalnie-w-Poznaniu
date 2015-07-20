@@ -8,6 +8,7 @@
     <dimen name="rating_button_padding">4dp</dimen>
     <dimen name="list_photo_size">84dp</dimen>
 
+    <dimen name="title_main_text">24sp</dimen>
     <dimen name="title_text">20sp</dimen>
     <dimen name="title_long_text">16sp</dimen>
     <dimen name="description_text">12sp</dimen>
@@ -15,4 +16,5 @@
     <dimen name="comment_indent">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 
+    <dimen name="photo_size">256dp</dimen>
 </resources>

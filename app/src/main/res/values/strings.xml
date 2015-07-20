@@ -43,6 +43,7 @@
     <string name="action_sort_popular">Najpopularniejsze</string>
     <string name="action_sort_newest">Najnowsze</string>
     <string name="action_sort_top">Top</string>
+
     <string name="set_date">Ustaw datę</string>
     <string name="cancel">Anuluj</string>
     <string name="set">Ustaw</string>
@@ -56,6 +57,13 @@
     <string name="edit_issue">Edycja zgłoszenia</string>
     <string name="edit_event">Edycja wydarzenia</string>
 
+    <string name="empty_list">Lista jest pusta\nPrzeciągnij w dół aby odświeżyć\nlub ustaw inny Filtr</string>
+    <string name="empty_comment_list">Brak komentarzy\n</string>
+
+    <string name="title_activity_issue">Wpis</string>
+    <string name="comment_hint">Dodaj komentarz...</string>
+    <string name="response_hint">Odpowiedz...</string>
+    <string name="action_refresh">Odwież</string>
 
     <plurals name="votes">
         <item quantity="one">%d głos</item>
@@ -74,4 +82,5 @@
         <item quantity="few">%d zaproszone</item>
         <item quantity="other">%d zaproszonych</item>
     </plurals>
+
 </resources>

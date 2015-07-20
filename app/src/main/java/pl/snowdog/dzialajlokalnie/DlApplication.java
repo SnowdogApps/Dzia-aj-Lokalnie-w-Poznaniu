@@ -10,7 +10,6 @@ import com.google.gson.GsonBuilder;
 import pl.snowdog.dzialajlokalnie.api.CityApi;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.api.GlobalErrorHandler;
-import pl.snowdog.dzialajlokalnie.model.City;
 import pl.snowdog.dzialajlokalnie.model.Filter;
 import pl.snowdog.dzialajlokalnie.model.Session;
 import retrofit.RequestInterceptor;
@@ -29,7 +28,9 @@ public class DlApplication extends Application {
     public static DlApi.EventApi eventApi;
     public static DlApi.VoteApi voteApi;
     public static DlApi.UserApi userApi;
+    public static DlApi.CommentApi commentApi;
     public static CityApi.PoznanApi poznanApi;
+
     public static Session currentSession;
     public static Filter filter;
 
@@ -70,6 +71,7 @@ public class DlApplication extends Application {
         eventApi = restAdapter.create(DlApi.EventApi.class);
         voteApi = restAdapter.create(DlApi.VoteApi.class);
         userApi = restAdapter.create(DlApi.UserApi.class);
+        commentApi = restAdapter.create(DlApi.CommentApi.class);
 
         restCityAdapter = new RestAdapter.Builder()
                 .setLogLevel(RestAdapter.LogLevel.FULL)

@@ -13,7 +13,8 @@ import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.databinding.ItemIssueBinding;
-import pl.snowdog.dzialajlokalnie.events.IssueRateEvent;
+import pl.snowdog.dzialajlokalnie.events.IssueClickedEvent;
+import pl.snowdog.dzialajlokalnie.events.IssueVoteEvent;
 import pl.snowdog.dzialajlokalnie.model.Issue;
 
 /**
@@ -60,18 +61,26 @@ public class IssuesAdapter extends RecyclerView.Adapter<IssuesAdapter.ViewHolder
             binding.ratingWidget.ibRateUp.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EventBus.getDefault().post(new IssueRateEvent(
+                    EventBus.getDefault().post(new IssueVoteEvent(
                             ViewHolder.this.binding.getIssue().getIssueID(),
-                            IssueRateEvent.Vote.UP));
+                            IssueVoteEvent.Vote.UP));
                 }
             });
 
             binding.ratingWidget.ibRateDown.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EventBus.getDefault().post(new IssueRateEvent(
+                    EventBus.getDefault().post(new IssueVoteEvent(
                             ViewHolder.this.binding.getIssue().getIssueID(),
-                            IssueRateEvent.Vote.DOWN));
+                            IssueVoteEvent.Vote.DOWN));
+                }
+            });
+
+            binding.getRoot().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EventBus.getDefault().post(new IssueClickedEvent(
+                            ViewHolder.this.binding.getIssue().getIssueID()));
                 }
             });
 

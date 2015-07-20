@@ -24,8 +24,6 @@ import java.util.List;
 
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.adapter.MapInfoWindowAdapter;
-import pl.snowdog.dzialajlokalnie.events.EventClickedOnMapEvent;
-import pl.snowdog.dzialajlokalnie.events.IssueClickedOnMapEvent;
 import pl.snowdog.dzialajlokalnie.model.Event;
 import pl.snowdog.dzialajlokalnie.model.Issue;
 
@@ -97,19 +95,6 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Goo
                 icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_event_marker)));
             adapter.putEvent(marker, event);
         }
-    }
-
-    @Override
-    protected boolean isImplementingEventBus() {
-        return true;
-    }
-
-    public void onEvent(IssueClickedOnMapEvent event) {
-        Log.d(TAG, "onEvent " + event);
-    }
-
-    public void onEvent(EventClickedOnMapEvent event) {
-        Log.d(TAG, "onEvent " + event);
     }
 
     @Override

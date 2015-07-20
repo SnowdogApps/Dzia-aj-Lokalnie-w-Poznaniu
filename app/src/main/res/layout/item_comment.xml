@@ -1,56 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
-    <View
-        android:layout_width="@dimen/comment_indent"
-        android:layout_height="1dp"
-        android:visibility="gone"/>
+    <data>
+        <import type="android.view.View"/>
+        <variable name="comment" type="pl.snowdog.dzialajlokalnie.model.Comment"/>
+    </data>
 
-    <include layout="@layout/rating_widget"/>
-
-    <LinearLayout
-        android:orientation="vertical"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/item_padding">
+        android:visibility="@{comment.parentType > 0 ? View.VISIBLE : View.GONE}"
+        >
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/item_padding">
+        <View
+            android:id="@+id/indent"
+            android:layout_width="@dimen/comment_indent"
+            android:layout_height="1dp"
+            android:layout_alignParentLeft="true"
+            android:visibility="@{comment.parentType == 3 ? View.VISIBLE : View.GONE}"/>
 
-            <ImageView
-                android:id="@+id/ivAvatar"
-                android:layout_width="@dimen/comment_photo_size"
-                android:layout_height="@dimen/comment_photo_size"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/sample_user"
-                android:scaleType="centerCrop"/>
-
-            <TextView
-                android:id="@+id/tvUsername"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/item_padding"
-                style="@style/textView_item_title"
-                android:lines="1"
-                android:ellipsize="end"
-                android:text="\@PaniGrażynka"/>
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvText"
-            android:layout_width="match_parent"
+        <include layout="@layout/rating_widget"
+            android:id="@+id/ratingWidget"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/item_padding"
-            style="@style/textView_item_desc"
-            android:minLines="4"
-            android:ellipsize="end"
-            android:text="Ławka ma popękane szczeble od 3 tygodni. Jakieś bolki tam chleją wieczorami piwo. Nie dzwoniłem na policję bo nie chcę dostać. Ktoś może coś poradzić? Jakieś bolki tam chleją wieczorami piwo. Nie dzwoniłem na policję bo nie chcę dostać. Ktoś może coś poradzić?"/>
+            android:layout_toRightOf="@+id/indent"
+            android:layout_alignParentTop="true"
+            bind:rating="@{comment.commentRating}"
+            bind:votedvalue="@{comment.userVotedValue}"
+            />
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/text_container"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/ratingWidget"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="@dimen/item_padding">
 
-</LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/item_padding">
+
+                <ImageView
+                    android:id="@+id/ivAvatar"
+                    android:layout_width="@dimen/comment_photo_size"
+                    android:layout_height="@dimen/comment_photo_size"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/sample_user"
+                    android:scaleType="centerCrop"/>
+
+                <TextView
+                    android:id="@+id/tvUsername"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/item_padding"
+                    style="@style/textView_item_title"
+                    android:lines="1"
+                    android:ellipsize="end"
+                    android:text="@{comment.authorName}"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/item_padding"
+                android:layout_marginBottom="@dimen/item_padding"
+                style="@style/textView_item_desc"
+                android:minLines="4"
+                android:ellipsize="end"
+                android:text="@{comment.text}"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_toRightOf="@+id/indent"
+            android:layout_alignParentTop="true"
+            android:background="@color/background_inverse"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            />
+    </RelativeLayout>
+</layout>

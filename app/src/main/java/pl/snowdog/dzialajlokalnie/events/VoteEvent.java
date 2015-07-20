@@ -3,32 +3,32 @@ package pl.snowdog.dzialajlokalnie.events;
 /**
  * Created by bartek on 07.07.15.
  */
-public class IssueRateEvent {
+public abstract class VoteEvent {
 
-    public enum Vote {UP, DOWN};
+    public enum Vote {UP, DOWN}
 
-    private int issueId;
+    private int id;
     private Vote vote;
 
-    public IssueRateEvent(int issueId, Vote vote) {
-        this.issueId = issueId;
+    public VoteEvent(int id, Vote vote) {
+        this.id = id;
         this.vote = vote;
     }
 
     @Override
     public String toString() {
-        return "IssueRateEvent{" +
-                "issueId=" + issueId +
+        return "VoteEvent{" +
+                "id=" + id +
                 ", vote=" + vote +
                 '}';
     }
 
-    public int getIssueId() {
-        return issueId;
+    public int getId() {
+        return id;
     }
 
-    public void setIssueId(int issueId) {
-        this.issueId = issueId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Vote getVote() {

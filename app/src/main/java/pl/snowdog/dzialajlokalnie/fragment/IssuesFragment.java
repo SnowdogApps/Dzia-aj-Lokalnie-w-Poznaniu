@@ -1,16 +1,16 @@
 package pl.snowdog.dzialajlokalnie.fragment;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import org.androidannotations.annotations.EFragment;
 
 import java.util.List;
 
-import pl.snowdog.dzialajlokalnie.AddIssueActivity_;
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.adapter.IssuesAdapter;
-import pl.snowdog.dzialajlokalnie.events.IssueRateEvent;
+import pl.snowdog.dzialajlokalnie.api.DlApi;
+import pl.snowdog.dzialajlokalnie.events.IssueVoteEvent;
+import pl.snowdog.dzialajlokalnie.events.VoteEvent;
 import pl.snowdog.dzialajlokalnie.model.Issue;
 import pl.snowdog.dzialajlokalnie.model.Vote;
 
@@ -31,6 +31,7 @@ public class IssuesFragment extends ListFragment {
 
     @Override
     protected void refreshItems() {
+        super.refreshItems();
         getIssues();
     }
 
@@ -47,10 +48,9 @@ public class IssuesFragment extends ListFragment {
         return true;
     }
 
-    public void onEvent(IssueRateEvent event) {
+    public void onEvent(IssueVoteEvent event) {
         Log.d(TAG, "onEvent " + event);
-        //AddIssueActivity_.intent(this).mEditedIssue(adapter.getIssues().get(0)).start();
-        vote(Vote.ParentType.issues, event.getIssueId(), event.getVote() == IssueRateEvent.Vote.UP ? 1 : -1);
+        vote(DlApi.ParentType.issues, event.getId(), event.getVote() == VoteEvent.Vote.UP ? 1 : -1);
     }
 
     @Override
@@ -59,6 +59,7 @@ public class IssuesFragment extends ListFragment {
             Issue issue = adapter.getIssues().get(i);
             if (issue.getIssueID() == vote.getParentID()) {
                 issue.setIssueRating(issue.getIssueRating()+vote.getValue());
+                issue.setUserVotedValue(vote.getValue());
                 adapter.notifyItemChanged(i);
                 break;
             }

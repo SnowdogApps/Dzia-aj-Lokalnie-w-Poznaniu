@@ -20,7 +20,7 @@ import pl.snowdog.dzialajlokalnie.util.ListHelper;
 @Table(name = "Issues")
 public class Issue extends Model implements Serializable {
 
-    @Column
+    @Column(unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
     private int issueID;
 
     @Column
@@ -75,7 +75,7 @@ public class Issue extends Model implements Serializable {
     private int votesCount;
 
     @Column
-    private boolean userVotedValue;
+    private int userVotedValue;
 
 
     private String categoriesText;
@@ -84,7 +84,7 @@ public class Issue extends Model implements Serializable {
         super();
     }
 
-    public Issue(int issueID, int parentID, int userID, String title, String description, int districtID, double lon, double lat, String address, String facebookUrl, String issueUrl, Date createdAt, int issueStatus, String categoryID, String photoIssueUri, int issueRating, int commentsCount, int votesCount, boolean userVotedValue) {
+    public Issue(int issueID, int parentID, int userID, String title, String description, int districtID, double lon, double lat, String address, String facebookUrl, String issueUrl, Date createdAt, int issueStatus, String categoryID, String photoIssueUri, int issueRating, int commentsCount, int votesCount, int userVotedValue) {
         super();
 
         this.issueID = issueID;
@@ -141,11 +141,11 @@ public class Issue extends Model implements Serializable {
         this.categoriesText = categoriesText;
     }
 
-    public boolean isUserVotedValue() {
+    public int isUserVotedValue() {
         return userVotedValue;
     }
 
-    public void setUserVotedValue(boolean userVotedValue) {
+    public void setUserVotedValue(int userVotedValue) {
         this.userVotedValue = userVotedValue;
     }
 

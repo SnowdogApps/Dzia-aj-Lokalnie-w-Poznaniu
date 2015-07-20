@@ -1,5 +1,6 @@
 package pl.snowdog.dzialajlokalnie.model;
 
+import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
@@ -7,10 +8,10 @@ import java.util.Date;
 
 
 @Table(name = "Comments")
-public class Comment {
+public class Comment extends Model{
 
 
-    @Column
+    @Column(unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
     private int commentID;
 
     @Column
@@ -20,7 +21,7 @@ public class Comment {
     private int parentId;
 
     @Column
-    private String parentType;
+    private int parentType;
 
     @Column
     private int solution;
@@ -40,11 +41,27 @@ public class Comment {
     @Column
     private String commentMentioned;
 
+    @Column
+    private int commentRating;
+
+    @Column
+    private int authorID;
+
+    @Column
+    private String authorName;
+
+    @Column
+    private String authorAvatar;
+
+    @Column
+    private int userVotedValue;
+
+
     public Comment() {
         super();
     }
 
-    public Comment(int commentID, int userID, int parentId, String parentType, int solution, String text, Date createdAt, Date updatedAt, String commentHashtags, String commentMentioned) {
+    public Comment(int commentID, int userID, int parentId, int parentType, int solution, String text, Date createdAt, Date updatedAt, String commentHashtags, String commentMentioned, int commentRating, int authorID, String authorName, String authorAvatar) {
         super();
         this.commentID = commentID;
         this.userID = userID;
@@ -56,6 +73,10 @@ public class Comment {
         this.updatedAt = updatedAt;
         this.commentHashtags = commentHashtags;
         this.commentMentioned = commentMentioned;
+        this.commentRating = commentRating;
+        this.authorID = authorID;
+        this.authorName = authorName;
+        this.authorAvatar = authorAvatar;
     }
 
     @Override
@@ -64,14 +85,50 @@ public class Comment {
                 "commentID=" + commentID +
                 ", userID=" + userID +
                 ", parentId=" + parentId +
-                ", parentType='" + parentType + '\'' +
+                ", parentType=" + parentType +
                 ", solution=" + solution +
                 ", text='" + text + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 ", commentHashtags='" + commentHashtags + '\'' +
                 ", commentMentioned='" + commentMentioned + '\'' +
+                ", commentRating=" + commentRating +
+                ", authorID=" + authorID +
+                ", authorName='" + authorName + '\'' +
+                ", authorAvatar='" + authorAvatar + '\'' +
                 '}';
+    }
+
+    public String getAuthorAvatar() {
+        return authorAvatar;
+    }
+
+    public void setAuthorAvatar(String authorAvatar) {
+        this.authorAvatar = authorAvatar;
+    }
+
+    public int getAuthorID() {
+        return authorID;
+    }
+
+    public void setAuthorID(int authorID) {
+        this.authorID = authorID;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public int getCommentRating() {
+        return commentRating;
+    }
+
+    public void setCommentRating(int commentRating) {
+        this.commentRating = commentRating;
     }
 
     public int getCommentID() {
@@ -98,11 +155,11 @@ public class Comment {
         this.parentId = parentId;
     }
 
-    public String getParentType() {
+    public int getParentType() {
         return parentType;
     }
 
-    public void setParentType(String parentType) {
+    public void setParentType(int parentType) {
         this.parentType = parentType;
     }
 
@@ -152,5 +209,13 @@ public class Comment {
 
     public void setCommentMentioned(String commentMentioned) {
         this.commentMentioned = commentMentioned;
+    }
+
+    public void setUserVotedValue(int userVotedValue) {
+        this.userVotedValue = userVotedValue;
+    }
+
+    public int getUserVotedValue() {
+        return userVotedValue;
     }
 }

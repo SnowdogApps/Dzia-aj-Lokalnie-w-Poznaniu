@@ -11,7 +11,9 @@ import java.util.List;
 
 import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.DlApplication;
+import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.model.Category;
+import pl.snowdog.dzialajlokalnie.model.Comment;
 import pl.snowdog.dzialajlokalnie.model.Event;
 import pl.snowdog.dzialajlokalnie.model.Filter;
 import pl.snowdog.dzialajlokalnie.model.Issue;
@@ -61,13 +63,14 @@ public abstract class BaseFragment extends Fragment {
         String[] catIds = categoryID.split(",");
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 0; i < catIds.length; i++) {
-            if (i > 0) {
-                stringBuilder.append(", ");
-            }
-
             for (Category category : categories) {
                 if (category.getCategoryID() == Integer.valueOf(catIds[i])) {
+                    if (i > 0) {
+                        stringBuilder.append(", ");
+                    }
+
                     stringBuilder.append(category.getName());
+                    break;
                 }
             }
         }
@@ -82,38 +85,63 @@ public abstract class BaseFragment extends Fragment {
                 filter.getCategoriesFilter(),
                 filter.getSortForIssues(),
                 new Callback<List<Issue>>() {
-            @Override
-            public void success(List<Issue> issues, Response response) {
-                Log.d(TAG, "getIssues success: " + issues);
+                    @Override
+                    public void success(List<Issue> issues, Response response) {
+                        Log.d(TAG, "getIssues success: " + issues);
 
-                List<Category> categories = new Select().from(Category.class).execute();
-                for (Issue issue : issues) {
-                    issue.setCategoriesText(parseCategories(issue.getCategoryID(), categories));
-                }
+                        List<Category> categories = new Select().from(Category.class).execute();
+                        for (Issue issue : issues) {
+                            issue.setCategoriesText(parseCategories(issue.getCategoryID(), categories));
+                        }
 
-                issuesResult(issues);
+                        issuesResult(issues);
 
-                new Delete().from(Issue.class).execute();
-
-                ActiveAndroid.beginTransaction();
-                try {
-                    for (Issue issue : issues) {
-                        issue.save();
+                        ActiveAndroid.beginTransaction();
+                        try {
+                            for (Issue issue : issues) {
+                                issue.save();
+                            }
+                            ActiveAndroid.setTransactionSuccessful();
+                        } finally {
+                            ActiveAndroid.endTransaction();
+                        }
                     }
-                    ActiveAndroid.setTransactionSuccessful();
-                } finally {
-                    ActiveAndroid.endTransaction();
-                }
-            }
 
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d(TAG, "getIssues failure: " + error);
-            }
-        });
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.d(TAG, "getIssues failure: " + error);
+                    }
+                });
     }
 
     protected void issuesResult(List<Issue> issues) {
+        // implement by override
+    }
+
+    protected void getIssue(int id) {
+
+        DlApplication.issueApi.getIssue(id,
+                new Callback<Issue>() {
+                    @Override
+                    public void success(Issue issue, Response response) {
+                        Log.d(TAG, "getIssue success: " + issue);
+
+                        List<Category> categories = new Select().from(Category.class).execute();
+                        issue.setCategoriesText(parseCategories(issue.getCategoryID(), categories));
+
+                        issueResult(issue);
+
+                        issue.save();
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.d(TAG, "getIssue failure: " + error);
+                    }
+                });
+    }
+
+    protected void issueResult(Issue issue) {
         // implement by override
     }
 
@@ -135,8 +163,6 @@ public abstract class BaseFragment extends Fragment {
 
                 eventsResult(events);
 
-                new Delete().from(Issue.class).execute();
-
                 ActiveAndroid.beginTransaction();
                 try {
                     for (Event event : events) {
@@ -157,7 +183,35 @@ public abstract class BaseFragment extends Fragment {
 
     protected void eventsResult(List<Event> events) { }
 
-    protected void vote(Vote.ParentType parentType, int parentId, int value) {
+    protected void getComments(DlApi.ParentType parentType, int parentId) {
+        DlApplication.commentApi.getComments(parentType.name(), parentId, new Callback<List<Comment>>() {
+            @Override
+            public void success(List<Comment> comments, Response response) {
+                Log.d(TAG, "getComments success: " + comments);
+
+                commentsResult(comments);
+
+                ActiveAndroid.beginTransaction();
+                try {
+                    for (Comment comment : comments) {
+                        comment.save();
+                    }
+                    ActiveAndroid.setTransactionSuccessful();
+                } finally {
+                    ActiveAndroid.endTransaction();
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d(TAG, "getComments failure: " + error);
+            }
+        });
+    }
+
+    protected void commentsResult(List<Comment> comments) { }
+
+    protected void vote(DlApi.ParentType parentType, int parentId, int value) {
         DlApplication.voteApi.vote(parentType.name(), parentId, value, new Callback<Vote>() {
             @Override
             public void success(Vote vote, Response response) {

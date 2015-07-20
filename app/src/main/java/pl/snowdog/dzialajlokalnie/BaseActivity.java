@@ -1,5 +1,6 @@
 package pl.snowdog.dzialajlokalnie;
 
+import android.content.Intent;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,9 +17,13 @@ import org.androidannotations.annotations.ViewById;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
+import pl.snowdog.dzialajlokalnie.api.DlApi;
+import pl.snowdog.dzialajlokalnie.events.EventClickedEvent;
+import pl.snowdog.dzialajlokalnie.events.IssueClickedEvent;
 import pl.snowdog.dzialajlokalnie.events.NetworkErrorEvent;
-import pl.snowdog.dzialajlokalnie.model.ApiErrorEvent;
+import pl.snowdog.dzialajlokalnie.events.ApiErrorEvent;
 import pl.snowdog.dzialajlokalnie.model.Category;
+import pl.snowdog.dzialajlokalnie.model.Comment;
 import pl.snowdog.dzialajlokalnie.model.District;
 import pl.snowdog.dzialajlokalnie.model.Session;
 import retrofit.Callback;
@@ -95,6 +100,56 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
+    public void onEvent(IssueClickedEvent event) {
+        Log.d(TAG, "onEvent " + event);
+        startDetailsActivity(DlApi.ParentType.issues, event.getId());
+    }
+
+    public void onEvent(EventClickedEvent event) {
+        Log.d(TAG, "onEvent " + event);
+        startDetailsActivity(DlApi.ParentType.events, event.getId());
+    }
+
+    private void startDetailsActivity(DlApi.ParentType type, int id) {
+        Intent intent = new Intent(this, DetailsActivity_.class);
+        intent.putExtra("objType", type);
+        intent.putExtra("objId", id);
+        startActivity(intent);
+    }
+
+    protected void comment(DlApi.ParentType parentType, int parentID, int solution, String text) {
+        int intParentType;
+
+        switch (parentType){
+            case issues:
+                intParentType = 1;
+                break;
+            case events:
+                intParentType = 2;
+                break;
+            default: //comments
+                intParentType = 3;
+                break;
+        }
+
+        DlApplication.commentApi.comment(intParentType, parentID, solution, text, new Callback<Comment>() {
+            @Override
+            public void success(Comment comment, Response response) {
+                Log.d(TAG, "comment success: " + comment);
+
+                commentResult(comment);
+                comment.save();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d(TAG, "comment failure: " + error);
+            }
+        });
+    }
+
+    protected void commentResult(Comment comment) { }
+
     protected void getCategories() {
         DlApplication.baseApi.getCategories(new Callback<List<Category>>() {
             @Override
@@ -132,7 +187,6 @@ public abstract class BaseActivity extends AppCompatActivity {
             @Override
             public void success(List<District> districts, Response response) {
                 Log.d(TAG, "getDistricts success: " + districts);
-
 
                 new Delete().from(District.class).execute();
 
