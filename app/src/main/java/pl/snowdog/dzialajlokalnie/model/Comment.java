@@ -18,7 +18,7 @@ public class Comment extends Model{
     private int userID;
 
     @Column
-    private int parentId;
+    private int parentID;
 
     @Column
     private int parentType;
@@ -61,11 +61,11 @@ public class Comment extends Model{
         super();
     }
 
-    public Comment(int commentID, int userID, int parentId, int parentType, int solution, String text, Date createdAt, Date updatedAt, String commentHashtags, String commentMentioned, int commentRating, int authorID, String authorName, String authorAvatar) {
+    public Comment(int commentID, int userID, int parentID, int parentType, int solution, String text, Date createdAt, Date updatedAt, String commentHashtags, String commentMentioned, int commentRating, int authorID, String authorName, String authorAvatar) {
         super();
         this.commentID = commentID;
         this.userID = userID;
-        this.parentId = parentId;
+        this.parentID = parentID;
         this.parentType = parentType;
         this.solution = solution;
         this.text = text;
@@ -79,12 +79,20 @@ public class Comment extends Model{
         this.authorAvatar = authorAvatar;
     }
 
+    public Comment(int intParentType, int parentID, int solution, String text) {
+        super();
+        this.parentType = intParentType;
+        this.parentID = parentID;
+        this.solution = solution;
+        this.text = text;
+    }
+
     @Override
     public String toString() {
         return "Comment{" +
                 "commentID=" + commentID +
                 ", userID=" + userID +
-                ", parentId=" + parentId +
+                ", parentID=" + parentID +
                 ", parentType=" + parentType +
                 ", solution=" + solution +
                 ", text='" + text + '\'' +
@@ -147,12 +155,12 @@ public class Comment extends Model{
         this.userID = userID;
     }
 
-    public int getParentId() {
-        return parentId;
+    public int getParentID() {
+        return parentID;
     }
 
-    public void setParentId(int parentId) {
-        this.parentId = parentId;
+    public void setParentID(int parentID) {
+        this.parentID = parentID;
     }
 
     public int getParentType() {

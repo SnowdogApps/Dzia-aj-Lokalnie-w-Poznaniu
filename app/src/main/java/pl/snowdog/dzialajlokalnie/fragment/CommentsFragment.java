@@ -81,7 +81,7 @@ public class CommentsFragment extends ListFragment {
 
         if (event.getComment().getParentType() == 3) { //comment to comment -> add under commented
             for (int i = 0; i < adapter.getItemCount(); i++) {
-                if (adapter.getComments().get(i).getCommentID() == event.getComment().getParentId()) {
+                if (adapter.getComments().get(i).getCommentID() == event.getComment().getParentID()) {
                     position = i+1;
                     break;
                 }

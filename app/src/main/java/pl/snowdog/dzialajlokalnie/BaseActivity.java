@@ -133,7 +133,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 break;
         }
 
-        DlApplication.commentApi.comment(intParentType, parentID, solution, text, new Callback<Comment>() {
+        DlApplication.commentApi.comment(new Comment(intParentType, parentID, solution, text), new Callback<Comment>() {
             @Override
             public void success(Comment comment, Response response) {
                 Log.d(TAG, "comment success: " + comment);

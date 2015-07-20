@@ -93,6 +93,9 @@ public class DlApi {
         void comment(@Field("parentType") int parentType, @Field("parentID") int parentID,
                      @Field("solution") int solution, @Field("text") String text,
                      Callback<Comment> cb);
+
+        @POST("/comments/new")
+        void comment(@Body Comment comment, Callback<Comment> cb);
     }
 
     public interface VoteApi {
@@ -101,12 +104,11 @@ public class DlApi {
          *
          * @param what issues or comments
          * @param id id of issue or comment
-         * @param value value 1, 0, -1
+         * @param vote with value 1, 0, -1
          * @param cb callback
          */
-        @FormUrlEncoded
         @PUT("/{what}/{id}/vote")
-        void vote(@Path("what") String what, @Path("id") int id, @Field("value") int value, Callback<Vote> cb);
+        void vote(@Path("what") String what, @Path("id") int id, @Body Vote vote, Callback<Vote> cb);
     }
 
     public interface UserApi {
