@@ -7,12 +7,17 @@
 
     tools:context=".AddIssueActivity"
     >
+    <TextView
+        android:id="@+id/date_info"
+        android:text="@string/choose_date_info"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <LinearLayout
         android:id="@+id/caldroid"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/date_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:orientation="horizontal" />
     <Button
         android:id="@+id/btnCancel"

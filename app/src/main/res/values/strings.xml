@@ -64,6 +64,7 @@
     <string name="comment_hint">Dodaj komentarz...</string>
     <string name="response_hint">Odpowiedz...</string>
     <string name="action_refresh">Odwież</string>
+    <string name="choose_date_info">Wybierz datę lub zakres dat (od - do)</string>
 
     <plurals name="votes">
         <item quantity="one">%d głos</item>
