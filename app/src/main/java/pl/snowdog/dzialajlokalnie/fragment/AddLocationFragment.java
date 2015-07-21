@@ -215,9 +215,17 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
                 map.clear();
                 mMarker = map.addMarker(new MarkerOptions().position(point).draggable(true));
                 Log.d(TAG, "mpdbg markerLat: " + point.latitude + " marker.lon: " + point.longitude);
-                getAddressForLocation(point.latitude, point.longitude);
 
-                findDistrictAndSetSpinner(point);
+
+                if(findDistrictAndSetSpinner(point)) {
+                    getAddressForLocation(point.latitude, point.longitude);
+                } else {
+                    map.clear();
+                    mMarker = null;
+                    spinner.setSelection(0);
+                    Snackbar.make(getView(), getString(R.string.outside_city_warning), Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
 
 
             }
@@ -236,8 +244,17 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
 
             @Override
             public void onMarkerDragEnd(Marker marker) {
-                getAddressForLocation(marker.getPosition().latitude, marker.getPosition().longitude);
-                findDistrictAndSetSpinner(new LatLng(marker.getPosition().latitude, marker.getPosition().longitude));
+                map.clear();
+                mMarker = map.addMarker(new MarkerOptions().position(marker.getPosition()).draggable(true));
+                if(findDistrictAndSetSpinner(new LatLng(marker.getPosition().latitude, marker.getPosition().longitude))) {
+                    getAddressForLocation(marker.getPosition().latitude, marker.getPosition().longitude);
+                } else {
+                    map.clear();
+                    mMarker = null;
+                    spinner.setSelection(0);
+                    Snackbar.make(getView(), getString(R.string.outside_city_warning), Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
             }
         });
 
@@ -251,7 +268,13 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
         }
     }
 
-    private void findDistrictAndSetSpinner(LatLng point) {
+    /**
+     *
+     * @param point to check if it belongs to any district in the city
+     * @return true if point is within given district
+     */
+    private boolean findDistrictAndSetSpinner(LatLng point) {
+        boolean isWithinDistrict = false;
         int counter = 0;
         for(District d : districts) {
             if(d.getPolygon() != null) {
@@ -259,11 +282,12 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
                     isMarkerChange = true;
                     spinner.setSelection(counter);
                     PolygonUtil.createDistrictShapeOnMap(map, d, getActivity());
-                    break;
+                    return true;
                 }
             }
             counter++;
         }
+        return isWithinDistrict;
     }
 
 

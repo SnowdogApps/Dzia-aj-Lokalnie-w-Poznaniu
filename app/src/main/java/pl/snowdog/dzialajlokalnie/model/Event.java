@@ -88,6 +88,9 @@ public class Event extends Model implements Serializable {
 
     private String categoriesText;
 
+    @Column
+    private List<Integer> categoriesList;
+
 
     public Event() {
         super();
@@ -351,8 +354,12 @@ public class Event extends Model implements Serializable {
         this.votesCount = votesCount;
     }
 
+    public void parseCategoriesList() {
+        categoriesList = ListHelper.parseCategoryListFromString(categoryID);
+    }
+
     public List<Integer> getCategoryIdsList() {
-        return ListHelper.parseCategoryListFromString(categoryID);
+        return categoriesList;
     }
 
     public class EventWrapper {

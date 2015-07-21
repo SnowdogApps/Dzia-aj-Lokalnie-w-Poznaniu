@@ -91,6 +91,7 @@ public abstract class BaseFragment extends Fragment {
 
                         List<Category> categories = new Select().from(Category.class).execute();
                         for (Issue issue : issues) {
+                            issue.parseCategoriesList();
                             issue.setCategoriesText(parseCategories(issue.getCategoryID(), categories));
                         }
 
@@ -128,7 +129,7 @@ public abstract class BaseFragment extends Fragment {
 
                         List<Category> categories = new Select().from(Category.class).execute();
                         issue.setCategoriesText(parseCategories(issue.getCategoryID(), categories));
-
+                        issue.parseCategoriesList();
                         issueResult(issue);
 
                         issue.save();
@@ -158,6 +159,7 @@ public abstract class BaseFragment extends Fragment {
 
                 List<Category> categories = new Select().from(Category.class).execute();
                 for (Event event : events) {
+                    event.parseCategoriesList();
                     event.setCategoriesText(parseCategories(event.getCategoryID(), categories));
                 }
 

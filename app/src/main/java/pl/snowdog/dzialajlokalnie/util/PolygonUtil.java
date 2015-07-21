@@ -40,6 +40,7 @@ public class PolygonUtil {
     public static void createDistrictShapeOnMap(GoogleMap map, District district, Context context) {
         if(context == null || map == null) return;
         // Instantiates a new Polygon object and adds points to define a rectangle
+
         PolygonOptions rectOptions = new PolygonOptions();
         for (Point p : district.getPolygon().getPoints()) {
             rectOptions.add(new LatLng(p.getY(), p.getX()));
