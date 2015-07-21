@@ -159,7 +159,7 @@ public class AddTitleDateFragment extends AddBaseFragment {
         btnPrev.setVisibility(View.GONE);
 
         FragmentAddTitleDateBinding binding = DataBindingUtil.bind(rootView);
-        binding.setNewObject(mEditedObject);
+        binding.setEditedObject(mEditedObject);
 
         if(mEditedObject != null) {
             updateDateTextView();
