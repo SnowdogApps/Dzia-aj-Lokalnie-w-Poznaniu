@@ -30,8 +30,8 @@ import pl.snowdog.dzialajlokalnie.model.DateWrapper;
 /**
  * Created by chomi3 on 2015-07-15.
  */
-@EFragment(R.layout.fragment_add_caldroid)
-public class AddCaldroidFragment extends DialogFragment {
+@EFragment(R.layout.dialog_fragment_add_caldroid)
+public class AddCaldroidDialogFragment extends DialogFragment {
     public static final String TAG = "AddCaldroidFragment";
     CaldroidFragment caldroidFragment;
 

@@ -9,22 +9,18 @@ import android.view.View;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
 import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
-import pl.snowdog.dzialajlokalnie.fragment.AddIssueCategoriesFragment_;
-import pl.snowdog.dzialajlokalnie.fragment.AddIssueImageFragment_;
-import pl.snowdog.dzialajlokalnie.fragment.AddIssueLocationFragment_;
-import pl.snowdog.dzialajlokalnie.fragment.AddIssueTitleDateFragment;
-
-import pl.snowdog.dzialajlokalnie.fragment.AddIssueTitleDateFragment_;
+import pl.snowdog.dzialajlokalnie.fragment.AddCategoriesFragment_;
+import pl.snowdog.dzialajlokalnie.fragment.AddImageFragment_;
+import pl.snowdog.dzialajlokalnie.fragment.AddLocationFragment_;
+import pl.snowdog.dzialajlokalnie.fragment.AddTitleDateFragment;
+import pl.snowdog.dzialajlokalnie.fragment.AddTitleDateFragment_;
 import pl.snowdog.dzialajlokalnie.model.DateWrapper;
 import pl.snowdog.dzialajlokalnie.model.Event;
-import pl.snowdog.dzialajlokalnie.model.Issue;
 import pl.snowdog.dzialajlokalnie.model.NewEvent;
-import pl.snowdog.dzialajlokalnie.model.NewIssue;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -50,17 +46,17 @@ public class AddEventActivity extends AddBaseActivity {
         Locale l = Locale.getDefault();
         Adapter adapter = new Adapter(getSupportFragmentManager());
 
-        adapter.addFragment(new AddIssueTitleDateFragment_().builder()
+        adapter.addFragment(new AddTitleDateFragment_().builder()
                 .mEditedObject(mEditedEvent != null ? new CreateNewObjectEvent.Builder()
                         .title(mEditedEvent.getTitle())
                         .description(mEditedEvent.getDescription())
                         .startDate(new DateWrapper(mEditedEvent.getStartDate()))
                         .endDate(new DateWrapper(mEditedEvent.getEndDate()))
                         .build() : null)
-                .mAddingMode(AddIssueTitleDateFragment.MODE_EVENT)
+                .mAddingMode(AddTitleDateFragment.MODE_EVENT)
                 .build());
 
-        adapter.addFragment(new AddIssueLocationFragment_().builder()
+        adapter.addFragment(new AddLocationFragment_().builder()
                 .mEditedObject(mEditedEvent != null ? new CreateNewObjectEvent.Builder()
                         .lat(mEditedEvent.getLat())
                         .lon(mEditedEvent.getLon())
@@ -69,13 +65,13 @@ public class AddEventActivity extends AddBaseActivity {
                         .build() : null)
                 .build());
 
-        adapter.addFragment(new AddIssueImageFragment_().builder()
+        adapter.addFragment(new AddImageFragment_().builder()
                 .mEditedObject(mEditedEvent != null ? new CreateNewObjectEvent.Builder()
                         .image(mEditedEvent.getPhotoEventUri())
                         .build() : null)
                 .build());
 
-        adapter.addFragment(new AddIssueCategoriesFragment_().builder()
+        adapter.addFragment(new AddCategoriesFragment_().builder()
                 .mEditedObject(mEditedEvent != null ? new CreateNewObjectEvent.Builder()
                         .categoryIDs(mEditedEvent.getCategoryIdsList())
                         .build() : null)

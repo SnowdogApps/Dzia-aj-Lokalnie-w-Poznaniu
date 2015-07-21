@@ -17,7 +17,7 @@ import pl.snowdog.dzialajlokalnie.events.FilterChangedEvent;
  * Created by chomi3 on 2015-07-06.
  */
 @EFragment
-public abstract class AddIssueBaseFragment extends BaseFragment {
+public abstract class AddBaseFragment extends BaseFragment {
 
     @ViewById(R.id.btnNext)
     Button btnNext;

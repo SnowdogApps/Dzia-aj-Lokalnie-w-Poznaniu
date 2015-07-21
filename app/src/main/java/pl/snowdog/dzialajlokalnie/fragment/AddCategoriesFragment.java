@@ -25,8 +25,8 @@ import pl.snowdog.dzialajlokalnie.model.Category;
 /**
  * Created by chomi3 on 2015-07-06.
  */
-@EFragment(R.layout.fragment_add_issue_categories)
-public class AddIssueCategoriesFragment extends AddIssueBaseFragment {
+@EFragment(R.layout.fragment_add_categories)
+public class AddCategoriesFragment extends AddBaseFragment {
 
     @ViewById(R.id.lvCategories)
     ListView lvCategories;

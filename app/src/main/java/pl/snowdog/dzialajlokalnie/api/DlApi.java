@@ -28,6 +28,8 @@ public class DlApi {
 
 //        public static final String API_URL = "http://192.168.1.96/dzialaj-lokalnie-api/index.php/";
     public static final String API_URL = "http://dzialajlokalnie.snowdog.pro";
+    //public static final String API_URL = "http://144.76.97.81";
+
     public static final String CITY_API_URL = "http://www.poznan.pl/";
     public static final String PHOTO_THUMB_URL = API_URL + "/photos/%s_thumb.jpeg";
     public static final String PHOTO_NORMAL_URL = API_URL + "/photos/%s_normal.jpeg";

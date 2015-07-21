@@ -9,15 +9,14 @@ import android.view.View;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 
-import java.util.ArrayList;
 import java.util.Locale;
 
 import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
-import pl.snowdog.dzialajlokalnie.fragment.AddIssueCategoriesFragment_;
-import pl.snowdog.dzialajlokalnie.fragment.AddIssueImageFragment_;
-import pl.snowdog.dzialajlokalnie.fragment.AddIssueLocationFragment_;
-import pl.snowdog.dzialajlokalnie.fragment.AddIssueTitleDateFragment;
-import pl.snowdog.dzialajlokalnie.fragment.AddIssueTitleDateFragment_;
+import pl.snowdog.dzialajlokalnie.fragment.AddCategoriesFragment_;
+import pl.snowdog.dzialajlokalnie.fragment.AddImageFragment_;
+import pl.snowdog.dzialajlokalnie.fragment.AddLocationFragment_;
+import pl.snowdog.dzialajlokalnie.fragment.AddTitleDateFragment;
+import pl.snowdog.dzialajlokalnie.fragment.AddTitleDateFragment_;
 import pl.snowdog.dzialajlokalnie.model.Issue;
 import pl.snowdog.dzialajlokalnie.model.NewIssue;
 import retrofit.Callback;
@@ -41,15 +40,15 @@ public class AddIssueActivity extends AddBaseActivity {
         Locale l = Locale.getDefault();
         Adapter adapter = new Adapter(getSupportFragmentManager());
 
-        adapter.addFragment(new AddIssueTitleDateFragment_().builder()
+        adapter.addFragment(new AddTitleDateFragment_().builder()
                 .mEditedObject(mEditedIssue != null ? new CreateNewObjectEvent.Builder()
                         .title(mEditedIssue.getTitle())
                         .description(mEditedIssue.getDescription())
                         .build() : null)
-                .mAddingMode(AddIssueTitleDateFragment.MODE_ISSUE)
+                .mAddingMode(AddTitleDateFragment.MODE_ISSUE)
                 .build());
 
-        adapter.addFragment(new AddIssueLocationFragment_().builder()
+        adapter.addFragment(new AddLocationFragment_().builder()
                 .mEditedObject(mEditedIssue != null ? new CreateNewObjectEvent.Builder()
                         .lat(mEditedIssue.getLat())
                         .lon(mEditedIssue.getLon())
@@ -58,13 +57,13 @@ public class AddIssueActivity extends AddBaseActivity {
                         .build() : null)
                 .build());
 
-        adapter.addFragment(new AddIssueImageFragment_().builder()
+        adapter.addFragment(new AddImageFragment_().builder()
                 .mEditedObject(mEditedIssue != null ? new CreateNewObjectEvent.Builder()
                         .image(mEditedIssue.getPhotoIssueUri())
                         .build() : null)
                 .build());
 
-        adapter.addFragment(new AddIssueCategoriesFragment_().builder()
+        adapter.addFragment(new AddCategoriesFragment_().builder()
                 .mEditedObject(mEditedIssue != null ? new CreateNewObjectEvent.Builder()
                         .categoryIDs(mEditedIssue.getCategoryIdsList())
                         .build() : null)

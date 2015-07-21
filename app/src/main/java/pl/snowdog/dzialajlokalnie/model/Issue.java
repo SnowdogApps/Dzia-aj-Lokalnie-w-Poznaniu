@@ -77,6 +77,9 @@ public class Issue extends Model implements Serializable {
     @Column
     private int userVotedValue;
 
+    @Column
+    private List<Integer> categoriesList;
+
 
     private String categoriesText;
 
@@ -293,11 +296,13 @@ public class Issue extends Model implements Serializable {
         this.votesCount = votesCount;
     }
 
-    public List<Integer> getCategoryIdsList() {
-        return ListHelper.parseCategoryListFromString(categoryID);
+    public void parseCategoriesList() {
+        categoriesList = ListHelper.parseCategoryListFromString(categoryID);
     }
 
-
+    public List<Integer> getCategoryIdsList() {
+        return categoriesList;
+    }
 
     public class IssueWrapper {
         private Issue issue;

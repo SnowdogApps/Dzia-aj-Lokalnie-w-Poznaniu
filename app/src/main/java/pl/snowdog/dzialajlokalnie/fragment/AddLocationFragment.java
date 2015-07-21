@@ -54,8 +54,8 @@ import retrofit.client.Response;
 /**
  * Created by chomi3 on 2015-07-06.
  */
-@EFragment(R.layout.fragment_add_issue_location)
-public class AddIssueLocationFragment extends AddIssueBaseFragment implements OnMapReadyCallback, GoogleMap.OnMyLocationChangeListener, GoogleMap.OnCameraChangeListener {
+@EFragment(R.layout.fragment_add_location)
+public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCallback, GoogleMap.OnMyLocationChangeListener, GoogleMap.OnCameraChangeListener {
 
     private static final String TAG = "AddIssueLocationFr";
     @ViewById

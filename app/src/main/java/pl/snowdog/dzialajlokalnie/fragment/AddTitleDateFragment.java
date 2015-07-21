@@ -1,13 +1,9 @@
 package pl.snowdog.dzialajlokalnie.fragment;
 
 import android.databinding.DataBindingUtil;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -24,7 +20,7 @@ import java.util.Date;
 
 import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.R;
-import pl.snowdog.dzialajlokalnie.databinding.FragmentAddIssueTitleDateBinding;
+import pl.snowdog.dzialajlokalnie.databinding.FragmentAddTitleDateBinding;
 import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
 import pl.snowdog.dzialajlokalnie.events.DateSetEvent;
 import pl.snowdog.dzialajlokalnie.model.DateWrapper;
@@ -32,8 +28,8 @@ import pl.snowdog.dzialajlokalnie.model.DateWrapper;
 /**
  * Created by chomi3 on 2015-07-06.
  */
-@EFragment(R.layout.fragment_add_issue_title_date)
-public class AddIssueTitleDateFragment extends AddIssueBaseFragment {
+@EFragment(R.layout.fragment_add_title_date)
+public class AddTitleDateFragment extends AddBaseFragment {
     private static final String TAG = "AddIssueTitleDateFragment";
 
     public static final int MODE_EVENT = 0;
@@ -162,7 +158,7 @@ public class AddIssueTitleDateFragment extends AddIssueBaseFragment {
         }
         btnPrev.setVisibility(View.GONE);
 
-        FragmentAddIssueTitleDateBinding binding = DataBindingUtil.bind(rootView);
+        FragmentAddTitleDateBinding binding = DataBindingUtil.bind(rootView);
         binding.setNewObject(mEditedObject);
 
         if(mEditedObject != null) {
@@ -173,7 +169,7 @@ public class AddIssueTitleDateFragment extends AddIssueBaseFragment {
 
     @Click(R.id.btnCaldroid)
     void onCaldroidClicked() {
-        AddCaldroidFragment_.builder().startDate(startDate).endDate(endDate).build().show(getChildFragmentManager(), AddCaldroidFragment.TAG);
+        AddCaldroidDialogFragment_.builder().startDate(startDate).endDate(endDate).build().show(getChildFragmentManager(), AddCaldroidDialogFragment.TAG);
     }
 
 

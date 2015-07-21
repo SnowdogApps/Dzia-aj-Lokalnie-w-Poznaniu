@@ -33,8 +33,8 @@ import pl.snowdog.dzialajlokalnie.util.FileChooserUtil;
 /**
  * Created by chomi3 on 2015-07-06.
  */
-@EFragment(R.layout.fragment_add_issue_image)
-public class AddIssueImageFragment extends AddIssueBaseFragment {
+@EFragment(R.layout.fragment_add_image)
+public class AddImageFragment extends AddBaseFragment {
     public static final int PICK_FROM_FILE = 1231;
     public static final int TAKE_PICTURE = 1234;
     private static final String TAG = "AddIssueImageFr";
