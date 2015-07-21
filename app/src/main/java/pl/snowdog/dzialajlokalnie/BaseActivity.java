@@ -25,6 +25,7 @@ import pl.snowdog.dzialajlokalnie.events.ApiErrorEvent;
 import pl.snowdog.dzialajlokalnie.model.Category;
 import pl.snowdog.dzialajlokalnie.model.Comment;
 import pl.snowdog.dzialajlokalnie.model.District;
+import pl.snowdog.dzialajlokalnie.model.Login;
 import pl.snowdog.dzialajlokalnie.model.Session;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -132,7 +133,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 break;
         }
 
-        DlApplication.commentApi.comment(intParentType, parentID, solution, text, new Callback<Comment>() {
+        DlApplication.commentApi.comment(new Comment(intParentType, parentID, solution, text), new Callback<Comment>() {
             @Override
             public void success(Comment comment, Response response) {
                 Log.d(TAG, "comment success: " + comment);
@@ -210,7 +211,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void login(String username, String pass) {
-        DlApplication.userApi.login(username, pass, 2, new Callback<Session>() {
+        DlApplication.userApi.login(new Login(username, pass, 2), new Callback<Session>() {
             @Override
             public void success(Session session, Response response) {
                 Log.d(TAG, "login success: " + session);
