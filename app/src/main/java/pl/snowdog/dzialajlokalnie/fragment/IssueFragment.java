@@ -73,11 +73,6 @@ public class IssueFragment extends BaseFragment {
         Log.d(TAG, "issueResult " + issue);
         binding.setIssue(issue);
 
-        Picasso.with(binding.getRoot().getContext()).
-                load(String.format(DlApi.PHOTO_NORMAL_URL, issue.getPhotoIssueUri())).
-                error(R.drawable.ic_editor_insert_emoticon).
-                into(binding.ivAvatar);
-
         EventBus.getDefault().post(new SetTitleAndPhotoEvent(issue.getTitle(),
                 String.format(DlApi.PHOTO_NORMAL_URL, issue.getPhotoIssueUri())));
     }

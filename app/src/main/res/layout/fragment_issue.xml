@@ -11,19 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/ivAvatar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/photo_size"
-            android:src="@drawable/sample_picture"
-            android:scaleType="centerCrop"/>
-
         <include layout="@layout/rating_widget"
             android:id="@+id/ratingWidget"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_above="@+id/footerWidget"
             bind:rating="@{issue.issueRating}"
             bind:bgcolor="@{true}"
             />
@@ -32,7 +24,6 @@
             android:id="@+id/textContent"
             android:layout_toRightOf="@+id/ratingWidget"
             android:layout_alignTop="@+id/ratingWidget"
-            android:layout_above="@+id/footerWidget"
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -65,15 +56,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_alignBottom="@+id/ivAvatar"
+            android:layout_alignBottom="@+id/textContent"
             bind:footerText='@{@plurals/votes(issue.votesCount, issue.votesCount) + ", " + @plurals/comments(issue.commentsCount, issue.commentsCount) + ", " + @string/tags(issue.categoriesText)}'/>
 
-
-        <View
-            android:layout_below="@+id/ivAvatar"
-            android:background="?attr/colorPrimary"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            />
     </RelativeLayout>
 </layout>
