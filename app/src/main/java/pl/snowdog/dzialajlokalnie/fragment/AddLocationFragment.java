@@ -260,10 +260,10 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
 
         //EDIT Mode
         if(mEditedObject != null) {
-            mMarker = map.addMarker(new MarkerOptions().position(new LatLng(mEditedObject.getLat(), mEditedObject.getLat())).draggable(true));
-            getAddressForLocation(mEditedObject.getLat(), mEditedObject.getLat());
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mEditedObject.getLat(), mEditedObject.getLat()), 11));
-            findDistrictAndSetSpinner(new LatLng(mEditedObject.getLat(), mEditedObject.getLat()));
+            mMarker = map.addMarker(new MarkerOptions().position(new LatLng(mEditedObject.getLat(), mEditedObject.getLon())).draggable(true));
+            getAddressForLocation(mEditedObject.getLat(), mEditedObject.getLon());
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mEditedObject.getLat(), mEditedObject.getLon()), 11));
+            findDistrictAndSetSpinner(new LatLng(mEditedObject.getLat(), mEditedObject.getLon()));
             Log.d(TAG, "edtdbg location: lat: "+mEditedObject.getLat()+ " lon: "+mEditedObject.getLon());
         }
     }

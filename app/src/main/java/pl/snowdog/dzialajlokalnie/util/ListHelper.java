@@ -12,6 +12,8 @@ import java.util.List;
 public class ListHelper {
     @NonNull
     public static  List<Integer> parseCategoryListFromString(String categoryID) {
+        if(categoryID == null) return null;
+
         List<String> items = Arrays.asList(categoryID.split(","));
         List<Integer> ints = new ArrayList<>();
         for(String i : items) {

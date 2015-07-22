@@ -56,7 +56,7 @@ public class AddImageFragment extends AddBaseFragment {
     void onNextButtonClicked() {
         if(validateInput()) {
             CreateNewObjectEvent.Builder builder = new CreateNewObjectEvent.Builder()
-                    .image("abc")
+                    .image(mFileUri == null ? "" : mFileUri.getPath())
                     .type(CreateNewObjectEvent.Type.image);
 
             EventBus.getDefault().post(builder.build());
@@ -98,6 +98,7 @@ public class AddImageFragment extends AddBaseFragment {
         }
         Picasso.with(getActivity()).load(mFileUri).error(
                 R.drawable.ic_editor_insert_emoticon).into(ivPreview);
+        btnNext.setText(R.string.next);
         //handleGalleryResult(data);
     }
 
@@ -109,20 +110,24 @@ public class AddImageFragment extends AddBaseFragment {
         }
         Uri selectedImage = data.getData();
         mTmpGalleryPicturePath = FileChooserUtil.getPath(getActivity(), selectedImage);
-        if(mTmpGalleryPicturePath!=null)
+        if(mTmpGalleryPicturePath!=null) {
+            mFileUri = selectedImage;
             Picasso.with(getActivity()).load(selectedImage).error(
                     R.drawable.ic_editor_insert_emoticon).into(ivPreview);
-        else
+
+        } else
         {
             try {
                 InputStream is = getActivity().getContentResolver().openInputStream(selectedImage);
                 ivPreview.setImageBitmap(BitmapFactory.decodeStream(is));
                 mTmpGalleryPicturePath = selectedImage.getPath();
+                mFileUri = selectedImage;
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
+        btnNext.setText(R.string.next);
     }
 
     @Override
@@ -132,6 +137,9 @@ public class AddImageFragment extends AddBaseFragment {
 
     @AfterViews
     void afterViews() {
+        if(mFileUri == null) {
+            btnNext.setText(R.string.skip);
+        }
         //EDIT MODE
         if(mEditedObject != null) {
             Picasso.with(getActivity())

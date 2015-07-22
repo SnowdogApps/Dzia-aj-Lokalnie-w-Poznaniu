@@ -42,7 +42,7 @@ public abstract class AddBaseActivity extends BaseActivity {
     double lon;
     String address;
     List<Integer> categoryIDs;
-    String PHOTO; //// TODO: 2015-07-15
+    String photoUri; //// TODO: 2015-07-15
 
 
     @Override
@@ -123,7 +123,7 @@ public abstract class AddBaseActivity extends BaseActivity {
                 goToNextPage();
                 break;
             case image:
-                PHOTO = event.getImage();
+                photoUri = event.getImage();
                 goToNextPage();
                 break;
 

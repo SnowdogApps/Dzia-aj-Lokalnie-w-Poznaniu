@@ -9,6 +9,7 @@ import android.view.View;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 
+import java.io.File;
 import java.util.Locale;
 
 import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
@@ -22,6 +23,7 @@ import pl.snowdog.dzialajlokalnie.model.NewIssue;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.TypedFile;
 
 
 /**
@@ -104,10 +106,12 @@ public class AddIssueActivity extends AddBaseActivity {
 
     private void postIssue() {
         NewIssue newIssue = createNewIssueObject();
+
         DlApplication.issueApi.postIssue(newIssue, new Callback<Issue.IssueWrapper>() {
             @Override
             public void success(Issue.IssueWrapper issueWrapper, Response response) {
-                Log.d(TAG, "issueApi post success: " + response + " newIssueFromApi: " + issueWrapper.toString());
+                Log.d(TAG, "issueApi post success: " + response.toString() + " newIssueFromApi: " + issueWrapper.toString());
+                putIssueImage(issueWrapper.getIssueID());
             }
 
             @Override
@@ -122,12 +126,29 @@ public class AddIssueActivity extends AddBaseActivity {
         DlApplication.issueApi.putIssue(newIssue, mEditedIssue.getIssueID(), new Callback<Issue.IssueWrapper>() {
             @Override
             public void success(Issue.IssueWrapper issueWrapper, Response response) {
-                Log.d(TAG, "issueApi post success: " + response + " newIssueFromApi: " + issueWrapper.toString());
+                Log.d(TAG, "issueApi put success: " + response + " newIssueFromApi: " + issueWrapper.toString());
+
             }
 
             @Override
             public void failure(RetrofitError error) {
-                Log.d(TAG, "issueApi post error: " + error);
+                Log.d(TAG, "issueApi put error: " + error);
+            }
+        });
+    }
+
+    private void putIssueImage(int issueId) {
+        TypedFile file = new TypedFile("image/jpg", new File(photoUri));
+
+        DlApplication.issueApi.putIssueImage(file, issueId, new Callback<Issue.IssueWrapper>() {
+            @Override
+            public void success(Issue.IssueWrapper issueWrapper, Response response) {
+                Log.d(TAG, "issueApi put image success: " + response + " newIssueFromApi: " + issueWrapper.toString());
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d(TAG, "issueApi put imaget error: " + error);
             }
         });
     }
@@ -141,6 +162,8 @@ public class AddIssueActivity extends AddBaseActivity {
         newIssue.setLocation(Double.toString(lat) + "," + Double.toString(lon));
         newIssue.setCategoryID(categoryIDs);
         newIssue.setDistrictID(districtID);
+
+
         return newIssue;
     }
 

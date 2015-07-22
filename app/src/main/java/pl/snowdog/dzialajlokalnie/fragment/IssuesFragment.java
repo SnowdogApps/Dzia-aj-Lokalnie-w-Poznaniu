@@ -6,6 +6,7 @@ import org.androidannotations.annotations.EFragment;
 
 import java.util.List;
 
+import pl.snowdog.dzialajlokalnie.AddIssueActivity_;
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.adapter.IssuesAdapter;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
@@ -50,7 +51,8 @@ public class IssuesFragment extends ListFragment {
 
     public void onEvent(IssueVoteEvent event) {
         Log.d(TAG, "onEvent " + event);
-        vote(DlApi.ParentType.issues, event.getId(), event.getVote() == VoteEvent.Vote.UP ? 1 : -1);
+        AddIssueActivity_.intent(getActivity()).mEditedIssue(adapter.getIssues().get(0)).start();
+        //vote(DlApi.ParentType.issues, event.getId(), event.getVote() == VoteEvent.Vote.UP ? 1 : -1);
     }
 
     @Override

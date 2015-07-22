@@ -305,6 +305,17 @@ public class Issue extends Model implements Serializable {
     }
 
     public class IssueWrapper {
+        private int issueID;
+
+        public int getIssueID() {
+            return issueID;
+        }
+
+        public void setIssueID(int issueID) {
+            this.issueID = issueID;
+        }
+
+        /*
         private Issue issue;
 
         public Issue getIssue() {
@@ -313,6 +324,6 @@ public class Issue extends Model implements Serializable {
 
         public void setIssue(Issue issue) {
             this.issue = issue;
-        }
+        }*/
     }
 }

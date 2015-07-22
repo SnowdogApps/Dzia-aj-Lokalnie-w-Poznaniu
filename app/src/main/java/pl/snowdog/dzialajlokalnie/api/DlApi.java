@@ -17,10 +17,13 @@ import retrofit.http.Body;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
+import retrofit.http.Multipart;
 import retrofit.http.POST;
 import retrofit.http.PUT;
+import retrofit.http.Part;
 import retrofit.http.Path;
 import retrofit.http.Query;
+import retrofit.mime.TypedFile;
 
 /**
  * Created by bartek on 06.07.15.
@@ -60,6 +63,12 @@ public class DlApi {
         @POST("/issues/new")
         void postIssue(@Body NewIssue issue,
                        Callback<Issue.IssueWrapper> cb);
+
+        @Multipart
+        @PUT("/issues/{id}/photo/new")
+        void putIssueImage(@Part("photoIssue") TypedFile image,
+                           @Path("id") int issueId,
+                           Callback<Issue.IssueWrapper> cb);
 
         @PUT("/issues/{id}/edit")
         void putIssue(@Body NewIssue issue,

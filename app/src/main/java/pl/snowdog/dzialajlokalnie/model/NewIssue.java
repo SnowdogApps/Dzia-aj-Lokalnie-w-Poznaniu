@@ -1,7 +1,8 @@
 package pl.snowdog.dzialajlokalnie.model;
 
-import java.util.Date;
 import java.util.List;
+
+import retrofit.mime.TypedFile;
 
 /**
  * Created by chomi3 on 2015-07-16.
@@ -14,7 +15,6 @@ public class NewIssue {
     private String location;
 
     private List<Integer> categoryID;
-    private String photoEvent;
 
     public NewIssue() {
 
@@ -68,11 +68,4 @@ public class NewIssue {
         this.categoryID = categoryID;
     }
 
-    public String getPhotoEvent() {
-        return photoEvent;
-    }
-
-    public void setPhotoEvent(String photoEvent) {
-        this.photoEvent = photoEvent;
-    }
 }

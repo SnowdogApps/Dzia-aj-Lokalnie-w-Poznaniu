@@ -66,6 +66,7 @@
     <string name="action_refresh">Odwież</string>
     <string name="choose_date_info">Wybierz datę lub zakres dat (od - do)</string>
     <string name="outside_city_warning">Miejsce poza miastem</string>
+    <string name="skip">Pomiń</string>
 
     <plurals name="votes">
         <item quantity="one">%d głos</item>
