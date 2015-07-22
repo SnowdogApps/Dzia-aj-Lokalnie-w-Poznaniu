@@ -87,7 +87,13 @@ public class DlApi {
         void postEvent(@Body NewEvent event,
                        Callback<Event.EventWrapper> cb);
 
-        @POST("/events/{id}/edit")
+        @Multipart
+        @PUT("/events/{id}/photo/new")
+        void putEventImage(@Part("photoEvent") TypedFile image,
+                           @Path("id") int eventId,
+                           Callback<Event.EventWrapper> cb);
+
+        @PUT("/events/{id}/edit")
         void putEvent(@Body NewEvent event,
                       @Path("id") int issueId,
                       Callback<Event.EventWrapper> cb);

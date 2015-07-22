@@ -19,7 +19,12 @@ import org.androidannotations.annotations.ViewById;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
+import pl.snowdog.dzialajlokalnie.events.ObjectAddedEvent;
+import pl.snowdog.dzialajlokalnie.fragment.ApiActionDialogFragment;
+import pl.snowdog.dzialajlokalnie.fragment.ApiActionDialogFragment_;
+import pl.snowdog.dzialajlokalnie.view.CircularProgressWheel;
 
 /**
  * Created by chomi3 on 2015-07-06.
@@ -33,6 +38,8 @@ public abstract class AddBaseActivity extends BaseActivity {
 
     @ViewById(R.id.tabs)
     protected TabLayout mTabLayout;
+
+    protected ApiActionDialogFragment mApiActionDialogFragment;
 
     //Common fields for creation of new object
     String title;
@@ -98,8 +105,19 @@ public abstract class AddBaseActivity extends BaseActivity {
 
     }
 
+    protected void toggleProgressWheel(boolean show) {
+        if(show) {
+            if(mApiActionDialogFragment == null) {
+                mApiActionDialogFragment = ApiActionDialogFragment_.builder().build();
+            }
+            mApiActionDialogFragment.show(getSupportFragmentManager(), ApiActionDialogFragment.TAG);
+        } else {
+            mApiActionDialogFragment.dismiss();
+        }
+    }
+
     private void updateSubtitle() {
-        getSupportActionBar().setSubtitle(getString(R.string.add_issue_step)+ " "+(mViewPager.getCurrentItem()+1)+ "/"+mViewPager.getAdapter().getCount());
+        getSupportActionBar().setSubtitle(getString(R.string.add_issue_step) + " " + (mViewPager.getCurrentItem() + 1) + "/" + mViewPager.getAdapter().getCount());
     }
 
     /**
@@ -130,6 +148,11 @@ public abstract class AddBaseActivity extends BaseActivity {
         }
     }
 
+    protected void finishAdding(ObjectAddedEvent.Type added) {
+        toggleProgressWheel(false);
+        finish();
+        EventBus.getDefault().post(new ObjectAddedEvent(added));
+    }
 
     public void onObjectCreated() {
         Log.d(TAG, "title: "+title+" description: "+description+ " lat: "+lat+ " lon: "+lon+ " districtID: "+districtID

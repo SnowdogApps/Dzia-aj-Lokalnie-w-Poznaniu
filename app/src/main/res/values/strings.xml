@@ -67,6 +67,11 @@
     <string name="choose_date_info">Wybierz datę lub zakres dat (od - do)</string>
     <string name="outside_city_warning">Miejsce poza miastem</string>
     <string name="skip">Pomiń</string>
+    <string name="choose_image_info">Choose an image</string>
+    <string name="added_event_success_info">Dodano nowe wydarzenie</string>
+    <string name="added_issue_success_info">Dodano nowe zgłoszenie</string>
+    <string name="api_communication_info">Komunikacja z API w toku</string>
+    <string name="please_wait_info">Proszę czekać</string>
 
     <plurals name="votes">
         <item quantity="one">%d głos</item>

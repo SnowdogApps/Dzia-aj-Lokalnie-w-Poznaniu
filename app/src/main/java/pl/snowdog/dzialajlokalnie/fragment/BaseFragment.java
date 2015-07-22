@@ -41,18 +41,18 @@ public abstract class BaseFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        if (isImplementingEventBus()) {
+        if (isImplementingEventBus() && !EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
     }
 
     @Override
-    public void onStop() {
+    public void onDestroy() {
         if (isImplementingEventBus()) {
             EventBus.getDefault().unregister(this);
         }
 
-        super.onStop();
+        super.onDestroy();
     }
 
     protected String parseCategories(String categoryID, List<Category> categories) {

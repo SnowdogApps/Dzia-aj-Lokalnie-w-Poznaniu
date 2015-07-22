@@ -9,10 +9,12 @@ import android.view.View;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 
+import java.io.File;
 import java.util.Date;
 import java.util.Locale;
 
 import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
+import pl.snowdog.dzialajlokalnie.events.ObjectAddedEvent;
 import pl.snowdog.dzialajlokalnie.fragment.AddCategoriesFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.AddImageFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.AddLocationFragment_;
@@ -20,10 +22,12 @@ import pl.snowdog.dzialajlokalnie.fragment.AddTitleDateFragment;
 import pl.snowdog.dzialajlokalnie.fragment.AddTitleDateFragment_;
 import pl.snowdog.dzialajlokalnie.model.DateWrapper;
 import pl.snowdog.dzialajlokalnie.model.Event;
+import pl.snowdog.dzialajlokalnie.model.Issue;
 import pl.snowdog.dzialajlokalnie.model.NewEvent;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+import retrofit.mime.TypedFile;
 
 /**
  * Created by chomi3 on 2015-07-06.
@@ -119,33 +123,67 @@ public class AddEventActivity extends AddBaseActivity {
     }
 
     private void postEvent() {
+        toggleProgressWheel(true);
         NewEvent newEvent = createNewEventObject();
 
         DlApplication.eventApi.postEvent(newEvent, new Callback<Event.EventWrapper>() {
             @Override
             public void success(Event.EventWrapper eventWrapper, Response response) {
+                finishAdding(ObjectAddedEvent.Type.event);
                 Log.d(TAG, "eventApi post success: " + response + " newEventFromApi: " + eventWrapper.toString());
             }
 
             @Override
             public void failure(RetrofitError error) {
                 Log.d(TAG, "eventApi post error: " + error);
+                toggleProgressWheel(false);
             }
         });
     }
 
 
     private void putEvent() {
+        toggleProgressWheel(true);
         NewEvent newEvent = createNewEventObject();
         DlApplication.eventApi.putEvent(newEvent, mEditedEvent.getEventID(), new Callback<Event.EventWrapper>() {
             @Override
             public void success(Event.EventWrapper eventWrapper, Response response) {
                 Log.d(TAG, "eventApi post success: " + response + " newEventFromApi: " + eventWrapper.toString());
+                if (photoUri != null && photoUri.length() > 0) {
+                    putIssueImage(eventWrapper.getEventID());
+                } else {
+                    //Finished adding, close view
+                    finishAdding(ObjectAddedEvent.Type.event);
+                }
+
+
             }
 
             @Override
             public void failure(RetrofitError error) {
                 Log.d(TAG, "eventApi post error: " + error);
+                toggleProgressWheel(false);
+            }
+        });
+    }
+
+
+    private void putIssueImage(int eventId) {
+        toggleProgressWheel(true);
+        TypedFile file = new TypedFile("image/jpg", new File(photoUri));
+
+        DlApplication.eventApi.putEventImage(file, eventId, new Callback<Event.EventWrapper>() {
+            @Override
+            public void success(Event.EventWrapper issueWrapper, Response response) {
+                Log.d(TAG, "eventApi put image success: " + response + " eventApi: " + issueWrapper.toString());
+                //toggleProgressWheel(false);
+                finishAdding(ObjectAddedEvent.Type.event);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d(TAG, "eventApi put imaget error: " + error);
+                toggleProgressWheel(false);
             }
         });
     }

@@ -2,6 +2,7 @@ package pl.snowdog.dzialajlokalnie.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Environment;
@@ -21,7 +22,9 @@ import org.androidannotations.annotations.ViewById;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Random;
 
 import de.greenrobot.event.EventBus;
@@ -86,7 +89,7 @@ public class AddImageFragment extends AddBaseFragment {
         startActivityForResult(
                 Intent.createChooser(
                         new Intent(Intent.ACTION_GET_CONTENT)
-                                .setType("image/*"), "Choose an image"),
+                                .setType("image/*"), getString(R.string.choose_image_info)),
                 PICK_FROM_FILE);
 
     }
@@ -96,6 +99,31 @@ public class AddImageFragment extends AddBaseFragment {
         if(resultCode != Activity.RESULT_OK) {
             return;
         }
+
+        /* Set bitmap options to scale the image decode target */
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = 2;
+        bmOptions.inPurgeable = true;
+
+        /* Decode the JPEG file into a Bitmap */
+        Bitmap bitmap = BitmapFactory.decodeFile(mFileUri.getPath(), bmOptions);
+
+        /* Test compress */
+        File imageFile = new File(mFileUri.getPath());
+        try{
+            OutputStream out = null;
+            out = new FileOutputStream(imageFile);
+            //Bitmap bitmap = BitmapFactory.decodeFile(picturePath);
+
+            bitmap.compress(Bitmap.CompressFormat.JPEG,80,out);
+            out.flush();
+            out.close();
+            Log.d(TAG, "imgdbg COMPRESSED FILE");
+        }catch(Exception e){
+            Log.e(TAG,"imgdbg Error compressing: "+e.toString());
+        }
+
         Picasso.with(getActivity()).load(mFileUri).error(
                 R.drawable.ic_editor_insert_emoticon).into(ivPreview);
         btnNext.setText(R.string.next);

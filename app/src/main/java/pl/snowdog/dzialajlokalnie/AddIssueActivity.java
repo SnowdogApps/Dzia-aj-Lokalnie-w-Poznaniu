@@ -12,7 +12,10 @@ import org.androidannotations.annotations.Extra;
 import java.io.File;
 import java.util.Locale;
 
+import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
+import pl.snowdog.dzialajlokalnie.events.FilterChangedEvent;
+import pl.snowdog.dzialajlokalnie.events.ObjectAddedEvent;
 import pl.snowdog.dzialajlokalnie.fragment.AddCategoriesFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.AddImageFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.AddLocationFragment_;
@@ -97,6 +100,7 @@ public class AddIssueActivity extends AddBaseActivity {
                 if(mEditedIssue != null) {
                     putIssue();
                 } else {
+                    //toggleProgressWheel(true);
                     postIssue();
                 }
                 return;
@@ -105,50 +109,70 @@ public class AddIssueActivity extends AddBaseActivity {
     }
 
     private void postIssue() {
+        toggleProgressWheel(true);
         NewIssue newIssue = createNewIssueObject();
 
         DlApplication.issueApi.postIssue(newIssue, new Callback<Issue.IssueWrapper>() {
             @Override
             public void success(Issue.IssueWrapper issueWrapper, Response response) {
-                Log.d(TAG, "issueApi post success: " + response.toString() + " newIssueFromApi: " + issueWrapper.toString());
-                putIssueImage(issueWrapper.getIssueID());
+                Log.d(TAG, "issueApi post success: " + response.toString() + " newIssueFromApi: " + issueWrapper.toString()+ " photoUri: "+photoUri.toString());
+                if (photoUri != null && photoUri.length() > 0) {
+                    putIssueImage(issueWrapper.getIssueID());
+                } else {
+                    //Finished adding, close view
+                    finishAdding(ObjectAddedEvent.Type.issue);
+                }
             }
 
             @Override
             public void failure(RetrofitError error) {
+                toggleProgressWheel(false);
                 Log.d(TAG, "issueApi post error: " + error);
             }
         });
     }
 
+
+
     private void putIssue() {
+        toggleProgressWheel(true);
         NewIssue newIssue = createNewIssueObject();
         DlApplication.issueApi.putIssue(newIssue, mEditedIssue.getIssueID(), new Callback<Issue.IssueWrapper>() {
             @Override
             public void success(Issue.IssueWrapper issueWrapper, Response response) {
                 Log.d(TAG, "issueApi put success: " + response + " newIssueFromApi: " + issueWrapper.toString());
-
+                if (photoUri != null && photoUri.length() > 0) {
+                    putIssueImage(issueWrapper.getIssueID());
+                } else {
+                    //Finished adding, close view
+                    finishAdding(ObjectAddedEvent.Type.issue);
+                }
             }
 
             @Override
             public void failure(RetrofitError error) {
                 Log.d(TAG, "issueApi put error: " + error);
+               toggleProgressWheel(false);
             }
         });
     }
 
     private void putIssueImage(int issueId) {
+        toggleProgressWheel(true);
         TypedFile file = new TypedFile("image/jpg", new File(photoUri));
 
         DlApplication.issueApi.putIssueImage(file, issueId, new Callback<Issue.IssueWrapper>() {
             @Override
             public void success(Issue.IssueWrapper issueWrapper, Response response) {
                 Log.d(TAG, "issueApi put image success: " + response + " newIssueFromApi: " + issueWrapper.toString());
+                //toggleProgressWheel(false);
+                finishAdding(ObjectAddedEvent.Type.issue);
             }
 
             @Override
             public void failure(RetrofitError error) {
                 Log.d(TAG, "issueApi put imaget error: " + error);
+                toggleProgressWheel(false);
             }
         });
     }

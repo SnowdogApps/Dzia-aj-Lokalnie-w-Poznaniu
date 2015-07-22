@@ -1,5 +1,6 @@
 package pl.snowdog.dzialajlokalnie.fragment;
 
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 
 import org.androidannotations.annotations.EFragment;
@@ -9,6 +10,7 @@ import java.util.List;
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.adapter.EventsAdapter;
 import pl.snowdog.dzialajlokalnie.events.EventAttendEvent;
+import pl.snowdog.dzialajlokalnie.events.ObjectAddedEvent;
 import pl.snowdog.dzialajlokalnie.model.Event;
 
 /**
@@ -46,5 +48,17 @@ public class EventsFragment extends ListFragment {
 
     public void onEvent(EventAttendEvent event) {
         Log.d(TAG, "onEvent " + event);
+    }
+
+    public void onEvent(ObjectAddedEvent event) {
+        Log.d(TAG, "onEvent " + event);
+        switch (event.getAdded()) {
+            case event:
+                Snackbar.make(getView(), getString(R.string.added_event_success_info), Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                break;
+        }
+
+        refreshItems();
     }
 }
