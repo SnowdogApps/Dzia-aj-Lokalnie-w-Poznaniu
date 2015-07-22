@@ -7,10 +7,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -28,7 +27,7 @@ import pl.snowdog.dzialajlokalnie.databinding.AddCommentWidgetBinding;
 import pl.snowdog.dzialajlokalnie.events.CommentClickedEvent;
 import pl.snowdog.dzialajlokalnie.events.NewCommentEvent;
 import pl.snowdog.dzialajlokalnie.events.RefreshEvent;
-import pl.snowdog.dzialajlokalnie.events.SetTitleEvent;
+import pl.snowdog.dzialajlokalnie.events.SetTitleAndPhotoEvent;
 import pl.snowdog.dzialajlokalnie.fragment.CommentsFragment;
 import pl.snowdog.dzialajlokalnie.fragment.CommentsFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.IssueFragment;
@@ -48,6 +47,9 @@ public class DetailsActivity extends BaseActivity {
 
     @ViewById(R.id.toolbar)
     Toolbar toolbar;
+
+    @ViewById(R.id.ivAvatar)
+    ImageView ivAvatar;
 
     @ViewById(R.id.focus_background)
     View focusBackground;
@@ -146,9 +148,14 @@ public class DetailsActivity extends BaseActivity {
         unfocus();
     }
 
-    public void onEvent(SetTitleEvent event) {
+    public void onEvent(SetTitleAndPhotoEvent event) {
         //TODO only collapsingToolbarLayout works but title is at the bottom (should be sticked to the top)
         collapsingToolbarLayout.setTitle(event.getTitle());
+
+        Picasso.with(binding.getRoot().getContext()).
+                load(event.getPhotoUrl()).
+                error(R.drawable.ic_editor_insert_emoticon).
+                into(ivAvatar);
     }
 
     public void onEvent(CommentClickedEvent event) {
