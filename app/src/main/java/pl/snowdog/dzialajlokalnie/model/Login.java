@@ -1,7 +1,5 @@
 package pl.snowdog.dzialajlokalnie.model;
 
-import retrofit.http.Field;
-
 /**
  * Created by bartek on 20.07.15.
  */
