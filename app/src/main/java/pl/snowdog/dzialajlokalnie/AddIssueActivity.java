@@ -158,10 +158,10 @@ public class AddIssueActivity extends AddBaseActivity {
     }
 
     private void putIssueImage(int issueId) {
-        toggleProgressWheel(true);
+        
         TypedFile file = new TypedFile("image/jpg", new File(photoUri));
 
-        DlApplication.issueApi.putIssueImage(file, issueId, new Callback<Issue.IssueWrapper>() {
+        DlApplication.issueApi.postIssueImage(file, issueId, new Callback<Issue.IssueWrapper>() {
             @Override
             public void success(Issue.IssueWrapper issueWrapper, Response response) {
                 Log.d(TAG, "issueApi put image success: " + response + " newIssueFromApi: " + issueWrapper.toString());

@@ -65,8 +65,8 @@ public class DlApi {
                        Callback<Issue.IssueWrapper> cb);
 
         @Multipart
-        @PUT("/issues/{id}/photo/new")
-        void putIssueImage(@Part("photoIssue") TypedFile image,
+        @POST("/issues/{id}/photo/new")
+        void postIssueImage(@Part("photoIssue") TypedFile image,
                            @Path("id") int issueId,
                            Callback<Issue.IssueWrapper> cb);
 
@@ -88,8 +88,8 @@ public class DlApi {
                        Callback<Event.EventWrapper> cb);
 
         @Multipart
-        @PUT("/events/{id}/photo/new")
-        void putEventImage(@Part("photoEvent") TypedFile image,
+        @POST("/events/{id}/photo/new")
+        void postEventImage(@Part("photoEvent") TypedFile image,
                            @Path("id") int eventId,
                            Callback<Event.EventWrapper> cb);
 

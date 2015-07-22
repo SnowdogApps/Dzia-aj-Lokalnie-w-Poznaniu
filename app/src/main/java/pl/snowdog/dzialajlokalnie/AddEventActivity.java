@@ -169,10 +169,10 @@ public class AddEventActivity extends AddBaseActivity {
 
 
     private void putIssueImage(int eventId) {
-        toggleProgressWheel(true);
+
         TypedFile file = new TypedFile("image/jpg", new File(photoUri));
 
-        DlApplication.eventApi.putEventImage(file, eventId, new Callback<Event.EventWrapper>() {
+        DlApplication.eventApi.postEventImage(file, eventId, new Callback<Event.EventWrapper>() {
             @Override
             public void success(Event.EventWrapper issueWrapper, Response response) {
                 Log.d(TAG, "eventApi put image success: " + response + " eventApi: " + issueWrapper.toString());
