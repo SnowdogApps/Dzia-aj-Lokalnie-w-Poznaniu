@@ -26,4 +26,8 @@
     <color name="colorPrimarySemi">#99673AB7</color>
     <color name="focus_background">#CC000000</color>
     <color name="transparent">#00000000</color>
+
+<!--toolbar shadow for white photos-->
+    <color name="shadow_start">#33000000</color>
+    <color name="shadow_end">#00000000</color>
 </resources>

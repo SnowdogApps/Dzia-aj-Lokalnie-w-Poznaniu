@@ -46,6 +46,13 @@
                     android:scaleType="centerCrop"
                     app:layout_collapseMode="parallax"/>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="@drawable/toolbar_shadow"
+                    app:layout_collapseMode="pin"
+                    />
+
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
