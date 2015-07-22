@@ -8,6 +8,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:paddingLeft="@dimen/dialog_padding"
         android:paddingRight="@dimen/dialog_padding"
         android:layout_above="@+id/btSet">
@@ -44,11 +45,11 @@
             android:text="@string/categories_label"
             />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <ListView
+            android:id="@+id/lvCategories"
+            android:choiceMode="multipleChoice"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
 

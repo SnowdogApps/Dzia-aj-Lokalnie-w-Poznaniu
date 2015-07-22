@@ -4,7 +4,11 @@ package pl.snowdog.dzialajlokalnie.fragment;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.util.SparseBooleanArray;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Spinner;
 
 import com.activeandroid.query.Select;
@@ -15,6 +19,7 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ItemSelect;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
@@ -37,9 +42,6 @@ public class FilterFragment extends DialogFragment {
     @ViewById(R.id.spDistrict)
     Spinner spinner;
 
-    @ViewById(R.id.recyclerView)
-    RecyclerView recyclerView;
-
     @ViewById(R.id.btSet)
     Button setButton;
 
@@ -47,7 +49,13 @@ public class FilterFragment extends DialogFragment {
     Button cancelButton;
 
     private DistrictAdapter adapter;
-    private CategoryAdapter categoriesAdapter;
+
+    @ViewById(R.id.lvCategories)
+    ListView lvCategories;
+
+    List<Category> lCategories = new ArrayList<>();
+    ArrayList<String> lCategoriesLabels = new ArrayList<>();;
+    ArrayAdapter<String> categoriesAdapter;
 
 
     @AfterViews
@@ -63,11 +71,41 @@ public class FilterFragment extends DialogFragment {
         spinner.setAdapter(adapter);
         spinner.setSelection(adapter.getSelection());
 
-        List<Category> categories = new Select().from(Category.class).orderBy("name").execute();
-        categoriesAdapter = new CategoryAdapter(categories);
-        categoriesAdapter.setSelectedCategories(DlApplication.filter.getCategories());
-        recyclerView.setAdapter(categoriesAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        lCategories = new Select().from(Category.class).orderBy("name").execute();
+        for(Category c : lCategories) {
+            lCategoriesLabels.add(c.getName());
+        }
+
+        categoriesAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_multiple_choice, lCategoriesLabels);
+        lvCategories.setAdapter(categoriesAdapter);
+        if (DlApplication.filter.getCategories() != null) {
+            for(Category c : DlApplication.filter.getCategories()) {
+
+                int counter = 0;
+                for(Category oldC : lCategories) {
+                    if(oldC.getCategoryID() == c.getCategoryID()) {
+                        lvCategories.setItemChecked(counter, true);
+                        Log.d("issue", "create categoryId category: " + c.getCategoryID());
+                    } else {
+                        // lvCategories.setItemChecked(counter, false);
+                    }
+                    counter++;
+                }
+            }
+
+        }
+
+    }
+
+    private List<Category> getSelectedCategoriesList() {
+        SparseBooleanArray checked = lvCategories.getCheckedItemPositions();
+        List<Category> lSelectedCategoriesIds = new ArrayList<>(lvCategories.getCheckedItemCount());
+        for (int i = 0; i < lvCategories.getAdapter().getCount(); i++) {
+            if (checked.get(i)) {
+                lSelectedCategoriesIds.add(lCategories.get(i));
+            }
+        }
+        return lSelectedCategoriesIds;
     }
 
     @Click(R.id.btSet)
@@ -77,7 +115,7 @@ public class FilterFragment extends DialogFragment {
         } else {
             DlApplication.filter.setDistrict(null);
         }
-        DlApplication.filter.setCategories(categoriesAdapter.getSelectedCategories());
+        DlApplication.filter.setCategories(getSelectedCategoriesList());
 
         EventBus.getDefault().post(new FilterChangedEvent());
         dismiss();
