@@ -88,12 +88,6 @@ public class DlApi {
                        @Path("id") int id,
                        Callback<List<Comment>> cb);
 
-        @FormUrlEncoded
-        @POST("/comments/new")
-        void comment(@Field("parentType") int parentType, @Field("parentID") int parentID,
-                     @Field("solution") int solution, @Field("text") String text,
-                     Callback<Comment> cb);
-
         @POST("/comments/new")
         void comment(@Body Comment comment, Callback<Comment> cb);
     }
