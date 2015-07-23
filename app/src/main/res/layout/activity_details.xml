@@ -46,7 +46,6 @@
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
-        <!--TODO TabLayout is not visible. Maybe someone will resolve that problem there: http://stackoverflow.com/questions/30625979/collapsingtoolbarlayout-and-tablayout-->
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
