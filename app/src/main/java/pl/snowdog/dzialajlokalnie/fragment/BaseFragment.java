@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import com.activeandroid.ActiveAndroid;
-import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
 import java.util.List;
