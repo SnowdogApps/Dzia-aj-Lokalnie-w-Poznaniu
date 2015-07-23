@@ -1,8 +1,20 @@
 package pl.snowdog.dzialajlokalnie.fragment;
 
 import android.databinding.DataBindingUtil;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -26,7 +38,7 @@ import pl.snowdog.dzialajlokalnie.model.Vote;
  */
 
 @EFragment(R.layout.fragment_issue)
-public class IssueFragment extends BaseFragment {
+public class IssueFragment extends BaseFragment implements OnMapReadyCallback {
 
     private static final String TAG = "IssueFragment";
     FragmentIssueBinding binding;
@@ -36,6 +48,9 @@ public class IssueFragment extends BaseFragment {
 
     @ViewById(R.id.issueDetails)
     View rootView;
+
+    private SupportMapFragment mapFragment;
+    private GoogleMap map;
 
     @AfterViews
     void afterViews() {
@@ -67,6 +82,13 @@ public class IssueFragment extends BaseFragment {
 
         EventBus.getDefault().post(new SetTitleAndPhotoEvent(issue.getTitle(),
                 String.format(DlApi.PHOTO_NORMAL_URL, issue.getPhotoIssueUri())));
+
+
+        GoogleMapOptions options = new GoogleMapOptions().liteMode(true);
+        options.camera(new CameraPosition(new LatLng(issue.getLat(), issue.getLon()), 15, 0, 0));
+        mapFragment = SupportMapFragment.newInstance(options);
+        getChildFragmentManager().beginTransaction().add(R.id.mapCard, mapFragment).commit();
+        mapFragment.getMapAsync(this);
     }
 
     @Override
@@ -94,5 +116,19 @@ public class IssueFragment extends BaseFragment {
             //TODO - this is dirty implementation. Observables shoud be used but it requires extending BaseObservable - conflict with Model
             binding.setIssue(issue);
         }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        map = googleMap;
+
+        map.setMyLocationEnabled(true);
+        map.setBuildingsEnabled(true);
+
+        Marker marker = map.addMarker(new MarkerOptions().
+                position(new LatLng(binding.getIssue().getLat(), binding.getIssue().getLon())).
+                title(binding.getIssue().getAddress()).
+                icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_issue_marker)));
+        marker.showInfoWindow();
     }
 }
