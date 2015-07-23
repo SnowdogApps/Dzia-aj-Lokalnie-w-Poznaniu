@@ -304,26 +304,4 @@ public class Issue extends Model implements Serializable {
         return categoriesList;
     }
 
-    public class IssueWrapper {
-        private int issueID;
-
-        public int getIssueID() {
-            return issueID;
-        }
-
-        public void setIssueID(int issueID) {
-            this.issueID = issueID;
-        }
-
-        /*
-        private Issue issue;
-
-        public Issue getIssue() {
-            return issue;
-        }
-
-        public void setIssue(Issue issue) {
-            this.issue = issue;
-        }*/
-    }
 }

@@ -126,9 +126,9 @@ public class AddEventActivity extends AddBaseActivity {
         toggleProgressWheel(true);
         NewEvent newEvent = createNewEventObject();
 
-        DlApplication.eventApi.postEvent(newEvent, new Callback<Event.EventWrapper>() {
+        DlApplication.eventApi.postEvent(newEvent, new Callback<Event>() {
             @Override
-            public void success(Event.EventWrapper eventWrapper, Response response) {
+            public void success(Event eventWrapper, Response response) {
                 finishAdding(ObjectAddedEvent.Type.event);
                 Log.d(TAG, "eventApi post success: " + response + " newEventFromApi: " + eventWrapper.toString());
             }
@@ -145,9 +145,9 @@ public class AddEventActivity extends AddBaseActivity {
     private void putEvent() {
         toggleProgressWheel(true);
         NewEvent newEvent = createNewEventObject();
-        DlApplication.eventApi.putEvent(newEvent, mEditedEvent.getEventID(), new Callback<Event.EventWrapper>() {
+        DlApplication.eventApi.putEvent(newEvent, mEditedEvent.getEventID(), new Callback<Event>() {
             @Override
-            public void success(Event.EventWrapper eventWrapper, Response response) {
+            public void success(Event eventWrapper, Response response) {
                 Log.d(TAG, "eventApi post success: " + response + " newEventFromApi: " + eventWrapper.toString());
                 if (photoUri != null && photoUri.length() > 0) {
                     putIssueImage(eventWrapper.getEventID());
@@ -172,9 +172,9 @@ public class AddEventActivity extends AddBaseActivity {
 
         TypedFile file = new TypedFile("image/jpg", new File(photoUri));
 
-        DlApplication.eventApi.postEventImage(file, eventId, new Callback<Event.EventWrapper>() {
+        DlApplication.eventApi.postEventImage(file, eventId, new Callback<Event>() {
             @Override
-            public void success(Event.EventWrapper issueWrapper, Response response) {
+            public void success(Event issueWrapper, Response response) {
                 Log.d(TAG, "eventApi put image success: " + response + " eventApi: " + issueWrapper.toString());
                 //toggleProgressWheel(false);
                 finishAdding(ObjectAddedEvent.Type.event);
