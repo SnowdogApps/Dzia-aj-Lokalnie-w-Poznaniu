@@ -131,10 +131,11 @@ public class DetailsActivity extends BaseActivity {
             super.onBackPressed();
         }
     }
+
     @Click(R.id.focus_background)
     protected void unfocus() {
         binding.etComment.clearFocus();
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(binding.etComment.getWindowToken(), 0);
 
         binding.setComment(null);
@@ -161,17 +162,17 @@ public class DetailsActivity extends BaseActivity {
                 load(event.getPhotoUrl()).
                 error(R.drawable.ic_editor_insert_emoticon). //TODO change error drawable and remove setting INVISIBLE below
                 into(ivAvatar, new Callback() {
-                    @Override
-                    public void onSuccess() {
-                    }
+            @Override
+            public void onSuccess() {
+            }
 
-                    @Override
-                    public void onError() {
-                        appBarLayout.collapseToolbar(true);
-                        ivAvatar.setVisibility(View.INVISIBLE);
-                        // TODO lock expanding and collapsing the appbar because there is no photo
-                    }
-                });
+            @Override
+            public void onError() {
+                appBarLayout.collapseToolbar(true);
+                ivAvatar.setVisibility(View.INVISIBLE);
+                // TODO lock expanding and collapsing the appbar because there is no photo
+            }
+        });
     }
 
     public void onEvent(CommentClickedEvent event) {

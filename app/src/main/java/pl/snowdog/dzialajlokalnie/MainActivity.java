@@ -85,8 +85,6 @@ public class MainActivity extends BaseActivity {
 
     }
 
-
-
     @Click(R.id.fab_new_event)
     void onFabNewEventClicked() {
 
@@ -111,9 +109,6 @@ public class MainActivity extends BaseActivity {
             Log.d(TAG, "loginResult " + s);
         }
     }
-
-
-
 
     private void setupViewPager(ViewPager viewPager) {
         Locale l = Locale.getDefault();
