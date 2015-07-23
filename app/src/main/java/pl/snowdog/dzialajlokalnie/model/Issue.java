@@ -30,6 +30,9 @@ public class Issue extends Model implements Serializable {
     private int userID;
 
     @Column
+    private String authorName;
+
+    @Column
     private String title;
 
     @Column
@@ -87,12 +90,13 @@ public class Issue extends Model implements Serializable {
         super();
     }
 
-    public Issue(int issueID, int parentID, int userID, String title, String description, int districtID, double lon, double lat, String address, String facebookUrl, String issueUrl, Date createdAt, int issueStatus, String categoryID, String photoIssueUri, int issueRating, int commentsCount, int votesCount, int userVotedValue) {
+    public Issue(int issueID, int parentID, int userID, String authorName, String title, String description, int districtID, double lon, double lat, String address, String facebookUrl, String issueUrl, Date createdAt, int issueStatus, String categoryID, String photoIssueUri, int issueRating, int commentsCount, int votesCount, int userVotedValue, List<Integer> categoriesList, String categoriesText) {
         super();
 
         this.issueID = issueID;
         this.parentID = parentID;
         this.userID = userID;
+        this.authorName = authorName;
         this.title = title;
         this.description = description;
         this.districtID = districtID;
@@ -109,6 +113,28 @@ public class Issue extends Model implements Serializable {
         this.commentsCount = commentsCount;
         this.votesCount = votesCount;
         this.userVotedValue = userVotedValue;
+        this.categoriesList = categoriesList;
+        this.categoriesText = categoriesText;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public int getUserVotedValue() {
+        return userVotedValue;
+    }
+
+    public List<Integer> getCategoriesList() {
+        return categoriesList;
+    }
+
+    public void setCategoriesList(List<Integer> categoriesList) {
+        this.categoriesList = categoriesList;
     }
 
     @Override
@@ -117,6 +143,7 @@ public class Issue extends Model implements Serializable {
                 "issueID=" + issueID +
                 ", parentID=" + parentID +
                 ", userID=" + userID +
+                ", authorName='" + authorName + '\'' +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", districtID=" + districtID +
@@ -133,6 +160,8 @@ public class Issue extends Model implements Serializable {
                 ", commentsCount=" + commentsCount +
                 ", votesCount=" + votesCount +
                 ", userVotedValue=" + userVotedValue +
+                ", categoriesList=" + categoriesList +
+                ", categoriesText='" + categoriesText + '\'' +
                 '}';
     }
 

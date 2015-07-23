@@ -1,12 +1,24 @@
 package pl.snowdog.dzialajlokalnie.fragment;
 
 import android.databinding.DataBindingUtil;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 
-import com.squareup.picasso.Picasso;
+import com.activeandroid.query.Select;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMapOptions;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.ViewById;
@@ -17,8 +29,9 @@ import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.databinding.FragmentIssueBinding;
 import pl.snowdog.dzialajlokalnie.events.IssueVoteEvent;
 import pl.snowdog.dzialajlokalnie.events.RefreshEvent;
-import pl.snowdog.dzialajlokalnie.events.SetTitleEvent;
+import pl.snowdog.dzialajlokalnie.events.SetTitleAndPhotoEvent;
 import pl.snowdog.dzialajlokalnie.events.VoteEvent;
+import pl.snowdog.dzialajlokalnie.model.District;
 import pl.snowdog.dzialajlokalnie.model.Issue;
 import pl.snowdog.dzialajlokalnie.model.Vote;
 
@@ -27,7 +40,7 @@ import pl.snowdog.dzialajlokalnie.model.Vote;
  */
 
 @EFragment(R.layout.fragment_issue)
-public class IssueFragment extends BaseFragment {
+public class IssueFragment extends BaseFragment implements OnMapReadyCallback {
 
     private static final String TAG = "IssueFragment";
     FragmentIssueBinding binding;
@@ -38,47 +51,45 @@ public class IssueFragment extends BaseFragment {
     @ViewById(R.id.issueDetails)
     View rootView;
 
+    private SupportMapFragment mapFragment;
+    private GoogleMap map;
+
     @AfterViews
     void afterViews() {
         binding = DataBindingUtil.bind(rootView);
-
-        binding.ratingWidget.ibRateUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (binding.getIssue() != null) {
-                    EventBus.getDefault().post(new IssueVoteEvent(
-                            binding.getIssue().getIssueID(),
-                            IssueVoteEvent.Vote.UP));
-                }
-            }
-        });
-
-        binding.ratingWidget.ibRateDown.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (binding.getIssue() != null) {
-                    EventBus.getDefault().post(new IssueVoteEvent(
-                            binding.getIssue().getIssueID(),
-                            IssueVoteEvent.Vote.DOWN));
-                }
-            }
-        });
-
         getIssue(objId);
+    }
+
+    @Click(R.id.ibRateUp)
+    protected void rateUp() {
+        rate(IssueVoteEvent.Vote.UP);
+    }
+
+    @Click(R.id.ibRateDown)
+    protected void rateDown() {
+        rate(IssueVoteEvent.Vote.DOWN);
+    }
+
+    private void rate(IssueVoteEvent.Vote vote) {
+        if (binding.getIssue() != null) {
+            EventBus.getDefault().post(new IssueVoteEvent(
+                    binding.getIssue().getIssueID(), vote));
+        }
     }
 
     @Override
     protected void issueResult(Issue issue) {
-        
         Log.d(TAG, "issueResult " + issue);
         binding.setIssue(issue);
 
-        Picasso.with(binding.getRoot().getContext()).
-                load(String.format(DlApi.PHOTO_NORMAL_URL, issue.getPhotoIssueUri())).
-                error(R.drawable.ic_editor_insert_emoticon).
-                into(binding.ivAvatar);
+        EventBus.getDefault().post(new SetTitleAndPhotoEvent(issue.getTitle(),
+                String.format(DlApi.PHOTO_NORMAL_URL, issue.getPhotoIssueUri())));
 
-        EventBus.getDefault().post(new SetTitleEvent(issue.getTitle()));
+        GoogleMapOptions options = new GoogleMapOptions().liteMode(true);
+        options.camera(new CameraPosition(new LatLng(issue.getLat(), issue.getLon()), 15, 0, 0));
+        mapFragment = SupportMapFragment.newInstance(options);
+        getChildFragmentManager().beginTransaction().add(R.id.mapCard, mapFragment).commit();
+        mapFragment.getMapAsync(this);
     }
 
     @Override
@@ -101,10 +112,27 @@ public class IssueFragment extends BaseFragment {
     protected void voteResult(Vote vote) {
         Issue issue = binding.getIssue();
         if (issue.getIssueID() == vote.getParentID()) {
-            issue.setIssueRating(issue.getIssueRating()+vote.getValue());
+            issue.setIssueRating(issue.getIssueRating() + vote.getValue());
             issue.setUserVotedValue(vote.getValue());
             //TODO - this is dirty implementation. Observables shoud be used but it requires extending BaseObservable - conflict with Model
             binding.setIssue(issue);
         }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        map = googleMap;
+
+        map.setMyLocationEnabled(true);
+
+        District district = new Select().from(District.class).
+                where("districtID == ?", binding.getIssue().getDistrictID()).executeSingle();
+
+        Marker marker = map.addMarker(new MarkerOptions().
+                position(new LatLng(binding.getIssue().getLat(), binding.getIssue().getLon())).
+                title(binding.getIssue().getAddress()).
+                snippet(district != null ? district.getName() : null).
+                icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_issue_marker)));
+        marker.showInfoWindow();
     }
 }
