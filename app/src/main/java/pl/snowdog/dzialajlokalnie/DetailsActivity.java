@@ -169,6 +169,7 @@ public class DetailsActivity extends BaseActivity {
                     public void onError() {
                         appBarLayout.collapseToolbar(true);
                         ivAvatar.setVisibility(View.INVISIBLE);
+                        // TODO lock expanding and collapsing the appbar because there is no photo
                     }
                 });
     }
