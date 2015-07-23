@@ -39,11 +39,8 @@ import pl.snowdog.dzialajlokalnie.events.RefreshEvent;
 import pl.snowdog.dzialajlokalnie.events.SetTitleAndPhotoEvent;
 import pl.snowdog.dzialajlokalnie.fragment.CommentsFragment;
 import pl.snowdog.dzialajlokalnie.fragment.CommentsFragment_;
-import pl.snowdog.dzialajlokalnie.fragment.EventsFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.IssueFragment;
 import pl.snowdog.dzialajlokalnie.fragment.IssueFragment_;
-import pl.snowdog.dzialajlokalnie.fragment.IssuesFragment_;
-import pl.snowdog.dzialajlokalnie.fragment.MapFragment_;
 import pl.snowdog.dzialajlokalnie.model.Comment;
 import pl.snowdog.dzialajlokalnie.util.FadeInAnimation;
 import pl.snowdog.dzialajlokalnie.util.FadeOutAnimation;
@@ -108,8 +105,6 @@ public class DetailsActivity extends BaseActivity {
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(2);
         mTabLayout.setupWithViewPager(viewPager);
-//        getSupportFragmentManager().beginTransaction().replace(R.id.topContent, issueFragment).commit();
-//        getSupportFragmentManager().beginTransaction().replace(R.id.bottomContent, commentsFragment).commit();
 
         binding = AddCommentWidgetBinding.bind(addCommentWidget);
         binding.itemComment.getRoot().setVisibility(View.GONE);

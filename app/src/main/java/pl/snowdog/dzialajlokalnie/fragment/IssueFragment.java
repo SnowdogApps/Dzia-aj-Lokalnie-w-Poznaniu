@@ -124,7 +124,6 @@ public class IssueFragment extends BaseFragment implements OnMapReadyCallback {
         map = googleMap;
 
         map.setMyLocationEnabled(true);
-        map.setBuildingsEnabled(true);
 
         District district = new Select().from(District.class).
                 where("districtID == ?", binding.getIssue().getDistrictID()).executeSingle();
