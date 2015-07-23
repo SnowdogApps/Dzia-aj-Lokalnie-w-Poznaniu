@@ -53,8 +53,8 @@ public class IssuesFragment extends ListFragment {
 
     public void onEvent(IssueVoteEvent event) {
         Log.d(TAG, "onEvent " + event);
-        AddIssueActivity_.intent(getActivity()).mEditedIssue(adapter.getIssues().get(0)).start();
-        //vote(DlApi.ParentType.issues, event.getId(), event.getVote() == VoteEvent.Vote.UP ? 1 : -1);
+        //AddIssueActivity_.intent(getActivity()).mEditedIssue(adapter.getIssues().get(0)).start();
+        vote(DlApi.ParentType.issues, event.getId(), event.getVote() == VoteEvent.Vote.UP ? 1 : -1);
     }
 
     public void onEvent(ObjectAddedEvent event) {
