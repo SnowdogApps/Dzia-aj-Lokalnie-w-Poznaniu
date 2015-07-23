@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Dzialaj Lokalnie</string>
 
-    <string name="title_section1">Wpisy</string>
+    <string name="title_section1">Zgłoszenia</string>
     <string name="title_section2">Mapa</string>
     <string name="title_section3">Wydarzenia</string>
 
@@ -18,15 +18,15 @@
     <string name="next">Dalej</string>
     <string name="add_issue_step">Krok</string>
     <string name="back">Cofnij</string>
-    <string name="warning_fill_title">Uzupełnij tytuł zgłoszenia</string>
-    <string name="warning_fill_description">Uzupełnij opis zgłoszenia</string>
+    <string name="warning_fill_title">Uzupełnij tytuł </string>
+    <string name="warning_fill_description">Uzupełnij opis </string>
     <string name="warning_fill_date">Ustaw datę wydarzenia</string>
     <string name="warning_choose_category">Wybierz kategorię</string>
-    <string name="warning_set_place">Kliknij na mapie i ustaw miejsce zgłoszenia</string>
+    <string name="warning_set_place">Kliknij na mapie i ustaw miejsce </string>
     <string name="add">Dodaj</string>
-    <string name="choose_category_info">Wybierz pasujące kategorie zgłoszenia:</string>
-    <string name="choose_place_info">Zaznacz miejsce na mapie, bądź wybierz dzielnice zgłoszenia</string>
-    <string name="choose_photo_info">Opcjonalnie dodaj zdjęcie dotyczące Twojego zgłoszenia</string>
+    <string name="choose_category_info">Wybierz pasujące kategorie:</string>
+    <string name="choose_place_info">Zaznacz miejsce na mapie, bądź wybierz dzielnice </string>
+    <string name="choose_photo_info">Opcjonalnie dodaj zdjęcie </string>
 
     <string name="network_error">Problem z połączeniem internetowym</string>
     <string name="unauthorized_error">Musisz się zalogować</string>
@@ -60,7 +60,7 @@
     <string name="empty_list">Lista jest pusta\nPrzeciągnij w dół aby odświeżyć\nlub ustaw inny Filtr</string>
     <string name="empty_comment_list">Brak komentarzy\n</string>
 
-    <string name="title_activity_issue">Wpis</string>
+    <string name="title_activity_issue">Zgłoszenie</string>
     <string name="comment_hint">Dodaj komentarz...</string>
     <string name="response_hint">Odpowiedz...</string>
     <string name="action_refresh">Odwież</string>

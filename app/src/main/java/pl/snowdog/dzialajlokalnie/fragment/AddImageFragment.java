@@ -52,14 +52,30 @@ public class AddImageFragment extends AddBaseFragment {
 
     private Uri mFileUri;
 
+    private int photoFrom = 0;
+
     @FragmentArg
     CreateNewObjectEvent mEditedObject;
 
     @Click(R.id.btnNext)
     void onNextButtonClicked() {
         if(validateInput()) {
+            String uriToSend = "";
+            switch (photoFrom) {
+                case PICK_FROM_FILE:
+                    if(mFileUri != null) {
+                        uriToSend = FileChooserUtil.getPath(getActivity(), mFileUri);
+                    }
+                    break;
+                case TAKE_PICTURE:
+                    if(mFileUri != null) {
+                        uriToSend = mFileUri.toString();
+                    }
+                    break;
+            }
+
             CreateNewObjectEvent.Builder builder = new CreateNewObjectEvent.Builder()
-                    .image(mFileUri == null ? "" : mFileUri.getPath())
+                    .image(uriToSend)
                     .type(CreateNewObjectEvent.Type.image);
 
             EventBus.getDefault().post(builder.build());
@@ -123,7 +139,7 @@ public class AddImageFragment extends AddBaseFragment {
         }catch(Exception e){
             Log.e(TAG,"imgdbg Error compressing: "+e.toString());
         }
-
+        photoFrom = TAKE_PICTURE;
         Picasso.with(getActivity()).load(mFileUri).error(
                 R.drawable.ic_editor_insert_emoticon).into(ivPreview);
         btnNext.setText(R.string.next);
@@ -139,9 +155,11 @@ public class AddImageFragment extends AddBaseFragment {
         Uri selectedImage = data.getData();
         mTmpGalleryPicturePath = FileChooserUtil.getPath(getActivity(), selectedImage);
         if(mTmpGalleryPicturePath!=null) {
+
             mFileUri = selectedImage;
             Picasso.with(getActivity()).load(selectedImage).error(
                     R.drawable.ic_editor_insert_emoticon).into(ivPreview);
+            Log.d(TAG, "imgdbg pick from file A mFileUri: "+mFileUri.toString());
 
         } else
         {
@@ -150,11 +168,14 @@ public class AddImageFragment extends AddBaseFragment {
                 ivPreview.setImageBitmap(BitmapFactory.decodeStream(is));
                 mTmpGalleryPicturePath = selectedImage.getPath();
                 mFileUri = selectedImage;
+
+                Log.d(TAG, "imgdbg pick from file B mFileUri: "+mFileUri.toString());
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
+        photoFrom = PICK_FROM_FILE;
         btnNext.setText(R.string.next);
     }
 

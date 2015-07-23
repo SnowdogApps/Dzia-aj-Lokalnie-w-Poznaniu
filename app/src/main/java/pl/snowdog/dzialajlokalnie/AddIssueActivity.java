@@ -158,7 +158,7 @@ public class AddIssueActivity extends AddBaseActivity {
     }
 
     private void putIssueImage(int issueId) {
-        
+
         TypedFile file = new TypedFile("image/jpg", new File(photoUri));
 
         DlApplication.issueApi.postIssueImage(file, issueId, new Callback<Issue.IssueWrapper>() {
