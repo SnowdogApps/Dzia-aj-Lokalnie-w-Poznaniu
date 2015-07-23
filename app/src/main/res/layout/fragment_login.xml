@@ -1,0 +1,109 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <RelativeLayout
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:id="@+id/top_container"
+        android:layout_above="@+id/lower_buttons_container"
+        >
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/etTitleWrapper"
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/etTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences"
+
+                android:hint="@string/title" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/etDescriptionWrapper"
+            android:layout_below="@id/etTitleWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <EditText
+                android:id="@+id/etDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapSentences|textMultiLine"
+                android:maxLines="8"
+                android:singleLine="false"
+
+                android:hint="@string/description" />
+
+        </android.support.design.widget.TextInputLayout>
+        <RelativeLayout
+            android:id="@+id/event_container"
+            android:visibility="gone"
+            android:layout_below="@id/etDescriptionWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/etFacebookEventWrapper"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/etFacebookEvent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textCapSentences"
+                    android:hint="@string/facebook_event" />
+
+            </android.support.design.widget.TextInputLayout>
+            <RelativeLayout
+                android:layout_below="@id/etFacebookEventWrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/ivDate"
+                    android:layout_alignParentLeft="true"
+                    android:src="@drawable/ic_event_white_36dp"
+                    android:tint="@color/colorAccent"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/item_padding"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/tvDateStatus"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/ivDate"
+                    android:text="@string/date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <Button
+                    android:id="@+id/btnCaldroid"
+                    android:text="@string/set"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </RelativeLayout>
+    <include
+        android:id="@+id/lower_buttons_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/include_lower_buttons_container" />
+</RelativeLayout>

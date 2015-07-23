@@ -41,7 +41,7 @@ public abstract class AddBaseActivity extends BaseActivity {
 
     protected ApiActionDialogFragment mApiActionDialogFragment;
 
-    //Common fields for creation of new object
+    //Common fields for creation of new objects (issue / event)
     String title;
     String description;
     int districtID;
@@ -49,7 +49,7 @@ public abstract class AddBaseActivity extends BaseActivity {
     double lon;
     String address;
     List<Integer> categoryIDs;
-    String photoUri; //// TODO: 2015-07-15
+    String photoUri;
 
 
     @Override
