@@ -62,18 +62,18 @@ public class DlApi {
 
         @POST("/issues/new")
         void postIssue(@Body NewIssue issue,
-                       Callback<Issue.IssueWrapper> cb);
+                       Callback<Issue> cb);
 
         @Multipart
         @POST("/issues/{id}/photo/new")
         void postIssueImage(@Part("photoIssue") TypedFile image,
                            @Path("id") int issueId,
-                           Callback<Issue.IssueWrapper> cb);
+                           Callback<Issue> cb);
 
         @PUT("/issues/{id}/edit")
         void putIssue(@Body NewIssue issue,
                       @Path("id") int issueId,
-                      Callback<Issue.IssueWrapper> cb);
+                      Callback<Issue> cb);
     }
 
     public interface EventApi {
@@ -85,18 +85,18 @@ public class DlApi {
 
         @POST("/events/new")
         void postEvent(@Body NewEvent event,
-                       Callback<Event.EventWrapper> cb);
+                       Callback<Event> cb);
 
         @Multipart
         @POST("/events/{id}/photo/new")
         void postEventImage(@Part("photoEvent") TypedFile image,
                            @Path("id") int eventId,
-                           Callback<Event.EventWrapper> cb);
+                           Callback<Event> cb);
 
         @PUT("/events/{id}/edit")
         void putEvent(@Body NewEvent event,
                       @Path("id") int issueId,
-                      Callback<Event.EventWrapper> cb);
+                      Callback<Event> cb);
     }
 
     public interface CommentApi {
