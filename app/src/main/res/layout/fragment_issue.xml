@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -28,6 +27,24 @@
                 android:id="@+id/vote_card"
                 bind:issue="@{issue}"
                 />
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="@dimen/item_padding"
+            card_view:contentPadding="@dimen/item_padding"
+            card_view:cardBackgroundColor="@color/card_board_color"
+            card_view:cardCornerRadius="5dp"
+            card_view:cardUseCompatPadding="true" >
+
+            <TextView
+                android:id="@+id/tvDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/textView_item_desc"
+                android:text='@{issue.description}'/>
         </android.support.v7.widget.CardView>
 
     </LinearLayout>
