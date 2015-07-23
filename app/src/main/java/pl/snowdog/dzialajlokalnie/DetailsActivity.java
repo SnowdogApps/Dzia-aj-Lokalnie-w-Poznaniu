@@ -12,6 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import org.androidannotations.annotations.Click;
@@ -35,12 +36,16 @@ import pl.snowdog.dzialajlokalnie.fragment.IssueFragment_;
 import pl.snowdog.dzialajlokalnie.model.Comment;
 import pl.snowdog.dzialajlokalnie.util.FadeInAnimation;
 import pl.snowdog.dzialajlokalnie.util.FadeOutAnimation;
+import pl.snowdog.dzialajlokalnie.view.ControllableAppBarLayout;
 
 @EActivity(R.layout.activity_details)
 @OptionsMenu(R.menu.menu_issue)
 public class DetailsActivity extends BaseActivity {
 
     private static final String TAG = "DetailsActivity";
+
+    @ViewById(R.id.appbar)
+    ControllableAppBarLayout appBarLayout;
 
     @ViewById(R.id.collapsingToolbarLayout)
     CollapsingToolbarLayout collapsingToolbarLayout;
@@ -154,8 +159,18 @@ public class DetailsActivity extends BaseActivity {
 
         Picasso.with(binding.getRoot().getContext()).
                 load(event.getPhotoUrl()).
-                error(R.drawable.ic_editor_insert_emoticon).
-                into(ivAvatar);
+                error(R.drawable.ic_editor_insert_emoticon). //TODO change error drawable and remove setting INVISIBLE below
+                into(ivAvatar, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                    }
+
+                    @Override
+                    public void onError() {
+                        appBarLayout.collapseToolbar(true);
+                        ivAvatar.setVisibility(View.INVISIBLE);
+                    }
+                });
     }
 
     public void onEvent(CommentClickedEvent event) {
