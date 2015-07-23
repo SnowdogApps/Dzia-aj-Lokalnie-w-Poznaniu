@@ -44,16 +44,14 @@
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-            <!--TODO TabLayout is not visible. Maybe someone will resolve that problem there: http://stackoverflow.com/questions/30625979/collapsingtoolbarlayout-and-tablayout-->
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tabs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_collapseMode="pin"
-                android:translationY="?attr/actionBarSize"
-                android:layout_gravity="bottom" />
         </android.support.design.widget.CollapsingToolbarLayout>
 
+        <!--TODO TabLayout is not visible. Maybe someone will resolve that problem there: http://stackoverflow.com/questions/30625979/collapsingtoolbarlayout-and-tablayout-->
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom" />
     </pl.snowdog.dzialajlokalnie.view.ControllableAppBarLayout>
 
     <android.support.v4.view.ViewPager
