@@ -69,7 +69,7 @@ public class AddImageFragment extends AddBaseFragment {
                     break;
                 case TAKE_PICTURE:
                     if(mFileUri != null) {
-                        uriToSend = mFileUri.toString();
+                        uriToSend = mFileUri.getPath();
                     }
                     break;
             }
