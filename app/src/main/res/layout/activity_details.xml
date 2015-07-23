@@ -71,6 +71,7 @@
         layout="@layout/add_comment_widget"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom" />
+        android:layout_gravity="end|bottom"
+        android:visibility="invisible" />
 
 </android.support.design.widget.CoordinatorLayout>

@@ -49,7 +49,7 @@ import pl.snowdog.dzialajlokalnie.view.ControllableAppBarLayout;
 
 @EActivity(R.layout.activity_details)
 @OptionsMenu(R.menu.menu_issue)
-public class DetailsActivity extends BaseActivity {
+public class DetailsActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
 
     private static final String TAG = "DetailsActivity";
 
@@ -105,6 +105,8 @@ public class DetailsActivity extends BaseActivity {
         adapter.addFragment(commentsFragment, getString(R.string.details_title_section2).toUpperCase());
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(2);
+
+        viewPager.addOnPageChangeListener(this);
         tabLayout.setupWithViewPager(viewPager);
 
         binding = AddCommentWidgetBinding.bind(addCommentWidget);
@@ -220,4 +222,21 @@ public class DetailsActivity extends BaseActivity {
     void refresh() {
         EventBus.getDefault().post(new RefreshEvent());
     }
+
+    @Override
+    public void onPageScrolled(int i, float v, int i1) { }
+
+    @Override
+    public void onPageSelected(int i) {
+        if (i == 1) {
+            final FadeInAnimation anim = new FadeInAnimation(addCommentWidget);
+            addCommentWidget.startAnimation(anim);
+        } else {
+            final FadeOutAnimation anim = new FadeOutAnimation(addCommentWidget);
+            addCommentWidget.startAnimation(anim);
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int i) { }
 }
