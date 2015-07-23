@@ -2,6 +2,11 @@ package pl.snowdog.dzialajlokalnie;
 
 import android.content.Context;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -22,6 +27,9 @@ import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.databinding.AddCommentWidgetBinding;
@@ -31,8 +39,11 @@ import pl.snowdog.dzialajlokalnie.events.RefreshEvent;
 import pl.snowdog.dzialajlokalnie.events.SetTitleAndPhotoEvent;
 import pl.snowdog.dzialajlokalnie.fragment.CommentsFragment;
 import pl.snowdog.dzialajlokalnie.fragment.CommentsFragment_;
+import pl.snowdog.dzialajlokalnie.fragment.EventsFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.IssueFragment;
 import pl.snowdog.dzialajlokalnie.fragment.IssueFragment_;
+import pl.snowdog.dzialajlokalnie.fragment.IssuesFragment_;
+import pl.snowdog.dzialajlokalnie.fragment.MapFragment_;
 import pl.snowdog.dzialajlokalnie.model.Comment;
 import pl.snowdog.dzialajlokalnie.util.FadeInAnimation;
 import pl.snowdog.dzialajlokalnie.util.FadeOutAnimation;
@@ -55,6 +66,12 @@ public class DetailsActivity extends BaseActivity {
 
     @ViewById(R.id.ivAvatar)
     ImageView ivAvatar;
+
+    @ViewById(R.id.tabs)
+    TabLayout mTabLayout;
+
+    @ViewById(R.id.pager)
+    ViewPager viewPager;
 
     @ViewById(R.id.focus_background)
     View focusBackground;
@@ -84,8 +101,15 @@ public class DetailsActivity extends BaseActivity {
         CommentsFragment commentsFragment = CommentsFragment_.builder().arg("objId", objId).
                 arg("objType", objType).build();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.topContent, issueFragment).commit();
-        getSupportFragmentManager().beginTransaction().replace(R.id.bottomContent, commentsFragment).commit();
+
+        Adapter adapter = new Adapter(getSupportFragmentManager());
+        adapter.addFragment(issueFragment, getString(R.string.details_title_section1).toUpperCase());
+        adapter.addFragment(commentsFragment, getString(R.string.details_title_section2).toUpperCase());
+        viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(2);
+        mTabLayout.setupWithViewPager(viewPager);
+//        getSupportFragmentManager().beginTransaction().replace(R.id.topContent, issueFragment).commit();
+//        getSupportFragmentManager().beginTransaction().replace(R.id.bottomContent, commentsFragment).commit();
 
         binding = AddCommentWidgetBinding.bind(addCommentWidget);
         binding.itemComment.getRoot().setVisibility(View.GONE);
@@ -118,6 +142,35 @@ public class DetailsActivity extends BaseActivity {
                 return false;
             }
         });
+    }
+
+    static class Adapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragments = new ArrayList<>();
+        private final List<String> mFragmentTitles = new ArrayList<>();
+
+        public Adapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragments.add(fragment);
+            mFragmentTitles.add(title);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragments.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitles.get(position);
+        }
     }
 
     @Override

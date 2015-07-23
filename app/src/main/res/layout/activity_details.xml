@@ -13,28 +13,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v4.widget.NestedScrollView
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <RelativeLayout
-                    android:id="@+id/topContent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-                <RelativeLayout
-                    android:id="@+id/bottomContent"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-            </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
-
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
         <pl.snowdog.dzialajlokalnie.view.ControllableAppBarLayout
             android:id="@+id/appbar"
@@ -61,6 +44,8 @@
                     android:layout_height="?attr/actionBarSize"
                     android:background="@drawable/toolbar_shadow"
                     app:layout_collapseMode="pin"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     />
 
                 <android.support.v7.widget.Toolbar
@@ -70,6 +55,11 @@
                     app:layout_collapseMode="pin"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
             </android.support.design.widget.CollapsingToolbarLayout>
+
+            <android.support.design.widget.TabLayout
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
         </pl.snowdog.dzialajlokalnie.view.ControllableAppBarLayout>
 

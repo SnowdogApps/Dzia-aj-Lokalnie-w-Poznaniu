@@ -5,6 +5,10 @@
     <string name="title_section2">Mapa</string>
     <string name="title_section3">Wydarzenia</string>
 
+
+    <string name="details_title_section1">Szczegóły</string>
+    <string name="details_title_section2">Komentarze</string>
+
     <string name="hello_world">Hello world!</string>
 
     <string name="action_settings">Settings</string>
