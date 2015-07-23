@@ -4,9 +4,8 @@ import android.databinding.DataBindingUtil;
 import android.util.Log;
 import android.view.View;
 
-import com.squareup.picasso.Picasso;
-
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.ViewById;
@@ -41,35 +40,28 @@ public class IssueFragment extends BaseFragment {
     @AfterViews
     void afterViews() {
         binding = DataBindingUtil.bind(rootView);
-
-        binding.voteCard.ratingWidget.ibRateUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (binding.getIssue() != null) {
-                    EventBus.getDefault().post(new IssueVoteEvent(
-                            binding.getIssue().getIssueID(),
-                            IssueVoteEvent.Vote.UP));
-                }
-            }
-        });
-
-        binding.voteCard.ratingWidget.ibRateDown.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (binding.getIssue() != null) {
-                    EventBus.getDefault().post(new IssueVoteEvent(
-                            binding.getIssue().getIssueID(),
-                            IssueVoteEvent.Vote.DOWN));
-                }
-            }
-        });
-
         getIssue(objId);
+    }
+
+    @Click(R.id.ibRateUp)
+    protected void rateUp() {
+        rate(IssueVoteEvent.Vote.UP);
+    }
+
+    @Click(R.id.ibRateDown)
+    protected void rateDown() {
+        rate(IssueVoteEvent.Vote.DOWN);
+    }
+
+    private void rate(IssueVoteEvent.Vote vote) {
+        if (binding.getIssue() != null) {
+            EventBus.getDefault().post(new IssueVoteEvent(
+                    binding.getIssue().getIssueID(), vote));
+        }
     }
 
     @Override
     protected void issueResult(Issue issue) {
-        
         Log.d(TAG, "issueResult " + issue);
         binding.setIssue(issue);
 
@@ -97,7 +89,7 @@ public class IssueFragment extends BaseFragment {
     protected void voteResult(Vote vote) {
         Issue issue = binding.getIssue();
         if (issue.getIssueID() == vote.getParentID()) {
-            issue.setIssueRating(issue.getIssueRating()+vote.getValue());
+            issue.setIssueRating(issue.getIssueRating() + vote.getValue());
             issue.setUserVotedValue(vote.getValue());
             //TODO - this is dirty implementation. Observables shoud be used but it requires extending BaseObservable - conflict with Model
             binding.setIssue(issue);
