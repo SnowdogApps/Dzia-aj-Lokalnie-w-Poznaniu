@@ -5,6 +5,7 @@ import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 
+import com.activeandroid.query.Select;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
@@ -30,6 +31,7 @@ import pl.snowdog.dzialajlokalnie.events.IssueVoteEvent;
 import pl.snowdog.dzialajlokalnie.events.RefreshEvent;
 import pl.snowdog.dzialajlokalnie.events.SetTitleAndPhotoEvent;
 import pl.snowdog.dzialajlokalnie.events.VoteEvent;
+import pl.snowdog.dzialajlokalnie.model.District;
 import pl.snowdog.dzialajlokalnie.model.Issue;
 import pl.snowdog.dzialajlokalnie.model.Vote;
 
@@ -82,8 +84,7 @@ public class IssueFragment extends BaseFragment implements OnMapReadyCallback {
 
         EventBus.getDefault().post(new SetTitleAndPhotoEvent(issue.getTitle(),
                 String.format(DlApi.PHOTO_NORMAL_URL, issue.getPhotoIssueUri())));
-
-
+        
         GoogleMapOptions options = new GoogleMapOptions().liteMode(true);
         options.camera(new CameraPosition(new LatLng(issue.getLat(), issue.getLon()), 15, 0, 0));
         mapFragment = SupportMapFragment.newInstance(options);
@@ -125,9 +126,13 @@ public class IssueFragment extends BaseFragment implements OnMapReadyCallback {
         map.setMyLocationEnabled(true);
         map.setBuildingsEnabled(true);
 
+        District district = new Select().from(District.class).
+                where("districtID == ?", binding.getIssue().getDistrictID()).executeSingle();
+
         Marker marker = map.addMarker(new MarkerOptions().
                 position(new LatLng(binding.getIssue().getLat(), binding.getIssue().getLon())).
                 title(binding.getIssue().getAddress()).
+                snippet(district != null ? district.getName() : null).
                 icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_issue_marker)));
         marker.showInfoWindow();
     }
