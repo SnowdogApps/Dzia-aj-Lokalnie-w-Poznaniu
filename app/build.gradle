@@ -64,7 +64,7 @@ dependencies {
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
 
     apt "org.androidannotations:androidannotations:$AAVersion"
-    apt "com.android.databinding:compiler:1.0-rc0"
+    apt "com.android.databinding:compiler:1.+"
     compile "org.androidannotations:androidannotations-api:$AAVersion"
 
 }
