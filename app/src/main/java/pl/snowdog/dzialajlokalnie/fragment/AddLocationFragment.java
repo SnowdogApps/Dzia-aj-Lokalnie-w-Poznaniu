@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.activeandroid.query.Select;
@@ -38,6 +39,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.greenrobot.event.EventBus;
+import pl.snowdog.dzialajlokalnie.AddUserActivity;
 import pl.snowdog.dzialajlokalnie.DlApplication;
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.adapter.DistrictAdapter;
@@ -56,13 +58,16 @@ import retrofit.client.Response;
  */
 @EFragment(R.layout.fragment_add_location)
 public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCallback, GoogleMap.OnMyLocationChangeListener, GoogleMap.OnCameraChangeListener {
-
     private static final String TAG = "AddIssueLocationFr";
+
+
     @ViewById
     MapView mapView;
     GoogleMap map;
     Marker mMarker;
 
+    @ViewById(R.id.tvHint)
+    TextView tvHint;
 
     @ViewById(R.id.spDistrict)
     Spinner spinner;
@@ -75,6 +80,8 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
 
     @FragmentArg
     CreateNewObjectEvent mEditedObject;
+
+    @FragmentArg int mMode;
 
     List<District> districts;
 
@@ -139,6 +146,9 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
         spinner.setAdapter(adapter);
         spinner.setSelection(adapter.getSelection());
 
+        if(mMode == AddUserActivity.MODE_SIGN_UP) {
+            tvHint.setText(R.string.info_select_live_distrcit);
+        }
     }
 
     @ItemSelect(R.id.spDistrict)

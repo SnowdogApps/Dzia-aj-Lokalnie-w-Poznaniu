@@ -23,6 +23,11 @@
     <string name="warning_fill_date">Ustaw datę wydarzenia</string>
     <string name="warning_choose_category">Wybierz kategorię</string>
     <string name="warning_set_place">Kliknij na mapie i ustaw miejsce </string>
+    <string name="warning_fill_name">Podaj swoje imię</string>
+    <string name="warning_fill_surname">Podaj swoje nazwisko</string>
+    <string name="warning_fill_email">Podaj prawidłowy adres email</string>
+    <string name="warning_fill_password">Wymagane znaki: duża i mała litera, cyfra. 8-20 znaków</string>
+
     <string name="add">Dodaj</string>
     <string name="choose_category_info">Wybierz pasujące kategorie:</string>
     <string name="choose_place_info">Zaznacz miejsce na mapie, bądź wybierz dzielnice </string>
@@ -72,6 +77,14 @@
     <string name="added_issue_success_info">Dodano nowe zgłoszenie</string>
     <string name="api_communication_info">Komunikacja z API w toku</string>
     <string name="please_wait_info">Proszę czekać</string>
+    <string name="surname">Nazwisko</string>
+    <string name="name">Imię</string>
+    <string name="email">Adres email</string>
+    <string name="password">Hasło</string>
+    <string name="user_description">O sobie</string>
+    <string name="sign_up">Rejestracja</string>
+    <string name="info_select_live_distrcit">Zaznacz dzielnice w której mieszkasz:</string>
+    <string name="register">Zarejestruj</string>
 
     <plurals name="votes">
         <item quantity="one">%d głos</item>

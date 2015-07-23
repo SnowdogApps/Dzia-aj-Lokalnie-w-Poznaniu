@@ -9,7 +9,7 @@ import pl.snowdog.dzialajlokalnie.model.DateWrapper;
  * Created by chomi3 on 2015-07-15.
  */
 public class CreateNewObjectEvent implements Serializable {
-    public enum Type{title, date, location, image, category};
+    public enum Type{title, date, location, image, category, details};
     Type type;
     String title;
     String description;
@@ -20,7 +20,11 @@ public class CreateNewObjectEvent implements Serializable {
     DateWrapper endDate;
     String address;
     List<Integer> categoryIDs;
-    String image; //// TODO: 2015-07-15
+    String image;
+    String name;
+    String surname;
+    String email;
+    String password;
 
     public static class Builder {
         Type type;
@@ -34,6 +38,10 @@ public class CreateNewObjectEvent implements Serializable {
         String address;
         List<Integer> categoryIDs;
         String image;
+        String name;
+        String surname;
+        String email;
+        String password;
 
         public Builder type(Type type) {this.type = type; return this;}
         public Builder title(String title) {this.title = title; return this;}
@@ -46,6 +54,10 @@ public class CreateNewObjectEvent implements Serializable {
         public Builder address(String address) {this.address = address; return this;}
         public Builder categoryIDs(List<Integer> categoryIDs) {this.categoryIDs = categoryIDs; return this;}
         public Builder image(String image) {this.image = image; return this;}
+        public Builder name(String name) {this.name = name; return this;}
+        public Builder surname(String surname) {this.surname = surname; return this;}
+        public Builder email(String email) {this.email = email; return this;}
+        public Builder password(String password) {this.password = password; return this;}
 
         //return fully build object
         public CreateNewObjectEvent build() {
@@ -68,6 +80,11 @@ public class CreateNewObjectEvent implements Serializable {
         this.address = builder.address;
         this.categoryIDs = builder.categoryIDs;
         this.image = builder.image;
+        this.name = builder.name;
+        this.surname = builder.surname;
+        this.email = builder.email;
+        this.password = builder.password;
+
     }
 
     public Type getType() {
@@ -156,5 +173,37 @@ public class CreateNewObjectEvent implements Serializable {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

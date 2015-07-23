@@ -80,7 +80,7 @@ public class MainActivity extends BaseActivity {
         // TODO move login to login activity
         logout();
         if (!isLoggedIn()) {
-            login("Bartek", "bartek");
+            login("bartek@bartek.pl", "bartek");
         }
 
     }
@@ -99,7 +99,8 @@ public class MainActivity extends BaseActivity {
     void onFabNewIssueClicked() {
         fab.collapse();
         //fab.performClick();
-        AddIssueActivity_.intent(this).start();
+        //AddIssueActivity_.intent(this).start();
+        AddUserActivity_.intent(this).start();
     }
 
     @Override

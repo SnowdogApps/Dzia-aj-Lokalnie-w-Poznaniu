@@ -62,7 +62,7 @@ public abstract class AddBaseActivity extends BaseActivity {
         ab.setDisplayHomeAsUpEnabled(true);
 
         if (mViewPager != null) {
-            mViewPager.setOffscreenPageLimit(4);
+
             setupViewPager(mViewPager);
         }
 

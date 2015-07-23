@@ -10,7 +10,9 @@ import pl.snowdog.dzialajlokalnie.model.Issue;
 import pl.snowdog.dzialajlokalnie.model.Login;
 import pl.snowdog.dzialajlokalnie.model.NewEvent;
 import pl.snowdog.dzialajlokalnie.model.NewIssue;
+import pl.snowdog.dzialajlokalnie.model.NewUser;
 import pl.snowdog.dzialajlokalnie.model.Session;
+import pl.snowdog.dzialajlokalnie.model.User;
 import pl.snowdog.dzialajlokalnie.model.Vote;
 import retrofit.Callback;
 import retrofit.http.Body;
@@ -125,5 +127,14 @@ public class DlApi {
     public interface UserApi {
         @PUT("/login")
         void login(@Body Login login, Callback<Session> cb);
+
+        @POST("/users/new")
+        void postNewUser(@Body NewUser newUser, Callback<User> cb);
+
+        @Multipart
+        @POST("/users/{id}/avatar/new")
+        void postUserAvatar(@Part("avatarPhoto") TypedFile image,
+                            @Path("id") int issueId,
+                            Callback<User> cb);
     }
 }

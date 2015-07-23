@@ -75,6 +75,14 @@
 
 
         <activity
+            android:name=".AddUserActivity_"
+            android:label="@string/sign_up"
+            android:parentActivityName=".MainActivity_"
+            android:windowSoftInputMode="stateVisible|adjustResize">
+        </activity>
+
+
+        <activity
             android:name=".DetailsActivity_"
             android:label="@string/title_activity_issue"
             android:parentActivityName=".MainActivity_" >

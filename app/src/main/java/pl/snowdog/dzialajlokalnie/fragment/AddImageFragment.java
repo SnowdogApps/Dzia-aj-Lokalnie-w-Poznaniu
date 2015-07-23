@@ -28,6 +28,7 @@ import java.io.OutputStream;
 import java.util.Random;
 
 import de.greenrobot.event.EventBus;
+import pl.snowdog.dzialajlokalnie.AddUserActivity;
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
@@ -49,6 +50,9 @@ public class AddImageFragment extends AddBaseFragment {
 
     @ViewById(R.id.fab)
     FloatingActionsMenu fab;
+
+    @FragmentArg
+    int mMode;
 
     private Uri mFileUri;
 
@@ -142,7 +146,9 @@ public class AddImageFragment extends AddBaseFragment {
         photoFrom = TAKE_PICTURE;
         Picasso.with(getActivity()).load(mFileUri).error(
                 R.drawable.ic_editor_insert_emoticon).into(ivPreview);
-        btnNext.setText(R.string.next);
+        if(mMode != AddUserActivity.MODE_SIGN_UP) {
+            btnNext.setText(R.string.next);
+        }
         //handleGalleryResult(data);
     }
 
@@ -176,7 +182,9 @@ public class AddImageFragment extends AddBaseFragment {
             }
         }
         photoFrom = PICK_FROM_FILE;
-        btnNext.setText(R.string.next);
+        if(mMode != AddUserActivity.MODE_SIGN_UP) {
+            btnNext.setText(R.string.next);
+        }
     }
 
     @Override
@@ -196,6 +204,10 @@ public class AddImageFragment extends AddBaseFragment {
                     .error(
                     R.drawable.ic_editor_insert_emoticon).into(ivPreview);
             Log.d(TAG, "edtdbg image: "+mEditedObject.getImage());
+        }
+
+        if(mMode == AddUserActivity.MODE_SIGN_UP) {
+            btnNext.setText(R.string.register);
         }
     }
 }
