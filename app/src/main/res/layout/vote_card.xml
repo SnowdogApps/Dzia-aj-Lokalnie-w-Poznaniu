@@ -28,9 +28,7 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/item_padding"
-            android:paddingTop="@dimen/item_padding"
-            android:paddingBottom="@dimen/item_padding">
+            android:paddingLeft="@dimen/item_padding">
 
             <TextView
                 android:id="@+id/tvAuthor"
@@ -51,8 +49,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/textView_item_desc"
-                android:lines="3"
-                android:ellipsize="end"
                 android:text='@{@plurals/votes(issue.votesCount, issue.votesCount) + ", " + @plurals/comments(issue.commentsCount, issue.commentsCount) + "\n" + @string/tags(issue.categoriesText)}'/>
         </LinearLayout>
     </RelativeLayout>
