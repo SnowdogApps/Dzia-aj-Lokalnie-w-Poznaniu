@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
+import pl.snowdog.dzialajlokalnie.adapter.FragmentAdapter;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.databinding.AddCommentWidgetBinding;
 import pl.snowdog.dzialajlokalnie.events.CommentClickedEvent;
@@ -99,7 +100,7 @@ public class DetailsActivity extends BaseActivity {
                 arg("objType", objType).build();
 
 
-        Adapter adapter = new Adapter(getSupportFragmentManager());
+        FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager());
         adapter.addFragment(issueFragment, getString(R.string.details_title_section1).toUpperCase());
         adapter.addFragment(commentsFragment, getString(R.string.details_title_section2).toUpperCase());
         viewPager.setAdapter(adapter);
@@ -137,35 +138,6 @@ public class DetailsActivity extends BaseActivity {
                 return false;
             }
         });
-    }
-
-    static class Adapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragments = new ArrayList<>();
-        private final List<String> mFragmentTitles = new ArrayList<>();
-
-        public Adapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragments.add(fragment);
-            mFragmentTitles.add(title);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragments.size();
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitles.get(position);
-        }
     }
 
     @Override
