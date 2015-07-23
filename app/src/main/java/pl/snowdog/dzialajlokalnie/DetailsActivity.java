@@ -65,7 +65,7 @@ public class DetailsActivity extends BaseActivity {
     ImageView ivAvatar;
 
     @ViewById(R.id.tabs)
-    TabLayout mTabLayout;
+    TabLayout tabLayout;
 
     @ViewById(R.id.pager)
     ViewPager viewPager;
@@ -104,7 +104,7 @@ public class DetailsActivity extends BaseActivity {
         adapter.addFragment(commentsFragment, getString(R.string.details_title_section2).toUpperCase());
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(2);
-        mTabLayout.setupWithViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager);
 
         binding = AddCommentWidgetBinding.bind(addCommentWidget);
         binding.itemComment.getRoot().setVisibility(View.GONE);
