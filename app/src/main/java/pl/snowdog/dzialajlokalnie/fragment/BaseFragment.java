@@ -115,6 +115,7 @@ public abstract class BaseFragment extends Fragment {
                 });
     }
 
+    //TODO protect calling this method from situation when Fragment is detached from activity (and other callback methods)
     protected void issuesResult(List<Issue> issues) {
         // implement by override
     }

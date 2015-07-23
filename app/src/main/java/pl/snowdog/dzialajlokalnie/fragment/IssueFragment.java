@@ -84,7 +84,7 @@ public class IssueFragment extends BaseFragment implements OnMapReadyCallback {
 
         EventBus.getDefault().post(new SetTitleAndPhotoEvent(issue.getTitle(),
                 String.format(DlApi.PHOTO_NORMAL_URL, issue.getPhotoIssueUri())));
-        
+
         GoogleMapOptions options = new GoogleMapOptions().liteMode(true);
         options.camera(new CameraPosition(new LatLng(issue.getLat(), issue.getLon()), 15, 0, 0));
         mapFragment = SupportMapFragment.newInstance(options);
