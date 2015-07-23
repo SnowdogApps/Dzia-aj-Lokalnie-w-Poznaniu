@@ -42,7 +42,7 @@ public class IssueFragment extends BaseFragment {
     void afterViews() {
         binding = DataBindingUtil.bind(rootView);
 
-        binding.ratingWidget.ibRateUp.setOnClickListener(new View.OnClickListener() {
+        binding.voteCard.ratingWidget.ibRateUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (binding.getIssue() != null) {
@@ -53,7 +53,7 @@ public class IssueFragment extends BaseFragment {
             }
         });
 
-        binding.ratingWidget.ibRateDown.setOnClickListener(new View.OnClickListener() {
+        binding.voteCard.ratingWidget.ibRateDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (binding.getIssue() != null) {

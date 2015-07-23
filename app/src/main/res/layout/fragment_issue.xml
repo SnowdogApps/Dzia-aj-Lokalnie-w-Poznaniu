@@ -19,62 +19,16 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_margin="@dimen/item_padding"
-            bind:contentPadding="@dimen/item_padding"
+            card_view:contentPadding="@dimen/item_padding"
             card_view:cardBackgroundColor="@color/card_board_color"
             card_view:cardCornerRadius="5dp"
             card_view:cardUseCompatPadding="true" >
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/textView_item_title"
-                android:text='@{@plurals/votes(issue.votesCount, issue.votesCount) + ", " + @plurals/comments(issue.commentsCount, issue.commentsCount) + "\n" + @string/tags(issue.categoriesText)}'
+            <include layout="@layout/vote_card"
+                android:id="@+id/vote_card"
+                bind:issue="@{issue}"
                 />
         </android.support.v7.widget.CardView>
-
-        <include layout="@layout/rating_widget"
-            android:id="@+id/ratingWidget"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            bind:rating="@{issue.issueRating}"
-            bind:bgcolor="@{true}"
-            />
-
-        <LinearLayout
-            android:id="@+id/textContent"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/item_padding"
-            android:paddingTop="@dimen/item_padding"
-            android:paddingBottom="@dimen/item_padding"
-            android:background="@color/colorPrimarySemi">
-
-            <TextView
-                android:id="@+id/tvTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/textView_title"
-                android:ellipsize="end"
-                android:text="@{issue.title}"
-                android:visibility="gone"/>
-
-            <TextView
-                android:id="@+id/tvDesc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:lines="3"
-                style="@style/textView_desc"
-                android:ellipsize="end"
-                android:text="@{issue.description}"/>
-        </LinearLayout>
-
-        <include layout="@layout/item_footer"
-            android:id="@+id/footerWidget"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            bind:footerText='@{@plurals/votes(issue.votesCount, issue.votesCount) + ", " + @plurals/comments(issue.commentsCount, issue.commentsCount) + ", " + @string/tags(issue.categoriesText)}'/>
 
     </LinearLayout>
 </layout>
