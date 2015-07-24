@@ -26,6 +26,7 @@ import pl.snowdog.dzialajlokalnie.model.DateWrapper;
 import pl.snowdog.dzialajlokalnie.model.Event;
 import pl.snowdog.dzialajlokalnie.model.NewEvent;
 import pl.snowdog.dzialajlokalnie.model.NewUser;
+import pl.snowdog.dzialajlokalnie.model.Session;
 import pl.snowdog.dzialajlokalnie.model.User;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -105,12 +106,9 @@ public class AddUserActivity extends AddBaseActivity {
         DlApplication.userApi.postNewUser(newUser, new Callback<User>() {
             @Override
             public void success(User user, Response response) {
-                if (photoUri != null && photoUri.length() > 0) {
-                    postUserAvatar(user.getUserID());
-                } else {
-                    //Finished adding, close view
-                    finishAdding(ObjectAddedEvent.Type.user);
-                }
+                //Login as new user:
+                login(email, password);
+
 
                 Log.d(TAG, "userApi.postNewUser post success: " + response + " user: " + user.toString());
             }
@@ -123,6 +121,18 @@ public class AddUserActivity extends AddBaseActivity {
         });
     }
 
+
+    @Override
+    protected void loginResult(Session session) {
+        super.loginResult(session);
+        //If we have successfull login, we can try to upload avatar
+        if (photoUri != null && photoUri.length() > 0) {
+            postUserAvatar(session.getUserID());
+        } else {
+            //Finished adding, close view
+            finishAdding(ObjectAddedEvent.Type.user);
+        }
+    }
 
     private void postUserAvatar(int userId) {
 
@@ -149,6 +159,7 @@ public class AddUserActivity extends AddBaseActivity {
     private NewUser createNewUserObject() {
         NewUser newUser = new NewUser();
         newUser.setDistrictID(districtID);
+        newUser.setDescription(description);
         newUser.setName(name);
         newUser.setSurname(surname);
         newUser.setEmail(email);
