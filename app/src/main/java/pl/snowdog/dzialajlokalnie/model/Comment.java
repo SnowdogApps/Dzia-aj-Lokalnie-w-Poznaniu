@@ -61,8 +61,9 @@ public class Comment extends Model{
         super();
     }
 
-    public Comment(int commentID, int userID, int parentID, int parentType, int solution, String text, Date createdAt, Date updatedAt, String commentHashtags, String commentMentioned, int commentRating, int authorID, String authorName, String authorAvatar) {
+    public Comment(int commentID, int userID, int parentID, int parentType, int solution, String text, Date createdAt, Date updatedAt, String commentHashtags, String commentMentioned, int commentRating, int authorID, String authorName, String authorAvatar, int userVotedValue) {
         super();
+
         this.commentID = commentID;
         this.userID = userID;
         this.parentID = parentID;
@@ -77,6 +78,7 @@ public class Comment extends Model{
         this.authorID = authorID;
         this.authorName = authorName;
         this.authorAvatar = authorAvatar;
+        this.userVotedValue = userVotedValue;
     }
 
     public Comment(int intParentType, int parentID, int solution, String text) {
@@ -104,9 +106,9 @@ public class Comment extends Model{
                 ", authorID=" + authorID +
                 ", authorName='" + authorName + '\'' +
                 ", authorAvatar='" + authorAvatar + '\'' +
+                ", userVotedValue=" + userVotedValue +
                 '}';
     }
-
 
 
     public String getAuthorAvatar() {
