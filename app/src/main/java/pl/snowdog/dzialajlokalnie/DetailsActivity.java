@@ -187,6 +187,14 @@ public class DetailsActivity extends BaseActivity {
         });
     }
 
+    @Click(R.id.fab)
+    protected void fabClick() {
+        binding.etComment.requestFocus();
+
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+    }
+
     public void onEvent(CommentClickedEvent event) {
         binding.setComment(event.getComment());
         binding.itemComment.getRoot().setVisibility(View.VISIBLE);
