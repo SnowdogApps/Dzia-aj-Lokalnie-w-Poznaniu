@@ -1,79 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:bind="http://schemas.android.com/apk/res-auto">
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable name="issue" type="pl.snowdog.dzialajlokalnie.model.Issue"/>
     </data>
 
-    <RelativeLayout
+    <android.support.v4.widget.NestedScrollView
         android:id="@+id/issueDetails"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/ivAvatar"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/photo_size"
-            android:src="@drawable/sample_picture"
-            android:scaleType="centerCrop"/>
-
-        <include layout="@layout/rating_widget"
-            android:id="@+id/ratingWidget"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_above="@+id/footerWidget"
-            bind:rating="@{issue.issueRating}"
-            bind:bgcolor="@{true}"
-            />
+        android:layout_height="match_parent"
+        >
 
         <LinearLayout
-            android:id="@+id/textContent"
-            android:layout_toRightOf="@+id/ratingWidget"
-            android:layout_alignTop="@+id/ratingWidget"
-            android:layout_above="@+id/footerWidget"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/item_padding"
-            android:paddingTop="@dimen/item_padding"
-            android:paddingBottom="@dimen/item_padding"
-            android:background="@color/colorPrimarySemi">
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tvTitle"
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/textView_title"
-                android:ellipsize="end"
-                android:text="@{issue.title}"
-                android:visibility="gone"/>
+                android:orientation="horizontal"
+                android:layout_margin="@dimen/item_padding"
+                card_view:contentPadding="@dimen/item_padding"
+                card_view:cardBackgroundColor="@color/card_board_color"
+                card_view:cardCornerRadius="5dp"
+                card_view:cardUseCompatPadding="true" >
 
-            <TextView
-                android:id="@+id/tvDesc"
+                <include layout="@layout/vote_card"
+                    android:id="@+id/vote_card"
+                    bind:issue="@{issue}"
+                    />
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:lines="3"
-                style="@style/textView_desc"
-                android:ellipsize="end"
-                android:text="@{issue.description}"/>
+                android:orientation="horizontal"
+                android:layout_marginLeft="@dimen/item_padding"
+                android:layout_marginRight="@dimen/item_padding"
+                android:layout_marginBottom="@dimen/item_padding"
+                card_view:contentPadding="@dimen/item_padding"
+                card_view:cardBackgroundColor="@color/card_board_color"
+                card_view:cardCornerRadius="5dp"
+                card_view:cardUseCompatPadding="true" >
+
+                <TextView
+                    android:id="@+id/tvDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/textView_item_desc"
+                    android:text='@{issue.description}'/>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/mapCard"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/photo_size"
+                android:orientation="horizontal"
+                android:layout_marginLeft="@dimen/item_padding"
+                android:layout_marginRight="@dimen/item_padding"
+                android:layout_marginBottom="@dimen/item_padding"
+                card_view:contentPadding="@dimen/item_padding"
+                card_view:cardBackgroundColor="@color/card_board_color"
+                card_view:cardCornerRadius="5dp"
+                card_view:cardUseCompatPadding="true" >
+
+            </android.support.v7.widget.CardView>
         </LinearLayout>
-
-        <include layout="@layout/item_footer"
-            android:id="@+id/footerWidget"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignBottom="@+id/ivAvatar"
-            bind:footerText='@{@plurals/votes(issue.votesCount, issue.votesCount) + ", " + @plurals/comments(issue.commentsCount, issue.commentsCount) + ", " + @string/tags(issue.categoriesText)}'/>
-
-
-        <View
-            android:layout_below="@+id/ivAvatar"
-            android:background="?attr/colorPrimary"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            />
-    </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
 </layout>

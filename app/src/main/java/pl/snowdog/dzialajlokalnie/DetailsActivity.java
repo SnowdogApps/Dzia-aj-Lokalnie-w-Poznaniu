@@ -2,17 +2,19 @@ package pl.snowdog.dzialajlokalnie;
 
 import android.content.Context;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import org.androidannotations.annotations.Click;
@@ -23,12 +25,13 @@ import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
 
 import de.greenrobot.event.EventBus;
+import pl.snowdog.dzialajlokalnie.adapter.FragmentAdapter;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.databinding.AddCommentWidgetBinding;
 import pl.snowdog.dzialajlokalnie.events.CommentClickedEvent;
 import pl.snowdog.dzialajlokalnie.events.NewCommentEvent;
 import pl.snowdog.dzialajlokalnie.events.RefreshEvent;
-import pl.snowdog.dzialajlokalnie.events.SetTitleEvent;
+import pl.snowdog.dzialajlokalnie.events.SetTitleAndPhotoEvent;
 import pl.snowdog.dzialajlokalnie.fragment.CommentsFragment;
 import pl.snowdog.dzialajlokalnie.fragment.CommentsFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.IssueFragment;
@@ -36,18 +39,31 @@ import pl.snowdog.dzialajlokalnie.fragment.IssueFragment_;
 import pl.snowdog.dzialajlokalnie.model.Comment;
 import pl.snowdog.dzialajlokalnie.util.FadeInAnimation;
 import pl.snowdog.dzialajlokalnie.util.FadeOutAnimation;
+import pl.snowdog.dzialajlokalnie.view.ControllableAppBarLayout;
 
 @EActivity(R.layout.activity_details)
 @OptionsMenu(R.menu.menu_issue)
-public class DetailsActivity extends BaseActivity {
+public class DetailsActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
 
     private static final String TAG = "DetailsActivity";
+
+    @ViewById(R.id.appbar)
+    ControllableAppBarLayout appBarLayout;
 
     @ViewById(R.id.collapsingToolbarLayout)
     CollapsingToolbarLayout collapsingToolbarLayout;
 
     @ViewById(R.id.toolbar)
     Toolbar toolbar;
+
+    @ViewById(R.id.ivAvatar)
+    ImageView ivAvatar;
+
+    @ViewById(R.id.tabs)
+    TabLayout tabLayout;
+
+    @ViewById(R.id.pager)
+    ViewPager viewPager;
 
     @ViewById(R.id.focus_background)
     View focusBackground;
@@ -77,8 +93,15 @@ public class DetailsActivity extends BaseActivity {
         CommentsFragment commentsFragment = CommentsFragment_.builder().arg("objId", objId).
                 arg("objType", objType).build();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.topContent, issueFragment).commit();
-        getSupportFragmentManager().beginTransaction().replace(R.id.bottomContent, commentsFragment).commit();
+
+        FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager());
+        adapter.addFragment(issueFragment, getString(R.string.details_title_section1).toUpperCase());
+        adapter.addFragment(commentsFragment, getString(R.string.details_title_section2).toUpperCase());
+        viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(2);
+
+        viewPager.addOnPageChangeListener(this);
+        tabLayout.setupWithViewPager(viewPager);
 
         binding = AddCommentWidgetBinding.bind(addCommentWidget);
         binding.itemComment.getRoot().setVisibility(View.GONE);
@@ -124,10 +147,11 @@ public class DetailsActivity extends BaseActivity {
             super.onBackPressed();
         }
     }
+
     @Click(R.id.focus_background)
     protected void unfocus() {
         binding.etComment.clearFocus();
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(binding.etComment.getWindowToken(), 0);
 
         binding.setComment(null);
@@ -146,9 +170,25 @@ public class DetailsActivity extends BaseActivity {
         unfocus();
     }
 
-    public void onEvent(SetTitleEvent event) {
+    public void onEvent(SetTitleAndPhotoEvent event) {
         //TODO only collapsingToolbarLayout works but title is at the bottom (should be sticked to the top)
         collapsingToolbarLayout.setTitle(event.getTitle());
+
+        Picasso.with(binding.getRoot().getContext()).
+                load(event.getPhotoUrl()).
+                error(R.drawable.ic_editor_insert_emoticon). //TODO change error drawable and remove setting INVISIBLE below
+                into(ivAvatar, new Callback() {
+            @Override
+            public void onSuccess() {
+            }
+
+            @Override
+            public void onError() {
+                appBarLayout.collapseToolbar(true);
+                ivAvatar.setVisibility(View.INVISIBLE);
+                // TODO lock expanding and collapsing the appbar because there is no photo
+            }
+        });
     }
 
     public void onEvent(CommentClickedEvent event) {
@@ -176,4 +216,21 @@ public class DetailsActivity extends BaseActivity {
     void refresh() {
         EventBus.getDefault().post(new RefreshEvent());
     }
+
+    @Override
+    public void onPageScrolled(int i, float v, int i1) { }
+
+    @Override
+    public void onPageSelected(int i) {
+        if (i == 1) {
+            final FadeInAnimation anim = new FadeInAnimation(addCommentWidget);
+            addCommentWidget.startAnimation(anim);
+        } else {
+            final FadeOutAnimation anim = new FadeOutAnimation(addCommentWidget);
+            addCommentWidget.startAnimation(anim);
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int i) { }
 }

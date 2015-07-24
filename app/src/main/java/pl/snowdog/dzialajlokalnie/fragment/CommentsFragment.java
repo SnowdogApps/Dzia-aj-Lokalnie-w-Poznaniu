@@ -97,6 +97,8 @@ public class CommentsFragment extends ListFragment {
         adapter.getComments().add(position, event.getComment());
         adapter.notifyItemInserted(position);
         recyclerView.scrollToPosition(position);
+
+        onItemsLoadComplete();
     }
 
     @Override

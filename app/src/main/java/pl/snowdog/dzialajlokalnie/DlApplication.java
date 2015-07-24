@@ -44,7 +44,6 @@ public class DlApplication extends Application {
 
         final Gson gson = new GsonBuilder()
                 .excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC)
-//                .excludeFieldsWithoutExposeAnnotation()
                 .setDateFormat("yyyy-MM-dd HH:mm:ss")
                 .create();
 

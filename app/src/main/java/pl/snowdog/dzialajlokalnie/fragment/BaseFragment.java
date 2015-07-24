@@ -4,7 +4,6 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import com.activeandroid.ActiveAndroid;
-import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
 import java.util.List;
@@ -115,6 +114,7 @@ public abstract class BaseFragment extends Fragment {
                 });
     }
 
+    //TODO protect calling this method from situation when Fragment is detached from activity (and other callback methods)
     protected void issuesResult(List<Issue> issues) {
         // implement by override
     }
