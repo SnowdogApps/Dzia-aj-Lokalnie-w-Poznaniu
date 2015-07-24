@@ -14,6 +14,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -72,6 +73,9 @@ public class DetailsActivity extends BaseActivity {
 
     @ViewById(R.id.add_comment_widget)
     View addCommentWidget;
+
+    @ViewById(R.id.fab)
+    FloatingActionButton fab;
 
     AddCommentWidgetBinding binding;
 
@@ -137,11 +141,11 @@ public class DetailsActivity extends BaseActivity {
     @FocusChange(R.id.et_comment)
     protected void onFocusChangedOnNewComment(View v, boolean hasFocus) {
         if (hasFocus) {
-            final FadeInAnimation anim = new FadeInAnimation(focusBackground);
-            focusBackground.startAnimation(anim);
+            new FadeInAnimation(focusBackground).startAnimation();
+            new FadeOutAnimation(fab).startAnimation();
         } else {
-            final FadeOutAnimation anim = new FadeOutAnimation(focusBackground);
-            focusBackground.startAnimation(anim);
+            new FadeOutAnimation(focusBackground).startAnimation();
+            new FadeInAnimation(fab).startAnimation();
         }
     }
 

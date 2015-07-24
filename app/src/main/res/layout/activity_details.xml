@@ -60,17 +60,6 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <com.getbase.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:layout_margin="@dimen/fab_margin"
-        app:layout_behavior="pl.snowdog.dzialajlokalnie.view.FloatingActionButtonBehavior"
-        app:fab_icon="@drawable/ic_action_comment"
-        fab:fab_colorNormal="@color/colorAccent"
-        app:fab_colorPressed="@color/colorPrimary" />
-
     <RelativeLayout
         android:id="@+id/focus_background"
         android:layout_width="match_parent"
@@ -88,5 +77,14 @@
 
     </RelativeLayout>
 
-
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="@dimen/fab_margin"
+        app:layout_behavior="pl.snowdog.dzialajlokalnie.view.FloatingActionButtonBehavior"
+        app:fab_icon="@drawable/ic_action_comment"
+        fab:fab_colorNormal="@color/colorAccent"
+        app:fab_colorPressed="@color/colorPrimary" />
 </android.support.design.widget.CoordinatorLayout>
