@@ -35,8 +35,9 @@ public class StringUtil {
         for (int i = 0; i < lines.length; i++) {
             if (lines[i].startsWith("> ")) {
                 quoteLines[i] = true;
-                lines[i] = lines[i].replaceFirst("> ", "") + "\n";
+                lines[i] = lines[i].replaceFirst("> ", "");
             }
+            lines[i] = lines[i] + "\n";
             stringBuilder.append(lines[i]);
         }
 

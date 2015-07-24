@@ -120,7 +120,6 @@ public class DetailsActivity extends BaseActivity {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEND) {
                     send();
-                    unfocus();
                     return true;
                 }
                 return false;
@@ -163,10 +162,13 @@ public class DetailsActivity extends BaseActivity {
     @Click(R.id.bt_send)
     protected void send() {
         if (binding.getComment() != null) {
-            comment(DlApi.ParentType.comments, binding.getComment().getCommentID(), 0,
+            comment(DlApi.ParentType.comments, binding.getComment().getCommentID(),
+                    binding.ctvSolution.isChecked() ? 1 : 0,
                     binding.etComment.getText().toString());
         } else {
-            comment(objType, objId, 0, binding.etComment.getText().toString());
+            comment(objType, objId,
+                    binding.ctvSolution.isChecked() ? 1 : 0,
+                    binding.etComment.getText().toString());
         }
         unfocus();
     }
