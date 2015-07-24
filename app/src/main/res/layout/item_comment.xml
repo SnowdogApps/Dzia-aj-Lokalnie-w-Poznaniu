@@ -57,14 +57,29 @@
 
                 <TextView
                     android:id="@+id/tvUsername"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:paddingLeft="@dimen/item_padding"
                     style="@style/textView_item_title"
                     android:lines="1"
                     android:ellipsize="end"
                     android:text="@{comment.authorName}"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_action_solution"
+                    android:visibility="@{comment.solution == 1 ? View.VISIBLE : View.GONE}"
+                    />
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/textView_item_desc"
+                android:text="@{StringUtil.date2String(comment.createdAt)}"/>
 
             <TextView
                 android:id="@+id/tvText"
@@ -73,7 +88,7 @@
                 android:layout_marginTop="@dimen/item_padding"
                 android:layout_marginBottom="@dimen/item_padding"
                 style="@style/textView_item_desc"
-                android:minLines="4"
+                android:minLines="3"
                 android:ellipsize="end"
                 android:text="@{StringUtil.styleString(comment.text)}"/>
 
