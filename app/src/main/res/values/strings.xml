@@ -8,6 +8,7 @@
 
     <string name="details_title_section1">Szczegóły</string>
     <string name="details_title_section2">Komentarze</string>
+    <string name="details_title_section2_number">Komentarze (%d)</string>
 
     <string name="hello_world">Hello world!</string>
 

@@ -30,6 +30,7 @@ import pl.snowdog.dzialajlokalnie.adapter.FragmentAdapter;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.databinding.AddCommentWidgetBinding;
 import pl.snowdog.dzialajlokalnie.events.CommentClickedEvent;
+import pl.snowdog.dzialajlokalnie.events.CommentsLoadedEvent;
 import pl.snowdog.dzialajlokalnie.events.NewCommentEvent;
 import pl.snowdog.dzialajlokalnie.events.RefreshEvent;
 import pl.snowdog.dzialajlokalnie.events.SetTitleAndPhotoEvent;
@@ -80,6 +81,8 @@ public class DetailsActivity extends BaseActivity implements ViewPager.OnPageCha
     @Extra
     int objId;
 
+    private FragmentAdapter adapter;
+
     @Override
     protected void afterView() {
         setSupportActionBar(toolbar);
@@ -94,7 +97,7 @@ public class DetailsActivity extends BaseActivity implements ViewPager.OnPageCha
         CommentsFragment commentsFragment = CommentsFragment_.builder().arg("objId", objId).
                 arg("objType", objType).build();
 
-        FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager());
+        adapter = new FragmentAdapter(getSupportFragmentManager());
         adapter.addFragment(issueFragment, getString(R.string.details_title_section1).toUpperCase());
         adapter.addFragment(commentsFragment, getString(R.string.details_title_section2).toUpperCase());
         viewPager.setAdapter(adapter);
@@ -198,6 +201,11 @@ public class DetailsActivity extends BaseActivity implements ViewPager.OnPageCha
 
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+    }
+
+    public void onEvent(CommentsLoadedEvent event) {
+        adapter.setPageTitle(1, getString(R.string.details_title_section2_number, event.getCount()));
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     @Override
