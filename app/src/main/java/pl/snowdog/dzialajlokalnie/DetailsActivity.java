@@ -94,13 +94,11 @@ public class DetailsActivity extends BaseActivity implements ViewPager.OnPageCha
         CommentsFragment commentsFragment = CommentsFragment_.builder().arg("objId", objId).
                 arg("objType", objType).build();
 
-
         FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager());
         adapter.addFragment(issueFragment, getString(R.string.details_title_section1).toUpperCase());
         adapter.addFragment(commentsFragment, getString(R.string.details_title_section2).toUpperCase());
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(2);
-
         viewPager.addOnPageChangeListener(this);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -112,13 +110,11 @@ public class DetailsActivity extends BaseActivity implements ViewPager.OnPageCha
         binding.etComment.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                Log.d(TAG, "onEditorAction " + actionId);
                 if (actionId == EditorInfo.IME_ACTION_SEND) {
                     send();
                     unfocus();
                     return true;
                 }
-
                 return false;
             }
         });
@@ -137,7 +133,7 @@ public class DetailsActivity extends BaseActivity implements ViewPager.OnPageCha
     }
 
     @FocusChange(R.id.et_comment)
-    protected void focusChangedOnNewComment(View view, boolean hasFocus) {
+    protected void onFocusChangedOnNewComment(View v, boolean hasFocus) {
         if (hasFocus) {
             final FadeInAnimation anim = new FadeInAnimation(focusBackground);
             focusBackground.startAnimation(anim);
