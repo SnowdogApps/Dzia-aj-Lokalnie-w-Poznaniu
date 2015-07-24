@@ -11,7 +11,8 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/background">
+        android:background="@color/background"
+        android:clickable="true">
 
         <include layout="@layout/item_comment"
             android:id="@+id/item_comment"
@@ -19,6 +20,45 @@
             android:layout_height="wrap_content"
             bind:comment="@{comment}"
             />
+
+        <!--TODO this is hardcoded divider -> change it!-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/background_inverse"
+            />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <CheckedTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                android:text="Cytuj"
+                android:visibility="@{comment != null ? View.VISIBLE : View.INVISIBLE}"/>
+
+            <CheckedTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                android:text="Zgłoś"/>
+
+            <CheckedTextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                android:text="Rozwiązanie"/>
+
+        </LinearLayout>
 
         <!--TODO this is hardcoded divider -> change it!-->
         <View
