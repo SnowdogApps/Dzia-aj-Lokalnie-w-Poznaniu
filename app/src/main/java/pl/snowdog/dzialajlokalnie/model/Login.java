@@ -5,12 +5,12 @@ package pl.snowdog.dzialajlokalnie.model;
  */
 public class Login {
 
-    private String username;
+    private String email;
     private String pass;
     private int isSessionAuthByAPIkey;
 
-    public Login(String username, String pass, int isSessionAuthByAPIkey) {
-        this.username = username;
+    public Login(String email, String pass, int isSessionAuthByAPIkey) {
+        this.email = email;
         this.pass = pass;
         this.isSessionAuthByAPIkey = isSessionAuthByAPIkey;
     }
@@ -18,18 +18,18 @@ public class Login {
     @Override
     public String toString() {
         return "Login{" +
-                "username='" + username + '\'' +
+                "email='" + email + '\'' +
                 ", pass='" + pass + '\'' +
                 ", isSessionAuthByAPIkey=" + isSessionAuthByAPIkey +
                 '}';
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPass() {

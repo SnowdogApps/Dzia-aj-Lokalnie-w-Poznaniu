@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_content"
     android:layout_width="match_parent"
@@ -59,19 +60,31 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <View
+    <RelativeLayout
         android:id="@+id/focus_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/focus_background"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        >
 
-    <include
-        android:id="@+id/add_comment_widget"
-        layout="@layout/add_comment_widget"
-        android:layout_width="match_parent"
+        <include
+            android:id="@+id/add_comment_widget"
+            layout="@layout/add_comment_widget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" />
+
+    </RelativeLayout>
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:visibility="invisible" />
-
+        android:layout_margin="@dimen/fab_margin"
+        app:layout_behavior="pl.snowdog.dzialajlokalnie.view.FloatingActionButtonBehavior"
+        app:fab_icon="@drawable/ic_action_comment"
+        fab:fab_colorNormal="@color/colorAccent"
+        app:fab_colorPressed="@color/colorPrimary" />
 </android.support.design.widget.CoordinatorLayout>

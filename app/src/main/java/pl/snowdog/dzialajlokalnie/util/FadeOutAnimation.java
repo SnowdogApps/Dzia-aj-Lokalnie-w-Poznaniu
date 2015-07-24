@@ -31,4 +31,8 @@ public class FadeOutAnimation extends AlphaAnimation {
             }
         });
     }
+
+    public void startAnimation() {
+        view.startAnimation(this);
+    }
 }

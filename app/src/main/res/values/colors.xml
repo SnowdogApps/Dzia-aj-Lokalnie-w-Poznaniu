@@ -23,7 +23,7 @@
     <color name="map_shape_fill">#512DA8</color>
 
 <!-- updated these colors (add 99 alpha) after updating main app colors-->
-    <color name="colorPrimarySemi">#99673AB7</color>
+    <color name="colorAccentSemi">#66FF4081</color>
     <color name="focus_background">#CC000000</color>
     <color name="transparent">#00000000</color>
 

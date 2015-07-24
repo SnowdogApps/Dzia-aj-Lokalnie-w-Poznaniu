@@ -8,6 +8,7 @@
 
     <string name="details_title_section1">Szczegóły</string>
     <string name="details_title_section2">Komentarze</string>
+    <string name="details_title_section2_number">Komentarze (%d)</string>
 
     <string name="hello_world">Hello world!</string>
 
@@ -81,6 +82,7 @@
     <string name="added_issue_success_info">Dodano nowe zgłoszenie</string>
     <string name="api_communication_info">Komunikacja z API w toku</string>
     <string name="please_wait_info">Proszę czekać</string>
+
     <string name="surname">Nazwisko</string>
     <string name="name">Imię</string>
     <string name="email">Adres email</string>
@@ -89,6 +91,11 @@
     <string name="sign_up">Rejestracja</string>
     <string name="info_select_live_distrcit">Zaznacz dzielnice w której mieszkasz:</string>
     <string name="register">Zarejestruj</string>
+
+    <string name="quote">Cytuj</string>
+    <string name="report">Zgłoś</string>
+    <string name="solution">Rozwiązanie</string>
+
 
     <plurals name="votes">
         <item quantity="one">%d głos</item>

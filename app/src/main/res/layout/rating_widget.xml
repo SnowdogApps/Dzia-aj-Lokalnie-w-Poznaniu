@@ -15,7 +15,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@{bgcolor ? @color/colorPrimarySemi : @color/transparent}"
+        android:background="@{bgcolor ? @color/colorAccentSemi : @color/transparent}"
         tools:showIn="@layout/item_issue">
 
         <ImageButton

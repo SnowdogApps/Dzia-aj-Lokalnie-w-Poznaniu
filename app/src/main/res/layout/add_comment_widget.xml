@@ -11,7 +11,8 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/background">
+        android:background="@color/background"
+        android:clickable="true">
 
         <include layout="@layout/item_comment"
             android:id="@+id/item_comment"
@@ -19,6 +20,48 @@
             android:layout_height="wrap_content"
             bind:comment="@{comment}"
             />
+
+        <!--TODO this is hardcoded divider -> change it!-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/background_inverse"
+            />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <CheckedTextView
+                android:id="@+id/ctv_quote"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                android:text="@string/quote"
+                android:enabled="@{comment != null}"/>
+
+            <CheckedTextView
+                android:id="@+id/ctv_report"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                android:text="@string/report"/>
+
+            <CheckedTextView
+                android:id="@+id/ctv_solution"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                android:text="@string/solution"/>
+
+        </LinearLayout>
 
         <!--TODO this is hardcoded divider -> change it!-->
         <View
@@ -35,8 +78,8 @@
                 android:id="@+id/et_comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:imeOptions="actionSend|actionUnspecified"
-                android:inputType="text"
+                android:inputType="text|textMultiLine|textImeMultiLine"
+                android:maxLines="5"
                 android:layout_toLeftOf="@+id/bt_send"
                 android:hint="@string/comment_hint"/>
 

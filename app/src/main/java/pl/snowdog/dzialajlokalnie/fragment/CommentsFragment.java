@@ -7,11 +7,13 @@ import org.androidannotations.annotations.FragmentArg;
 
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.adapter.CommentsAdapter;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.events.CommentClickedEvent;
 import pl.snowdog.dzialajlokalnie.events.CommentVoteEvent;
+import pl.snowdog.dzialajlokalnie.events.CommentsLoadedEvent;
 import pl.snowdog.dzialajlokalnie.events.NewCommentEvent;
 import pl.snowdog.dzialajlokalnie.events.RefreshEvent;
 import pl.snowdog.dzialajlokalnie.events.VoteEvent;
@@ -53,6 +55,7 @@ public class CommentsFragment extends ListFragment {
         adapter = new CommentsAdapter(comments);
         recyclerView.setAdapter(adapter);
 
+        EventBus.getDefault().post(new CommentsLoadedEvent(comments.size()));
         onItemsLoadComplete();
     }
 
@@ -98,6 +101,7 @@ public class CommentsFragment extends ListFragment {
         adapter.notifyItemInserted(position);
         recyclerView.scrollToPosition(position);
 
+        EventBus.getDefault().post(new CommentsLoadedEvent(adapter.getItemCount()));
         onItemsLoadComplete();
     }
 

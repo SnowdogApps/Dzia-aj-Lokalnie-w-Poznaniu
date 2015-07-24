@@ -14,12 +14,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.FocusChange;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
@@ -27,8 +29,10 @@ import org.androidannotations.annotations.ViewById;
 import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.adapter.FragmentAdapter;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
+import pl.snowdog.dzialajlokalnie.databinding.AddCommentBinding;
 import pl.snowdog.dzialajlokalnie.databinding.AddCommentWidgetBinding;
 import pl.snowdog.dzialajlokalnie.events.CommentClickedEvent;
+import pl.snowdog.dzialajlokalnie.events.CommentsLoadedEvent;
 import pl.snowdog.dzialajlokalnie.events.NewCommentEvent;
 import pl.snowdog.dzialajlokalnie.events.RefreshEvent;
 import pl.snowdog.dzialajlokalnie.events.SetTitleAndPhotoEvent;
@@ -43,7 +47,7 @@ import pl.snowdog.dzialajlokalnie.view.ControllableAppBarLayout;
 
 @EActivity(R.layout.activity_details)
 @OptionsMenu(R.menu.menu_issue)
-public class DetailsActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
+public class DetailsActivity extends BaseActivity {
 
     private static final String TAG = "DetailsActivity";
 
@@ -71,13 +75,18 @@ public class DetailsActivity extends BaseActivity implements ViewPager.OnPageCha
     @ViewById(R.id.add_comment_widget)
     View addCommentWidget;
 
-    AddCommentWidgetBinding binding;
+    @ViewById(R.id.fab)
+    FloatingActionButton fab;
+
+    AddCommentBinding binding;
 
     @Extra
     DlApi.ParentType objType;
 
     @Extra
     int objId;
+
+    private FragmentAdapter adapter;
 
     @Override
     protected void afterView() {
@@ -93,44 +102,27 @@ public class DetailsActivity extends BaseActivity implements ViewPager.OnPageCha
         CommentsFragment commentsFragment = CommentsFragment_.builder().arg("objId", objId).
                 arg("objType", objType).build();
 
-
-        FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager());
+        adapter = new FragmentAdapter(getSupportFragmentManager());
         adapter.addFragment(issueFragment, getString(R.string.details_title_section1).toUpperCase());
         adapter.addFragment(commentsFragment, getString(R.string.details_title_section2).toUpperCase());
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(2);
-
-        viewPager.addOnPageChangeListener(this);
         tabLayout.setupWithViewPager(viewPager);
 
-        binding = AddCommentWidgetBinding.bind(addCommentWidget);
+//        binding = AddCommentBinding.bind(addCommentWidget);
+        binding = new AddCommentBinding(addCommentWidget);
         binding.itemComment.getRoot().setVisibility(View.GONE);
         binding.itemComment.ratingWidget.ibRateUp.setVisibility(View.INVISIBLE);
         binding.itemComment.ratingWidget.ibRateDown.setVisibility(View.INVISIBLE);
 
-        binding.etComment.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    final FadeInAnimation anim = new FadeInAnimation(focusBackground);
-                    focusBackground.startAnimation(anim);
-                } else {
-                    final FadeOutAnimation anim = new FadeOutAnimation(focusBackground);
-                    focusBackground.startAnimation(anim);
-                }
-            }
-        });
-
         binding.etComment.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                Log.d(TAG, "onEditorAction " + actionId);
                 if (actionId == EditorInfo.IME_ACTION_SEND) {
                     send();
                     unfocus();
                     return true;
                 }
-
                 return false;
             }
         });
@@ -145,6 +137,17 @@ public class DetailsActivity extends BaseActivity implements ViewPager.OnPageCha
             unfocus();
         } else {
             super.onBackPressed();
+        }
+    }
+
+    @FocusChange(R.id.et_comment)
+    protected void onFocusChangedOnNewComment(View v, boolean hasFocus) {
+        if (hasFocus) {
+            new FadeInAnimation(focusBackground).startAnimation();
+            new FadeOutAnimation(fab).startAnimation();
+        } else {
+            new FadeOutAnimation(focusBackground).startAnimation();
+            new FadeInAnimation(fab).startAnimation();
         }
     }
 
@@ -171,7 +174,6 @@ public class DetailsActivity extends BaseActivity implements ViewPager.OnPageCha
     }
 
     public void onEvent(SetTitleAndPhotoEvent event) {
-        //TODO only collapsingToolbarLayout works but title is at the bottom (should be sticked to the top)
         collapsingToolbarLayout.setTitle(event.getTitle());
 
         Picasso.with(binding.getRoot().getContext()).
@@ -191,6 +193,14 @@ public class DetailsActivity extends BaseActivity implements ViewPager.OnPageCha
         });
     }
 
+    @Click(R.id.fab)
+    protected void fabClick() {
+        binding.etComment.requestFocus();
+
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+    }
+
     public void onEvent(CommentClickedEvent event) {
         binding.setComment(event.getComment());
         binding.itemComment.getRoot().setVisibility(View.VISIBLE);
@@ -206,6 +216,11 @@ public class DetailsActivity extends BaseActivity implements ViewPager.OnPageCha
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
+    public void onEvent(CommentsLoadedEvent event) {
+        adapter.setPageTitle(1, getString(R.string.details_title_section2_number, event.getCount()));
+        tabLayout.getTabAt(1).setText(adapter.getPageTitle(1));
+    }
+
     @Override
     protected void commentResult(Comment comment) {
         binding.etComment.setText("");
@@ -216,21 +231,4 @@ public class DetailsActivity extends BaseActivity implements ViewPager.OnPageCha
     void refresh() {
         EventBus.getDefault().post(new RefreshEvent());
     }
-
-    @Override
-    public void onPageScrolled(int i, float v, int i1) { }
-
-    @Override
-    public void onPageSelected(int i) {
-        if (i == 1) {
-            final FadeInAnimation anim = new FadeInAnimation(addCommentWidget);
-            addCommentWidget.startAnimation(anim);
-        } else {
-            final FadeOutAnimation anim = new FadeOutAnimation(addCommentWidget);
-            addCommentWidget.startAnimation(anim);
-        }
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int i) { }
 }
