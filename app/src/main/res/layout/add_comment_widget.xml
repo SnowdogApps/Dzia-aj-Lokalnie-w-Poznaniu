@@ -76,6 +76,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text|textMultiLine|textImeMultiLine"
+                android:maxLines="5"
                 android:layout_toLeftOf="@+id/bt_send"
                 android:hint="@string/comment_hint"/>
 
