@@ -77,7 +77,7 @@ public class MainActivity extends BaseActivity {
         // TODO move login to login activity
         logout();
         if (!isLoggedIn()) {
-            login("Bartek", "bartek");
+            login("bartek@bartek.pl", "bartek");
         }
 
     }

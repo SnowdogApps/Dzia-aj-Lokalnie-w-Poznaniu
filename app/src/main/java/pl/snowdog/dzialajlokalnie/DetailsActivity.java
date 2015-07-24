@@ -20,6 +20,7 @@ import com.squareup.picasso.Picasso;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
+import org.androidannotations.annotations.FocusChange;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.ViewById;
@@ -108,19 +109,6 @@ public class DetailsActivity extends BaseActivity implements ViewPager.OnPageCha
         binding.itemComment.ratingWidget.ibRateUp.setVisibility(View.INVISIBLE);
         binding.itemComment.ratingWidget.ibRateDown.setVisibility(View.INVISIBLE);
 
-        binding.etComment.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    final FadeInAnimation anim = new FadeInAnimation(focusBackground);
-                    focusBackground.startAnimation(anim);
-                } else {
-                    final FadeOutAnimation anim = new FadeOutAnimation(focusBackground);
-                    focusBackground.startAnimation(anim);
-                }
-            }
-        });
-
         binding.etComment.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -148,6 +136,17 @@ public class DetailsActivity extends BaseActivity implements ViewPager.OnPageCha
         }
     }
 
+    @FocusChange(R.id.et_comment)
+    protected void focusChangedOnNewComment(View view, boolean hasFocus) {
+        if (hasFocus) {
+            final FadeInAnimation anim = new FadeInAnimation(focusBackground);
+            focusBackground.startAnimation(anim);
+        } else {
+            final FadeOutAnimation anim = new FadeOutAnimation(focusBackground);
+            focusBackground.startAnimation(anim);
+        }
+    }
+
     @Click(R.id.focus_background)
     protected void unfocus() {
         binding.etComment.clearFocus();
@@ -171,7 +170,6 @@ public class DetailsActivity extends BaseActivity implements ViewPager.OnPageCha
     }
 
     public void onEvent(SetTitleAndPhotoEvent event) {
-        //TODO only collapsingToolbarLayout works but title is at the bottom (should be sticked to the top)
         collapsingToolbarLayout.setTitle(event.getTitle());
 
         Picasso.with(binding.getRoot().getContext()).
