@@ -61,13 +61,15 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
+        android:layout_gravity="end|bottom"
         android:layout_margin="@dimen/fab_margin"
+        app:layout_behavior="pl.snowdog.dzialajlokalnie.view.FloatingActionButtonBehavior"
         app:fab_icon="@drawable/ic_action_comment"
         fab:fab_colorNormal="@color/colorAccent"
-        app:layout_anchorGravity="bottom|right|end" />
+        app:fab_colorPressed="@color/colorPrimary" />
 
     <RelativeLayout
         android:id="@+id/focus_background"
