@@ -45,7 +45,7 @@ import pl.snowdog.dzialajlokalnie.view.ControllableAppBarLayout;
 
 @EActivity(R.layout.activity_details)
 @OptionsMenu(R.menu.menu_issue)
-public class DetailsActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
+public class DetailsActivity extends BaseActivity {
 
     private static final String TAG = "DetailsActivity";
 
@@ -102,7 +102,6 @@ public class DetailsActivity extends BaseActivity implements ViewPager.OnPageCha
         adapter.addFragment(commentsFragment, getString(R.string.details_title_section2).toUpperCase());
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(2);
-        viewPager.addOnPageChangeListener(this);
         tabLayout.setupWithViewPager(viewPager);
 
         binding = AddCommentWidgetBinding.bind(addCommentWidget);
@@ -205,7 +204,7 @@ public class DetailsActivity extends BaseActivity implements ViewPager.OnPageCha
 
     public void onEvent(CommentsLoadedEvent event) {
         adapter.setPageTitle(1, getString(R.string.details_title_section2_number, event.getCount()));
-        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.getTabAt(1).setText(adapter.getPageTitle(1));
     }
 
     @Override
@@ -218,21 +217,4 @@ public class DetailsActivity extends BaseActivity implements ViewPager.OnPageCha
     void refresh() {
         EventBus.getDefault().post(new RefreshEvent());
     }
-
-    @Override
-    public void onPageScrolled(int i, float v, int i1) { }
-
-    @Override
-    public void onPageSelected(int i) {
-        if (i == 1) {
-            final FadeInAnimation anim = new FadeInAnimation(addCommentWidget);
-            addCommentWidget.startAnimation(anim);
-        } else {
-            final FadeOutAnimation anim = new FadeOutAnimation(addCommentWidget);
-            addCommentWidget.startAnimation(anim);
-        }
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int i) { }
 }

@@ -59,19 +59,22 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <View
+    <RelativeLayout
         android:id="@+id/focus_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/focus_background"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        >
 
-    <include
-        android:id="@+id/add_comment_widget"
-        layout="@layout/add_comment_widget"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:visibility="invisible" />
+        <include
+            android:id="@+id/add_comment_widget"
+            layout="@layout/add_comment_widget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" />
+
+    </RelativeLayout>
+
 
 </android.support.design.widget.CoordinatorLayout>
