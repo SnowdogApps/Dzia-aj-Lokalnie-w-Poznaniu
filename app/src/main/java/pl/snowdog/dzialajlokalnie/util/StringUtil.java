@@ -1,8 +1,10 @@
 package pl.snowdog.dzialajlokalnie.util;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.text.SpannableString;
 import android.text.style.QuoteSpan;
+import android.text.style.StyleSpan;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -44,6 +46,8 @@ public class StringUtil {
         for (int i = 0; i < lines.length; i++) {
             if (quoteLines[i]) {
                 spannableString.setSpan(new QuoteSpan(Color.parseColor("#FF4081")),
+                        startIndex, startIndex+lines[i].length(), 0);
+                spannableString.setSpan(new StyleSpan(Typeface.ITALIC),
                         startIndex, startIndex+lines[i].length(), 0);
             }
             startIndex += lines[i].length();

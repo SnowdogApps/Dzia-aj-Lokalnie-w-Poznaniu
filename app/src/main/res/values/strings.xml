@@ -80,6 +80,7 @@
     <string name="quote">Cytuj</string>
     <string name="report">Zgłoś</string>
     <string name="solution">Rozwiązanie</string>
+    <string name="wrote_on_quote">%s napisał(a): \n</string>
 
     <plurals name="votes">
         <item quantity="one">%d głos</item>

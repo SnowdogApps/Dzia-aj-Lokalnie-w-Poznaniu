@@ -3,6 +3,7 @@ package pl.snowdog.dzialajlokalnie.databinding;
 import android.view.View;
 import android.widget.CheckedTextView;
 
+import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.model.Comment;
 
 /**
@@ -20,8 +21,10 @@ public class AddCommentBinding extends AddCommentWidgetBinding {
 
                     if (v == ctvQuote && getComment() != null) {
                         Comment comment = getComment();
-                        String quote = "> " + comment.getAuthorName() + ": " +
-                                comment.getText().replace("\n", "\n> ") + "\n\n";
+                        String quote = "> " +
+                                AddCommentBinding.this.getRoot().getContext().
+                                        getString(R.string.wrote_on_quote, comment.getAuthorName()) +
+                                "> " + comment.getText().replace("\n", "\n> ") + "\n\n";
 
                         if (((CheckedTextView)v).isChecked()) {
                             etComment.setText("");
@@ -38,5 +41,14 @@ public class AddCommentBinding extends AddCommentWidgetBinding {
         ctvQuote.setOnClickListener(ctvOnClickListener);
         ctvReport.setOnClickListener(ctvOnClickListener);
         ctvSolution.setOnClickListener(ctvOnClickListener);
+    }
+
+    public void clear() {
+        setComment(null);
+        itemComment.getRoot().setVisibility(View.GONE);
+        etComment.setHint(R.string.comment_hint);
+        ctvQuote.setChecked(false);
+        ctvReport.setChecked(false);
+        ctvSolution.setChecked(false);
     }
 }

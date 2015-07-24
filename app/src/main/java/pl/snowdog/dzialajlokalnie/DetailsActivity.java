@@ -157,9 +157,7 @@ public class DetailsActivity extends BaseActivity {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(binding.etComment.getWindowToken(), 0);
 
-        binding.setComment(null);
-        binding.itemComment.getRoot().setVisibility(View.GONE);
-        binding.etComment.setHint(R.string.comment_hint);
+        binding.clear();
     }
 
     @Click(R.id.bt_send)
