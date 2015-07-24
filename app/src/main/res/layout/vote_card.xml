@@ -3,7 +3,7 @@
     xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <import type="pl.snowdog.dzialajlokalnie.util.DateUtil"/>
+        <import type="pl.snowdog.dzialajlokalnie.util.StringUtil"/>
         <variable name="issue" type="pl.snowdog.dzialajlokalnie.model.Issue"/>
     </data>
 
@@ -43,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/textView_item_desc"
-                android:text="@{DateUtil.date2String(issue.createdAt)}"/>
+                android:text="@{StringUtil.date2String(issue.createdAt)}"/>
 
             <TextView
                 android:id="@+id/tvStats"

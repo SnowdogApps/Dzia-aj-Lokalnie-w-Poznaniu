@@ -24,11 +24,11 @@ public class AddCommentBinding extends AddCommentWidgetBinding {
                                 comment.getText().replace("\n", "\n> ") + "\n\n";
 
                         if (((CheckedTextView)v).isChecked()) {
-                            etComment.setText(quote + etComment.getText().toString());
-                            etComment.append("");
+                            etComment.setText("");
+                            etComment.append(quote + etComment.getText().toString());
                         } else {
-                            etComment.setText(etComment.getText().toString().replace(quote, ""));
-                            etComment.append("");
+                            etComment.setText("");
+                            etComment.append(etComment.getText().toString().replace(quote, ""));
                         }
                     }
                 }

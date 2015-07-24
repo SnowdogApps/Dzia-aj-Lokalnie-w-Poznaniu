@@ -4,6 +4,7 @@
 
     <data>
         <import type="android.view.View"/>
+        <import type="pl.snowdog.dzialajlokalnie.util.StringUtil"/>
         <variable name="comment" type="pl.snowdog.dzialajlokalnie.model.Comment"/>
     </data>
 
@@ -74,7 +75,7 @@
                 style="@style/textView_item_desc"
                 android:minLines="4"
                 android:ellipsize="end"
-                android:text="@{comment.text}"/>
+                android:text="@{StringUtil.styleString(comment.text)}"/>
 
         </LinearLayout>
 
