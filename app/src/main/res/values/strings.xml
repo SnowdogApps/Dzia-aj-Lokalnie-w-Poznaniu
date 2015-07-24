@@ -77,6 +77,9 @@
     <string name="added_issue_success_info">Dodano nowe zgłoszenie</string>
     <string name="api_communication_info">Komunikacja z API w toku</string>
     <string name="please_wait_info">Proszę czekać</string>
+    <string name="quote">Cytuj</string>
+    <string name="report">Zgłoś</string>
+    <string name="solution">Rozwiązanie</string>
 
     <plurals name="votes">
         <item quantity="one">%d głos</item>

@@ -34,29 +34,32 @@
             android:layout_height="wrap_content">
 
             <CheckedTextView
+                android:id="@+id/ctv_quote"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                android:text="Cytuj"
+                android:text="@string/quote"
                 android:enabled="@{comment != null}"/>
 
             <CheckedTextView
+                android:id="@+id/ctv_report"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                android:text="Zgłoś"/>
+                android:text="@string/report"/>
 
             <CheckedTextView
+                android:id="@+id/ctv_solution"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                android:text="Rozwiązanie"/>
+                android:text="@string/solution"/>
 
         </LinearLayout>
 

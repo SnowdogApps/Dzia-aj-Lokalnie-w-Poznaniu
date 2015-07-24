@@ -29,6 +29,7 @@ import org.androidannotations.annotations.ViewById;
 import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.adapter.FragmentAdapter;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
+import pl.snowdog.dzialajlokalnie.databinding.AddCommentBinding;
 import pl.snowdog.dzialajlokalnie.databinding.AddCommentWidgetBinding;
 import pl.snowdog.dzialajlokalnie.events.CommentClickedEvent;
 import pl.snowdog.dzialajlokalnie.events.CommentsLoadedEvent;
@@ -77,7 +78,7 @@ public class DetailsActivity extends BaseActivity {
     @ViewById(R.id.fab)
     FloatingActionButton fab;
 
-    AddCommentWidgetBinding binding;
+    AddCommentBinding binding;
 
     @Extra
     DlApi.ParentType objType;
@@ -108,7 +109,8 @@ public class DetailsActivity extends BaseActivity {
         viewPager.setOffscreenPageLimit(2);
         tabLayout.setupWithViewPager(viewPager);
 
-        binding = AddCommentWidgetBinding.bind(addCommentWidget);
+//        binding = AddCommentBinding.bind(addCommentWidget);
+        binding = new AddCommentBinding(addCommentWidget);
         binding.itemComment.getRoot().setVisibility(View.GONE);
         binding.itemComment.ratingWidget.ibRateUp.setVisibility(View.INVISIBLE);
         binding.itemComment.ratingWidget.ibRateDown.setVisibility(View.INVISIBLE);
