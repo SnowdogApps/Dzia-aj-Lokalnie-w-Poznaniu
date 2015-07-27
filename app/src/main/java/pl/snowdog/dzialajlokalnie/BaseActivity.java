@@ -44,9 +44,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @AfterViews
     protected void afterBaseActivityViews() {
-        //TODO move init call for constant data to splash or other dedicated activity
-        getCategories();
-        getDistricts();
+
 
         //you can call there everything for all descendant activities that you normally call in onCreate method
         afterView();
@@ -183,12 +181,16 @@ public abstract class BaseActivity extends AppCompatActivity {
         // implement by override
     }
 
+    protected void districtsResult(List<District> districts) {
+        // implement by override
+    }
+
     protected void getDistricts() {
         DlApplication.baseApi.getDistricts(new Callback<List<District>>() {
             @Override
             public void success(List<District> districts, Response response) {
                 Log.d(TAG, "getDistricts success: " + districts);
-
+                districtsResult(districts);
                 new Delete().from(District.class).execute();
 
                 ActiveAndroid.beginTransaction();
