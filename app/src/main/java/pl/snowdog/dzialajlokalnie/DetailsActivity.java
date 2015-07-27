@@ -3,6 +3,7 @@ package pl.snowdog.dzialajlokalnie;
 import android.content.Context;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -37,6 +38,7 @@ import pl.snowdog.dzialajlokalnie.events.RefreshEvent;
 import pl.snowdog.dzialajlokalnie.events.SetTitleAndPhotoEvent;
 import pl.snowdog.dzialajlokalnie.fragment.CommentsFragment;
 import pl.snowdog.dzialajlokalnie.fragment.CommentsFragment_;
+import pl.snowdog.dzialajlokalnie.fragment.EventFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.IssueFragment;
 import pl.snowdog.dzialajlokalnie.fragment.IssueFragment_;
 import pl.snowdog.dzialajlokalnie.model.Comment;
@@ -96,13 +98,20 @@ public class DetailsActivity extends BaseActivity {
 
         Log.d(TAG, "afterView " + objType + " " + objId);
 
-        IssueFragment issueFragment = IssueFragment_.builder().arg("objId", objId).build();
+        Fragment firstFragment = null;
+        if (objType == DlApi.ParentType.issues) {
+            firstFragment = IssueFragment_.builder().arg("objId", objId).build();
+        } else if (objType == DlApi.ParentType.events) {
+            firstFragment = EventFragment_.builder().arg("objId", objId).build();
+        }
 
         CommentsFragment commentsFragment = CommentsFragment_.builder().arg("objId", objId).
                 arg("objType", objType).build();
 
         adapter = new FragmentAdapter(getSupportFragmentManager());
-        adapter.addFragment(issueFragment, getString(R.string.details_title_section1).toUpperCase());
+        if (firstFragment != null) {
+            adapter.addFragment(firstFragment, getString(R.string.details_title_section1).toUpperCase());
+        }
         adapter.addFragment(commentsFragment, getString(R.string.details_title_section2).toUpperCase());
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(2);
