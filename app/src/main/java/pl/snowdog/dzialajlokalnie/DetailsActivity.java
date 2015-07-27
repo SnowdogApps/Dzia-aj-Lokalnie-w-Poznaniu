@@ -109,11 +109,7 @@ public class DetailsActivity extends BaseActivity {
         viewPager.setOffscreenPageLimit(2);
         tabLayout.setupWithViewPager(viewPager);
 
-//        binding = AddCommentBinding.bind(addCommentWidget);
         binding = new AddCommentBinding(addCommentWidget);
-        binding.itemComment.getRoot().setVisibility(View.GONE);
-        binding.itemComment.ratingWidget.ibRateUp.setVisibility(View.INVISIBLE);
-        binding.itemComment.ratingWidget.ibRateDown.setVisibility(View.INVISIBLE);
 
         binding.etComment.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -194,7 +190,7 @@ public class DetailsActivity extends BaseActivity {
     }
 
     @Click(R.id.fab)
-    protected void fabClick() {
+    protected void openAddCommentWidget() {
         binding.etComment.requestFocus();
 
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -204,7 +200,6 @@ public class DetailsActivity extends BaseActivity {
     public void onEvent(CommentClickedEvent event) {
         binding.setComment(event.getComment());
         binding.itemComment.getRoot().setVisibility(View.VISIBLE);
-        binding.etComment.requestFocus();
         binding.etComment.setHint(R.string.response_hint);
 
         Picasso.with(binding.getRoot().getContext()).
@@ -212,8 +207,7 @@ public class DetailsActivity extends BaseActivity {
                 error(R.drawable.ic_editor_insert_emoticon).
                 into(binding.itemComment.ivAvatar);
 
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+        openAddCommentWidget();
     }
 
     public void onEvent(CommentsLoadedEvent event) {

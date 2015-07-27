@@ -41,6 +41,10 @@ public class AddCommentBinding extends AddCommentWidgetBinding {
         ctvQuote.setOnClickListener(ctvOnClickListener);
         ctvReport.setOnClickListener(ctvOnClickListener);
         ctvSolution.setOnClickListener(ctvOnClickListener);
+
+        itemComment.getRoot().setVisibility(View.GONE);
+        itemComment.ratingWidget.ibRateUp.setVisibility(View.INVISIBLE);
+        itemComment.ratingWidget.ibRateDown.setVisibility(View.INVISIBLE);
     }
 
     public void clear() {
