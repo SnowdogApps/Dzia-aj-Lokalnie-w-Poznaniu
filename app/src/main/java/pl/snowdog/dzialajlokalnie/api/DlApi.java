@@ -83,6 +83,10 @@ public class DlApi {
                        @Query("orderBy") String sort,
                        Callback<List<Event>> cb);
 
+        @GET("/events/{id}")
+        void getEvent(@Path("id") int id,
+                      Callback<Event> cb);
+
         @POST("/events/new")
         void postEvent(@Body NewEvent event,
                        Callback<Event.EventWrapper> cb);
