@@ -155,6 +155,8 @@ public class DetailsActivity extends BaseActivity {
 
     @Click(R.id.bt_send)
     protected void send() {
+        //TODO how to send Reports to api? binding.ctvReport = true
+
         if (binding.getComment() != null) {
             comment(DlApi.ParentType.comments, binding.getComment().getCommentID(),
                     binding.ctvSolution.isChecked() ? 1 : 0,
