@@ -144,7 +144,7 @@ public abstract class BaseFragment extends Fragment {
                         District district = new Select().from(District.class).
                                 where("districtID == ?", issue.getDistrictID()).executeSingle();
 
-                        if(district != null) {
+                        if (district != null) {
                             issue.setDistrictName(district.getName());
                         }
                         issueResult(issue);
@@ -170,46 +170,82 @@ public abstract class BaseFragment extends Fragment {
                 filter.getCategoriesFilter(),
                 filter.getSortForEvents(),
                 new Callback<List<Event>>() {
-            @Override
-            public void success(List<Event> events, Response response) {
-                Log.d(TAG, "getEvents success: " + events);
+                    @Override
+                    public void success(List<Event> events, Response response) {
+                        Log.d(TAG, "getEvents success: " + events);
 
-                List<Category> categories = new Select().from(Category.class).execute();
-                List<District> districts = new Select().from(District.class).execute();
+                        List<Category> categories = new Select().from(Category.class).execute();
+                        List<District> districts = new Select().from(District.class).execute();
 
-                for (Event event : events) {
-                    event.parseCategoriesList();
-                    event.setCategoriesText(parseCategories(event.getCategoryID(), categories));
+                        for (Event event : events) {
+                            event.parseCategoriesList();
+                            event.setCategoriesText(parseCategories(event.getCategoryID(), categories));
 
-                    for (District district : districts) {
-                        if (district.getDistrictID() == event.getDistrictID()) {
-                            event.setDistrictName(district.getName());
-                            break;
+                            for (District district : districts) {
+                                if (district.getDistrictID() == event.getDistrictID()) {
+                                    event.setDistrictName(district.getName());
+                                    break;
+                                }
+                            }
+                        }
+
+                        eventsResult(events);
+
+                        ActiveAndroid.beginTransaction();
+                        try {
+                            for (Event event : events) {
+                                event.save();
+                            }
+                            ActiveAndroid.setTransactionSuccessful();
+                        } finally {
+                            ActiveAndroid.endTransaction();
                         }
                     }
-                }
 
-                eventsResult(events);
-
-                ActiveAndroid.beginTransaction();
-                try {
-                    for (Event event : events) {
-                        event.save();
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.d(TAG, "getEvents failure: " + error);
                     }
-                    ActiveAndroid.setTransactionSuccessful();
-                } finally {
-                    ActiveAndroid.endTransaction();
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d(TAG, "getEvents failure: " + error);
-            }
-        });
+                });
     }
 
     protected void eventsResult(List<Event> events) { }
+
+
+    protected void getEvent(int id) {
+
+        DlApplication.eventApi.getEvent(id,
+                new Callback<Event>() {
+                    @Override
+                    public void success(Event event, Response response) {
+                        Log.d(TAG, "getEvent success: " + event);
+
+                        List<Category> categories = new Select().from(Category.class).execute();
+                        event.setCategoriesText(parseCategories(event.getCategoryID(), categories));
+                        event.parseCategoriesList();
+
+                        District district = new Select().from(District.class).
+                                where("districtID == ?", event.getDistrictID()).executeSingle();
+
+                        if (district != null) {
+                            event.setDistrictName(district.getName());
+                        }
+                        eventResult(event);
+
+                        event.save();
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.d(TAG, "getEvent failure: " + error);
+                    }
+                });
+    }
+
+    protected void eventResult(Event event) {
+        // implement by override
+    }
+
 
     protected void getComments(DlApi.ParentType parentType, int parentId) {
         DlApplication.commentApi.getComments(parentType.name(), parentId, new Callback<List<Comment>>() {
