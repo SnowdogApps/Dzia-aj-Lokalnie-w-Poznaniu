@@ -15,6 +15,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.ViewById;
@@ -23,6 +24,7 @@ import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.databinding.FragmentEventBinding;
+import pl.snowdog.dzialajlokalnie.events.EventAttendEvent;
 import pl.snowdog.dzialajlokalnie.events.RefreshEvent;
 import pl.snowdog.dzialajlokalnie.events.SetTitleAndPhotoEvent;
 import pl.snowdog.dzialajlokalnie.model.Event;
@@ -50,6 +52,13 @@ public class EventFragment extends BaseFragment implements OnMapReadyCallback {
     void afterViews() {
         binding = DataBindingUtil.bind(rootView);
         getEvent(objId);
+    }
+
+    @Click(R.id.ibAttend)
+    protected void attend() {
+        if (binding.getEvent() != null) {
+            EventBus.getDefault().post(new EventAttendEvent(binding.getEvent().getEventID()));
+        }
     }
 
     @Override
