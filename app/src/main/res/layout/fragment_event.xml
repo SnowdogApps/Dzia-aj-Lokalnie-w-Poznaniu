@@ -4,7 +4,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="issue" type="pl.snowdog.dzialajlokalnie.model.Issue"/>
+        <variable name="event" type="pl.snowdog.dzialajlokalnie.model.Event"/>
     </data>
 
     <android.support.v4.widget.NestedScrollView
@@ -30,7 +30,7 @@
 
                 <include layout="@layout/vote_card"
                     android:id="@+id/vote_card"
-                    bind:issue="@{issue}"
+                    bind:issue="@{null}"
                     />
             </android.support.v7.widget.CardView>
 
@@ -51,7 +51,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/textView_item_desc"
-                    android:text='@{issue.description}'/>
+                    android:text='@{event.description}'/>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
