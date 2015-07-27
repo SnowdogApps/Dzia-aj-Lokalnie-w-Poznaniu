@@ -33,6 +33,9 @@ public class Issue extends Model implements Serializable {
     private String authorName;
 
     @Column
+    private String authorAvatar;
+
+    @Column
     private String title;
 
     @Column
@@ -118,6 +121,36 @@ public class Issue extends Model implements Serializable {
         this.categoriesText = categoriesText;
     }
 
+    @Override
+    public String toString() {
+        return "Issue{" +
+                "issueID=" + issueID +
+                ", parentID=" + parentID +
+                ", userID=" + userID +
+                ", authorName='" + authorName + '\'' +
+                ", authorAvatar='" + authorAvatar + '\'' +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", districtID=" + districtID +
+                ", lon=" + lon +
+                ", lat=" + lat +
+                ", address='" + address + '\'' +
+                ", facebookUrl='" + facebookUrl + '\'' +
+                ", issueUrl='" + issueUrl + '\'' +
+                ", createdAt=" + createdAt +
+                ", issueStatus=" + issueStatus +
+                ", categoryID='" + categoryID + '\'' +
+                ", photoIssueUri='" + photoIssueUri + '\'' +
+                ", issueRating=" + issueRating +
+                ", commentsCount=" + commentsCount +
+                ", votesCount=" + votesCount +
+                ", userVotedValue=" + userVotedValue +
+                ", categoriesList=" + categoriesList +
+                ", categoriesText='" + categoriesText + '\'' +
+                ", districtName='" + districtName + '\'' +
+                '}';
+    }
+
     public String getAuthorName() {
         return authorName;
     }
@@ -138,32 +171,12 @@ public class Issue extends Model implements Serializable {
         this.categoriesList = categoriesList;
     }
 
-    @Override
-    public String toString() {
-        return "Issue{" +
-                "issueID=" + issueID +
-                ", parentID=" + parentID +
-                ", userID=" + userID +
-                ", authorName='" + authorName + '\'' +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", districtID=" + districtID +
-                ", lon=" + lon +
-                ", lat=" + lat +
-                ", address='" + address + '\'' +
-                ", facebookUrl='" + facebookUrl + '\'' +
-                ", issueUrl='" + issueUrl + '\'' +
-                ", createdAt=" + createdAt +
-                ", issueStatus=" + issueStatus +
-                ", categoryID='" + categoryID + '\'' +
-                ", photoIssueUri='" + photoIssueUri + '\'' +
-                ", issueRating=" + issueRating +
-                ", commentsCount=" + commentsCount +
-                ", votesCount=" + votesCount +
-                ", userVotedValue=" + userVotedValue +
-                ", categoriesList=" + categoriesList +
-                ", categoriesText='" + categoriesText + '\'' +
-                '}';
+    public String getAuthorAvatar() {
+        return authorAvatar;
+    }
+
+    public void setAuthorAvatar(String authorAvatar) {
+        this.authorAvatar = authorAvatar;
     }
 
     public String getCategoriesText() {

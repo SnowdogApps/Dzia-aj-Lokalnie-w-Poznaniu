@@ -44,6 +44,11 @@ public class IssuesAdapter extends RecyclerView.Adapter<IssuesAdapter.ViewHolder
                 load(String.format(DlApi.PHOTO_THUMB_URL, issue.getPhotoIssueUri())).
                 error(R.drawable.ic_editor_insert_emoticon).
                 into(viewHolder.binding.ivAvatar);
+
+        Picasso.with(viewHolder.binding.getRoot().getContext()).
+                load(String.format(DlApi.PHOTO_THUMB_URL, issue.getAuthorAvatar())).
+                error(R.drawable.ic_editor_insert_emoticon).
+                into(viewHolder.binding.ivAuthorAvatar);
     }
 
     @Override
