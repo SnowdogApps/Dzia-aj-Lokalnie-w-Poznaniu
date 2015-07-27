@@ -75,7 +75,7 @@ public class MainActivity extends BaseActivity {
 
         mTabLayout.setupWithViewPager(mViewPager);
         // TODO move login to login activity
-        logout();
+        //logout();
         if (!isLoggedIn()) {
             //login("bartek@bartek.pl", "bartek");
         }
@@ -94,8 +94,8 @@ public class MainActivity extends BaseActivity {
     void onFabNewIssueClicked() {
         fab.collapse();
         //fab.performClick();
-        //AddIssueActivity_.intent(this).start();
-        AddUserActivity_.intent(this).start();
+        AddIssueActivity_.intent(this).start();
+        //AddUserActivity_.intent(this).start();
     }
 
     @Override

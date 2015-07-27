@@ -99,7 +99,7 @@
                 android:maxLines="8"
                 android:singleLine="false"
 
-                android:hint="@string/password" />
+                android:hint="@string/pass" />
 
         </android.support.design.widget.TextInputLayout>
 

@@ -1,20 +1,17 @@
 package pl.snowdog.dzialajlokalnie.model;
 
-import java.util.Date;
-
 
 public class NewUser {
 
     private String username;
     private String email;
-    private String password;
+    private String pass;
     private String description;
     private String name;
     private String surname;
     private int districtID;
     private String pushRegId;
     private String avatarUri;
-    private int userLevel = 3; //TODO delete this after deploy
 
     public String getUsername() {
         return username;
@@ -32,12 +29,12 @@ public class NewUser {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPass() {
+        return pass;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 
     public String getDescription() {

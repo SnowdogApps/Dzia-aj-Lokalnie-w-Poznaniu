@@ -9,25 +9,16 @@ import android.view.View;
 import com.activeandroid.query.Select;
 
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.Extra;
 
 import java.io.File;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
 import pl.snowdog.dzialajlokalnie.events.ObjectAddedEvent;
-import pl.snowdog.dzialajlokalnie.fragment.AddCategoriesFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.AddImageFragment_;
-import pl.snowdog.dzialajlokalnie.fragment.AddLocationFragment;
 import pl.snowdog.dzialajlokalnie.fragment.AddLocationFragment_;
-import pl.snowdog.dzialajlokalnie.fragment.AddTitleDateFragment;
-import pl.snowdog.dzialajlokalnie.fragment.AddTitleDateFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.AddUserDetailsFragment_;
-import pl.snowdog.dzialajlokalnie.model.DateWrapper;
-import pl.snowdog.dzialajlokalnie.model.Event;
-import pl.snowdog.dzialajlokalnie.model.NewEvent;
 import pl.snowdog.dzialajlokalnie.model.NewUser;
 import pl.snowdog.dzialajlokalnie.model.Session;
 import pl.snowdog.dzialajlokalnie.model.User;
@@ -48,6 +39,8 @@ public class AddUserActivity extends AddBaseActivity {
     String surname;
     String email;
     String password;
+
+    private User mUser;
 
     @Override
     void setupViewPager(ViewPager viewPager) {
@@ -109,6 +102,8 @@ public class AddUserActivity extends AddBaseActivity {
         DlApplication.userApi.postNewUser(newUser, new Callback<User>() {
             @Override
             public void success(User user, Response response) {
+                mUser = user;
+
                 //Login as new user:
                 login(email, password);
 
@@ -136,7 +131,7 @@ public class AddUserActivity extends AddBaseActivity {
         }
         //If we have successfull login, we can try to upload avatar
         if (photoUri != null && photoUri.length() > 0) {
-            postUserAvatar(session.getUserID());
+            postUserAvatar(mUser.getUserID());
         } else {
             //Finished adding, close view
             finishAdding(ObjectAddedEvent.Type.user);
@@ -172,7 +167,7 @@ public class AddUserActivity extends AddBaseActivity {
         newUser.setName(name);
         newUser.setSurname(surname);
         newUser.setEmail(email);
-        newUser.setPassword(password);
+        newUser.setPass(password);
         newUser.setPushRegId("");
 
         return newUser;

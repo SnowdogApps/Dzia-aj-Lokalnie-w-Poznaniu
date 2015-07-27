@@ -86,7 +86,7 @@
     <string name="surname">Nazwisko</string>
     <string name="name">Imię</string>
     <string name="email">Adres email</string>
-    <string name="password">Hasło</string>
+    <string name="pass">Hasło</string>
     <string name="user_description">O sobie</string>
     <string name="sign_up">Rejestracja</string>
     <string name="info_select_live_distrcit">Zaznacz dzielnice w której mieszkasz:</string>
