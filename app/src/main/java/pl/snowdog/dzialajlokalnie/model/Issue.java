@@ -83,8 +83,9 @@ public class Issue extends Model implements Serializable {
     @Column
     private List<Integer> categoriesList;
 
-
+    //TODO for offline usage these fields could be stored in db
     private String categoriesText;
+    private String districtName;
 
     public Issue() {
         super();
@@ -331,6 +332,14 @@ public class Issue extends Model implements Serializable {
 
     public List<Integer> getCategoryIdsList() {
         return categoriesList;
+    }
+
+    public void setDistrictName(String districtName) {
+        this.districtName = districtName;
+    }
+
+    public String getDistrictName() {
+        return districtName;
     }
 
     public class IssueWrapper {

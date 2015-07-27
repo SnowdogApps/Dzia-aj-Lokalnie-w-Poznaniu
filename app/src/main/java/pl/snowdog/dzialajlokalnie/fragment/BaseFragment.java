@@ -13,6 +13,7 @@ import pl.snowdog.dzialajlokalnie.DlApplication;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.model.Category;
 import pl.snowdog.dzialajlokalnie.model.Comment;
+import pl.snowdog.dzialajlokalnie.model.District;
 import pl.snowdog.dzialajlokalnie.model.Event;
 import pl.snowdog.dzialajlokalnie.model.Filter;
 import pl.snowdog.dzialajlokalnie.model.Issue;
@@ -89,9 +90,18 @@ public abstract class BaseFragment extends Fragment {
                         Log.d(TAG, "getIssues success: " + issues);
 
                         List<Category> categories = new Select().from(Category.class).execute();
+                        List<District> districts = new Select().from(District.class).execute();
+
                         for (Issue issue : issues) {
                             issue.parseCategoriesList();
                             issue.setCategoriesText(parseCategories(issue.getCategoryID(), categories));
+
+                            for (District district : districts) {
+                                if (district.getDistrictID() == issue.getDistrictID()) {
+                                    issue.setDistrictName(district.getName());
+                                    break;
+                                }
+                            }
                         }
 
                         issuesResult(issues);
