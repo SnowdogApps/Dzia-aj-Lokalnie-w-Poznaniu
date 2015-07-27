@@ -94,8 +94,8 @@ public class MainActivity extends BaseActivity {
     void onFabNewIssueClicked() {
         fab.collapse();
         //fab.performClick();
-        AddIssueActivity_.intent(this).start();
-        //AddUserActivity_.intent(this).start();
+        //AddIssueActivity_.intent(this).start();
+        AddUserActivity_.intent(this).start();
     }
 
     @Override

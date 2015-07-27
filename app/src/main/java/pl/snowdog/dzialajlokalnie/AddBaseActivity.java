@@ -151,7 +151,8 @@ public abstract class AddBaseActivity extends BaseActivity {
     protected void finishAdding(ObjectAddedEvent.Type added) {
         toggleProgressWheel(false);
         finish();
-        EventBus.getDefault().post(new ObjectAddedEvent(added));
+        //EventBus.getDefault().post(new ObjectAddedEvent(added));
+        MainActivity_.intent(this).start();
     }
 
     public void onObjectCreated() {
