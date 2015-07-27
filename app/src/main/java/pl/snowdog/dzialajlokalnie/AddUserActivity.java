@@ -6,11 +6,14 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.activeandroid.query.Select;
+
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 
 import java.io.File;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
@@ -124,7 +127,13 @@ public class AddUserActivity extends AddBaseActivity {
 
     @Override
     protected void loginResult(Session session) {
-        super.loginResult(session);
+
+
+        List<Session> dbSessions = new Select().from(Session.class).execute();
+
+        for (Session s : dbSessions) {
+            Log.d(TAG, "loginResult " + s);
+        }
         //If we have successfull login, we can try to upload avatar
         if (photoUri != null && photoUri.length() > 0) {
             postUserAvatar(session.getUserID());

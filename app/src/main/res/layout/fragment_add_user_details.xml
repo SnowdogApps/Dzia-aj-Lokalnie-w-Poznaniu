@@ -3,6 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     >
+    <ScrollView
+        android:layout_above="@+id/lower_buttons_container"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     <RelativeLayout
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
@@ -10,9 +15,9 @@
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+
         android:id="@+id/top_container"
-        android:layout_above="@+id/lower_buttons_container"
+
         >
 
         <LinearLayout
@@ -119,6 +124,7 @@
         </android.support.design.widget.TextInputLayout>
 
     </RelativeLayout>
+    </ScrollView>
     <include
         android:id="@+id/lower_buttons_container"
         android:layout_width="match_parent"
