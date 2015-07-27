@@ -4,12 +4,16 @@
 
     <data>
         <variable name="footerText" type="String"/>
+        <variable name="footerText2" type="String"/>
     </data>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="@dimen/item_padding"
+        android:background="@color/background_inverse"
+        tools:showIn="@layout/item_issue"
         >
         <TextView
             android:id="@+id/tvFooter"
@@ -18,8 +22,15 @@
             style="@style/textView_footer"
             android:lines="1"
             android:ellipsize="end"
-            android:text="@{footerText}"
-            tools:showIn="@layout/item_issue" />
+            android:text="@{footerText}" />
+        <TextView
+            android:id="@+id/tvFooter2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/textView_footer"
+            android:lines="1"
+            android:ellipsize="end"
+            android:text="@{footerText2}" />
     </LinearLayout>
 
 </layout>
