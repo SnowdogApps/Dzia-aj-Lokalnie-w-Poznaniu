@@ -2,6 +2,7 @@ package pl.snowdog.dzialajlokalnie;
 
 import android.content.Context;
 import android.support.design.widget.TabLayout;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -12,9 +13,13 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.TextView;
 
+import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OptionsItem;
+import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
@@ -32,22 +37,57 @@ import pl.snowdog.dzialajlokalnie.fragment.AddTitleDateFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.ApiActionDialogFragment;
 import pl.snowdog.dzialajlokalnie.fragment.ApiActionDialogFragment_;
 import pl.snowdog.dzialajlokalnie.model.DateWrapper;
+import pl.snowdog.dzialajlokalnie.model.Session;
+import pl.snowdog.dzialajlokalnie.util.PasswordValidator;
 
 /**
  * Created by chomi3 on 2015-07-23.
  */
-@EActivity
+@EActivity(R.layout.activity_login)
 public class LoginActivity extends BaseActivity {
     private static final String TAG = "LoginActivity";
 
-    @ViewById(R.id.pager)
-    protected ViewPager mViewPager;
-
-    @ViewById(R.id.tabs)
-    protected TabLayout mTabLayout;
-
     protected ApiActionDialogFragment mApiActionDialogFragment;
 
+    @ViewById(R.id.etEmail)
+    EditText etEmail;
+
+    @ViewById(R.id.etPassword)
+    EditText etPassword;
+
+    @ViewById(R.id.etEmailWrapper)
+    TextInputLayout etEmailWrapper;
+
+    @ViewById(R.id.etPasswordWrapper)
+    TextInputLayout etPasswordWrapper;
+
+    @Click(R.id.btnLogin)
+    void onLoginClicked() {
+        if(validateInput()) {
+            toggleProgressWheel(true);
+            login(etEmail.getText().toString(), etPassword.getText().toString());
+        }
+    }
+
+    @Click(R.id.btnRegister)
+    void onRegisterClicked() {
+        AddUserActivity_.intent(this).start();
+        this.finish();
+    }
+
+    @Click(R.id.btnLoginFacebook)
+    void onFacebookLoginClicked() {
+
+    }
+
+    @Override
+    protected void loginResult(Session session) {
+        toggleProgressWheel(false);
+        super.loginResult(session);
+        if(session != null) {
+            this.finish();
+        }
+    }
 
     @Override
     protected void afterView() {
@@ -58,43 +98,59 @@ public class LoginActivity extends BaseActivity {
         ab.setHomeAsUpIndicator(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         ab.setDisplayHomeAsUpEnabled(true);
 
-        if (mViewPager != null) {
-            mViewPager.setOffscreenPageLimit(2);
-            setupViewPager(mViewPager);
+
+    }
+
+    @TextChange(R.id.etEmail)
+    void onTextChangeEmail(TextView tv, CharSequence text) {
+        if(text.length() > 0) {
+            validateEmail();
         }
-
-        mTabLayout.setupWithViewPager(mViewPager);
-
     }
 
-    void setupViewPager(ViewPager viewPager) {
-        Log.d(TAG, "setupViewPager");
-        Locale l = Locale.getDefault();
-        AddBaseActivity.Adapter adapter = new AddBaseActivity.Adapter(getSupportFragmentManager());
-/*
-
-        adapter.addFragment(new AddTitleDateFragment_().builder()
-                .mEditedObject(mEditedEvent != null ? new CreateNewObjectEvent.Builder()
-                        .title(mEditedEvent.getTitle())
-                        .description(mEditedEvent.getDescription())
-                        .startDate(new DateWrapper(mEditedEvent.getStartDate()))
-                        .endDate(new DateWrapper(mEditedEvent.getEndDate()))
-                        .build() : null)
-                .mAddingMode(AddTitleDateFragment.MODE_EVENT)
-                .build());
-*/
-
-
-        viewPager.setAdapter(adapter);
-
-        //Disable swipe events for viewpager
-        viewPager.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return true;
-            }
-        });
+    @TextChange(R.id.etPassword)
+    void onTextChangePassword(TextView tv, CharSequence text) {
+        if(text.length() > 0) {
+            validatePassword();
+        }
     }
+
+    boolean validateInput() {
+        boolean validEmail = validateEmail();
+        boolean validPassword = validatePassword();
+
+        if(validEmail && validPassword) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean validateEmail() {
+        boolean isInputValid = true;
+        if(!android.util.Patterns.EMAIL_ADDRESS.matcher(etEmail.getText().toString()).matches()) {
+            etEmailWrapper.setErrorEnabled(true);
+            etEmailWrapper.setError(getString(R.string.warning_fill_email));
+            isInputValid = false;
+        } else {
+            etEmailWrapper.setErrorEnabled(false);
+        }
+        return isInputValid;
+    }
+
+    private boolean validatePassword() {
+        boolean isInputValid = true;
+        if(etPassword.getText().toString().length() == 0
+                || new PasswordValidator().validate(etPassword.getText().toString()) == false) {
+            etPasswordWrapper.setErrorEnabled(true);
+            etPasswordWrapper.setError(getString(R.string.warning_fill_password));
+            isInputValid = false;
+        } else {
+            etPasswordWrapper.setErrorEnabled(false);
+        }
+        return isInputValid;
+    }
+
 
     private void hideKeyboard() {
         // Check if no view has focus:
@@ -116,35 +172,6 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-
-    static class Adapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragments = new ArrayList<>();
-        private final List<String> mFragmentTitles = new ArrayList<>();
-
-        public Adapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        public void addFragment(Fragment fragment) {
-            mFragments.add(fragment);
-            mFragmentTitles.add("");
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragments.size();
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitles.get(position);
-        }
-    }
 
 
     @OptionsItem(android.R.id.home)

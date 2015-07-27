@@ -12,6 +12,10 @@ public class Session extends Model {
 
     @Column(name = "Ssid", unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
     private String ssid;
+
+    @Column(name = "apikey", unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
+    private String apikey;
+
     private int userID;
     private int deviceType;
     private String ip;
@@ -102,5 +106,13 @@ public class Session extends Model {
 
     public void setExpiredAt(Date expiredAt) {
         this.expiredAt = expiredAt;
+    }
+
+    public String getApiKey() {
+        return apikey;
+    }
+
+    public void setApiKey(String apiKey) {
+        this.apikey = apiKey;
     }
 }

@@ -2,6 +2,7 @@ package pl.snowdog.dzialajlokalnie;
 
 
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -10,6 +11,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.activeandroid.query.Select;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
@@ -84,18 +86,25 @@ public class MainActivity extends BaseActivity {
 
     @Click(R.id.fab_new_event)
     void onFabNewEventClicked() {
-
-        fab.collapse();
-        AddEventActivity_.intent(this).start();
-
+        if(!isLoggedIn()) {
+            showLoginSnackbar();
+        } else {
+            fab.collapse();
+            AddEventActivity_.intent(this).start();
+        }
     }
 
     @Click(R.id.fab_new_issue)
     void onFabNewIssueClicked() {
-        fab.collapse();
-        //fab.performClick();
+        if(!isLoggedIn()) {
+            showLoginSnackbar();
+        } else {
+            fab.collapse();
+            AddIssueActivity_.intent(this).start();
+            //AddUserActivity_.intent(this).start();
+        }
         //AddIssueActivity_.intent(this).start();
-        AddUserActivity_.intent(this).start();
+
     }
 
     @Override
@@ -139,6 +148,11 @@ public class MainActivity extends BaseActivity {
     void filterSelected() {
         FilterFragment fragment = FilterFragment_.builder().build();
         fragment.show(getSupportFragmentManager(), "filter");
+    }
+
+    @OptionsItem(R.id.action_logout)
+    void actionLogout() {
+        logout();
     }
 
     @OptionsItem(R.id.action_sort_popular)

@@ -95,6 +95,13 @@
     <string name="quote">Cytuj</string>
     <string name="report">Zgłoś</string>
     <string name="solution">Rozwiązanie</string>
+    <string name="register_cta">Nie masz konta? </string>
+    <string name="register_cta2">  Zarejestruj się</string>
+    <string name="or">LUB</string>
+    <string name="login_label">Logowanie</string>
+    <string name="login_success">Zalogowano</string>
+    <string name="action_logout">Wyloguj</string>
+    <string name="logout_success">Wylogowano</string>
 
 
     <plurals name="votes">

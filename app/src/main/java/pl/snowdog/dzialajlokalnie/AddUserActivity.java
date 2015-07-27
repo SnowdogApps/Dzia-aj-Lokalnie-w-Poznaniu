@@ -122,7 +122,7 @@ public class AddUserActivity extends AddBaseActivity {
 
     @Override
     protected void loginResult(Session session) {
-
+        super.loginResult(session);
 
         List<Session> dbSessions = new Select().from(Session.class).execute();
 

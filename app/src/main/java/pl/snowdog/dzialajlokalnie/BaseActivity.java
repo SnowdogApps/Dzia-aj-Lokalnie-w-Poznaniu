@@ -75,14 +75,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         switch (event.getStatus()) {
             case 401:
-                Snackbar.make(coordinatorLayout, getString(R.string.unauthorized_error), Snackbar.LENGTH_LONG).
-                        setAction(R.string.login_action, new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                //TODO go to login activity
-                                Log.d(TAG, "login_action from snackbar ");
-                            }
-                        }).show();
+                showLoginSnackbar();
                 break;
             case 403:
                 Snackbar.make(coordinatorLayout, getString(R.string.forbidden_error), Snackbar.LENGTH_SHORT).show();
@@ -97,6 +90,19 @@ public abstract class BaseActivity extends AppCompatActivity {
                     Snackbar.make(coordinatorLayout, getString(R.string.unknown_error), Snackbar.LENGTH_SHORT).show();
                 }
         }
+    }
+
+    protected void showLoginSnackbar() {
+        Snackbar.make(coordinatorLayout, getString(R.string.unauthorized_error), Snackbar.LENGTH_LONG).
+                setAction(R.string.login_action, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //TODO go to login activity
+                        LoginActivity_.intent(BaseActivity.this).start();
+                        //AddUserActivity_.intent(BaseActivity.this).start();
+                        Log.d(TAG, "login_action from snackbar ");
+                    }
+                }).show();
     }
 
     public void onEvent(IssueClickedEvent event) {
@@ -229,12 +235,18 @@ public abstract class BaseActivity extends AppCompatActivity {
 
             @Override
             public void failure(RetrofitError error) {
+                loginResult(null);
                 Log.d(TAG, "login failure: " + error);
             }
         });
     }
 
-    protected void loginResult(Session session) { }
+    protected void loginResult(Session session) {
+        if(session != null) {
+            Snackbar.make(coordinatorLayout, getString(R.string.login_success), Snackbar.LENGTH_LONG).show();
+            DlApplication.createDlRestAdapter();
+        }
+    }
 
     protected boolean isLoggedIn() {
         return DlApplication.currentSession != null && DlApplication.currentSession.getSsid() != null;
@@ -243,5 +255,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void logout() {
         new Delete().from(Session.class).execute();
         DlApplication.currentSession = null;
+        Snackbar.make(coordinatorLayout, getString(R.string.logout_success), Snackbar.LENGTH_LONG).show();
     }
 }

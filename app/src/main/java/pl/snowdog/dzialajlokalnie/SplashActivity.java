@@ -39,7 +39,6 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void afterView() {
-        logout();
         startApiSync();
     }
 
@@ -69,12 +68,13 @@ public class SplashActivity extends BaseActivity {
     void startMainOrLoginActivity() {
         if((!districtsReady && !categoriesReady) || startActivity) return;
         startActivity = true;
+        MainActivity_.intent(this).start();
 
-        if(isLoggedIn()) {
+        /*if(isLoggedIn()) {
             MainActivity_.intent(this).start();
         } else {
             AddUserActivity_.intent(this).start();
-        }
+        }*/
 
         this.finish();
     }

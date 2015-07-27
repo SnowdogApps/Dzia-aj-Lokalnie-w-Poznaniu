@@ -7,6 +7,9 @@ import com.activeandroid.query.Select;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.androidannotations.annotations.EApplication;
+import org.androidannotations.annotations.sharedpreferences.Pref;
+
 import java.lang.reflect.Modifier;
 
 import pl.snowdog.dzialajlokalnie.api.CityApi;
@@ -36,21 +39,33 @@ public class DlApplication extends Application {
     public static Session currentSession;
     public static Filter filter;
 
+    static Gson gson;
+
     @Override
     public void onCreate() {
         super.onCreate();
 
         ActiveAndroid.initialize(this);
 
-        final Gson gson = new GsonBuilder()
+        gson = new GsonBuilder()
                 .excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC)
                 .setDateFormat("yyyy-MM-dd HH:mm:ss")
                 .create();
 
+        createDlRestAdapter();
+
+
+        filter = new Filter();
+    }
+
+    public static void createDlRestAdapter() {
         RequestInterceptor requestInterceptor = new RequestInterceptor() {
             @Override
             public void intercept(RequestFacade request) {
-                request.addQueryParam("apikey", "wjk8regtrvv158mu3ekb");
+                if (currentSession != null && currentSession.getApiKey() != null) {
+                    request.addQueryParam("apikey", currentSession.getApiKey());
+                }
+
                 if (currentSession == null) {
                     refreshCurrentSession();
                 }
@@ -69,6 +84,7 @@ public class DlApplication extends Application {
                 .setErrorHandler(new GlobalErrorHandler())
                 .build();
 
+
         baseApi = restAdapter.create(DlApi.Base.class);
         issueApi = restAdapter.create(DlApi.IssueApi.class);
         eventApi = restAdapter.create(DlApi.EventApi.class);
@@ -86,8 +102,6 @@ public class DlApplication extends Application {
         poznanApi = restCityAdapter.create(CityApi.PoznanApi.class);
 
         refreshCurrentSession();
-
-        filter = new Filter();
     }
 
     public static void refreshCurrentSession() {

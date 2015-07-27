@@ -74,7 +74,7 @@
 
         <activity
             android:name=".LoginActivity_"
-            android:label="@string/new_event"
+            android:label="@string/login_label"
             android:windowSoftInputMode="stateVisible|adjustResize">
         </activity>
 
