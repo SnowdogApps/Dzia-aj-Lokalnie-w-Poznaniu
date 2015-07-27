@@ -3,6 +3,7 @@
     xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="pl.snowdog.dzialajlokalnie.util.StringUtil"/>
         <variable name="issue" type="pl.snowdog.dzialajlokalnie.model.Issue"/>
     </data>
 
@@ -37,16 +38,52 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/textView_item_title"
-                android:lines="2"
+                android:maxLines="2"
                 android:ellipsize="end"
                 android:text="@{issue.title}"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/item_padding">
+
+                <ImageView
+                    android:id="@+id/ivAuthorAvatar"
+                    android:layout_width="@dimen/comment_photo_size"
+                    android:layout_height="@dimen/comment_photo_size"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/sample_user"
+                    android:scaleType="centerCrop"/>
+
+                <TextView
+                    android:id="@+id/tvUsername"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/item_padding"
+                    android:layout_gravity="center_vertical"
+                    style="@style/textView_item_desc"
+                    android:lines="1"
+                    android:ellipsize="end"
+                    android:text="@{issue.authorName}"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/textView_item_desc"
+                android:text="@{StringUtil.date2String(issue.createdAt)}"/>
+
 
             <TextView
                 android:id="@+id/tvDesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/textView_item_desc"
-                android:lines="3"
+                android:maxLines="3"
                 android:ellipsize="end"
                 android:text="@{issue.description}"/>
         </LinearLayout>
