@@ -30,7 +30,6 @@ import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.adapter.FragmentAdapter;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.databinding.AddCommentBinding;
-import pl.snowdog.dzialajlokalnie.databinding.AddCommentWidgetBinding;
 import pl.snowdog.dzialajlokalnie.events.CommentClickedEvent;
 import pl.snowdog.dzialajlokalnie.events.CommentsLoadedEvent;
 import pl.snowdog.dzialajlokalnie.events.NewCommentEvent;
@@ -110,7 +109,6 @@ public class DetailsActivity extends BaseActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         binding = new AddCommentBinding(addCommentWidget);
-
         binding.etComment.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
