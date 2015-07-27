@@ -168,9 +168,18 @@ public abstract class BaseFragment extends Fragment {
                 Log.d(TAG, "getEvents success: " + events);
 
                 List<Category> categories = new Select().from(Category.class).execute();
+                List<District> districts = new Select().from(District.class).execute();
+
                 for (Event event : events) {
                     event.parseCategoriesList();
                     event.setCategoriesText(parseCategories(event.getCategoryID(), categories));
+
+                    for (District district : districts) {
+                        if (district.getDistrictID() == event.getDistrictID()) {
+                            event.setDistrictName(district.getName());
+                            break;
+                        }
+                    }
                 }
 
                 eventsResult(events);

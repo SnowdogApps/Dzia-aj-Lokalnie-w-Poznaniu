@@ -33,7 +33,7 @@
             android:value="dzialajlokalnie.db" />
         <meta-data
             android:name="AA_DB_VERSION"
-            android:value="12" />
+            android:value="13" />
         <meta-data
             android:name="AA_MODELS"
             android:value="pl.snowdog.dzialajlokalnie.model.Category, pl.snowdog.dzialajlokalnie.model.Comment, pl.snowdog.dzialajlokalnie.model.District, pl.snowdog.dzialajlokalnie.model.Event, pl.snowdog.dzialajlokalnie.model.Issue, pl.snowdog.dzialajlokalnie.model.Session" />

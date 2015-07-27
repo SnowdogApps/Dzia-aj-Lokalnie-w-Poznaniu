@@ -77,7 +77,6 @@
                 style="@style/textView_item_desc"
                 android:text="@{StringUtil.date2String(issue.createdAt)}"/>
 
-
             <TextView
                 android:id="@+id/tvDesc"
                 android:layout_width="match_parent"

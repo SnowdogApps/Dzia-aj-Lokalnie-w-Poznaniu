@@ -44,6 +44,11 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                 load(String.format(DlApi.PHOTO_THUMB_URL, event.getPhotoEventUri())).
                 error(R.drawable.ic_editor_insert_emoticon).
                 into(viewHolder.binding.ivAvatar);
+
+        Picasso.with(viewHolder.binding.getRoot().getContext()).
+                load(String.format(DlApi.PHOTO_THUMB_URL, event.getAuthorAvatar())).
+                error(R.drawable.ic_editor_insert_emoticon).
+                into(viewHolder.binding.ivAuthorAvatar);
     }
 
     @Override

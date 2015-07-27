@@ -24,6 +24,12 @@ public class Event extends Model implements Serializable {
     private int userID;
 
     @Column
+    private String authorName;
+
+    @Column
+    private String authorAvatar;
+
+    @Column
     private String title;
 
     @Column
@@ -87,6 +93,7 @@ public class Event extends Model implements Serializable {
     private int userStatus;
 
     private String categoriesText;
+    private String districtName;
 
     @Column
     private List<Integer> categoriesList;
@@ -130,6 +137,8 @@ public class Event extends Model implements Serializable {
                 "eventID=" + eventID +
                 ", parentID=" + parentID +
                 ", userID=" + userID +
+                ", authorName='" + authorName + '\'' +
+                ", authorAvatar='" + authorAvatar + '\'' +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", districtID=" + districtID +
@@ -142,7 +151,7 @@ public class Event extends Model implements Serializable {
                 ", eventUrl='" + eventUrl + '\'' +
                 ", createdAt=" + createdAt +
                 ", eventStatus=" + eventStatus +
-                ", categoryID=" + categoryID +
+                ", categoryID='" + categoryID + '\'' +
                 ", photoEventUri='" + photoEventUri + '\'' +
                 ", commentsCount=" + commentsCount +
                 ", votesCount=" + votesCount +
@@ -151,7 +160,42 @@ public class Event extends Model implements Serializable {
                 ", maybeCount=" + maybeCount +
                 ", declinedCount=" + declinedCount +
                 ", userStatus=" + userStatus +
+                ", categoriesText='" + categoriesText + '\'' +
+                ", districtName='" + districtName + '\'' +
+                ", categoriesList=" + categoriesList +
                 '}';
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public String getAuthorAvatar() {
+        return authorAvatar;
+    }
+
+    public void setAuthorAvatar(String authorAvatar) {
+        this.authorAvatar = authorAvatar;
+    }
+
+    public String getDistrictName() {
+        return districtName;
+    }
+
+    public void setDistrictName(String districtName) {
+        this.districtName = districtName;
+    }
+
+    public List<Integer> getCategoriesList() {
+        return categoriesList;
+    }
+
+    public void setCategoriesList(List<Integer> categoriesList) {
+        this.categoriesList = categoriesList;
     }
 
     public String getCategoriesText() {
