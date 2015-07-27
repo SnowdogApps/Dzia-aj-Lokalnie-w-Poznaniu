@@ -140,6 +140,13 @@ public abstract class BaseFragment extends Fragment {
                         List<Category> categories = new Select().from(Category.class).execute();
                         issue.setCategoriesText(parseCategories(issue.getCategoryID(), categories));
                         issue.parseCategoriesList();
+
+                        District district = new Select().from(District.class).
+                                where("districtID == ?", issue.getDistrictID()).executeSingle();
+
+                        if(district != null) {
+                            issue.setDistrictName(district.getName());
+                        }
                         issueResult(issue);
 
                         issue.save();

@@ -122,16 +122,12 @@ public class IssueFragment extends BaseFragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
-
         map.setMyLocationEnabled(true);
-
-        District district = new Select().from(District.class).
-                where("districtID == ?", binding.getIssue().getDistrictID()).executeSingle();
 
         Marker marker = map.addMarker(new MarkerOptions().
                 position(new LatLng(binding.getIssue().getLat(), binding.getIssue().getLon())).
                 title(binding.getIssue().getAddress()).
-                snippet(district != null ? district.getName() : null).
+                snippet(binding.getIssue().getDistrictName()).
                 icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_issue_marker)));
         marker.showInfoWindow();
     }
