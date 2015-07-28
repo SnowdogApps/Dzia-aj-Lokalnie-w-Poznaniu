@@ -1,9 +1,15 @@
 package pl.snowdog.dzialajlokalnie;
 
 import android.app.Application;
+import android.location.Location;
+import android.os.Bundle;
+import android.util.Log;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -17,6 +23,7 @@ import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.api.GlobalErrorHandler;
 import pl.snowdog.dzialajlokalnie.model.Filter;
 import pl.snowdog.dzialajlokalnie.model.Session;
+import pl.snowdog.dzialajlokalnie.util.PrefsUtil_;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
@@ -24,8 +31,11 @@ import retrofit.converter.GsonConverter;
 /**
  * Created by bartek on 06.07.15.
  */
-public class DlApplication extends Application {
+@EApplication
+public class DlApplication extends Application implements
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
+    private static final String TAG = "DlApplication";
     public static RestAdapter restAdapter;
     public static RestAdapter restCityAdapter;
     public static DlApi.Base baseApi;
@@ -41,10 +51,17 @@ public class DlApplication extends Application {
 
     static Gson gson;
 
+
+    @Pref
+    PrefsUtil_ pref;
+
+    private GoogleApiClient mGoogleApiClient;
+
     @Override
     public void onCreate() {
         super.onCreate();
 
+        buildGoogleApiClient();
         ActiveAndroid.initialize(this);
 
         gson = new GsonBuilder()
@@ -107,4 +124,40 @@ public class DlApplication extends Application {
     public static void refreshCurrentSession() {
         currentSession = new Select().from(Session.class).executeSingle();
     }
+
+
+    protected synchronized void buildGoogleApiClient() {
+        if(mGoogleApiClient == null || !mGoogleApiClient.isConnected()) {
+            mGoogleApiClient = new GoogleApiClient.Builder(this)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+            mGoogleApiClient.connect();
+            Log.d(TAG, "gacdbg GoogleApiClient buildGoogleApiClient");
+        }
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                mGoogleApiClient);
+        Log.d(TAG, "gacdbg GoogleApiClient onConnected Location Services");
+        if (mLastLocation != null) {
+            pref.edit().lastLat().put((float) mLastLocation.getLatitude()).lastLon().put((float) mLastLocation.getLongitude()).apply();
+            Log.d(TAG, "gacdbg GoogleApiClient onConnected Location Services mLastLocation: " + mLastLocation.toString());
+            Log.d(TAG, "gacdbg location exists " + pref.lastLat().get());
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.d(TAG, "gacdbg GoogleApiClient onConnectionSuspended");
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.d(TAG, "gacdbg GoogleApiClient onConnectionFailed connectionResult: " + connectionResult.toString());
+    }
+
 }

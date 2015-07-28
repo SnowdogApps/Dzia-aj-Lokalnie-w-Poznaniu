@@ -1,6 +1,8 @@
 package pl.snowdog.dzialajlokalnie;
 
 import android.content.Intent;
+import android.location.Location;
+import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -9,10 +11,14 @@ import android.view.View;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Delete;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.sharedpreferences.Pref;
 
 import java.util.List;
 
@@ -27,6 +33,7 @@ import pl.snowdog.dzialajlokalnie.model.Comment;
 import pl.snowdog.dzialajlokalnie.model.District;
 import pl.snowdog.dzialajlokalnie.model.Login;
 import pl.snowdog.dzialajlokalnie.model.Session;
+import pl.snowdog.dzialajlokalnie.util.PrefsUtil_;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -45,9 +52,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     @AfterViews
     protected void afterBaseActivityViews() {
 
-
         //you can call there everything for all descendant activities that you normally call in onCreate method
         afterView();
+
     }
 
     protected abstract void afterView();
@@ -257,4 +264,5 @@ public abstract class BaseActivity extends AppCompatActivity {
         DlApplication.currentSession = null;
         Snackbar.make(coordinatorLayout, getString(R.string.logout_success), Snackbar.LENGTH_LONG).show();
     }
+
 }

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Debug;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
@@ -32,6 +33,7 @@ import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.ItemSelect;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
+import org.androidannotations.annotations.sharedpreferences.Pref;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -49,6 +51,7 @@ import pl.snowdog.dzialajlokalnie.model.Point;
 import pl.snowdog.dzialajlokalnie.model.Polygon;
 import pl.snowdog.dzialajlokalnie.model.ReverseGeocoding;
 import pl.snowdog.dzialajlokalnie.util.PolygonUtil;
+import pl.snowdog.dzialajlokalnie.util.PrefsUtil_;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -84,6 +87,9 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
     @FragmentArg int mMode;
 
     List<District> districts;
+
+    @Pref
+    PrefsUtil_ pref;
 
     /**
      * When we do manual marker operations (drag, create) we mark it so the adapter.setSelected()
@@ -146,9 +152,6 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
         spinner.setAdapter(adapter);
         spinner.setSelection(adapter.getSelection());
 
-        if(mMode == AddUserActivity.MODE_SIGN_UP) {
-            tvHint.setText(R.string.info_select_live_distrcit);
-        }
     }
 
     @ItemSelect(R.id.spDistrict)
@@ -276,6 +279,17 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
             findDistrictAndSetSpinner(new LatLng(mEditedObject.getLat(), mEditedObject.getLon()));
             Log.d(TAG, "edtdbg location: lat: "+mEditedObject.getLat()+ " lon: "+mEditedObject.getLon());
         }
+
+
+        if(mMode == AddUserActivity.MODE_SIGN_UP) {
+            tvHint.setText(R.string.info_select_live_distrcit);
+            if(pref.lastLat().exists() && pref.lastLon().exists()) {
+                mMarker = map.addMarker(new MarkerOptions().position(new LatLng(pref.lastLat().get(), pref.lastLon().get())).draggable(true));
+                if (findDistrictAndSetSpinner(new LatLng(pref.lastLat().get(), pref.lastLon().get()))) {
+                    getAddressForLocation(pref.lastLat().get(), pref.lastLon().get());
+                }
+            }
+        }
     }
 
     /**
@@ -292,6 +306,7 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
                     isMarkerChange = true;
                     spinner.setSelection(counter);
                     PolygonUtil.createDistrictShapeOnMap(map, d, getActivity());
+                    Log.d(TAG, "gacdbg look for location exists");
                     return true;
                 }
             }
