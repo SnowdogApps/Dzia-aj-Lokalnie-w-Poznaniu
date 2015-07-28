@@ -168,7 +168,7 @@ public class AddUserActivity extends AddBaseActivity {
         newUser.setSurname(surname);
         newUser.setEmail(email);
         newUser.setPass(password);
-        newUser.setPushRegId("");
+        newUser.setPushRegId(pref.pushRegId().get());
 
         return newUser;
     }

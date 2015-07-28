@@ -9,9 +9,13 @@ public class NewUser {
     private String description;
     private String name;
     private String surname;
-    private int districtID;
+    private Integer districtID;
     private String pushRegId;
     private String avatarUri;
+
+    public NewUser() {
+        this.setDistrictID(null);
+    }
 
     public String getUsername() {
         return username;
@@ -65,7 +69,7 @@ public class NewUser {
         return districtID;
     }
 
-    public void setDistrictID(int districtID) {
+    public void setDistrictID(Integer districtID) {
         this.districtID = districtID;
     }
 

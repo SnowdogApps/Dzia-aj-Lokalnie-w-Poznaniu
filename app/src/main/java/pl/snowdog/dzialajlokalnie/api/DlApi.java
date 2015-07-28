@@ -131,6 +131,11 @@ public class DlApi {
         @POST("/users/new")
         void postNewUser(@Body NewUser newUser, Callback<User> cb);
 
+        @PUT("/users/{id}/edit")
+        void putUser(@Body NewUser newUser,
+                     @Path("id") int userId,
+                     Callback<User> cb);
+
         @Multipart
         @POST("/users/{id}/avatar/new")
         void postUserAvatar(@Part("avatarPhoto") TypedFile image,

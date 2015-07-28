@@ -9,4 +9,5 @@ import org.androidannotations.annotations.sharedpreferences.SharedPref;
 public interface PrefsUtil {
     float lastLat();
     float lastLon();
+    String pushRegId();
 }

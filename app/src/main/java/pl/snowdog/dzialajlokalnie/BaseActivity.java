@@ -1,18 +1,28 @@
 package pl.snowdog.dzialajlokalnie;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Delete;
 import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.iid.InstanceID;
 import com.google.android.gms.location.LocationServices;
 
 import org.androidannotations.annotations.AfterViews;
@@ -20,6 +30,7 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 
+import java.io.IOException;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
@@ -28,6 +39,8 @@ import pl.snowdog.dzialajlokalnie.events.EventClickedEvent;
 import pl.snowdog.dzialajlokalnie.events.IssueClickedEvent;
 import pl.snowdog.dzialajlokalnie.events.NetworkErrorEvent;
 import pl.snowdog.dzialajlokalnie.events.ApiErrorEvent;
+import pl.snowdog.dzialajlokalnie.gcm.QuickstartPreferences;
+import pl.snowdog.dzialajlokalnie.gcm.RegistrationIntentService;
 import pl.snowdog.dzialajlokalnie.model.Category;
 import pl.snowdog.dzialajlokalnie.model.Comment;
 import pl.snowdog.dzialajlokalnie.model.District;
@@ -43,14 +56,49 @@ import retrofit.client.Response;
  */
 @EActivity//(R.layout.activity_main)
 public abstract class BaseActivity extends AppCompatActivity {
-
     private static final String TAG = "BaseActivity";
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     @ViewById(R.id.main_content)
     protected View coordinatorLayout;
 
+    @Pref
+    PrefsUtil_ pref;
+
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
+
     @AfterViews
     protected void afterBaseActivityViews() {
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                SharedPreferences sharedPreferences =
+                        PreferenceManager.getDefaultSharedPreferences(context);
+                boolean sentToken = sharedPreferences
+                        .getBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false);
+                if (sentToken) {
+                    Log.d(TAG, "gcmdbg TOKEN sent");
+                    InstanceID instanceID = InstanceID.getInstance(BaseActivity.this);
+                    try {
+                        String token = instanceID.getToken(getString(R.string.gcm_defaultSenderId),
+                                GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+                        pref.edit().pushRegId().put(token).apply();
+                    } catch (IOException e) {
+
+                        e.printStackTrace();
+                    }
+                } else {
+                    Log.d(TAG, "gcmdbg TOKEN NOT sent");
+                }
+            }
+        };
+
+        if (checkPlayServices()) {
+            // Start IntentService to register this application with GCM.
+            Intent intent = new Intent(this, RegistrationIntentService.class);
+            startService(intent);
+        }
 
         //you can call there everything for all descendant activities that you normally call in onCreate method
         afterView();
@@ -59,6 +107,19 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract void afterView();
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter(QuickstartPreferences.REGISTRATION_COMPLETE));
+    }
+
+    @Override
+    protected void onPause() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
+        super.onPause();
+    }
 
     @Override
     public void onStart() {
@@ -265,4 +326,23 @@ public abstract class BaseActivity extends AppCompatActivity {
         Snackbar.make(coordinatorLayout, getString(R.string.logout_success), Snackbar.LENGTH_LONG).show();
     }
 
+    /**
+     * Check the device to make sure it has the Google Play Services APK. If
+     * it doesn't, display a dialog that allows users to download the APK from
+     * the Google Play Store or enable it in the device's system settings.
+     */
+    private boolean checkPlayServices() {
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                GooglePlayServicesUtil.getErrorDialog(resultCode, this,
+                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            } else {
+                Log.i(TAG, "This device is not supported.");
+                finish();
+            }
+            return false;
+        }
+        return true;
+    }
 }

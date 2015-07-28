@@ -35,7 +35,12 @@ import pl.snowdog.dzialajlokalnie.fragment.FilterFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.IssuesFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.MapFragment_;
 import pl.snowdog.dzialajlokalnie.model.Filter;
+import pl.snowdog.dzialajlokalnie.model.NewUser;
 import pl.snowdog.dzialajlokalnie.model.Session;
+import pl.snowdog.dzialajlokalnie.model.User;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 @EActivity(R.layout.activity_main)
 @OptionsMenu(R.menu.menu_main)
@@ -101,6 +106,7 @@ public class MainActivity extends BaseActivity {
         } else {
             fab.collapse();
             AddIssueActivity_.intent(this).start();
+
             //AddUserActivity_.intent(this).start();
         }
         //AddIssueActivity_.intent(this).start();
