@@ -1,6 +1,12 @@
 package pl.snowdog.dzialajlokalnie;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
@@ -16,12 +22,28 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+import com.squareup.picasso.Picasso;
+
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.ViewById;
+import org.json.JSONObject;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -38,6 +60,7 @@ import pl.snowdog.dzialajlokalnie.fragment.ApiActionDialogFragment;
 import pl.snowdog.dzialajlokalnie.fragment.ApiActionDialogFragment_;
 import pl.snowdog.dzialajlokalnie.model.DateWrapper;
 import pl.snowdog.dzialajlokalnie.model.Session;
+import pl.snowdog.dzialajlokalnie.util.FileChooserUtil;
 import pl.snowdog.dzialajlokalnie.util.PasswordValidator;
 
 /**
@@ -61,6 +84,15 @@ public class LoginActivity extends BaseActivity {
     @ViewById(R.id.etPasswordWrapper)
     TextInputLayout etPasswordWrapper;
 
+
+    @ViewById(R.id.btnLoginFacebook)
+    LoginButton btnFacebookLogin;
+
+
+    CallbackManager callbackManager;
+    private ProfileTracker profileTracker;
+
+
     @Click(R.id.btnLogin)
     void onLoginClicked() {
         if(validateInput()) {
@@ -81,6 +113,11 @@ public class LoginActivity extends BaseActivity {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     protected void loginResult(Session session) {
         toggleProgressWheel(false);
         super.loginResult(session);
@@ -98,7 +135,55 @@ public class LoginActivity extends BaseActivity {
         ab.setHomeAsUpIndicator(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         ab.setDisplayHomeAsUpEnabled(true);
 
+        btnFacebookLogin.setReadPermissions("public_profile");
+        btnFacebookLogin.setReadPermissions("email");
+        callbackManager = CallbackManager.Factory.create();
+        btnFacebookLogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                profileTracker.startTracking();
 
+                GraphRequest request = GraphRequest.newMeRequest(
+                        loginResult.getAccessToken(),
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(
+                                    JSONObject object,
+                                    GraphResponse response) {
+                                // Application code
+                                Log.d(TAG, "fbdbg: "+response.toString());
+                            }
+                        });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,email,gender, birthday");
+                request.setParameters(parameters);
+                request.executeAsync();
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(FacebookException e) {
+
+            }
+        });
+
+        profileTracker = new ProfileTracker() {
+            @Override
+            protected void onCurrentProfileChanged(
+                    Profile oldProfile,
+                    Profile currentProfile) {
+
+                //Profile profile = Profile.getCurrentProfile();
+                if(currentProfile != null) {
+                    Log.d(TAG, "fbdbg profile: " + currentProfile.getName() + " " + currentProfile.getLastName());
+                }
+                // App code
+            }
+        };
     }
 
     @TextChange(R.id.etEmail)
@@ -151,6 +236,11 @@ public class LoginActivity extends BaseActivity {
         return isInputValid;
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        profileTracker.stopTracking();
+    }
 
     private void hideKeyboard() {
         // Check if no view has focus:
@@ -172,7 +262,10 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
 
     @OptionsItem(android.R.id.home)
     void homeSelected() {

@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Dzialaj Lokalnie</string>
+    <string name="facebook_app_id">867077646719945</string>
 
     <string name="title_section1">Zgłoszenia</string>
     <string name="title_section2">Mapa</string>

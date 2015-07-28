@@ -131,14 +131,14 @@
                 android:layout_height="1dp"
                 android:background="?android:attr/dividerVertical" />
         </RelativeLayout>
-        <ImageView
+        <com.facebook.login.widget.LoginButton
             android:id="@+id/btnLoginFacebook"
             android:layout_below="@id/orContainer"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:src="@drawable/common_signin_btn_text_pressed_dark"
-            android:layout_width="300dp"
-            android:layout_height="50dp" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
     </RelativeLayout>
 
 </RelativeLayout>

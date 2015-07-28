@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
+import com.facebook.FacebookSdk;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -63,7 +64,7 @@ public class DlApplication extends Application implements
     @Override
     public void onCreate() {
         super.onCreate();
-
+        FacebookSdk.sdkInitialize(getApplicationContext());
         buildGoogleApiClient();
         ActiveAndroid.initialize(this);
 
