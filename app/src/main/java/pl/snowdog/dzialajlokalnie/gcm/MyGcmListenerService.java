@@ -71,10 +71,8 @@ public class MyGcmListenerService extends GcmListenerService {
      * @param pushNotification GCM message received.
      */
     private void sendNotification(PushNotification pushNotification) {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT);
+
+        PendingIntent pendingIntent = buildPendingIntent(pushNotification);
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
@@ -90,5 +88,37 @@ public class MyGcmListenerService extends GcmListenerService {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+    }
+
+    private PendingIntent buildPendingIntent(PushNotification pushNotification) {
+        switch (pushNotification.getAction()) {
+            case NotificationAction.NEW_ISSUE_SURROUND:
+                break;
+            case NotificationAction.EDIT_ISSUE:
+                break;
+            case NotificationAction.DELETE_ISSUE:
+                break;
+
+            case NotificationAction.NEW_EVENT_SURROUND:
+                break;
+            case NotificationAction.NEW_EVENT_USER_PARTICIPATED:
+                break;
+            case NotificationAction.EDIT_EVENT:
+                break;
+            case NotificationAction.DELETE_EVENT_USER_SAVED:
+                break;
+            case NotificationAction.EVENT_REMINDER:
+                break;
+
+            case NotificationAction.COMMENT_PARENT_USER_OWNER:
+                break;
+        }
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra(NotificationAction.INTENT_ACTION, pushNotification.getAction());
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+                PendingIntent.FLAG_ONE_SHOT);
+        return pendingIntent;
     }
 }

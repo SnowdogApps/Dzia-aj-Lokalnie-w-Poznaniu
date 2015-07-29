@@ -4,6 +4,8 @@ package pl.snowdog.dzialajlokalnie.gcm;
  * Created by chomi3 on 2015-07-29.
  */
 public class NotificationAction {
+    public static final String INTENT_ACTION = "action";
+
     //ISSUES
     public static final int NEW_ISSUE_SURROUND = 10;
     public static final int EDIT_ISSUE = 11;
