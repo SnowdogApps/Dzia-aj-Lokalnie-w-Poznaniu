@@ -46,10 +46,11 @@ public class MyGcmListenerService extends GcmListenerService {
     @Override
     public void onMessageReceived(String from, Bundle data) {
         String message = data.getString("message");
-        Log.d(TAG, "From: " + from);
-        Log.d(TAG, "Message: " + message);
+        Log.d(TAG, "gcmdbg From: " + from);
+        Log.d(TAG, "gcmdbg Message: " + message);
 
         PushNotification pushNotification = new PushNotification(data);
+        Log.d(TAG, "gmcdbg pushNotification received: "+pushNotification.toString());
         /**
          * Production applications would usually process the message here.
          * Eg: - Syncing with server.
@@ -91,29 +92,41 @@ public class MyGcmListenerService extends GcmListenerService {
     }
 
     private PendingIntent buildPendingIntent(PushNotification pushNotification) {
+        //TODO define separate handling of clicks
+        Intent intent = null;
         switch (pushNotification.getAction()) {
             case NotificationAction.NEW_ISSUE_SURROUND:
+                intent = new Intent(this, MainActivity.class);
                 break;
             case NotificationAction.EDIT_ISSUE:
+                intent = new Intent(this, MainActivity.class);
                 break;
             case NotificationAction.DELETE_ISSUE:
+                intent = new Intent(this, MainActivity.class);
                 break;
 
             case NotificationAction.NEW_EVENT_SURROUND:
+                intent = new Intent(this, MainActivity.class);
                 break;
             case NotificationAction.NEW_EVENT_USER_PARTICIPATED:
+                intent = new Intent(this, MainActivity.class);
                 break;
             case NotificationAction.EDIT_EVENT:
+                intent = new Intent(this, MainActivity.class);
                 break;
             case NotificationAction.DELETE_EVENT_USER_SAVED:
+                intent = new Intent(this, MainActivity.class);
                 break;
             case NotificationAction.EVENT_REMINDER:
+                intent = new Intent(this, MainActivity.class);
                 break;
 
             case NotificationAction.COMMENT_PARENT_USER_OWNER:
+                intent = new Intent(this, MainActivity.class);
                 break;
         }
-        Intent intent = new Intent(this, MainActivity.class);
+        if(intent == null) return null;
+
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra(NotificationAction.INTENT_ACTION, pushNotification.getAction());
 

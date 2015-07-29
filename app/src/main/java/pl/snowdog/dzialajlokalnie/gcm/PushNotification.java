@@ -15,6 +15,7 @@ public class PushNotification {
     String largeIcon;
     String smallIcon;
     int action;
+    int objectID;
 
     public PushNotification(Bundle data) {
         if(data.containsKey("message")) {
@@ -30,10 +31,18 @@ public class PushNotification {
             tickerText = data.getString("tickerText");
         }
         if(data.containsKey("vibrate")) {
-            vibrate = data.getInt("vibrate");
+            try {
+                vibrate = Integer.parseInt(data.getString("vibrate"));
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
         }
         if(data.containsKey("sound")) {
-            sound = data.getInt("sound");
+            try {
+                sound = Integer.parseInt(data.getString("sound"));
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
         }
         if(data.containsKey("largeIcon")) {
             largeIcon = data.getString("largeIcon");
@@ -42,7 +51,18 @@ public class PushNotification {
             smallIcon = data.getString("smallIcon");
         }
         if(data.containsKey("action")) {
-            action = data.getInt("action");
+            try{
+                action = Integer.parseInt(data.getString("action"));
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+        if(data.containsKey("objectID")) {
+            try {
+                objectID = Integer.parseInt(data.getString("objectID"));
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
         }
 
     }
@@ -117,5 +137,29 @@ public class PushNotification {
 
     public void setAction(int action) {
         this.action = action;
+    }
+
+    public int getObjectID() {
+        return objectID;
+    }
+
+    public void setObjectID(int objectID) {
+        this.objectID = objectID;
+    }
+
+    @Override
+    public String toString() {
+        return "PushNotification{" +
+                "message='" + message + '\'' +
+                ", title='" + title + '\'' +
+                ", subtitle='" + subtitle + '\'' +
+                ", tickerText='" + tickerText + '\'' +
+                ", vibrate=" + vibrate +
+                ", sound=" + sound +
+                ", largeIcon='" + largeIcon + '\'' +
+                ", smallIcon='" + smallIcon + '\'' +
+                ", action=" + action +
+                ", objectID=" + objectID +
+                '}';
     }
 }

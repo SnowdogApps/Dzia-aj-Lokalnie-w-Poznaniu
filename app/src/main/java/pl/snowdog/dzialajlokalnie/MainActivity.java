@@ -37,8 +37,10 @@ import pl.snowdog.dzialajlokalnie.fragment.FilterFragment;
 import pl.snowdog.dzialajlokalnie.fragment.FilterFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.IssuesFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.MapFragment_;
+import pl.snowdog.dzialajlokalnie.gcm.NotificationAction;
 import pl.snowdog.dzialajlokalnie.model.Filter;
 import pl.snowdog.dzialajlokalnie.model.NewUser;
+import pl.snowdog.dzialajlokalnie.model.Notification;
 import pl.snowdog.dzialajlokalnie.model.Session;
 import pl.snowdog.dzialajlokalnie.model.User;
 import retrofit.Callback;
@@ -97,7 +99,12 @@ public class MainActivity extends BaseActivity {
         super.onNewIntent(intent);
         Bundle extras = intent.getExtras();
         if(extras != null) {
+            int action = extras.getInt(NotificationAction.INTENT_ACTION);
+            switch (action) {
+                case NotificationAction.NEW_ISSUE_SURROUND:
 
+                    break;
+            }
         }
     }
 
