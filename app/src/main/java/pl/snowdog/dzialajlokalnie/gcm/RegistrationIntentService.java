@@ -70,13 +70,10 @@ public class RegistrationIntentService extends IntentService {
                 String token = instanceID.getToken(getString(R.string.gcm_defaultSenderId),
                         GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
                 // [END get_token]
-                Log.i(TAG, "GCM Registration Token: " + token);
+                Log.d(TAG, "gcmdbg GCM Registration Token: " + token);
 
                 // TODO: Implement this method to send any registration to your app's servers.
                 sendRegistrationToServer(token);
-
-                // Subscribe to topic channels
-                subscribeTopics(token);
 
                 // You should store a boolean that indicates whether the generated token has been
                 // sent to your server. If the boolean is false, send the token to your server,
@@ -85,7 +82,7 @@ public class RegistrationIntentService extends IntentService {
                 // [END register_for_gcm]
             }
         } catch (Exception e) {
-            Log.d(TAG, "Failed to complete token refresh", e);
+            Log.d(TAG, "gcmdbg Failed to complete token refresh", e);
             // If an exception happens while fetching the new token or updating our registration data
             // on a third-party server, this ensures that we'll attempt the update at a later time.
             sharedPreferences.edit().putBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false).apply();
@@ -126,19 +123,7 @@ public class RegistrationIntentService extends IntentService {
 
     }
 
-    /**
-     * Subscribe to any GCM topics of interest, as defined by the TOPICS constant.
-     *
-     * @param token GCM token
-     * @throws IOException if unable to reach the GCM PubSub service
-     */
-    // [START subscribe_topics]
-    private void subscribeTopics(String token) throws IOException {
-        for (String topic : TOPICS) {
-            GcmPubSub pubSub = GcmPubSub.getInstance(this);
-            pubSub.subscribe(token, "/topics/" + topic, null);
-        }
-    }
+
     // [END subscribe_topics]
 
 }

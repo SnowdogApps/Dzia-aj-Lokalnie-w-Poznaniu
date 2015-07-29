@@ -41,6 +41,7 @@ import pl.snowdog.dzialajlokalnie.events.NetworkErrorEvent;
 import pl.snowdog.dzialajlokalnie.events.ApiErrorEvent;
 import pl.snowdog.dzialajlokalnie.gcm.QuickstartPreferences;
 import pl.snowdog.dzialajlokalnie.gcm.RegistrationIntentService;
+import pl.snowdog.dzialajlokalnie.gcm.RegistrationIntentService_;
 import pl.snowdog.dzialajlokalnie.model.Category;
 import pl.snowdog.dzialajlokalnie.model.Comment;
 import pl.snowdog.dzialajlokalnie.model.District;
@@ -96,7 +97,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         if (checkPlayServices()) {
             // Start IntentService to register this application with GCM.
-            Intent intent = new Intent(this, RegistrationIntentService.class);
+            Intent intent = new Intent(this, RegistrationIntentService_.class);
             startService(intent);
         }
 
