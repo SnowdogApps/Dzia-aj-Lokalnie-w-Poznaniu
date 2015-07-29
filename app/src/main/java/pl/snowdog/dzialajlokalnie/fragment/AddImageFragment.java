@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -23,6 +24,7 @@ import org.androidannotations.annotations.ViewById;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Random;
@@ -31,6 +33,7 @@ import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
+import pl.snowdog.dzialajlokalnie.helpers.BitmapHeplers;
 import pl.snowdog.dzialajlokalnie.util.FileChooserUtil;
 
 /**
@@ -59,16 +62,16 @@ public class AddImageFragment extends AddBaseFragment {
 
     @Click(R.id.btnNext)
     void onNextButtonClicked() {
-        if(validateInput()) {
+        if (validateInput()) {
             String uriToSend = "";
             switch (photoFrom) {
                 case PICK_FROM_FILE:
-                    if(mFileUri != null) {
+                    if (mFileUri != null) {
                         uriToSend = FileChooserUtil.getPath(getActivity(), mFileUri);
                     }
                     break;
                 case TAKE_PICTURE:
-                    if(mFileUri != null) {
+                    if (mFileUri != null) {
                         uriToSend = mFileUri.toString();
                     }
                     break;
@@ -90,9 +93,9 @@ public class AddImageFragment extends AddBaseFragment {
         Random generator = new Random();
         int n = 10000;
         n = generator.nextInt(n);
-        String fname = "Image-"+ n +".jpg";
+        String fname = "Image-" + n + ".jpg";
         //File image = new File(Environment.getExternalStorageDirectory(),  AppHelpers.getRandomBigInt(999999) + ".jpg");
-        File photo = new File(Environment.getExternalStorageDirectory(),  fname);
+        File photo = new File(Environment.getExternalStorageDirectory(), fname);
         intent.putExtra(MediaStore.EXTRA_OUTPUT,
                 Uri.fromFile(photo));
         mFileUri = Uri.fromFile(photo);
@@ -112,32 +115,39 @@ public class AddImageFragment extends AddBaseFragment {
 
     @OnActivityResult(TAKE_PICTURE)
     void handleTakePictureResult(int resultCode, Intent data) {
-        if(resultCode != Activity.RESULT_OK) {
+        if (resultCode != Activity.RESULT_OK) {
             return;
         }
 
         /* Set bitmap options to scale the image decode target */
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = 2;
-        bmOptions.inPurgeable = true;
+//        bmOptions.inJustDecodeBounds = false;
+//        bmOptions.inSampleSize = 2;
+//        bmOptions.inPurgeable = true;
+
+
 
         /* Decode the JPEG file into a Bitmap */
-        Bitmap bitmap = BitmapFactory.decodeFile(mFileUri.getPath(), bmOptions);
+
+         /* Rotate image by EXIF data */
+
+        BitmapHeplers bmHelpers = new BitmapHeplers();
+
+        Bitmap bitmap = bmHelpers.rotateBitmap(mFileUri, bmOptions);
 
         /* Test compress */
         File imageFile = new File(mFileUri.getPath());
-        try{
+        try {
             OutputStream out = null;
             out = new FileOutputStream(imageFile);
             //Bitmap bitmap = BitmapFactory.decodeFile(picturePath);
 
-            bitmap.compress(Bitmap.CompressFormat.JPEG,80,out);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, out);
             out.flush();
             out.close();
             Log.d(TAG, "imgdbg COMPRESSED FILE");
-        }catch(Exception e){
-            Log.e(TAG,"imgdbg Error compressing: "+e.toString());
+        } catch (Exception e) {
+            Log.e(TAG, "imgdbg Error compressing: " + e.toString());
         }
         photoFrom = TAKE_PICTURE;
         Picasso.with(getActivity()).load(mFileUri).error(
@@ -147,29 +157,27 @@ public class AddImageFragment extends AddBaseFragment {
     }
 
     @OnActivityResult(PICK_FROM_FILE)
-    void handleGalleryResult(int resultCode, Intent data)
-    {
-        if(resultCode != Activity.RESULT_OK) {
+    void handleGalleryResult(int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
             return;
         }
         Uri selectedImage = data.getData();
         mTmpGalleryPicturePath = FileChooserUtil.getPath(getActivity(), selectedImage);
-        if(mTmpGalleryPicturePath!=null) {
+        if (mTmpGalleryPicturePath != null) {
 
             mFileUri = selectedImage;
             Picasso.with(getActivity()).load(selectedImage).error(
                     R.drawable.ic_editor_insert_emoticon).into(ivPreview);
-            Log.d(TAG, "imgdbg pick from file A mFileUri: "+mFileUri.toString());
+            Log.d(TAG, "imgdbg pick from file A mFileUri: " + mFileUri.toString());
 
-        } else
-        {
+        } else {
             try {
                 InputStream is = getActivity().getContentResolver().openInputStream(selectedImage);
                 ivPreview.setImageBitmap(BitmapFactory.decodeStream(is));
                 mTmpGalleryPicturePath = selectedImage.getPath();
                 mFileUri = selectedImage;
 
-                Log.d(TAG, "imgdbg pick from file B mFileUri: "+mFileUri.toString());
+                Log.d(TAG, "imgdbg pick from file B mFileUri: " + mFileUri.toString());
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -186,16 +194,16 @@ public class AddImageFragment extends AddBaseFragment {
 
     @AfterViews
     void afterViews() {
-        if(mFileUri == null) {
+        if (mFileUri == null) {
             btnNext.setText(R.string.skip);
         }
         //EDIT MODE
-        if(mEditedObject != null) {
+        if (mEditedObject != null) {
             Picasso.with(getActivity())
                     .load(String.format(DlApi.PHOTO_THUMB_URL, mEditedObject.getImage()))
                     .error(
-                    R.drawable.ic_editor_insert_emoticon).into(ivPreview);
-            Log.d(TAG, "edtdbg image: "+mEditedObject.getImage());
+                            R.drawable.ic_editor_insert_emoticon).into(ivPreview);
+            Log.d(TAG, "edtdbg image: " + mEditedObject.getImage());
         }
     }
 }
