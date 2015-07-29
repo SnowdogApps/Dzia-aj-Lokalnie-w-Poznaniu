@@ -8,18 +8,18 @@ import android.util.Log;
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
 import com.facebook.FacebookSdk;
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.google.android.gms.iid.InstanceID;
 import com.google.android.gms.location.LocationServices;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.splunk.mint.Mint;
 
 import org.androidannotations.annotations.EApplication;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 
-import java.io.IOException;
 import java.lang.reflect.Modifier;
 
 import pl.snowdog.dzialajlokalnie.api.CityApi;
@@ -55,6 +55,9 @@ public class DlApplication extends Application implements
 
     static Gson gson;
 
+    public static GoogleAnalytics analytics;
+    public static Tracker tracker;
+
 
     @Pref
     PrefsUtil_ pref;
@@ -75,9 +78,26 @@ public class DlApplication extends Application implements
 
         createDlRestAdapter();
 
+        initGoogleAnalytics();
 
+        initSplunkMint();
 
         filter = new Filter();
+    }
+
+    private void initSplunkMint() {
+        //TODO update API KEY
+        //Mint.initAndStartSession(getApplicationContext(), "");
+    }
+
+    private void initGoogleAnalytics() {
+        analytics = GoogleAnalytics.getInstance(this);
+        analytics.setLocalDispatchPeriod(1800);
+
+        tracker = analytics.newTracker("UA-213599-109");
+        tracker.enableExceptionReporting(true);
+        tracker.enableAdvertisingIdCollection(true);
+        tracker.enableAutoActivityTracking(true);
     }
 
     public static void createDlRestAdapter() {

@@ -42,6 +42,9 @@ android {
 repositories {
     mavenCentral()
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    maven {
+        url "https://mint.splunk.com/gradle/"
+    }
 }
 
 dependencies {
@@ -54,7 +57,7 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:22.2.1'
     compile 'de.greenrobot:eventbus:2.4.0'
     compile 'com.android.support:design:22.2.1'
-
+    compile "com.splunk.mint:mint:4.2.1"
     compile 'com.getbase:floatingactionbutton:1.9.1'
     compile 'com.roomorama:caldroid:2.1.0'
 
