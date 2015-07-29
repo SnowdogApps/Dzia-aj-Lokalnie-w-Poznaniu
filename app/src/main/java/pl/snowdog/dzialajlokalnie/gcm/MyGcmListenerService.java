@@ -49,6 +49,7 @@ public class MyGcmListenerService extends GcmListenerService {
         Log.d(TAG, "From: " + from);
         Log.d(TAG, "Message: " + message);
 
+        PushNotification pushNotification = new PushNotification(data);
         /**
          * Production applications would usually process the message here.
          * Eg: - Syncing with server.
@@ -60,16 +61,16 @@ public class MyGcmListenerService extends GcmListenerService {
          * In some cases it may be useful to show a notification indicating to the user
          * that a message was received.
          */
-        sendNotification(message);
+        sendNotification(pushNotification);
     }
     // [END receive_message]
 
     /**
      * Create and show a simple notification containing the received GCM message.
      *
-     * @param message GCM message received.
+     * @param pushNotification GCM message received.
      */
-    private void sendNotification(String message) {
+    private void sendNotification(PushNotification pushNotification) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
@@ -78,8 +79,9 @@ public class MyGcmListenerService extends GcmListenerService {
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_action_accept)
-                .setContentTitle("GCM Message")
-                .setContentText(message)
+                .setContentTitle(pushNotification.getTitle())
+                .setSubText(pushNotification.getSubtitle())
+                .setContentText(pushNotification.getMessage())
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
