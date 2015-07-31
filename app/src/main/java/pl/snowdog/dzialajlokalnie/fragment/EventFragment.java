@@ -28,6 +28,7 @@ import pl.snowdog.dzialajlokalnie.events.EventAttendEvent;
 import pl.snowdog.dzialajlokalnie.events.RefreshEvent;
 import pl.snowdog.dzialajlokalnie.events.SetTitleAndPhotoEvent;
 import pl.snowdog.dzialajlokalnie.model.Event;
+import pl.snowdog.dzialajlokalnie.model.ParticipateEvent;
 
 /**
  * Created by bartek on 15.07.15.
@@ -84,6 +85,16 @@ public class EventFragment extends BaseFragment implements OnMapReadyCallback {
     public void onEvent(RefreshEvent event) {
         Log.d(TAG, "onEvent " + event);
         getEvent(objId);
+    }
+
+    public void onEvent(EventAttendEvent event) {
+        Log.d(TAG, "onEvent " + event);
+        participate(new ParticipateEvent(event.getEventId(), ParticipateEvent.ParcitipateType.attending));
+    }
+
+    @Override
+    protected void participateResult(ParticipateEvent participateEvent) {
+        Log.d(TAG, "participateResult " + participateEvent);
     }
 
     @Override

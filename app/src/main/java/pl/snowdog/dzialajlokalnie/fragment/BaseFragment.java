@@ -309,5 +309,5 @@ public abstract class BaseFragment extends Fragment {
         });
     }
 
-    private void participateResult(ParticipateEvent participateEvent) { }
+    protected void participateResult(ParticipateEvent participateEvent) { }
 }

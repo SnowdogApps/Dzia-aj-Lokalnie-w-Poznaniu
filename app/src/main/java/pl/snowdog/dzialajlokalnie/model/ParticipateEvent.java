@@ -15,6 +15,33 @@ public class ParticipateEvent {
         this.participateType = participateType;
     }
 
+    public ParticipateEvent(int eventId, ParcitipateType participateType) {
+        this.eventId = eventId;
+
+        int intPt;
+        switch (participateType) {
+            case attending:
+                intPt = 1;
+                break;
+            case maybe:
+                intPt = 2;
+                break;
+            case declined:
+                intPt = 3;
+                break;
+            case invited:
+                intPt = 4;
+                break;
+            case banned:
+                intPt = 5;
+                break;
+            default:
+                intPt = 0;
+        }
+
+        this.participateType = intPt;
+    }
+
     @Override
     public String toString() {
         return "ParticipateEvent{" +
