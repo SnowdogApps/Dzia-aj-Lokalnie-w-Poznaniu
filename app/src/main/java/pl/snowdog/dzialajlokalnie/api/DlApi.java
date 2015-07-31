@@ -10,6 +10,7 @@ import pl.snowdog.dzialajlokalnie.model.Issue;
 import pl.snowdog.dzialajlokalnie.model.Login;
 import pl.snowdog.dzialajlokalnie.model.NewEvent;
 import pl.snowdog.dzialajlokalnie.model.NewIssue;
+import pl.snowdog.dzialajlokalnie.model.ParticipateEvent;
 import pl.snowdog.dzialajlokalnie.model.Session;
 import pl.snowdog.dzialajlokalnie.model.Vote;
 import retrofit.Callback;
@@ -99,7 +100,12 @@ public class DlApi {
 
         @PUT("/events/{id}/edit")
         void putEvent(@Body NewEvent event,
-                      @Path("id") int issueId,
+                      @Path("id") int eventId,
+                      Callback<Event.EventWrapper> cb);
+
+        @PUT("/events/{id}/users")
+        void putParticipateEvent(@Body ParticipateEvent participateEvent,
+                      @Path("id") int eventId,
                       Callback<Event.EventWrapper> cb);
     }
 
