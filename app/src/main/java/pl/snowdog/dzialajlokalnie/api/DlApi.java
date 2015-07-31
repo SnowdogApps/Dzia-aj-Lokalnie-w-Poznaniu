@@ -106,7 +106,7 @@ public class DlApi {
         @PUT("/events/{id}/users")
         void putParticipateEvent(@Body ParticipateEvent participateEvent,
                       @Path("id") int eventId,
-                      Callback<Event.EventWrapper> cb);
+                      Callback<ParticipateEvent> cb);
     }
 
     public interface CommentApi {

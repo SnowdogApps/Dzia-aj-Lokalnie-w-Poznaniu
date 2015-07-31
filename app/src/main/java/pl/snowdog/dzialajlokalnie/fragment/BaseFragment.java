@@ -17,6 +17,7 @@ import pl.snowdog.dzialajlokalnie.model.District;
 import pl.snowdog.dzialajlokalnie.model.Event;
 import pl.snowdog.dzialajlokalnie.model.Filter;
 import pl.snowdog.dzialajlokalnie.model.Issue;
+import pl.snowdog.dzialajlokalnie.model.ParticipateEvent;
 import pl.snowdog.dzialajlokalnie.model.Vote;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -292,5 +293,21 @@ public abstract class BaseFragment extends Fragment {
 
     protected void voteResult(Vote vote) { }
 
+    protected void participate(ParticipateEvent participateEvent) {
+        DlApplication.eventApi.putParticipateEvent(participateEvent, participateEvent.getEventId(),
+                new Callback<ParticipateEvent>() {
+            @Override
+            public void success(ParticipateEvent participateEvent, Response response) {
+                Log.d(TAG, "participate success: " + participateEvent);
+                participateResult(participateEvent);
+            }
 
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d(TAG, "participate failure: " + error);
+            }
+        });
+    }
+
+    private void participateResult(ParticipateEvent participateEvent) { }
 }
