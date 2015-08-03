@@ -120,12 +120,7 @@ public abstract class AddBaseActivity extends BaseActivity {
         getSupportActionBar().setSubtitle(getString(R.string.add_issue_step) + " " + (mViewPager.getCurrentItem() + 1) + "/" + mViewPager.getAdapter().getCount());
     }
 
-    /**
-     * Handles gathering informations from fragments
-     * NOTE: final step (category) is handled by child activities (AddIssue / AddEvent)
-     * as we need to create different objects from the data
-     * @param event
-     */
+
     public void onEvent(CreateNewObjectEvent event) {
         switch (event.getType()) {
             case title:

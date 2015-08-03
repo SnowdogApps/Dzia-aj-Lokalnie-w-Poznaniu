@@ -22,6 +22,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.activeandroid.ActiveAndroid;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -32,6 +33,8 @@ import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
 
 import org.androidannotations.annotations.Click;
@@ -59,9 +62,14 @@ import pl.snowdog.dzialajlokalnie.fragment.AddTitleDateFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.ApiActionDialogFragment;
 import pl.snowdog.dzialajlokalnie.fragment.ApiActionDialogFragment_;
 import pl.snowdog.dzialajlokalnie.model.DateWrapper;
+import pl.snowdog.dzialajlokalnie.model.Login;
 import pl.snowdog.dzialajlokalnie.model.Session;
+import pl.snowdog.dzialajlokalnie.model.User;
 import pl.snowdog.dzialajlokalnie.util.FileChooserUtil;
 import pl.snowdog.dzialajlokalnie.util.PasswordValidator;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 /**
  * Created by chomi3 on 2015-07-23.
@@ -92,6 +100,8 @@ public class LoginActivity extends BaseActivity {
     CallbackManager callbackManager;
     private ProfileTracker profileTracker;
 
+    private Login.Facebook mFacebookLogin;
+
 
     @Click(R.id.btnLogin)
     void onLoginClicked() {
@@ -103,7 +113,9 @@ public class LoginActivity extends BaseActivity {
 
     @Click(R.id.btnRegister)
     void onRegisterClicked() {
-        AddUserActivity_.intent(this).start();
+        //AddUserActivity_.intent(this).start();
+        AddUserFacebookActivity_.intent(LoginActivity.this).start();
+        hideKeyboard();
         this.finish();
     }
 
@@ -140,7 +152,7 @@ public class LoginActivity extends BaseActivity {
         callbackManager = CallbackManager.Factory.create();
         btnFacebookLogin.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
-            public void onSuccess(LoginResult loginResult) {
+            public void onSuccess(final LoginResult loginResult) {
                 profileTracker.startTracking();
 
                 GraphRequest request = GraphRequest.newMeRequest(
@@ -151,13 +163,23 @@ public class LoginActivity extends BaseActivity {
                                     JSONObject object,
                                     GraphResponse response) {
                                 // Application code
-                                Log.d(TAG, "fbdbg: "+response.toString()+ " object: "+object.toString());
+                                toggleProgressWheel(true);
+                                Log.d(TAG, "fbdbg: " + response.toString() + " object: " + object.toString() + " accessToken: " + loginResult.getAccessToken().getToken());
+
+                                GsonBuilder gsonBuilder = new GsonBuilder();
+                                Gson gson = gsonBuilder.create();
+                                mFacebookLogin = gson.fromJson(object.toString(), Login.Facebook.class);
+                                mFacebookLogin.setAccessToken(loginResult.getAccessToken().getToken());
+                                loginWithFacebook(mFacebookLogin);
+
+
                             }
                         });
                 Bundle parameters = new Bundle();
                 parameters.putString("fields", "id,name,email,gender, birthday");
                 request.setParameters(parameters);
                 request.executeAsync();
+
             }
 
             @Override
@@ -184,6 +206,53 @@ public class LoginActivity extends BaseActivity {
                 // App code
             }
         };
+    }
+
+
+    public void onEvent(CreateNewObjectEvent event) {
+        switch (event.getType()) {
+            case facebook:
+                if(mFacebookLogin != null) {
+                    loginWithFacebook(mFacebookLogin);
+                }
+
+
+        }
+    }
+
+    private void loginWithFacebook(Login.Facebook login) {
+        DlApplication.userApi.loginFb(login, new Callback<Login.Facebook>() {
+            @Override
+            public void success(Login.Facebook user, Response response) {
+                Log.d(TAG, "fbdbg facebookLogin user post success: " + response + " user: " + user.toString());
+                if (user.getSession() != null) {
+                    //Consecutive facebook login, user was already created - store session
+                    //and start regular app usage
+                    Log.d(TAG, "fbdbg facebookLogin SESSION RECEIVED");
+                    try {
+                        user.getSession().save();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    finish();
+                }
+                if (user.getUser() != null) {
+                    //First user login by facebook, we need to get his location to update account
+                    //if no location will be provided - log user out
+                    Log.d(TAG, "fbdbg facebookLogin USER RECEIVED");
+                    hideKeyboard();
+                    AddUserFacebookActivity_.intent(LoginActivity.this).userID(user.getUser().getUserID()).start();
+                }
+                toggleProgressWheel(false);
+
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d(TAG, "userApi.postNewUser post error: " + error);
+                toggleProgressWheel(false);
+            }
+        });
     }
 
     @TextChange(R.id.etEmail)

@@ -94,7 +94,7 @@ public class MainActivity extends BaseActivity {
         if(isLoggedIn()) {
             AddUserActivity_.intent(this).mEditedUser(getLoggedInUser()).start();
         } else {
-            AddUserActivity_.intent(this).start();
+            LoginActivity_.intent(this).start();
         }
     }
 

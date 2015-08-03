@@ -81,12 +81,11 @@ public class AddUserDetailsFragment extends AddBaseFragment {
     }
 
     boolean validateInput() {
-        boolean validEmail = true;
         boolean validPassword = true;
         boolean validName = validateName();
         boolean validSurname = validateSurname();
+        boolean validEmail = validateEmail();
         if(mEditedObject == null) {
-            validEmail = validateEmail();
             validPassword = validatePassword();
         }
         boolean validDescription = validateDescription();
@@ -209,7 +208,6 @@ public class AddUserDetailsFragment extends AddBaseFragment {
 
         if(mEditedObject != null) {
             etPassword.setVisibility(View.GONE);
-            etEmail.setVisibility(View.GONE);
         }
 
 

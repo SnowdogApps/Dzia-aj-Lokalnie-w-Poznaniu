@@ -111,6 +111,12 @@
             android:windowSoftInputMode="stateVisible|adjustResize">
         </activity>
 
+        <activity
+            android:name=".AddUserFacebookActivity_"
+            android:label="@string/sign_up"
+            android:parentActivityName=".MainActivity_"
+            >
+        </activity>
 
         <activity
             android:name=".DetailsActivity_"

@@ -9,7 +9,7 @@ import pl.snowdog.dzialajlokalnie.model.DateWrapper;
  * Created by chomi3 on 2015-07-15.
  */
 public class CreateNewObjectEvent implements Serializable {
-    public enum Type{title, date, location, image, category, details};
+    public enum Type{title, date, location, image, category, details, facebook};
     Type type;
     String title;
     String description;

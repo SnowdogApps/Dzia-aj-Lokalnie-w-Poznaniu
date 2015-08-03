@@ -152,6 +152,10 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
         spinner.setAdapter(adapter);
         spinner.setSelection(adapter.getSelection());
 
+        if(mMode == AddUserActivity.MODE_SIGN_UP_FACEBOOK) {
+            btnNext.setText(R.string.save_user_edit);
+            btnPrev.setVisibility(View.GONE);
+        }
     }
 
     @ItemSelect(R.id.spDistrict)
@@ -287,7 +291,7 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
         }
 
 
-        if(mMode == AddUserActivity.MODE_SIGN_UP) {
+        if(mMode == AddUserActivity.MODE_SIGN_UP || mMode == AddUserActivity.MODE_SIGN_UP_FACEBOOK) {
             tvHint.setText(R.string.info_select_live_distrcit);
             if(pref.lastLat().exists() && pref.lastLon().exists()) {
                 mMarker = map.addMarker(new MarkerOptions().position(new LatLng(pref.lastLat().get(), pref.lastLon().get())).draggable(true));

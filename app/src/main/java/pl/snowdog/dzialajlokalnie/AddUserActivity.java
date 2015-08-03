@@ -37,6 +37,8 @@ import retrofit.mime.TypedFile;
 public class AddUserActivity extends AddBaseActivity {
     private static final String TAG = "AddUserActivity";
     public static final int MODE_SIGN_UP = 1234;
+    public static final int MODE_SIGN_UP_FACEBOOK = 12373;
+
     //Event specific fields:
     String name;
     String surname;
@@ -117,7 +119,7 @@ public class AddUserActivity extends AddBaseActivity {
         super.onEvent(event);
     }
 
-    private void putEditedUser() {
+    protected void putEditedUser() {
         toggleProgressWheel(true);
         NewUser newUser = createNewUserObject();
 
@@ -151,7 +153,7 @@ public class AddUserActivity extends AddBaseActivity {
         });
     }
 
-    private void postNewUser() {
+    protected void postNewUser() {
         toggleProgressWheel(true);
         NewUser newUser = createNewUserObject();
 
@@ -201,7 +203,7 @@ public class AddUserActivity extends AddBaseActivity {
         }
     }
 
-    private void postUserAvatar(int userId) {
+    protected void postUserAvatar(int userId) {
 
         TypedFile file = new TypedFile("image/jpg", new File(photoUri));
 
@@ -238,12 +240,12 @@ public class AddUserActivity extends AddBaseActivity {
     }
 
     @NonNull
-    private NewUser createNewUserObject() {
+    protected NewUser createNewUserObject() {
         NewUser newUser = new NewUser();
-        newUser.setDistrictID(districtID);
-        newUser.setDescription(description);
-        newUser.setName(name);
-        newUser.setSurname(surname);
+        newUser.setDistrictID(districtID > 0 ? districtID : null);
+        newUser.setDescription(description.length() > 0 ? description : null);
+        newUser.setName(name.length() > 0 ? name : null);
+        newUser.setSurname(surname.length() > 0 ? name : null);
         newUser.setEmail(email.length() > 0 ? email : null);
         newUser.setPass(password.length() > 0 ? password : null);
         newUser.setPushRegId(pref.pushRegId().get());

@@ -144,6 +144,10 @@ public class DlApi {
         @PUT("/login")
         void login(@Body Login login, Callback<Session> cb);
 
+        @PUT("/login/fb")
+        void loginFb(@Body Login.Facebook login, Callback<Login.Facebook> cb);
+
+
         @POST("/users/new")
         void postNewUser(@Body NewUser newUser, Callback<User> cb);
 
