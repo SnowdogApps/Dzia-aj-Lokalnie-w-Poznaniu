@@ -24,7 +24,6 @@ import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.databinding.FragmentEventBinding;
-import pl.snowdog.dzialajlokalnie.events.EventAttendEvent;
 import pl.snowdog.dzialajlokalnie.events.RefreshEvent;
 import pl.snowdog.dzialajlokalnie.events.SetTitleAndPhotoEvent;
 import pl.snowdog.dzialajlokalnie.model.Event;

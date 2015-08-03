@@ -1,12 +1,9 @@
 package pl.snowdog.dzialajlokalnie.fragment;
 
 import android.databinding.DataBindingUtil;
-import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
 
-import com.activeandroid.query.Select;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -31,7 +28,6 @@ import pl.snowdog.dzialajlokalnie.events.IssueVoteEvent;
 import pl.snowdog.dzialajlokalnie.events.RefreshEvent;
 import pl.snowdog.dzialajlokalnie.events.SetTitleAndPhotoEvent;
 import pl.snowdog.dzialajlokalnie.events.VoteEvent;
-import pl.snowdog.dzialajlokalnie.model.District;
 import pl.snowdog.dzialajlokalnie.model.Issue;
 import pl.snowdog.dzialajlokalnie.model.Vote;
 
