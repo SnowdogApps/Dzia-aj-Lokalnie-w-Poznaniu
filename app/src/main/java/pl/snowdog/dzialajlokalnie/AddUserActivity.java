@@ -6,9 +6,11 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
 
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.Extra;
 
 import java.io.File;
 import java.util.List;
@@ -19,6 +21,7 @@ import pl.snowdog.dzialajlokalnie.events.ObjectAddedEvent;
 import pl.snowdog.dzialajlokalnie.fragment.AddImageFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.AddLocationFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.AddUserDetailsFragment_;
+import pl.snowdog.dzialajlokalnie.model.District;
 import pl.snowdog.dzialajlokalnie.model.NewUser;
 import pl.snowdog.dzialajlokalnie.model.Session;
 import pl.snowdog.dzialajlokalnie.model.User;
@@ -40,7 +43,8 @@ public class AddUserActivity extends AddBaseActivity {
     String email;
     String password;
 
-    private User mUser;
+    @Extra
+    User mEditedUser;
 
     @Override
     void setupViewPager(ViewPager viewPager) {
@@ -50,13 +54,24 @@ public class AddUserActivity extends AddBaseActivity {
         Adapter adapter = new Adapter(getSupportFragmentManager());
 
         adapter.addFragment(new AddUserDetailsFragment_().builder()
+                .mEditedObject(mEditedUser != null ? new CreateNewObjectEvent.Builder()
+                        .name(mEditedUser.getName())
+                        .surname(mEditedUser.getSurname())
+                        .description(mEditedUser.getDescription())
+                        .build() : null)
                 .build());
 
         adapter.addFragment(new AddLocationFragment_().builder()
-                .mMode(MODE_SIGN_UP)
+                .mEditedObject(mEditedUser != null ? new CreateNewObjectEvent.Builder()
+                        .districtID(mEditedUser.getDistrictID())
+                        .build() : null)
+                    .mMode(MODE_SIGN_UP)
                 .build());
 
         adapter.addFragment(new AddImageFragment_().builder()
+                .mEditedObject(mEditedUser != null ? new CreateNewObjectEvent.Builder()
+                        .image(mEditedUser.getAvatarUri())
+                        .build() : null)
                 .mMode(MODE_SIGN_UP)
                 .build());
 
@@ -74,6 +89,9 @@ public class AddUserActivity extends AddBaseActivity {
     @Override
     protected void afterView() {
         super.afterView();
+        if(mEditedUser != null) {
+            getSupportActionBar().setTitle(getString(R.string.edit_user));
+        }
     }
 
     public void onEvent(CreateNewObjectEvent event) {
@@ -89,10 +107,48 @@ public class AddUserActivity extends AddBaseActivity {
                 return;
             case image:
                 photoUri = event.getImage();
-                postNewUser();
+                if(mEditedUser == null) {
+                    postNewUser();
+                } else {
+                    putEditedUser();
+                }
                 return;
         }
         super.onEvent(event);
+    }
+
+    private void putEditedUser() {
+        toggleProgressWheel(true);
+        NewUser newUser = createNewUserObject();
+
+        DlApplication.userApi.putUser(newUser, DlApplication.currentSession.getUserID(), new Callback<User>() {
+            @Override
+            public void success(User user, Response response) {
+                Log.d(TAG, "userApi.sendRegistrationToServer post success: " + response + " user: " + user.toString());
+                ActiveAndroid.beginTransaction();
+                try {
+                    user.save();
+                    ActiveAndroid.setTransactionSuccessful();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    ActiveAndroid.endTransaction();
+                }
+                //If we have successfull login, we can try to upload avatar
+                if (photoUri != null && photoUri.length() > 0) {
+                    postUserAvatar(user.getUserID());
+                } else {
+                    //Finished adding, close view
+                    finishAdding(ObjectAddedEvent.Type.user);
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d(TAG, "userApi.postNewUser post error: " + error);
+                toggleProgressWheel(false);
+            }
+        });
     }
 
     private void postNewUser() {
@@ -102,8 +158,15 @@ public class AddUserActivity extends AddBaseActivity {
         DlApplication.userApi.postNewUser(newUser, new Callback<User>() {
             @Override
             public void success(User user, Response response) {
-                mUser = user;
-
+                ActiveAndroid.beginTransaction();
+                try {
+                    user.save();
+                    ActiveAndroid.setTransactionSuccessful();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    ActiveAndroid.endTransaction();
+                }
                 //Login as new user:
                 login(email, password);
 
@@ -131,7 +194,7 @@ public class AddUserActivity extends AddBaseActivity {
         }
         //If we have successfull login, we can try to upload avatar
         if (photoUri != null && photoUri.length() > 0) {
-            postUserAvatar(mUser.getUserID());
+            postUserAvatar(session.getUserID());
         } else {
             //Finished adding, close view
             finishAdding(ObjectAddedEvent.Type.user);
@@ -147,6 +210,21 @@ public class AddUserActivity extends AddBaseActivity {
             public void success(User user, Response response) {
                 Log.d(TAG, "userApi.postUserAvatar success: " + response + " eventApi: " + user.toString());
                 //toggleProgressWheel(false);
+
+                ActiveAndroid.beginTransaction();
+                try {
+                    user.save();
+                    ActiveAndroid.setTransactionSuccessful();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    ActiveAndroid.endTransaction();
+                }
+
+                List<User> users = new Select().from(User.class).execute();
+                for(User u : users) {
+                    Log.d(TAG, "usrdbg user: "+u.toString());
+                }
 
                 finishAdding(ObjectAddedEvent.Type.user);
             }
@@ -166,8 +244,8 @@ public class AddUserActivity extends AddBaseActivity {
         newUser.setDescription(description);
         newUser.setName(name);
         newUser.setSurname(surname);
-        newUser.setEmail(email);
-        newUser.setPass(password);
+        newUser.setEmail(email.length() > 0 ? email : null);
+        newUser.setPass(password.length() > 0 ? password : null);
         newUser.setPushRegId(pref.pushRegId().get());
 
         return newUser;

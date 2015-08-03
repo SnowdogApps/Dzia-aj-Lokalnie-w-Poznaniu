@@ -13,9 +13,11 @@ import pl.snowdog.dzialajlokalnie.DlApplication;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.model.Category;
 import pl.snowdog.dzialajlokalnie.model.Comment;
+import pl.snowdog.dzialajlokalnie.model.District;
 import pl.snowdog.dzialajlokalnie.model.Event;
 import pl.snowdog.dzialajlokalnie.model.Filter;
 import pl.snowdog.dzialajlokalnie.model.Issue;
+import pl.snowdog.dzialajlokalnie.model.ParticipateEvent;
 import pl.snowdog.dzialajlokalnie.model.Vote;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -89,9 +91,18 @@ public abstract class BaseFragment extends Fragment {
                         Log.d(TAG, "getIssues success: " + issues);
 
                         List<Category> categories = new Select().from(Category.class).execute();
+                        List<District> districts = new Select().from(District.class).execute();
+
                         for (Issue issue : issues) {
                             issue.parseCategoriesList();
                             issue.setCategoriesText(parseCategories(issue.getCategoryID(), categories));
+
+                            for (District district : districts) {
+                                if (district.getDistrictID() == issue.getDistrictID()) {
+                                    issue.setDistrictName(district.getName());
+                                    break;
+                                }
+                            }
                         }
 
                         issuesResult(issues);
@@ -130,6 +141,13 @@ public abstract class BaseFragment extends Fragment {
                         List<Category> categories = new Select().from(Category.class).execute();
                         issue.setCategoriesText(parseCategories(issue.getCategoryID(), categories));
                         issue.parseCategoriesList();
+
+                        District district = new Select().from(District.class).
+                                where("districtID == ?", issue.getDistrictID()).executeSingle();
+
+                        if (district != null) {
+                            issue.setDistrictName(district.getName());
+                        }
                         issueResult(issue);
 
                         issue.save();
@@ -153,37 +171,82 @@ public abstract class BaseFragment extends Fragment {
                 filter.getCategoriesFilter(),
                 filter.getSortForEvents(),
                 new Callback<List<Event>>() {
-            @Override
-            public void success(List<Event> events, Response response) {
-                Log.d(TAG, "getEvents success: " + events);
+                    @Override
+                    public void success(List<Event> events, Response response) {
+                        Log.d(TAG, "getEvents success: " + events);
 
-                List<Category> categories = new Select().from(Category.class).execute();
-                for (Event event : events) {
-                    event.parseCategoriesList();
-                    event.setCategoriesText(parseCategories(event.getCategoryID(), categories));
-                }
+                        List<Category> categories = new Select().from(Category.class).execute();
+                        List<District> districts = new Select().from(District.class).execute();
 
-                eventsResult(events);
+                        for (Event event : events) {
+                            event.parseCategoriesList();
+                            event.setCategoriesText(parseCategories(event.getCategoryID(), categories));
 
-                ActiveAndroid.beginTransaction();
-                try {
-                    for (Event event : events) {
-                        event.save();
+                            for (District district : districts) {
+                                if (district.getDistrictID() == event.getDistrictID()) {
+                                    event.setDistrictName(district.getName());
+                                    break;
+                                }
+                            }
+                        }
+
+                        eventsResult(events);
+
+                        ActiveAndroid.beginTransaction();
+                        try {
+                            for (Event event : events) {
+                                event.save();
+                            }
+                            ActiveAndroid.setTransactionSuccessful();
+                        } finally {
+                            ActiveAndroid.endTransaction();
+                        }
                     }
-                    ActiveAndroid.setTransactionSuccessful();
-                } finally {
-                    ActiveAndroid.endTransaction();
-                }
-            }
 
-            @Override
-            public void failure(RetrofitError error) {
-                Log.d(TAG, "getEvents failure: " + error);
-            }
-        });
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.d(TAG, "getEvents failure: " + error);
+                    }
+                });
     }
 
     protected void eventsResult(List<Event> events) { }
+
+
+    protected void getEvent(int id) {
+
+        DlApplication.eventApi.getEvent(id,
+                new Callback<Event>() {
+                    @Override
+                    public void success(Event event, Response response) {
+                        Log.d(TAG, "getEvent success: " + event);
+
+                        List<Category> categories = new Select().from(Category.class).execute();
+                        event.setCategoriesText(parseCategories(event.getCategoryID(), categories));
+                        event.parseCategoriesList();
+
+                        District district = new Select().from(District.class).
+                                where("districtID == ?", event.getDistrictID()).executeSingle();
+
+                        if (district != null) {
+                            event.setDistrictName(district.getName());
+                        }
+                        eventResult(event);
+
+                        event.save();
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.d(TAG, "getEvent failure: " + error);
+                    }
+                });
+    }
+
+    protected void eventResult(Event event) {
+        // implement by override
+    }
+
 
     protected void getComments(DlApi.ParentType parentType, int parentId) {
         DlApplication.commentApi.getComments(parentType.name(), parentId, new Callback<List<Comment>>() {
@@ -230,5 +293,21 @@ public abstract class BaseFragment extends Fragment {
 
     protected void voteResult(Vote vote) { }
 
+    protected void participate(ParticipateEvent participateEvent) {
+        DlApplication.eventApi.putParticipateEvent(participateEvent, participateEvent.getEventId(),
+                new Callback<ParticipateEvent>() {
+            @Override
+            public void success(ParticipateEvent participateEvent, Response response) {
+                Log.d(TAG, "participate success: " + participateEvent);
+                participateResult(participateEvent);
+            }
 
+            @Override
+            public void failure(RetrofitError error) {
+                Log.d(TAG, "participate failure: " + error);
+            }
+        });
+    }
+
+    protected void participateResult(ParticipateEvent participateEvent) { }
 }

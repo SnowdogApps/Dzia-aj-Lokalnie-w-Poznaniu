@@ -151,7 +151,7 @@ public class LoginActivity extends BaseActivity {
                                     JSONObject object,
                                     GraphResponse response) {
                                 // Application code
-                                Log.d(TAG, "fbdbg: "+response.toString());
+                                Log.d(TAG, "fbdbg: "+response.toString()+ " object: "+object.toString());
                             }
                         });
                 Bundle parameters = new Bundle();

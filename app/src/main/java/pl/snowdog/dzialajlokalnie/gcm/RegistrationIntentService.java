@@ -110,7 +110,7 @@ public class RegistrationIntentService extends IntentService {
                 DlApplication.userApi.putUser(newUser, DlApplication.currentSession.getUserID(), new Callback<User>() {
                     @Override
                     public void success(User user, Response response) {
-                        Log.d(TAG, "userApi.postNewUser post success: " + response + " user: " + user.toString());
+                        Log.d(TAG, "userApi.sendRegistrationToServer post success: " + response + " user: " + user.toString());
                     }
 
                     @Override

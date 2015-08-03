@@ -273,11 +273,17 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
 
         //EDIT Mode
         if(mEditedObject != null) {
-            mMarker = map.addMarker(new MarkerOptions().position(new LatLng(mEditedObject.getLat(), mEditedObject.getLon())).draggable(true));
-            getAddressForLocation(mEditedObject.getLat(), mEditedObject.getLon());
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mEditedObject.getLat(), mEditedObject.getLon()), 11));
-            findDistrictAndSetSpinner(new LatLng(mEditedObject.getLat(), mEditedObject.getLon()));
-            Log.d(TAG, "edtdbg location: lat: "+mEditedObject.getLat()+ " lon: "+mEditedObject.getLon());
+            if(mEditedObject.getLat() != 0.0f && mEditedObject.getLon() != 0.0f) {
+                mMarker = map.addMarker(new MarkerOptions().position(new LatLng(mEditedObject.getLat(), mEditedObject.getLon())).draggable(true));
+                getAddressForLocation(mEditedObject.getLat(), mEditedObject.getLon());
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mEditedObject.getLat(), mEditedObject.getLon()), 11));
+                findDistrictAndSetSpinner(new LatLng(mEditedObject.getLat(), mEditedObject.getLon()));
+                Log.d(TAG, "edtdbg location: lat: " + mEditedObject.getLat() + " lon: " + mEditedObject.getLon());
+            } else {
+                adapter.setSelectionId(mEditedObject.getDistrictID());
+                spinner.setAdapter(adapter);
+                spinner.setSelection(adapter.getSelection());
+            }
         }
 
 

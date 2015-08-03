@@ -4,7 +4,7 @@
 
     <data>
         <import type="pl.snowdog.dzialajlokalnie.util.StringUtil"/>
-        <variable name="issue" type="pl.snowdog.dzialajlokalnie.model.Issue"/>
+        <variable name="event" type="pl.snowdog.dzialajlokalnie.model.Event"/>
     </data>
 
     <RelativeLayout
@@ -12,19 +12,18 @@
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/item_padding">
 
-        <include layout="@layout/rating_widget"
-            android:id="@+id/ratingWidget"
+        <include layout="@layout/attending_widget"
+            android:id="@+id/attendingWidget"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            bind:rating="@{issue.issueRating}"
-            bind:votedvalue="@{issue.userVotedValue}"
+            bind:count="@{event.attendingCount}"
             />
 
         <LinearLayout
             android:id="@+id/textContent"
-            android:layout_toRightOf="@+id/ratingWidget"
+            android:layout_toRightOf="@+id/attendingWidget"
             android:layout_alignParentRight="true"
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -36,21 +35,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/textView_item_title"
-                android:text="@{issue.authorName}"/>
+                android:text="@{event.authorName}"/>
 
             <TextView
                 android:id="@+id/tvDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/textView_item_desc"
-                android:text="@{StringUtil.date2String(issue.createdAt)}"/>
+                android:text="@{StringUtil.date2String(event.createdAt)}"/>
 
             <TextView
                 android:id="@+id/tvStats"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/textView_item_desc"
-                android:text='@{@plurals/votes(issue.votesCount, issue.votesCount) + ", " + @plurals/comments(issue.commentsCount, issue.commentsCount) + "\n" + @string/tags(issue.categoriesText)}'/>
+                android:text='@{@plurals/invited(event.invitedCount, event.invitedCount) + ", " + @plurals/comments(event.commentsCount, event.commentsCount) + "\n" + @string/tags(event.categoriesText)}'/>
         </LinearLayout>
     </RelativeLayout>
 </layout>

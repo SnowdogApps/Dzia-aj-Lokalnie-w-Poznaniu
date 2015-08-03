@@ -49,9 +49,7 @@
 
     <style name="textView_footer">
         <item name="android:textSize">@dimen/description_text</item>
-        <item name="android:padding">@dimen/item_padding</item>
         <item name="android:textColor">@color/text_inverse</item>
-        <item name="android:background">@color/background_inverse</item>
     </style>
 
 </resources>

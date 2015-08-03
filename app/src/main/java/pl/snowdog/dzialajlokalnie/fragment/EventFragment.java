@@ -23,28 +23,26 @@ import org.androidannotations.annotations.ViewById;
 import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
-import pl.snowdog.dzialajlokalnie.databinding.FragmentIssueBinding;
-import pl.snowdog.dzialajlokalnie.events.IssueVoteEvent;
+import pl.snowdog.dzialajlokalnie.databinding.FragmentEventBinding;
 import pl.snowdog.dzialajlokalnie.events.RefreshEvent;
 import pl.snowdog.dzialajlokalnie.events.SetTitleAndPhotoEvent;
-import pl.snowdog.dzialajlokalnie.events.VoteEvent;
-import pl.snowdog.dzialajlokalnie.model.Issue;
-import pl.snowdog.dzialajlokalnie.model.Vote;
+import pl.snowdog.dzialajlokalnie.model.Event;
+import pl.snowdog.dzialajlokalnie.model.ParticipateEvent;
 
 /**
  * Created by bartek on 15.07.15.
  */
 
-@EFragment(R.layout.fragment_issue)
-public class IssueFragment extends BaseFragment implements OnMapReadyCallback {
+@EFragment(R.layout.fragment_event)
+public class EventFragment extends BaseFragment implements OnMapReadyCallback {
 
-    private static final String TAG = "IssueFragment";
-    FragmentIssueBinding binding;
+    private static final String TAG = "EventFragment";
+    FragmentEventBinding binding;
 
     @FragmentArg
     int objId;
 
-    @ViewById(R.id.issueDetails)
+    @ViewById(R.id.eventDetails)
     View rootView;
 
     private SupportMapFragment mapFragment;
@@ -53,35 +51,26 @@ public class IssueFragment extends BaseFragment implements OnMapReadyCallback {
     @AfterViews
     void afterViews() {
         binding = DataBindingUtil.bind(rootView);
-        getIssue(objId);
+        getEvent(objId);
     }
 
-    @Click(R.id.ibRateUp)
-    protected void rateUp() {
-        rate(IssueVoteEvent.Vote.UP);
-    }
-
-    @Click(R.id.ibRateDown)
-    protected void rateDown() {
-        rate(IssueVoteEvent.Vote.DOWN);
-    }
-
-    private void rate(IssueVoteEvent.Vote vote) {
-        if (binding.getIssue() != null) {
-            vote(DlApi.ParentType.issues, binding.getIssue().getIssueID(), vote == VoteEvent.Vote.UP ? 1 : -1);
+    @Click(R.id.ibAttend)
+    protected void attend() {
+        if (binding.getEvent() != null) {
+            participate(new ParticipateEvent(binding.getEvent().getEventID(), ParticipateEvent.ParcitipateType.attending));
         }
     }
 
     @Override
-    protected void issueResult(Issue issue) {
-        Log.d(TAG, "issueResult " + issue);
-        binding.setIssue(issue);
+    protected void eventResult(Event event) {
+        Log.d(TAG, "eventResult " + event);
+        binding.setEvent(event);
 
-        EventBus.getDefault().post(new SetTitleAndPhotoEvent(issue.getTitle(),
-                String.format(DlApi.PHOTO_NORMAL_URL, issue.getPhotoIssueUri())));
+        EventBus.getDefault().post(new SetTitleAndPhotoEvent(event.getTitle(),
+                String.format(DlApi.PHOTO_NORMAL_URL, event.getPhotoEventUri())));
 
         GoogleMapOptions options = new GoogleMapOptions().liteMode(true);
-        options.camera(new CameraPosition(new LatLng(issue.getLat(), issue.getLon()), 15, 0, 0));
+        options.camera(new CameraPosition(new LatLng(event.getLat(), event.getLon()), 15, 0, 0));
         mapFragment = SupportMapFragment.newInstance(options);
         getChildFragmentManager().beginTransaction().add(R.id.mapCard, mapFragment).commit();
         mapFragment.getMapAsync(this);
@@ -94,30 +83,23 @@ public class IssueFragment extends BaseFragment implements OnMapReadyCallback {
 
     public void onEvent(RefreshEvent event) {
         Log.d(TAG, "onEvent " + event);
-        getIssue(objId);
+        getEvent(objId);
     }
 
     @Override
-    protected void voteResult(Vote vote) {
-        Issue issue = binding.getIssue();
-        if (issue.getIssueID() == vote.getParentID()) {
-            issue.setIssueRating(issue.getIssueRating() + vote.getValue());
-            issue.setUserVotedValue(vote.getValue());
-            //TODO - this is dirty implementation. Observables shoud be used but it requires extending BaseObservable - conflict with Model
-            binding.setIssue(issue);
-        }
+    protected void participateResult(ParticipateEvent participateEvent) {
+        Log.d(TAG, "participateResult " + participateEvent);
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
         map.setMyLocationEnabled(true);
-
         Marker marker = map.addMarker(new MarkerOptions().
-                position(new LatLng(binding.getIssue().getLat(), binding.getIssue().getLon())).
-                title(binding.getIssue().getAddress()).
-                snippet(binding.getIssue().getDistrictName()).
-                icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_issue_marker)));
+                position(new LatLng(binding.getEvent().getLat(), binding.getEvent().getLon())).
+                title(binding.getEvent().getAddress()).
+                snippet(binding.getEvent().getDistrictName()).
+                icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_event_marker)));
         marker.showInfoWindow();
     }
 }

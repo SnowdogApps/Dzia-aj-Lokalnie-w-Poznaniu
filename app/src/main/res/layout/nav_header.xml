@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/navHeader"
     android:layout_width="match_parent"
     android:layout_height="192dp"
     android:background="?attr/colorPrimaryDark"
@@ -8,10 +9,24 @@
     android:orientation="vertical"
     android:gravity="bottom">
 
+    <ImageView
+        android:id="@+id/ivAvatar"
+        android:layout_width="@dimen/list_photo_size"
+        android:layout_height="@dimen/list_photo_size"
+        android:src="@drawable/sample_picture"
+        android:scaleType="centerCrop"/>
+
     <TextView
+        android:id="@+id/tvUserName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Username"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+    <TextView
+        android:id="@+id/tvUserDistrict"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="District"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 
 </LinearLayout>

@@ -10,7 +10,11 @@ import pl.snowdog.dzialajlokalnie.model.Issue;
 import pl.snowdog.dzialajlokalnie.model.Login;
 import pl.snowdog.dzialajlokalnie.model.NewEvent;
 import pl.snowdog.dzialajlokalnie.model.NewIssue;
+
 import pl.snowdog.dzialajlokalnie.model.NewUser;
+
+import pl.snowdog.dzialajlokalnie.model.ParticipateEvent;
+
 import pl.snowdog.dzialajlokalnie.model.Session;
 import pl.snowdog.dzialajlokalnie.model.User;
 import pl.snowdog.dzialajlokalnie.model.Vote;
@@ -39,6 +43,8 @@ public class DlApi {
     public static final String CITY_API_URL = "http://www.poznan.pl/";
     public static final String PHOTO_THUMB_URL = API_URL + "/photos/%s_thumb.jpeg";
     public static final String PHOTO_NORMAL_URL = API_URL + "/photos/%s_normal.jpeg";
+    public static final String AVATAR_THUMB_URL = API_URL + "/avatars/%s_thumb.jpeg";
+    public static final String AVATAR_NORMAL_URL = API_URL + "/avatars/%s_normal.jpeg";
 
     public enum ParentType {issues, events, comments}
 
@@ -85,6 +91,10 @@ public class DlApi {
                        @Query("orderBy") String sort,
                        Callback<List<Event>> cb);
 
+        @GET("/events/{id}")
+        void getEvent(@Path("id") int id,
+                      Callback<Event> cb);
+
         @POST("/events/new")
         void postEvent(@Body NewEvent event,
                        Callback<Event> cb);
@@ -97,8 +107,14 @@ public class DlApi {
 
         @PUT("/events/{id}/edit")
         void putEvent(@Body NewEvent event,
-                      @Path("id") int issueId,
+                      @Path("id") int eventId,
                       Callback<Event> cb);
+
+        @PUT("/events/{id}/users")
+        void putParticipateEvent(@Body ParticipateEvent participateEvent,
+                      @Path("id") int eventId,
+                      Callback<ParticipateEvent> cb);
+
     }
 
     public interface CommentApi {

@@ -3,6 +3,7 @@ package pl.snowdog.dzialajlokalnie;
 import android.content.Context;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
@@ -30,7 +31,6 @@ import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.adapter.FragmentAdapter;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.databinding.AddCommentBinding;
-import pl.snowdog.dzialajlokalnie.databinding.AddCommentWidgetBinding;
 import pl.snowdog.dzialajlokalnie.events.CommentClickedEvent;
 import pl.snowdog.dzialajlokalnie.events.CommentsLoadedEvent;
 import pl.snowdog.dzialajlokalnie.events.NewCommentEvent;
@@ -38,6 +38,7 @@ import pl.snowdog.dzialajlokalnie.events.RefreshEvent;
 import pl.snowdog.dzialajlokalnie.events.SetTitleAndPhotoEvent;
 import pl.snowdog.dzialajlokalnie.fragment.CommentsFragment;
 import pl.snowdog.dzialajlokalnie.fragment.CommentsFragment_;
+import pl.snowdog.dzialajlokalnie.fragment.EventFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.IssueFragment;
 import pl.snowdog.dzialajlokalnie.fragment.IssueFragment_;
 import pl.snowdog.dzialajlokalnie.model.Comment;
@@ -97,30 +98,31 @@ public class DetailsActivity extends BaseActivity {
 
         Log.d(TAG, "afterView " + objType + " " + objId);
 
-        IssueFragment issueFragment = IssueFragment_.builder().arg("objId", objId).build();
+        Fragment firstFragment = null;
+        if (objType == DlApi.ParentType.issues) {
+            firstFragment = IssueFragment_.builder().arg("objId", objId).build();
+        } else if (objType == DlApi.ParentType.events) {
+            firstFragment = EventFragment_.builder().arg("objId", objId).build();
+        }
 
         CommentsFragment commentsFragment = CommentsFragment_.builder().arg("objId", objId).
                 arg("objType", objType).build();
 
         adapter = new FragmentAdapter(getSupportFragmentManager());
-        adapter.addFragment(issueFragment, getString(R.string.details_title_section1).toUpperCase());
+        if (firstFragment != null) {
+            adapter.addFragment(firstFragment, getString(R.string.details_title_section1).toUpperCase());
+        }
         adapter.addFragment(commentsFragment, getString(R.string.details_title_section2).toUpperCase());
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(2);
         tabLayout.setupWithViewPager(viewPager);
 
-//        binding = AddCommentBinding.bind(addCommentWidget);
         binding = new AddCommentBinding(addCommentWidget);
-        binding.itemComment.getRoot().setVisibility(View.GONE);
-        binding.itemComment.ratingWidget.ibRateUp.setVisibility(View.INVISIBLE);
-        binding.itemComment.ratingWidget.ibRateDown.setVisibility(View.INVISIBLE);
-
         binding.etComment.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEND) {
                     send();
-                    unfocus();
                     return true;
                 }
                 return false;
@@ -157,18 +159,21 @@ public class DetailsActivity extends BaseActivity {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(binding.etComment.getWindowToken(), 0);
 
-        binding.setComment(null);
-        binding.itemComment.getRoot().setVisibility(View.GONE);
-        binding.etComment.setHint(R.string.comment_hint);
+        binding.clear();
     }
 
     @Click(R.id.bt_send)
     protected void send() {
+        //TODO how to send Reports to api? binding.ctvReport = true
+
         if (binding.getComment() != null) {
-            comment(DlApi.ParentType.comments, binding.getComment().getCommentID(), 0,
+            comment(DlApi.ParentType.comments, binding.getComment().getCommentID(),
+                    binding.ctvSolution.isChecked() ? 1 : 0,
                     binding.etComment.getText().toString());
         } else {
-            comment(objType, objId, 0, binding.etComment.getText().toString());
+            comment(objType, objId,
+                    binding.ctvSolution.isChecked() ? 1 : 0,
+                    binding.etComment.getText().toString());
         }
         unfocus();
     }
@@ -194,7 +199,7 @@ public class DetailsActivity extends BaseActivity {
     }
 
     @Click(R.id.fab)
-    protected void fabClick() {
+    protected void openAddCommentWidget() {
         binding.etComment.requestFocus();
 
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -204,7 +209,6 @@ public class DetailsActivity extends BaseActivity {
     public void onEvent(CommentClickedEvent event) {
         binding.setComment(event.getComment());
         binding.itemComment.getRoot().setVisibility(View.VISIBLE);
-        binding.etComment.requestFocus();
         binding.etComment.setHint(R.string.response_hint);
 
         Picasso.with(binding.getRoot().getContext()).
@@ -212,8 +216,7 @@ public class DetailsActivity extends BaseActivity {
                 error(R.drawable.ic_editor_insert_emoticon).
                 into(binding.itemComment.ivAvatar);
 
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+        openAddCommentWidget();
     }
 
     public void onEvent(CommentsLoadedEvent event) {

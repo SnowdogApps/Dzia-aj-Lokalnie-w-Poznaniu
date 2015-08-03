@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.LocalBroadcastManager;
@@ -18,6 +19,7 @@ import android.widget.ProgressBar;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Delete;
+import com.activeandroid.query.Select;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -47,6 +49,7 @@ import pl.snowdog.dzialajlokalnie.model.Comment;
 import pl.snowdog.dzialajlokalnie.model.District;
 import pl.snowdog.dzialajlokalnie.model.Login;
 import pl.snowdog.dzialajlokalnie.model.Session;
+import pl.snowdog.dzialajlokalnie.model.User;
 import pl.snowdog.dzialajlokalnie.util.PrefsUtil_;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -166,7 +169,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 setAction(R.string.login_action, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //TODO go to login activity
+
                         LoginActivity_.intent(BaseActivity.this).start();
                         //AddUserActivity_.intent(BaseActivity.this).start();
                         Log.d(TAG, "login_action from snackbar ");
@@ -291,11 +294,15 @@ public abstract class BaseActivity extends AppCompatActivity {
         DlApplication.userApi.login(new Login(username, pass, 2), new Callback<Session>() {
             @Override
             public void success(Session session, Response response) {
-                Log.d(TAG, "login success: " + session);
+                Log.d(TAG, "login success: " + session.toString());
 
                 new Delete().from(Session.class).execute();
+                try {
+                    session.save();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
-                session.save();
 
                 DlApplication.refreshCurrentSession();
 
@@ -308,6 +315,17 @@ public abstract class BaseActivity extends AppCompatActivity {
                 Log.d(TAG, "login failure: " + error);
             }
         });
+    }
+
+    @Nullable
+    protected User getLoggedInUser() {
+        User user = null;
+        try {
+            user = new Select().from(User.class).where("userID = ?", DlApplication.currentSession.getUserID()).executeSingle();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 
     protected void loginResult(Session session) {

@@ -3,6 +3,7 @@ package pl.snowdog.dzialajlokalnie;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -14,9 +15,12 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.activeandroid.query.Select;
 import com.getbase.floatingactionbutton.FloatingActionsMenu;
+import com.squareup.picasso.Picasso;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -31,6 +35,7 @@ import java.util.Locale;
 
 import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.adapter.FragmentAdapter;
+import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.events.FilterChangedEvent;
 import pl.snowdog.dzialajlokalnie.fragment.EventsFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.FilterFragment;
@@ -38,6 +43,7 @@ import pl.snowdog.dzialajlokalnie.fragment.FilterFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.IssuesFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.MapFragment_;
 import pl.snowdog.dzialajlokalnie.gcm.NotificationAction;
+import pl.snowdog.dzialajlokalnie.model.District;
 import pl.snowdog.dzialajlokalnie.model.Filter;
 import pl.snowdog.dzialajlokalnie.model.NewUser;
 import pl.snowdog.dzialajlokalnie.model.Notification;
@@ -67,6 +73,31 @@ public class MainActivity extends BaseActivity {
     @ViewById(R.id.fab)
     FloatingActionsMenu fab;
 
+    @ViewById(R.id.ivAvatar)
+    ImageView ivNavAvatar;
+
+    @ViewById(R.id.tvUserName)
+    TextView tvNavUserName;
+
+    @ViewById(R.id.tvUserDistrict)
+    TextView tvNavUserDistrict;
+
+/*
+    @Click(R.id.ivAvatar)
+    void onNavAvatarClicked() {
+
+    }
+*/
+
+    @Click(R.id.navHeader)
+    void onNavHeaderClicked() {
+        if(isLoggedIn()) {
+            AddUserActivity_.intent(this).mEditedUser(getLoggedInUser()).start();
+        } else {
+            AddUserActivity_.intent(this).start();
+        }
+    }
+
     @AfterViews
     protected void afterView() {
 
@@ -89,10 +120,31 @@ public class MainActivity extends BaseActivity {
         // TODO move login to login activity
         //logout();
         if (!isLoggedIn()) {
+            tvNavUserName.setText("Register");
+            tvNavUserDistrict.setText("or Login");
+
             //login("bartek@bartek.pl", "bartek");
+        } else {
+            List<User> users = new Select().from(User.class).execute();
+            for(User u : users) {
+                Log.d(TAG, "usrdbg user: "+u.toString()+" sessionUserId: "+DlApplication.currentSession.getUserID());
+            }
+            User user = getLoggedInUser();
+            if(user != null) {
+                tvNavUserName.setText(user.getName() + " " + user.getSurname());
+                District district = new Select().from(District.class).where("districtID = ?", user.getDistrictID()).executeSingle();
+                tvNavUserDistrict.setText(district.getName());
+
+                Picasso.with(this).
+                        load(String.format(DlApi.AVATAR_THUMB_URL, user.getAvatarUri())).
+                        error(R.drawable.ic_editor_insert_emoticon).
+                        into(ivNavAvatar);
+            }
         }
 
     }
+
+
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -153,6 +205,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
+
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override

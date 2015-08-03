@@ -1,5 +1,6 @@
 package pl.snowdog.dzialajlokalnie.fragment;
 
+import android.databinding.DataBindingUtil;
 import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.widget.EditText;
@@ -8,11 +9,14 @@ import android.widget.TextView;
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.FragmentArg;
 import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.ViewById;
 
 import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.R;
+import pl.snowdog.dzialajlokalnie.databinding.FragmentAddTitleDateBinding;
+import pl.snowdog.dzialajlokalnie.databinding.FragmentAddUserDetailsBinding;
 import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
 import pl.snowdog.dzialajlokalnie.util.PasswordValidator;
 
@@ -56,6 +60,9 @@ public class AddUserDetailsFragment extends AddBaseFragment {
     @ViewById(R.id.etDescriptionWrapper)
     TextInputLayout etDescriptionWrapper;
 
+    @FragmentArg
+    CreateNewObjectEvent mEditedObject;
+
 
     @Click(R.id.btnNext)
     void onNextButtonClicked() {
@@ -74,10 +81,14 @@ public class AddUserDetailsFragment extends AddBaseFragment {
     }
 
     boolean validateInput() {
+        boolean validEmail = true;
+        boolean validPassword = true;
         boolean validName = validateName();
         boolean validSurname = validateSurname();
-        boolean validEmail = validateEmail();
-        boolean validPassword = validatePassword();
+        if(mEditedObject == null) {
+            validEmail = validateEmail();
+            validPassword = validatePassword();
+        }
         boolean validDescription = validateDescription();
 
         if(validName && validSurname && validEmail && validPassword && validDescription) {
@@ -192,6 +203,15 @@ public class AddUserDetailsFragment extends AddBaseFragment {
     @AfterViews
     void afterViewsCreated() {
         btnPrev.setVisibility(View.GONE);
+
+        FragmentAddUserDetailsBinding binding = DataBindingUtil.bind(rootView);
+        binding.setEditedObject(mEditedObject);
+
+        if(mEditedObject != null) {
+            etPassword.setVisibility(View.GONE);
+            etEmail.setVisibility(View.GONE);
+        }
+
 
     }
 

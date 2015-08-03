@@ -199,15 +199,24 @@ public class AddImageFragment extends AddBaseFragment {
         }
         //EDIT MODE
         if(mEditedObject != null) {
-            Picasso.with(getActivity())
-                    .load(String.format(DlApi.PHOTO_THUMB_URL, mEditedObject.getImage()))
-                    .error(
-                    R.drawable.ic_editor_insert_emoticon).into(ivPreview);
-            Log.d(TAG, "edtdbg image: "+mEditedObject.getImage());
+            if(mMode == AddUserActivity.MODE_SIGN_UP) {
+                Picasso.with(getActivity())
+                        .load(String.format(DlApi.AVATAR_NORMAL_URL, mEditedObject.getImage()))
+                        .error(
+                                R.drawable.ic_editor_insert_emoticon).into(ivPreview);
+                Log.d(TAG, "edtdbg image: "+mEditedObject.getImage());
+            } else {
+                Picasso.with(getActivity())
+                        .load(String.format(DlApi.PHOTO_THUMB_URL, mEditedObject.getImage()))
+                        .error(
+                                R.drawable.ic_editor_insert_emoticon).into(ivPreview);
+                Log.d(TAG, "edtdbg image: "+mEditedObject.getImage());
+            }
+
         }
 
         if(mMode == AddUserActivity.MODE_SIGN_UP) {
-            btnNext.setText(R.string.register);
+            btnNext.setText(mEditedObject == null ? R.string.register : R.string.save_user_edit);
         }
     }
 }

@@ -16,6 +16,7 @@ public class Session extends Model {
     @Column(name = "apikey", unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
     private String apikey;
 
+    @Column
     private int userID;
     private int deviceType;
     private String ip;

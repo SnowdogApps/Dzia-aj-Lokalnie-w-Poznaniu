@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="event" type="pl.snowdog.dzialajlokalnie.model.Event"/>
+    </data>
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/eventDetails"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="@dimen/item_padding"
+                card_view:contentPadding="@dimen/item_padding"
+                card_view:cardBackgroundColor="@color/card_board_color"
+                card_view:cardCornerRadius="5dp"
+                card_view:cardUseCompatPadding="true" >
+
+                <include layout="@layout/attend_card"
+                    android:id="@+id/attend_card"
+                    bind:event="@{event}"
+                    />
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="@dimen/item_padding"
+                android:layout_marginRight="@dimen/item_padding"
+                android:layout_marginBottom="@dimen/item_padding"
+                card_view:contentPadding="@dimen/item_padding"
+                card_view:cardBackgroundColor="@color/card_board_color"
+                card_view:cardCornerRadius="5dp"
+                card_view:cardUseCompatPadding="true" >
+
+                <TextView
+                    android:id="@+id/tvDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/textView_item_desc"
+                    android:text='@{event.description}'/>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/mapCard"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/photo_size"
+                android:orientation="horizontal"
+                android:layout_marginLeft="@dimen/item_padding"
+                android:layout_marginRight="@dimen/item_padding"
+                android:layout_marginBottom="@dimen/item_padding"
+                card_view:contentPadding="@dimen/item_padding"
+                card_view:cardBackgroundColor="@color/card_board_color"
+                card_view:cardCornerRadius="5dp"
+                card_view:cardUseCompatPadding="true" >
+
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</layout>

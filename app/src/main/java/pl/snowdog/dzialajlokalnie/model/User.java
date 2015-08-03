@@ -1,35 +1,69 @@
 package pl.snowdog.dzialajlokalnie.model;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+
+import java.io.Serializable;
 import java.util.Date;
 
 
-public class User {
+@Table(name = "Users")
+public class User extends Model implements Serializable {
 
+    @Column(unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
     private int userID;
     private int userLevel;
-    private String username;
+
+    @Column
     private String email;
     private String password;
+
+    @Column
     private String description;
+
+    @Column
     private String name;
+
+    @Column
     private String surname;
+
+    @Column
     private int districtID;
+
+    @Column
     private int enableEmailNotifications;
+
+    @Column
     private int enablePushNotifications;
+
+    @Column
     private String pushRegId;
+
+    @Column
     private String avatarUri;
     private String apiKey;
     private Date lastLoginDate;
     private Date lastFailedLoginDate;
     private int failedLoginCount;
+
+    @Column
     private int accountStatus;
+
+    @Column
     private Date createdAt;
+
+    @Column
     private Date updatedAt;
 
-    public User(int userID, int userLevel, String username, String email, String password, String description, String name, String surname, int districtID, int enableEmailNotifications, int enablePushNotifications, String pushRegId, String avatarUri, String apiKey, Date lastLoginDate, Date lastFailedLoginDate, int failedLoginCount, int accountStatus, Date createdAt, Date updatedAt) {
+    public User() {
+        super();
+    }
+
+    public User(int userID, int userLevel, String email, String password, String description, String name, String surname, int districtID, int enableEmailNotifications, int enablePushNotifications, String pushRegId, String avatarUri, String apiKey, Date lastLoginDate, Date lastFailedLoginDate, int failedLoginCount, int accountStatus, Date createdAt, Date updatedAt) {
+        super();
         this.userID = userID;
         this.userLevel = userLevel;
-        this.username = username;
         this.email = email;
         this.password = password;
         this.description = description;
@@ -63,14 +97,6 @@ public class User {
 
     public void setUserLevel(int userLevel) {
         this.userLevel = userLevel;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getEmail() {
@@ -207,5 +233,30 @@ public class User {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userID=" + userID +
+                ", userLevel=" + userLevel +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", description='" + description + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", districtID=" + districtID +
+                ", enableEmailNotifications=" + enableEmailNotifications +
+                ", enablePushNotifications=" + enablePushNotifications +
+                ", pushRegId='" + pushRegId + '\'' +
+                ", avatarUri='" + avatarUri + '\'' +
+                ", apiKey='" + apiKey + '\'' +
+                ", lastLoginDate=" + lastLoginDate +
+                ", lastFailedLoginDate=" + lastFailedLoginDate +
+                ", failedLoginCount=" + failedLoginCount +
+                ", accountStatus=" + accountStatus +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
     }
 }
