@@ -12,6 +12,7 @@ import pl.snowdog.dzialajlokalnie.adapter.EventsAdapter;
 import pl.snowdog.dzialajlokalnie.events.EventAttendEvent;
 import pl.snowdog.dzialajlokalnie.events.ObjectAddedEvent;
 import pl.snowdog.dzialajlokalnie.model.Event;
+import pl.snowdog.dzialajlokalnie.model.ParticipateEvent;
 
 /**
  * Created by bartek on 07.07.15.
@@ -48,6 +49,7 @@ public class EventsFragment extends ListFragment {
 
     public void onEvent(EventAttendEvent event) {
         Log.d(TAG, "onEvent " + event);
+        participate(new ParticipateEvent(event.getEventId(), ParticipateEvent.ParcitipateType.attending));
     }
 
     public void onEvent(ObjectAddedEvent event) {

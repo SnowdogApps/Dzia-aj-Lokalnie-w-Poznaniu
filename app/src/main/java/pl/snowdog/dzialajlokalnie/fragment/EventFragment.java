@@ -58,7 +58,7 @@ public class EventFragment extends BaseFragment implements OnMapReadyCallback {
     @Click(R.id.ibAttend)
     protected void attend() {
         if (binding.getEvent() != null) {
-            EventBus.getDefault().post(new EventAttendEvent(binding.getEvent().getEventID()));
+            participate(new ParticipateEvent(binding.getEvent().getEventID(), ParticipateEvent.ParcitipateType.attending));
         }
     }
 
@@ -85,11 +85,6 @@ public class EventFragment extends BaseFragment implements OnMapReadyCallback {
     public void onEvent(RefreshEvent event) {
         Log.d(TAG, "onEvent " + event);
         getEvent(objId);
-    }
-
-    public void onEvent(EventAttendEvent event) {
-        Log.d(TAG, "onEvent " + event);
-        participate(new ParticipateEvent(event.getEventId(), ParticipateEvent.ParcitipateType.attending));
     }
 
     @Override

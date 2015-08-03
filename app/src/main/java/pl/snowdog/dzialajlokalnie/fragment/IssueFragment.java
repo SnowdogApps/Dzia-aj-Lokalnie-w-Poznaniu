@@ -72,8 +72,7 @@ public class IssueFragment extends BaseFragment implements OnMapReadyCallback {
 
     private void rate(IssueVoteEvent.Vote vote) {
         if (binding.getIssue() != null) {
-            EventBus.getDefault().post(new IssueVoteEvent(
-                    binding.getIssue().getIssueID(), vote));
+            vote(DlApi.ParentType.issues, binding.getIssue().getIssueID(), vote == VoteEvent.Vote.UP ? 1 : -1);
         }
     }
 
@@ -100,12 +99,6 @@ public class IssueFragment extends BaseFragment implements OnMapReadyCallback {
     public void onEvent(RefreshEvent event) {
         Log.d(TAG, "onEvent " + event);
         getIssue(objId);
-    }
-
-    public void onEvent(IssueVoteEvent event) {
-        Log.d(TAG, "onEvent " + event);
-
-        vote(DlApi.ParentType.issues, event.getId(), event.getVote() == VoteEvent.Vote.UP ? 1 : -1);
     }
 
     @Override
