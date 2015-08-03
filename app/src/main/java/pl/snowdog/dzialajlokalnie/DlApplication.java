@@ -4,9 +4,11 @@ import android.app.Application;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import io.fabric.sdk.android.Fabric;
 import java.lang.reflect.Modifier;
 
 import pl.snowdog.dzialajlokalnie.api.CityApi;
@@ -39,6 +41,7 @@ public class DlApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
 
         ActiveAndroid.initialize(this);
 
