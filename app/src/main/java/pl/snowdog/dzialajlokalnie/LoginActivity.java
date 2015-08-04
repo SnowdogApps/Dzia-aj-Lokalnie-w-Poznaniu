@@ -233,6 +233,7 @@ public class LoginActivity extends BaseActivity {
                         Log.d(TAG, "fbdbg facebookLogin SESSION RECEIVED");
                         try {
                             user.getSession().save();
+                            DlApplication.refreshCurrentSession();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -244,6 +245,7 @@ public class LoginActivity extends BaseActivity {
                         Log.d(TAG, "fbdbg facebookLogin USER RECEIVED");
                         try {
                             user.getSession().save();
+                            DlApplication.refreshCurrentSession();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
