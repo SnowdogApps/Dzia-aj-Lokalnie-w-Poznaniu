@@ -66,6 +66,7 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.1.0'
     compile 'com.google.code.gson:gson:2.3'
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
+    compile 'com.github.machinarius:preferencefragment:0.1.1'
     compile 'com.facebook.android:facebook-android-sdk:4.0.0'
     apt "org.androidannotations:androidannotations:$AAVersion"
     apt "com.android.databinding:compiler:1.+"

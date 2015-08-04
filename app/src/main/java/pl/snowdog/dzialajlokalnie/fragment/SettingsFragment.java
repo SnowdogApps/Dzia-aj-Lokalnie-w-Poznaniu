@@ -3,11 +3,13 @@ package pl.snowdog.dzialajlokalnie.fragment;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
-import android.preference.PreferenceFragment;
+
+
 import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.activeandroid.query.Select;
+import com.github.machinarius.preferencefragment.PreferenceFragment;
 
 import org.androidannotations.annotations.AfterPreferences;
 import org.androidannotations.annotations.EActivity;
@@ -18,6 +20,7 @@ import org.androidannotations.annotations.PreferenceScreen;
 
 import pl.snowdog.dzialajlokalnie.DlApplication;
 import pl.snowdog.dzialajlokalnie.R;
+import pl.snowdog.dzialajlokalnie.SettingsActivity;
 import pl.snowdog.dzialajlokalnie.model.NewUser;
 import pl.snowdog.dzialajlokalnie.model.User;
 import retrofit.Callback;
@@ -65,11 +68,13 @@ public class SettingsFragment extends PreferenceFragment {
             @Override
             public void success(User user, Response response) {
                 Log.d(TAG, "userApi.sendRegistrationToServer post success: " + response + " user: " + user.toString());
+                toggleProgressWheel(false);
             }
 
             @Override
             public void failure(RetrofitError error) {
                 Log.d(TAG, "userApi.postNewUser post error: " + error);
+                toggleProgressWheel(false);
 
             }
         });
@@ -80,7 +85,7 @@ public class SettingsFragment extends PreferenceFragment {
             if(mApiActionDialogFragment == null) {
                 mApiActionDialogFragment = ApiActionDialogFragment_.builder().build();
             }
-            mApiActionDialogFragment.show(getSupportFragmentManager(), ApiActionDialogFragment.TAG);
+            mApiActionDialogFragment.show(((SettingsActivity)getActivity()).getSupportFragmentManager(), ApiActionDialogFragment.TAG);
         } else {
             mApiActionDialogFragment.dismiss();
         }

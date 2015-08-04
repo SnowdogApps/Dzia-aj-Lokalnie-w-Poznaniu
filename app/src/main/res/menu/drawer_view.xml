@@ -5,7 +5,7 @@
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_setting_dark"
-            android:title="Ustawienia" />
+            android:title="@string/action_settings" />
 
     </group>
 
