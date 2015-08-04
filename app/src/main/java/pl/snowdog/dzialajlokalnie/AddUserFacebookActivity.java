@@ -100,16 +100,16 @@ public class AddUserFacebookActivity extends AddUserActivity {
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         // 2. Chain together various setter methods to set the dialog characteristics
-        builder.setMessage("Jeśli nie podasz lokalizacji, rejestracja zostanie przerwana.")
-                .setTitle("Przerwać rejestracje?");
+        builder.setMessage(getString(R.string.warning_localization_dialogi_message))
+                .setTitle(getString(R.string.warning_localization_dialog_title));
         // Add the buttons
-        builder.setPositiveButton("Przerwij", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(getString(R.string.warning_localization_dialog_positive), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 LoginManager.getInstance().logOut();
                 AddUserFacebookActivity.this.finish();
             }
         });
-        builder.setNegativeButton("Dokończ", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.warning_localization_dialog_negative), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.dismiss();
             }

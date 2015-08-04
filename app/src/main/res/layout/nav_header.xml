@@ -13,7 +13,7 @@
         android:id="@+id/ivAvatar"
         android:layout_width="@dimen/list_photo_size"
         android:layout_height="@dimen/list_photo_size"
-        android:src="@drawable/sample_picture"
+        android:src="@drawable/ic_editor_insert_emoticon"
         android:scaleType="centerCrop"/>
 
     <TextView

@@ -107,6 +107,11 @@
     <string name="wrote_on_quote">%s napisał(a): \n</string>
     <string name="edit_user">Edycja profilu</string>
     <string name="save_user_edit">Zapisz</string>
+    <string name="login_or_register">Zaloguj lub zarejestruj</string>
+    <string name="warning_localization_dialogi_message">Jeśli nie podasz lokalizacji, rejestracja zostanie przerwana.</string>
+    <string name="warning_localization_dialog_title">Przerwać rejestracje?</string>
+    <string name="warning_localization_dialog_positive">Przerwij</string>
+    <string name="warning_localization_dialog_negative">Dokończ</string>
 
     <plurals name="votes">
         <item quantity="one">%d głos</item>

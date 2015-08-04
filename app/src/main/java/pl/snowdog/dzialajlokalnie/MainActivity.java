@@ -120,8 +120,8 @@ public class MainActivity extends BaseActivity {
         // TODO move login to login activity
         //logout();
         if (!isLoggedIn()) {
-            tvNavUserName.setText("Register");
-            tvNavUserDistrict.setText("or Login");
+            tvNavUserName.setText(R.string.login_or_register);
+            tvNavUserDistrict.setText("");
 
             //login("bartek@bartek.pl", "bartek");
         } else {
