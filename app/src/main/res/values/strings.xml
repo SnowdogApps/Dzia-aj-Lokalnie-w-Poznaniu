@@ -116,6 +116,11 @@
 
     <string name="pref_key_push_notifications">pref_push_notifications</string>
     <string name="pref_key_email_notifications">pref_email_notifications</string>
+    <string name="pref_title_push_notifications">Powiadomienia na telefon</string>
+    <string name="pref_subtitle_push_notifications">Nowości, komentarze, wydarzenia</string>
+    <string name="pref_title_email_notifications">Powiadomienia emailem</string>
+    <string name="pref_subtitle_email_notifications">Nowości, komentarze, wydarzenia</string>
+
 
 
     <plurals name="votes">
