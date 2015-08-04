@@ -243,11 +243,11 @@ public class AddUserActivity extends AddBaseActivity {
     protected NewUser createNewUserObject() {
         NewUser newUser = new NewUser();
         newUser.setDistrictID(districtID > 0 ? districtID : null);
-        newUser.setDescription(description.length() > 0 ? description : null);
-        newUser.setName(name.length() > 0 ? name : null);
-        newUser.setSurname(surname.length() > 0 ? name : null);
-        newUser.setEmail(email.length() > 0 ? email : null);
-        newUser.setPass(password.length() > 0 ? password : null);
+        newUser.setDescription(description != null && description.length() > 0 ? description : null);
+        newUser.setName(name != null && name.length() > 0 ? name : null);
+        newUser.setSurname(surname != null && surname.length() > 0 ? name : null);
+        newUser.setEmail(email != null && email.length() > 0 ? email : null);
+        newUser.setPass(password != null && password.length() > 0 ? password : null);
         newUser.setPushRegId(pref.pushRegId().get());
 
         return newUser;

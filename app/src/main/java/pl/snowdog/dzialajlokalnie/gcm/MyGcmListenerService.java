@@ -97,6 +97,7 @@ public class MyGcmListenerService extends GcmListenerService {
         switch (pushNotification.getAction()) {
             case NotificationAction.NEW_ISSUE_SURROUND:
                 intent = new Intent(this, MainActivity.class);
+                //TODO
                 break;
             case NotificationAction.EDIT_ISSUE:
                 intent = new Intent(this, MainActivity.class);
@@ -107,6 +108,8 @@ public class MyGcmListenerService extends GcmListenerService {
 
             case NotificationAction.NEW_EVENT_SURROUND:
                 intent = new Intent(this, MainActivity.class);
+                //TODO
+
                 break;
             case NotificationAction.NEW_EVENT_USER_PARTICIPATED:
                 intent = new Intent(this, MainActivity.class);

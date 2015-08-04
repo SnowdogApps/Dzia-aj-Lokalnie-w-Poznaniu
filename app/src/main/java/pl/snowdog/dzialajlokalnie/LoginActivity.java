@@ -227,7 +227,7 @@ public class LoginActivity extends BaseActivity {
 
                 Log.d(TAG, "fbdbg facebookLogin user post success: " + response);// + " user: " + user.toString());
                 if(user != null) {
-                    if (user.getSession() != null) {
+                    if (user.getSession() != null && user.getUser() == null) {
                         //Consecutive facebook login, user was already created - store session
                         //and start regular app usage
                         Log.d(TAG, "fbdbg facebookLogin SESSION RECEIVED");
@@ -238,10 +238,15 @@ public class LoginActivity extends BaseActivity {
                         }
                         finish();
                     }
-                    if (user.getUser() != null) {
+                    if (user.getSession() != null && user.getUser() != null) {
                         //First user login by facebook, we need to get his location to update account
                         //if no location will be provided - log user out
                         Log.d(TAG, "fbdbg facebookLogin USER RECEIVED");
+                        try {
+                            user.getSession().save();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         hideKeyboard();
                         AddUserFacebookActivity_.intent(LoginActivity.this).userID(user.getUser().getUserID()).start();
                     }
