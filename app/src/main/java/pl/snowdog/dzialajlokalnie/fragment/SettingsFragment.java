@@ -48,6 +48,7 @@ public class SettingsFragment extends PreferenceFragment {
     void checkedChangedPushNotifications(boolean newValue, Preference preference) {
         loggedInUser.setEnablePushNotifications(newValue ? 1 : 0);
         loggedInUser.save();
+        sendChangesToApi();
         Log.d(TAG, "prfdbg Push clicked");
     }
 
@@ -55,6 +56,7 @@ public class SettingsFragment extends PreferenceFragment {
     void checkedChangedEmailNotifications(boolean newValue, Preference preference) {
         loggedInUser.setEnableEmailNotifications(newValue ? 1 : 0);
         loggedInUser.save();
+        sendChangesToApi();
         Log.d(TAG, "prfdbg Email clicked");
     }
 

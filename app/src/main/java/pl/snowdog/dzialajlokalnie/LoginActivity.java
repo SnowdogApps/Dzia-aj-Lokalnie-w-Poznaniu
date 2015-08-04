@@ -113,9 +113,9 @@ public class LoginActivity extends BaseActivity {
 
     @Click(R.id.btnRegister)
     void onRegisterClicked() {
-        //AddUserActivity_.intent(this).start();
-        AddUserFacebookActivity_.intent(LoginActivity.this).start();
-        hideKeyboard();
+        AddUserActivity_.intent(this).start();
+        /*AddUserFacebookActivity_.intent(LoginActivity.this).start();
+        hideKeyboard();*/
         this.finish();
     }
 

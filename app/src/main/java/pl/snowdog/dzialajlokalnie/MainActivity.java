@@ -134,7 +134,9 @@ public class MainActivity extends BaseActivity {
             if(user != null) {
                 tvNavUserName.setText(user.getName() + " " + user.getSurname());
                 District district = new Select().from(District.class).where("districtID = ?", user.getDistrictID()).executeSingle();
-                tvNavUserDistrict.setText(district.getName());
+                if(district != null) {
+                    tvNavUserDistrict.setText(district.getName());
+                }
 
                 Picasso.with(this).
                         load(String.format(DlApi.AVATAR_THUMB_URL, user.getAvatarUri())).

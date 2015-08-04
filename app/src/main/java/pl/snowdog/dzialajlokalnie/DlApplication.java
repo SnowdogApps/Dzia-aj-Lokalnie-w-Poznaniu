@@ -78,7 +78,7 @@ public class DlApplication extends Application implements
 
         createDlRestAdapter();
 
-        initGoogleAnalytics();
+        //initGoogleAnalytics();
 
         initSplunkMint();
 
