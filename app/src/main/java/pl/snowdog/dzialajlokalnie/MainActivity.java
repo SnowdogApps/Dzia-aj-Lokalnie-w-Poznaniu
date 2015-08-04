@@ -96,6 +96,7 @@ public class MainActivity extends BaseActivity {
         } else {
             LoginActivity_.intent(this).start();
         }
+        mDrawerLayout.closeDrawers();
     }
 
     @AfterViews
@@ -210,8 +211,17 @@ public class MainActivity extends BaseActivity {
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        menuItem.setChecked(true);
-                        mDrawerLayout.closeDrawers();
+                        switch (menuItem.getItemId()) {
+                            case R.id.nav_settings:
+                                mDrawerLayout.closeDrawers();
+                                SettingsActivity_.intent(MainActivity.this).start();
+                                break;
+                            default:
+                                menuItem.setChecked(true);
+                                mDrawerLayout.closeDrawers();
+                                break;
+                        }
+
                         return true;
                     }
                 });

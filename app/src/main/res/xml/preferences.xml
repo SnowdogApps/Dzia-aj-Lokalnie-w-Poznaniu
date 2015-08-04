@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:key="@string/pref_key_push_notifications"
+        android:title="Włącz powiadomienia systemowe"
+        android:summary="Otrzymuj powiadomienia o wydarzeniach w Twojej okolicy"
+        android:defaultValue="true" />
+    <CheckBoxPreference
+        android:key="@string/pref_key_email_notifications"
+        android:title="Włącz powiadomienia emailem"
+        android:summary="Otrzymuj powiadomienia o wydarzeniach w Twojej okolicy"
+        android:defaultValue="true" />
+
+</PreferenceScreen>
