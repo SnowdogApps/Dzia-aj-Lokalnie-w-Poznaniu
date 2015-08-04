@@ -231,6 +231,10 @@ public class MainActivity extends BaseActivity {
                                 mDrawerLayout.closeDrawers();
                                 SettingsActivity_.intent(MainActivity.this).start();
                                 break;
+                            case R.id.nav_about:
+                                mDrawerLayout.closeDrawers();
+                                AboutActivity_.intent(MainActivity.this).start();
+                                break;
                             default:
                                 menuItem.setChecked(true);
                                 mDrawerLayout.closeDrawers();
