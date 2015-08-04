@@ -224,24 +224,27 @@ public class LoginActivity extends BaseActivity {
         DlApplication.userApi.loginFb(login, new Callback<Login.Facebook>() {
             @Override
             public void success(Login.Facebook user, Response response) {
-                Log.d(TAG, "fbdbg facebookLogin user post success: " + response + " user: " + user.toString());
-                if (user.getSession() != null) {
-                    //Consecutive facebook login, user was already created - store session
-                    //and start regular app usage
-                    Log.d(TAG, "fbdbg facebookLogin SESSION RECEIVED");
-                    try {
-                        user.getSession().save();
-                    } catch (Exception e) {
-                        e.printStackTrace();
+
+                Log.d(TAG, "fbdbg facebookLogin user post success: " + response);// + " user: " + user.toString());
+                if(user != null) {
+                    if (user.getSession() != null) {
+                        //Consecutive facebook login, user was already created - store session
+                        //and start regular app usage
+                        Log.d(TAG, "fbdbg facebookLogin SESSION RECEIVED");
+                        try {
+                            user.getSession().save();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        finish();
                     }
-                    finish();
-                }
-                if (user.getUser() != null) {
-                    //First user login by facebook, we need to get his location to update account
-                    //if no location will be provided - log user out
-                    Log.d(TAG, "fbdbg facebookLogin USER RECEIVED");
-                    hideKeyboard();
-                    AddUserFacebookActivity_.intent(LoginActivity.this).userID(user.getUser().getUserID()).start();
+                    if (user.getUser() != null) {
+                        //First user login by facebook, we need to get his location to update account
+                        //if no location will be provided - log user out
+                        Log.d(TAG, "fbdbg facebookLogin USER RECEIVED");
+                        hideKeyboard();
+                        AddUserFacebookActivity_.intent(LoginActivity.this).userID(user.getUser().getUserID()).start();
+                    }
                 }
                 toggleProgressWheel(false);
 
