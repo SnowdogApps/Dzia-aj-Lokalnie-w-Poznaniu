@@ -84,12 +84,6 @@ public class MainActivity extends BaseActivity {
     @ViewById(R.id.tvUserDistrict)
     TextView tvNavUserDistrict;
 
-/*
-    @Click(R.id.ivAvatar)
-    void onNavAvatarClicked() {
-
-    }
-*/
 
     @Click(R.id.navHeader)
     void onNavHeaderClicked() {
