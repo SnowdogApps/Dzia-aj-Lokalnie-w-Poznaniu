@@ -1,6 +1,8 @@
 package pl.snowdog.dzialajlokalnie.model;
 
 
+import com.activeandroid.annotation.Column;
+
 public class NewUser {
 
     private String username;
@@ -10,11 +12,32 @@ public class NewUser {
     private String name;
     private String surname;
     private Integer districtID;
+    private Integer enableEmailNotifications;
+    private Integer enablePushNotifications;
     private String pushRegId;
     private String avatarUri;
 
+
     public NewUser() {
         this.setDistrictID(null);
+        this.setEnableEmailNotifications(null);
+        this.setEnablePushNotifications(null);
+    }
+
+    public Integer getEnableEmailNotifications() {
+        return enableEmailNotifications;
+    }
+
+    public void setEnableEmailNotifications(Integer enableEmailNotifications) {
+        this.enableEmailNotifications = enableEmailNotifications;
+    }
+
+    public Integer getEnablePushNotifications() {
+        return enablePushNotifications;
+    }
+
+    public void setEnablePushNotifications(Integer enablePushNotifications) {
+        this.enablePushNotifications = enablePushNotifications;
     }
 
     public String getUsername() {

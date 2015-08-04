@@ -3,32 +3,10 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_action_new"
-            android:title="Home" />
-        <item
-            android:id="@+id/nav_messages"
-            android:icon="@drawable/ic_action_new"
-            android:title="Messages" />
-        <item
-            android:id="@+id/nav_friends"
-            android:icon="@drawable/ic_action_new"
-            android:title="Friends" />
-        <item
-            android:id="@+id/nav_discussion"
-            android:icon="@drawable/ic_action_new"
-            android:title="Discussion" />
-    </group>
+            android:id="@+id/nav_settings"
+            android:icon="@drawable/ic_setting_dark"
+            android:title="Ustawienia" />
 
-    <item android:title="Sub items">
-        <menu>
-            <item
-                android:icon="@drawable/ic_action_new"
-                android:title="Sub item 1" />
-            <item
-                android:icon="@drawable/ic_action_new"
-                android:title="Sub item 2" />
-        </menu>
-    </item>
+    </group>
 
 </menu>
