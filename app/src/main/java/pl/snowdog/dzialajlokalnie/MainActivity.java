@@ -36,7 +36,9 @@ import java.util.Locale;
 import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.adapter.FragmentAdapter;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
+import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
 import pl.snowdog.dzialajlokalnie.events.FilterChangedEvent;
+import pl.snowdog.dzialajlokalnie.events.ObjectAddedEvent;
 import pl.snowdog.dzialajlokalnie.fragment.EventsFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.FilterFragment;
 import pl.snowdog.dzialajlokalnie.fragment.FilterFragment_;
@@ -91,7 +93,7 @@ public class MainActivity extends BaseActivity {
 
     @Click(R.id.navHeader)
     void onNavHeaderClicked() {
-        if(isLoggedIn()) {
+        if(isLoggedIn() && !DlApplication.currentSession.isFacebookSession()) {
             AddUserActivity_.intent(this).mEditedUser(getLoggedInUser()).start();
         } else {
             LoginActivity_.intent(this).start();
@@ -118,18 +120,20 @@ public class MainActivity extends BaseActivity {
         }
 
         mTabLayout.setupWithViewPager(mViewPager);
-        // TODO move login to login activity
+
         //logout();
+        updateUserNavHeader();
+
+    }
+
+    protected void updateUserNavHeader() {
         if (!isLoggedIn()) {
             tvNavUserName.setText(R.string.login_or_register);
             tvNavUserDistrict.setText("");
 
             //login("bartek@bartek.pl", "bartek");
         } else {
-            List<User> users = new Select().from(User.class).execute();
-            for(User u : users) {
-                Log.d(TAG, "usrdbg user: "+u.toString()+" sessionUserId: "+DlApplication.currentSession.getUserID());
-            }
+
             User user = getLoggedInUser();
             if(user != null) {
                 tvNavUserName.setText(user.getName() + " " + user.getSurname());
@@ -144,9 +148,7 @@ public class MainActivity extends BaseActivity {
                         into(ivNavAvatar);
             }
         }
-
     }
-
 
 
     @Override
@@ -187,6 +189,22 @@ public class MainActivity extends BaseActivity {
 
     }
 
+
+    public void onEvent(ObjectAddedEvent event) {
+        switch (event.getAdded()) {
+            case user:
+                updateUserNavHeader();
+                break;
+
+        }
+    }
+
+    @Override
+    protected void logout() {
+        super.logout();
+        updateUserNavHeader();
+    }
+
     @Override
     protected void loginResult(Session session) {
 
@@ -195,6 +213,7 @@ public class MainActivity extends BaseActivity {
         for (Session s : dbSessions) {
             Log.d(TAG, "loginResult " + s);
         }
+        updateUserNavHeader();
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -231,6 +250,7 @@ public class MainActivity extends BaseActivity {
 
     @OptionsItem(android.R.id.home)
     void homeSelected() {
+        updateUserNavHeader();
         mDrawerLayout.openDrawer(GravityCompat.START);
     }
 

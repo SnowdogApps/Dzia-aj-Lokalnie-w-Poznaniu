@@ -85,8 +85,15 @@ public class AddUserDetailsFragment extends AddBaseFragment {
         boolean validName = validateName();
         boolean validSurname = validateSurname();
         boolean validEmail = validateEmail();
+
+        //Normal password validation if not in edit mode
         if(mEditedObject == null) {
             validPassword = validatePassword();
+        } else {
+            //If we're editing the password, and user added new password, validate it
+            if(etPassword.getText().toString().length() > 0) {
+                validPassword = validatePassword();
+            }
         }
         boolean validDescription = validateDescription();
 
@@ -207,7 +214,7 @@ public class AddUserDetailsFragment extends AddBaseFragment {
         binding.setEditedObject(mEditedObject);
 
         if(mEditedObject != null) {
-            etPassword.setVisibility(View.GONE);
+        //    etPassword.setVisibility(View.GONE);
         }
 
 

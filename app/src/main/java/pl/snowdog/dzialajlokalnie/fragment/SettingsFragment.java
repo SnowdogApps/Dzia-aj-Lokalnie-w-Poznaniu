@@ -87,7 +87,7 @@ public class SettingsFragment extends PreferenceFragment {
             if(mApiActionDialogFragment == null) {
                 mApiActionDialogFragment = ApiActionDialogFragment_.builder().build();
             }
-            mApiActionDialogFragment.show(((SettingsActivity)getActivity()).getSupportFragmentManager(), ApiActionDialogFragment.TAG);
+            mApiActionDialogFragment.show(((SettingsActivity) getActivity()).getSupportFragmentManager(), ApiActionDialogFragment.TAG);
         } else {
             mApiActionDialogFragment.dismiss();
         }
@@ -95,13 +95,16 @@ public class SettingsFragment extends PreferenceFragment {
 
     @AfterPreferences
     void initPrefs() {
-        if(!isLoggedIn()) {
+        loggedInUser = getLoggedInUser();
+        if(!isLoggedIn() || loggedInUser == null) {
             prefPushNotifications.setEnabled(false);
             prefEmailNotifications.setEnabled(false);
         } else {
             loggedInUser = getLoggedInUser();
-            prefPushNotifications.setChecked(loggedInUser.getEnableEmailNotifications() == 1 ? true : false);
-            prefEmailNotifications.setChecked(loggedInUser.getEnablePushNotifications() == 1 ? true : false);
+            if(loggedInUser != null) {
+                prefPushNotifications.setChecked(loggedInUser.getEnableEmailNotifications() == 1 ? true : false);
+                prefEmailNotifications.setChecked(loggedInUser.getEnablePushNotifications() == 1 ? true : false);
+            }
         }
 
     }

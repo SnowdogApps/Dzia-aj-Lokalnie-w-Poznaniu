@@ -21,7 +21,6 @@ import pl.snowdog.dzialajlokalnie.events.ObjectAddedEvent;
 import pl.snowdog.dzialajlokalnie.fragment.AddImageFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.AddLocationFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.AddUserDetailsFragment_;
-import pl.snowdog.dzialajlokalnie.model.District;
 import pl.snowdog.dzialajlokalnie.model.NewUser;
 import pl.snowdog.dzialajlokalnie.model.Session;
 import pl.snowdog.dzialajlokalnie.model.User;
@@ -162,6 +161,7 @@ public class AddUserActivity extends AddBaseActivity {
             public void success(User user, Response response) {
                 ActiveAndroid.beginTransaction();
                 try {
+                    user.setEmail(email);
                     user.save();
                     ActiveAndroid.setTransactionSuccessful();
                 } catch (Exception e) {
@@ -245,7 +245,7 @@ public class AddUserActivity extends AddBaseActivity {
         newUser.setDistrictID(districtID > 0 ? districtID : null);
         newUser.setDescription(description != null && description.length() > 0 ? description : null);
         newUser.setName(name != null && name.length() > 0 ? name : null);
-        newUser.setSurname(surname != null && surname.length() > 0 ? name : null);
+        newUser.setSurname(surname != null && surname.length() > 0 ? surname : null);
         newUser.setEmail(email != null && email.length() > 0 ? email : null);
         newUser.setPass(password != null && password.length() > 0 ? password : null);
         newUser.setPushRegId(pref.pushRegId().get());

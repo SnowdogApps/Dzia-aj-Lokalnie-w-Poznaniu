@@ -1,36 +1,25 @@
 package pl.snowdog.dzialajlokalnie;
 
 import android.content.DialogInterface;
-import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.activeandroid.ActiveAndroid;
-import com.activeandroid.query.Select;
-import com.facebook.login.LoginManager;
-
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.Extra;
 
-import java.io.File;
-import java.util.List;
 import java.util.Locale;
 
 import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
 import pl.snowdog.dzialajlokalnie.events.ObjectAddedEvent;
-import pl.snowdog.dzialajlokalnie.fragment.AddImageFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.AddLocationFragment_;
-import pl.snowdog.dzialajlokalnie.fragment.AddUserDetailsFragment_;
 import pl.snowdog.dzialajlokalnie.model.NewUser;
-import pl.snowdog.dzialajlokalnie.model.Session;
 import pl.snowdog.dzialajlokalnie.model.User;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
-import retrofit.mime.TypedFile;
 
 /**
  * Created by chomi3 on 2015-07-06.
@@ -105,7 +94,8 @@ public class AddUserFacebookActivity extends AddUserActivity {
         // Add the buttons
         builder.setPositiveButton(getString(R.string.warning_localization_dialog_positive), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                LoginManager.getInstance().logOut();
+                //LoginManager.getInstance().logOut();
+                logout();
                 AddUserFacebookActivity.this.finish();
             }
         });

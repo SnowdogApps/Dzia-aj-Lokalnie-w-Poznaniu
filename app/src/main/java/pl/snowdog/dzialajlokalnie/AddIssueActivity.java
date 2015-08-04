@@ -12,9 +12,7 @@ import org.androidannotations.annotations.Extra;
 import java.io.File;
 import java.util.Locale;
 
-import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
-import pl.snowdog.dzialajlokalnie.events.FilterChangedEvent;
 import pl.snowdog.dzialajlokalnie.events.ObjectAddedEvent;
 import pl.snowdog.dzialajlokalnie.fragment.AddCategoriesFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.AddImageFragment_;

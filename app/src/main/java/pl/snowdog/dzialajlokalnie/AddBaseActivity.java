@@ -24,7 +24,6 @@ import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
 import pl.snowdog.dzialajlokalnie.events.ObjectAddedEvent;
 import pl.snowdog.dzialajlokalnie.fragment.ApiActionDialogFragment;
 import pl.snowdog.dzialajlokalnie.fragment.ApiActionDialogFragment_;
-import pl.snowdog.dzialajlokalnie.view.CircularProgressWheel;
 
 /**
  * Created by chomi3 on 2015-07-06.
@@ -145,9 +144,10 @@ public abstract class AddBaseActivity extends BaseActivity {
 
     protected void finishAdding(ObjectAddedEvent.Type added) {
         toggleProgressWheel(false);
+        EventBus.getDefault().post(new ObjectAddedEvent(added));
         finish();
-        //EventBus.getDefault().post(new ObjectAddedEvent(added));
-        MainActivity_.intent(this).start();
+
+
     }
 
     public void onObjectCreated() {

@@ -1,32 +1,20 @@
 package pl.snowdog.dzialajlokalnie;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.design.widget.TabLayout;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.activeandroid.ActiveAndroid;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.Profile;
@@ -35,37 +23,21 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.squareup.picasso.Picasso;
 
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.TextChange;
 import org.androidannotations.annotations.ViewById;
 import org.json.JSONObject;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
 import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
 import pl.snowdog.dzialajlokalnie.events.ObjectAddedEvent;
-import pl.snowdog.dzialajlokalnie.fragment.AddCategoriesFragment_;
-import pl.snowdog.dzialajlokalnie.fragment.AddImageFragment_;
-import pl.snowdog.dzialajlokalnie.fragment.AddLocationFragment_;
-import pl.snowdog.dzialajlokalnie.fragment.AddTitleDateFragment;
-import pl.snowdog.dzialajlokalnie.fragment.AddTitleDateFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.ApiActionDialogFragment;
 import pl.snowdog.dzialajlokalnie.fragment.ApiActionDialogFragment_;
-import pl.snowdog.dzialajlokalnie.model.DateWrapper;
 import pl.snowdog.dzialajlokalnie.model.Login;
 import pl.snowdog.dzialajlokalnie.model.Session;
-import pl.snowdog.dzialajlokalnie.model.User;
-import pl.snowdog.dzialajlokalnie.util.FileChooserUtil;
 import pl.snowdog.dzialajlokalnie.util.PasswordValidator;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -237,7 +209,9 @@ public class LoginActivity extends BaseActivity {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+                        EventBus.getDefault().post(new ObjectAddedEvent(ObjectAddedEvent.Type.user));
                         finish();
+
                     }
                     if (user.getSession() != null && user.getUser() != null) {
                         //First user login by facebook, we need to get his location to update account

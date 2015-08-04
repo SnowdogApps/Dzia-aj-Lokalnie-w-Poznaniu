@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -110,6 +111,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected abstract void afterView();
+
 
 
     @Override
@@ -342,6 +344,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void logout() {
         new Delete().from(Session.class).execute();
         DlApplication.currentSession = null;
+        LoginManager.getInstance().logOut();
         Snackbar.make(coordinatorLayout, getString(R.string.logout_success), Snackbar.LENGTH_LONG).show();
     }
 

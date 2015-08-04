@@ -22,7 +22,6 @@ import pl.snowdog.dzialajlokalnie.fragment.AddTitleDateFragment;
 import pl.snowdog.dzialajlokalnie.fragment.AddTitleDateFragment_;
 import pl.snowdog.dzialajlokalnie.model.DateWrapper;
 import pl.snowdog.dzialajlokalnie.model.Event;
-import pl.snowdog.dzialajlokalnie.model.Issue;
 import pl.snowdog.dzialajlokalnie.model.NewEvent;
 import retrofit.Callback;
 import retrofit.RetrofitError;

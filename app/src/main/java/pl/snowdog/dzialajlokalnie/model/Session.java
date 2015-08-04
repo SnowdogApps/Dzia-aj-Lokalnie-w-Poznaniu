@@ -9,6 +9,7 @@ import java.util.Date;
 
 @Table(name = "Sessions")
 public class Session extends Model {
+    public static final int FACEBOOK_SESSION = 3;
 
     @Column(name = "Ssid", unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
     private String ssid;
@@ -18,6 +19,10 @@ public class Session extends Model {
 
     @Column
     private int userID;
+
+    @Column
+    private int isSessionAuthByAPIkey;
+
     private int deviceType;
     private String ip;
     private String ua;
@@ -28,11 +33,11 @@ public class Session extends Model {
         super();
     }
 
-    public Session(String ssid, int userID, int deviceType, String ip, String ua, Date createdAt, Date expiredAt) {
-        super();
-
+    public Session(String ssid, String apikey, int userID, int isSessionAuthByAPIkey, int deviceType, String ip, String ua, Date createdAt, Date expiredAt) {
         this.ssid = ssid;
+        this.apikey = apikey;
         this.userID = userID;
+        this.isSessionAuthByAPIkey = isSessionAuthByAPIkey;
         this.deviceType = deviceType;
         this.ip = ip;
         this.ua = ua;
@@ -115,5 +120,17 @@ public class Session extends Model {
 
     public void setApiKey(String apiKey) {
         this.apikey = apiKey;
+    }
+
+    public int getIsSessionAuthByAPIkey() {
+        return isSessionAuthByAPIkey;
+    }
+
+    public void setIsSessionAuthByAPIkey(int isSessionAuthByAPIkey) {
+        this.isSessionAuthByAPIkey = isSessionAuthByAPIkey;
+    }
+
+    public boolean isFacebookSession() {
+        return isSessionAuthByAPIkey == FACEBOOK_SESSION ? true : false;
     }
 }

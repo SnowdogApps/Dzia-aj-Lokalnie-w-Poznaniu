@@ -7,7 +7,6 @@ import org.androidannotations.annotations.EFragment;
 
 import java.util.List;
 
-import pl.snowdog.dzialajlokalnie.AddIssueActivity_;
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.adapter.IssuesAdapter;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
