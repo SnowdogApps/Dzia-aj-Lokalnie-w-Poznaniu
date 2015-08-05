@@ -13,6 +13,7 @@ import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.splunk.mint.Mint;
@@ -20,6 +21,7 @@ import com.splunk.mint.Mint;
 import org.androidannotations.annotations.EApplication;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 
+import io.fabric.sdk.android.Fabric;
 import java.lang.reflect.Modifier;
 
 import pl.snowdog.dzialajlokalnie.api.CityApi;
@@ -69,6 +71,8 @@ public class DlApplication extends Application implements
         super.onCreate();
         FacebookSdk.sdkInitialize(getApplicationContext());
         buildGoogleApiClient();
+        Fabric.with(this, new Crashlytics());
+
         ActiveAndroid.initialize(this);
 
         gson = new GsonBuilder()

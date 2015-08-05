@@ -174,6 +174,9 @@
             android:name="pl.snowdog.dzialajlokalnie.gcm.RegistrationIntentService_"
             android:exported="false">
         </service>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="615ea27860850a4aa9d0fac3b4f4186b2477c24c" />
     </application>
 
 </manifest>
