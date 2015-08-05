@@ -164,11 +164,7 @@ public class MainActivity extends BaseActivity {
         } else {
             fab.collapse();
             AddIssueActivity_.intent(this).start();
-
-            //AddUserActivity_.intent(this).start();
         }
-        //AddIssueActivity_.intent(this).start();
-
     }
 
 
@@ -177,7 +173,6 @@ public class MainActivity extends BaseActivity {
             case user:
                 updateUserNavHeader();
                 break;
-
         }
     }
 
@@ -189,7 +184,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void loginResult(Session session) {
-
         List<Session> dbSessions = new Select().from(Session.class).execute();
 
         for (Session s : dbSessions) {
