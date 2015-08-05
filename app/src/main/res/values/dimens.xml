@@ -17,4 +17,8 @@
     <dimen name="fab_margin">16dp</dimen>
 
     <dimen name="photo_size">256dp</dimen>
+
+    <!--TODO check how to measure this value-->
+    <dimen name="statusbar_height">24dp</dimen>
+    <dimen name="nav_header_photo">72dp</dimen>
 </resources>

@@ -3,9 +3,7 @@ package pl.snowdog.dzialajlokalnie;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -14,7 +12,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,7 +24,6 @@ import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
-import org.androidannotations.annotations.Receiver;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.List;
@@ -36,7 +32,6 @@ import java.util.Locale;
 import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.adapter.FragmentAdapter;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
-import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
 import pl.snowdog.dzialajlokalnie.events.FilterChangedEvent;
 import pl.snowdog.dzialajlokalnie.events.ObjectAddedEvent;
 import pl.snowdog.dzialajlokalnie.fragment.EventsFragment_;
@@ -47,13 +42,9 @@ import pl.snowdog.dzialajlokalnie.fragment.MapFragment_;
 import pl.snowdog.dzialajlokalnie.gcm.NotificationAction;
 import pl.snowdog.dzialajlokalnie.model.District;
 import pl.snowdog.dzialajlokalnie.model.Filter;
-import pl.snowdog.dzialajlokalnie.model.NewUser;
-import pl.snowdog.dzialajlokalnie.model.Notification;
 import pl.snowdog.dzialajlokalnie.model.Session;
 import pl.snowdog.dzialajlokalnie.model.User;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import pl.snowdog.dzialajlokalnie.util.CircleTransform;
 
 @EActivity(R.layout.activity_main)
 @OptionsMenu(R.menu.menu_main)
@@ -87,7 +78,7 @@ public class MainActivity extends BaseActivity {
 
     @Click(R.id.navHeader)
     void onNavHeaderClicked() {
-        if(isLoggedIn() && !DlApplication.currentSession.isFacebookSession()) {
+        if (isLoggedIn() && !DlApplication.currentSession.isFacebookSession()) {
             AddUserActivity_.intent(this).mEditedUser(getLoggedInUser()).start();
         } else {
             LoginActivity_.intent(this).start();
@@ -115,7 +106,6 @@ public class MainActivity extends BaseActivity {
 
         mTabLayout.setupWithViewPager(mViewPager);
 
-        //logout();
         updateUserNavHeader();
 
     }
@@ -124,21 +114,19 @@ public class MainActivity extends BaseActivity {
         if (!isLoggedIn()) {
             tvNavUserName.setText(R.string.login_or_register);
             tvNavUserDistrict.setText("");
-
-            //login("bartek@bartek.pl", "bartek");
         } else {
-
             User user = getLoggedInUser();
-            if(user != null) {
+            if (user != null) {
                 tvNavUserName.setText(user.getName() + " " + user.getSurname());
                 District district = new Select().from(District.class).where("districtID = ?", user.getDistrictID()).executeSingle();
-                if(district != null) {
+                if (district != null) {
                     tvNavUserDistrict.setText(district.getName());
                 }
 
                 Picasso.with(this).
-                        load(String.format(DlApi.AVATAR_THUMB_URL, user.getAvatarUri())).
+                        load(String.format(DlApi.AVATAR_NORMAL_URL, user.getAvatarUri())).
                         error(R.drawable.ic_editor_insert_emoticon).
+                        transform(new CircleTransform()).
                         into(ivNavAvatar);
             }
         }
@@ -149,7 +137,7 @@ public class MainActivity extends BaseActivity {
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         Bundle extras = intent.getExtras();
-        if(extras != null) {
+        if (extras != null) {
             int action = extras.getInt(NotificationAction.INTENT_ACTION);
             switch (action) {
                 case NotificationAction.NEW_ISSUE_SURROUND:
@@ -161,7 +149,7 @@ public class MainActivity extends BaseActivity {
 
     @Click(R.id.fab_new_event)
     void onFabNewEventClicked() {
-        if(!isLoggedIn()) {
+        if (!isLoggedIn()) {
             showLoginSnackbar();
         } else {
             fab.collapse();
@@ -171,7 +159,7 @@ public class MainActivity extends BaseActivity {
 
     @Click(R.id.fab_new_issue)
     void onFabNewIssueClicked() {
-        if(!isLoggedIn()) {
+        if (!isLoggedIn()) {
             showLoginSnackbar();
         } else {
             fab.collapse();

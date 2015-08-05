@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/navHeader"
     android:layout_width="match_parent"
-    android:layout_height="192dp"
+    android:layout_height="wrap_content"
     android:background="?attr/colorPrimaryDark"
+    android:layout_marginTop="@dimen/statusbar_height"
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
     android:orientation="vertical"
@@ -11,8 +12,9 @@
 
     <ImageView
         android:id="@+id/ivAvatar"
-        android:layout_width="@dimen/list_photo_size"
-        android:layout_height="@dimen/list_photo_size"
+        android:layout_width="@dimen/nav_header_photo"
+        android:layout_height="@dimen/nav_header_photo"
+        android:layout_marginBottom="@dimen/item_padding"
         android:src="@drawable/ic_editor_insert_emoticon"
         android:scaleType="centerCrop"/>
 
@@ -21,12 +23,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Username"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
+        style="@style/textView_item_title_inverse"/>
     <TextView
         android:id="@+id/tvUserDistrict"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="District"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+        style="@style/textView_footer"/>
 
 </LinearLayout>

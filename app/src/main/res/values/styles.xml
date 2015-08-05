@@ -37,6 +37,11 @@
         <item name="android:textColor">@color/text</item>
     </style>
 
+    <style name="textView_item_title_inverse">
+        <item name="android:textSize">@dimen/title_text</item>
+        <item name="android:textColor">@color/text_inverse</item>
+    </style>
+
     <style name="menu_labels_style">
         <item name="android:background">@drawable/fab_label_background</item>
         <item name="android:textColor">@color/white</item>
