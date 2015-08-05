@@ -1,12 +1,9 @@
 package pl.snowdog.dzialajlokalnie;
 
-import org.androidannotations.annotations.Background;
+import android.webkit.WebView;
+
 import org.androidannotations.annotations.EActivity;
-
-import java.util.List;
-
-import pl.snowdog.dzialajlokalnie.model.Category;
-import pl.snowdog.dzialajlokalnie.model.District;
+import org.androidannotations.annotations.ViewById;
 
 /**
  * Created by chomi3 on 2015-07-27.
@@ -15,9 +12,12 @@ import pl.snowdog.dzialajlokalnie.model.District;
 public class AboutActivity extends BaseActivity {
     private static final String TAG = "AboutActivity";
 
+    @ViewById(R.id.web_view)
+    WebView webView;
+    
     @Override
     protected void afterView() {
-
+        webView.loadUrl("file:///android_asset/about.html");
     }
 
 }
