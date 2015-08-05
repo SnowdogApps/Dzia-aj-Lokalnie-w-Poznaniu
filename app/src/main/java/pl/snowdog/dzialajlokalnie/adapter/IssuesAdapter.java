@@ -16,6 +16,7 @@ import pl.snowdog.dzialajlokalnie.databinding.ItemIssueBinding;
 import pl.snowdog.dzialajlokalnie.events.IssueClickedEvent;
 import pl.snowdog.dzialajlokalnie.events.IssueVoteEvent;
 import pl.snowdog.dzialajlokalnie.model.Issue;
+import pl.snowdog.dzialajlokalnie.util.CircleTransform;
 
 /**
  * Created by bartek on 01.07.15.
@@ -46,8 +47,9 @@ public class IssuesAdapter extends RecyclerView.Adapter<IssuesAdapter.ViewHolder
                 into(viewHolder.binding.ivAvatar);
 
         Picasso.with(viewHolder.binding.getRoot().getContext()).
-                load(String.format(DlApi.PHOTO_THUMB_URL, issue.getAuthorAvatar())).
+                load(String.format(DlApi.AVATAR_THUMB_URL, issue.getAuthorAvatar())).
                 error(R.drawable.ic_editor_insert_emoticon).
+                transform(new CircleTransform()).
                 into(viewHolder.binding.ivAuthorAvatar);
     }
 
