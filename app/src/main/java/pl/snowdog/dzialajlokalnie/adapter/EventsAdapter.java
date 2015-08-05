@@ -16,6 +16,7 @@ import pl.snowdog.dzialajlokalnie.databinding.ItemEventBinding;
 import pl.snowdog.dzialajlokalnie.events.EventAttendEvent;
 import pl.snowdog.dzialajlokalnie.events.EventClickedEvent;
 import pl.snowdog.dzialajlokalnie.model.Event;
+import pl.snowdog.dzialajlokalnie.util.CircleTransform;
 
 /**
  * Created by bartek on 01.07.15.
@@ -41,13 +42,14 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
         viewHolder.binding.setEvent(event);
 
         Picasso.with(viewHolder.binding.getRoot().getContext()).
-                load(String.format(DlApi.PHOTO_THUMB_URL, event.getPhotoEventUri())).
+                load(String.format(DlApi.PHOTO_NORMAL_URL, event.getPhotoEventUri())).
                 error(R.drawable.ic_editor_insert_emoticon).
                 into(viewHolder.binding.ivAvatar);
 
         Picasso.with(viewHolder.binding.getRoot().getContext()).
-                load(String.format(DlApi.PHOTO_THUMB_URL, event.getAuthorAvatar())).
+                load(String.format(DlApi.AVATAR_THUMB_URL, event.getAuthorAvatar())).
                 error(R.drawable.ic_editor_insert_emoticon).
+                transform(new CircleTransform()).
                 into(viewHolder.binding.ivAuthorAvatar);
     }
 

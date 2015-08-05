@@ -21,6 +21,7 @@ import pl.snowdog.dzialajlokalnie.events.CommentClickedEvent;
 import pl.snowdog.dzialajlokalnie.events.CommentVoteEvent;
 import pl.snowdog.dzialajlokalnie.events.IssueVoteEvent;
 import pl.snowdog.dzialajlokalnie.model.Comment;
+import pl.snowdog.dzialajlokalnie.util.CircleTransform;
 
 /**
  * Created by bartek on 01.07.15.
@@ -46,8 +47,9 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.ViewHo
         viewHolder.binding.setComment(comment);
 
         Picasso.with(viewHolder.binding.getRoot().getContext()).
-                load(String.format(DlApi.PHOTO_THUMB_URL, comment.getAuthorAvatar())).
+                load(String.format(DlApi.AVATAR_THUMB_URL, comment.getAuthorAvatar())).
                 error(R.drawable.ic_editor_insert_emoticon).
+                transform(new CircleTransform()).
                 into(viewHolder.binding.ivAvatar);
     }
 

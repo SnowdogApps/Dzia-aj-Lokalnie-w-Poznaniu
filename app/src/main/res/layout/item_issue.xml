@@ -81,7 +81,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/item_padding"
+                        android:paddingLeft="@dimen/rating_button_padding"
                         android:layout_gravity="center_vertical"
                         style="@style/textView_item_desc"
                         android:lines="1"

@@ -60,7 +60,7 @@
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/item_padding"
+                    android:paddingLeft="@dimen/rating_button_padding"
                     style="@style/textView_item_title"
                     android:lines="1"
                     android:ellipsize="end"
