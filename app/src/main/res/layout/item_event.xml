@@ -4,6 +4,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View"/>
         <import type="pl.snowdog.dzialajlokalnie.util.StringUtil"/>
         <variable name="event" type="pl.snowdog.dzialajlokalnie.model.Event"/>
     </data>
@@ -22,24 +23,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <ImageView
+                android:id="@+id/ivAvatar"
+                android:layout_alignParentTop="true"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/list_photo_size"
+                android:layout_marginBottom="@dimen/item_padding"
+                android:src="@drawable/sample_picture"
+                android:scaleType="centerCrop"
+                android:visibility="@{event.photoEventUri != null ? View.VISIBLE : View.GONE}"/>
+
             <include layout="@layout/attending_widget"
                 android:id="@+id/attendingWidget"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
+                android:layout_below="@+id/ivAvatar"
                 bind:count="@{event.attendingCount}"
                 />
 
             <LinearLayout
                 android:id="@+id/textContent"
                 android:layout_toRightOf="@+id/attendingWidget"
-                android:layout_toLeftOf="@+id/ivAvatar"
+                android:layout_below="@+id/ivAvatar"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/item_padding"
-                android:paddingTop="@dimen/item_padding"
                 android:paddingBottom="@dimen/item_padding">
 
                 <TextView
@@ -94,18 +104,6 @@
                     android:ellipsize="end"
                     android:text="@{event.description}"/>
             </LinearLayout>
-
-            <ImageView
-                android:id="@+id/ivAvatar"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_width="@dimen/list_photo_size"
-                android:layout_height="@dimen/list_photo_size"
-                android:layout_marginLeft="@dimen/item_padding"
-                android:layout_marginRight="@dimen/item_padding"
-                android:layout_marginTop="@dimen/item_padding"
-                android:src="@drawable/sample_picture"
-                android:scaleType="centerCrop"/>
 
             <include layout="@layout/item_footer"
                 android:id="@+id/footerWidget"
