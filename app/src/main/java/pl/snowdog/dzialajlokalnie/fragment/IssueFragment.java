@@ -13,6 +13,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.picasso.Picasso;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -30,6 +31,7 @@ import pl.snowdog.dzialajlokalnie.events.SetTitleAndPhotoEvent;
 import pl.snowdog.dzialajlokalnie.events.VoteEvent;
 import pl.snowdog.dzialajlokalnie.model.Issue;
 import pl.snowdog.dzialajlokalnie.model.Vote;
+import pl.snowdog.dzialajlokalnie.util.CircleTransform;
 
 /**
  * Created by bartek on 15.07.15.
@@ -79,6 +81,12 @@ public class IssueFragment extends BaseFragment implements OnMapReadyCallback {
 
         EventBus.getDefault().post(new SetTitleAndPhotoEvent(issue.getTitle(),
                 String.format(DlApi.PHOTO_NORMAL_URL, issue.getPhotoIssueUri())));
+
+        Picasso.with(binding.getRoot().getContext()).
+                load(String.format(DlApi.AVATAR_THUMB_URL, issue.getAuthorAvatar())).
+                error(R.drawable.ic_editor_insert_emoticon).
+                transform(new CircleTransform()).
+                into(binding.voteCard.ivAuthorAvatar);
 
         GoogleMapOptions options = new GoogleMapOptions().liteMode(true);
         options.camera(new CameraPosition(new LatLng(issue.getLat(), issue.getLon()), 15, 0, 0));

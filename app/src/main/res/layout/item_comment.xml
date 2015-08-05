@@ -52,7 +52,6 @@
                     android:layout_width="@dimen/comment_photo_size"
                     android:layout_height="@dimen/comment_photo_size"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/sample_user"
                     android:scaleType="centerCrop"/>
 
                 <TextView

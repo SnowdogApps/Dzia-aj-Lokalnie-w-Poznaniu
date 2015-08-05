@@ -31,12 +31,31 @@
             android:layout_height="wrap_content"
             android:paddingLeft="@dimen/item_padding">
 
-            <TextView
-                android:id="@+id/tvAuthor"
+
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/textView_item_title"
-                android:text="@{issue.authorName}"/>
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/ivAuthorAvatar"
+                    android:layout_width="@dimen/comment_photo_size"
+                    android:layout_height="@dimen/comment_photo_size"
+                    android:layout_gravity="center_vertical"
+                    android:scaleType="centerCrop"/>
+
+                <TextView
+                    android:id="@+id/tvAuthor"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/rating_button_padding"
+                    android:layout_gravity="center_vertical"
+                    style="@style/textView_item_title"
+                    android:lines="1"
+                    android:ellipsize="end"
+                    android:text="@{issue.authorName}"/>
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tvDate"
