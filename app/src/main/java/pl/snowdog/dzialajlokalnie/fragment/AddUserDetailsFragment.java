@@ -17,6 +17,7 @@ import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.databinding.FragmentAddUserDetailsBinding;
 import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
+import pl.snowdog.dzialajlokalnie.util.NotEmptyValidator;
 import pl.snowdog.dzialajlokalnie.util.PasswordValidator;
 
 /**
@@ -103,27 +104,11 @@ public class AddUserDetailsFragment extends AddBaseFragment {
     }
 
     private boolean validateName() {
-        boolean isInputValid = true;
-        if (etName.getText().toString().length() == 0) {
-            etNameWrapper.setErrorEnabled(true);
-            etNameWrapper.setError(getString(R.string.warning_fill_name));
-            isInputValid = false;
-        } else {
-            etNameWrapper.setErrorEnabled(false);
-        }
-        return isInputValid;
+        return NotEmptyValidator.validate(etName, etNameWrapper, R.string.warning_fill_name);
     }
 
     private boolean validateSurname() {
-        boolean isInputValid = true;
-        if (etSurname.getText().toString().length() == 0) {
-            etSurnameWrapper.setErrorEnabled(true);
-            etSurnameWrapper.setError(getString(R.string.warning_fill_surname));
-            isInputValid = false;
-        } else {
-            etSurnameWrapper.setErrorEnabled(false);
-        }
-        return isInputValid;
+        return NotEmptyValidator.validate(etSurname, etSurnameWrapper, R.string.warning_fill_surname);
     }
 
     private boolean validateEmail() {
