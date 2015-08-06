@@ -277,6 +277,7 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
             }
         } else {
 //            if (mMode == AddUserActivity.MODE_SIGN_UP || mMode == AddUserActivity.MODE_SIGN_UP_FACEBOOK) {
+            //TODO in add new issue, event marker should be placed in current position - it is not working now
                 if (pref.lastLat().exists() && pref.lastLon().exists()) {
                     mMarker = map.addMarker(new MarkerOptions().position(new LatLng(pref.lastLat().get(), pref.lastLon().get())).draggable(true));
                     if (findDistrictAndSetSpinner(new LatLng(pref.lastLat().get(), pref.lastLon().get()))) {
