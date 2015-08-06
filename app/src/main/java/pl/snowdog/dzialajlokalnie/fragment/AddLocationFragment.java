@@ -156,7 +156,6 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
             adapter.setSelection(position);
 
             if (position != 0 && !isMarkerChange) {
-                Toast.makeText(getActivity(), "district latlng: " + adapter.getSelectedItem().getLat(), Toast.LENGTH_SHORT).show();
                 map.clear();
                 mMarker = map.addMarker(
                         new MarkerOptions()
@@ -187,7 +186,6 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
                         updateMarkerWithAddress(property);
                     }
                 }
-
             }
 
             @Override
@@ -224,7 +222,6 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
                 map.clear();
                 mMarker = map.addMarker(new MarkerOptions().position(point).draggable(true));
                 Log.d(TAG, "mpdbg markerLat: " + point.latitude + " marker.lon: " + point.longitude);
-
 
                 if (findDistrictAndSetSpinner(point)) {
                     getAddressForLocation(point.latitude, point.longitude);
@@ -278,17 +275,19 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
                 spinner.setAdapter(adapter);
                 spinner.setSelection(adapter.getSelection());
             }
+        } else {
+//            if (mMode == AddUserActivity.MODE_SIGN_UP || mMode == AddUserActivity.MODE_SIGN_UP_FACEBOOK) {
+                if (pref.lastLat().exists() && pref.lastLon().exists()) {
+                    mMarker = map.addMarker(new MarkerOptions().position(new LatLng(pref.lastLat().get(), pref.lastLon().get())).draggable(true));
+                    if (findDistrictAndSetSpinner(new LatLng(pref.lastLat().get(), pref.lastLon().get()))) {
+                        getAddressForLocation(pref.lastLat().get(), pref.lastLon().get());
+                    }
+                }
+//            }
         }
-
 
         if (mMode == AddUserActivity.MODE_SIGN_UP || mMode == AddUserActivity.MODE_SIGN_UP_FACEBOOK) {
             tvHint.setText(R.string.info_select_live_distrcit);
-            if (pref.lastLat().exists() && pref.lastLon().exists()) {
-                mMarker = map.addMarker(new MarkerOptions().position(new LatLng(pref.lastLat().get(), pref.lastLon().get())).draggable(true));
-                if (findDistrictAndSetSpinner(new LatLng(pref.lastLat().get(), pref.lastLon().get()))) {
-                    getAddressForLocation(pref.lastLat().get(), pref.lastLon().get());
-                }
-            }
         }
     }
 
