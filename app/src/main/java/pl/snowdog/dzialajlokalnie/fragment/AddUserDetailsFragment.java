@@ -139,15 +139,7 @@ public class AddUserDetailsFragment extends AddBaseFragment {
     private boolean validateDescription() {
         return true;
         //TODO to validate description or not to validate description?
-        /*boolean isInputValid = true;
-        if(etDescription.getText().toString().length() == 0) {
-            etDescriptionWrapper.setErrorEnabled(true);
-            etDescriptionWrapper.setError(getString(R.string.warning_fill_description));
-            isInputValid = false;
-        } else {
-            etDescriptionWrapper.setErrorEnabled(false);
-        }
-        return isInputValid;*/
+//        return NotEmptyValidator.validate(etDescription, etDescriptionWrapper, R.string.warning_fill_description);
     }
 
     @TextChange(R.id.etName)
