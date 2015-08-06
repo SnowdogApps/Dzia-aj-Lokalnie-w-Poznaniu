@@ -41,7 +41,7 @@ import pl.snowdog.dzialajlokalnie.util.FileChooserUtil;
 public class AddImageFragment extends AddBaseFragment {
     public static final int PICK_FROM_FILE = 1231;
     public static final int TAKE_PICTURE = 1234;
-    private static final String TAG = "AddIssueImageFr";
+    private static final String TAG = "AddImageFr";
 
     private String mTmpGalleryPicturePath;
 
@@ -63,16 +63,16 @@ public class AddImageFragment extends AddBaseFragment {
 
     @Click(R.id.btnNext)
     void onNextButtonClicked() {
-        if(validateInput()) {
+        if (validateInput()) {
             String uriToSend = "";
             switch (photoFrom) {
                 case PICK_FROM_FILE:
-                    if(mFileUri != null) {
+                    if (mFileUri != null) {
                         uriToSend = FileChooserUtil.getPath(getActivity(), mFileUri);
                     }
                     break;
                 case TAKE_PICTURE:
-                    if(mFileUri != null) {
+                    if (mFileUri != null) {
                         uriToSend = mFileUri.getPath();
                     }
                     break;
@@ -83,7 +83,6 @@ public class AddImageFragment extends AddBaseFragment {
                     .type(CreateNewObjectEvent.Type.image);
 
             EventBus.getDefault().post(builder.build());
-            //((AddBaseActivity)getActivity()).goToNextPage();
         }
     }
 
@@ -94,9 +93,9 @@ public class AddImageFragment extends AddBaseFragment {
         Random generator = new Random();
         int n = 10000;
         n = generator.nextInt(n);
-        String fname = "Image-"+ n +".jpg";
+        String fname = "Image-" + n + ".jpg";
         //File image = new File(Environment.getExternalStorageDirectory(),  AppHelpers.getRandomBigInt(999999) + ".jpg");
-        File photo = new File(Environment.getExternalStorageDirectory(),  fname);
+        File photo = new File(Environment.getExternalStorageDirectory(), fname);
         intent.putExtra(MediaStore.EXTRA_OUTPUT,
                 Uri.fromFile(photo));
         mFileUri = Uri.fromFile(photo);
@@ -116,7 +115,7 @@ public class AddImageFragment extends AddBaseFragment {
 
     @OnActivityResult(TAKE_PICTURE)
     void handleTakePictureResult(int resultCode, Intent data) {
-        if(resultCode != Activity.RESULT_OK) {
+        if (resultCode != Activity.RESULT_OK) {
             return;
         }
 
@@ -131,58 +130,56 @@ public class AddImageFragment extends AddBaseFragment {
 
         /* Test compress */
         File imageFile = new File(mFileUri.getPath());
-        try{
+        try {
             OutputStream out = null;
             out = new FileOutputStream(imageFile);
             //Bitmap bitmap = BitmapFactory.decodeFile(picturePath);
 
-            bitmap.compress(Bitmap.CompressFormat.JPEG,80,out);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, out);
             out.flush();
             out.close();
             Log.d(TAG, "imgdbg COMPRESSED FILE");
-        }catch(Exception e){
-            Log.e(TAG,"imgdbg Error compressing: "+e.toString());
+        } catch (Exception e) {
+            Log.e(TAG, "imgdbg Error compressing: " + e.toString());
         }
         photoFrom = TAKE_PICTURE;
         Picasso.with(getActivity()).load(mFileUri).error(
                 R.drawable.ic_editor_insert_emoticon).into(ivPreview);
-        if(mMode != AddUserActivity.MODE_SIGN_UP) {
+        if (mMode != AddUserActivity.MODE_SIGN_UP) {
             btnNext.setText(R.string.next);
         }
         //handleGalleryResult(data);
     }
 
     @OnActivityResult(PICK_FROM_FILE)
-    void handleGalleryResult(int resultCode, Intent data)
-    {
-        if(resultCode != Activity.RESULT_OK) {
+    void handleGalleryResult(int resultCode, Intent data) {
+        if (resultCode != Activity.RESULT_OK) {
             return;
         }
         Uri selectedImage = data.getData();
         mTmpGalleryPicturePath = FileChooserUtil.getPath(getActivity(), selectedImage);
-        if(mTmpGalleryPicturePath!=null) {
+        if (mTmpGalleryPicturePath != null) {
 
             mFileUri = selectedImage;
             Picasso.with(getActivity()).load(selectedImage).error(
                     R.drawable.ic_editor_insert_emoticon).into(ivPreview);
-            Log.d(TAG, "imgdbg pick from file A mFileUri: "+mFileUri.toString());
+            Log.d(TAG, "imgdbg pick from file A mFileUri: " + mFileUri.toString());
 
-        } else
-        {
+        } else {
             try {
                 InputStream is = getActivity().getContentResolver().openInputStream(selectedImage);
                 ivPreview.setImageBitmap(BitmapFactory.decodeStream(is));
                 mTmpGalleryPicturePath = selectedImage.getPath();
                 mFileUri = selectedImage;
 
-                Log.d(TAG, "imgdbg pick from file B mFileUri: "+mFileUri.toString());
+                Log.d(TAG, "imgdbg pick from file B mFileUri: " + mFileUri.toString());
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
         photoFrom = PICK_FROM_FILE;
-        if(mMode != AddUserActivity.MODE_SIGN_UP) {
+        if (mMode != AddUserActivity.MODE_SIGN_UP) {
             btnNext.setText(R.string.next);
         }
     }
@@ -194,28 +191,28 @@ public class AddImageFragment extends AddBaseFragment {
 
     @AfterViews
     void afterViews() {
-        if(mFileUri == null) {
+        if (mFileUri == null) {
             btnNext.setText(R.string.skip);
         }
         //EDIT MODE
-        if(mEditedObject != null) {
-            if(mMode == AddUserActivity.MODE_SIGN_UP) {
+        if (mEditedObject != null) {
+            if (mMode == AddUserActivity.MODE_SIGN_UP) {
                 Picasso.with(getActivity())
                         .load(String.format(DlApi.AVATAR_NORMAL_URL, mEditedObject.getImage()))
                         .error(
                                 R.drawable.ic_editor_insert_emoticon).into(ivPreview);
-                Log.d(TAG, "edtdbg image: "+mEditedObject.getImage());
+                Log.d(TAG, "edtdbg image: " + mEditedObject.getImage());
             } else {
                 Picasso.with(getActivity())
                         .load(String.format(DlApi.PHOTO_THUMB_URL, mEditedObject.getImage()))
                         .error(
                                 R.drawable.ic_editor_insert_emoticon).into(ivPreview);
-                Log.d(TAG, "edtdbg image: "+mEditedObject.getImage());
+                Log.d(TAG, "edtdbg image: " + mEditedObject.getImage());
             }
 
         }
 
-        if(mMode == AddUserActivity.MODE_SIGN_UP) {
+        if (mMode == AddUserActivity.MODE_SIGN_UP) {
             btnNext.setText(mEditedObject == null ? R.string.register : R.string.save_user_edit);
         }
     }
