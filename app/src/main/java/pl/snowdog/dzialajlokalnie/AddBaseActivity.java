@@ -2,13 +2,9 @@ package pl.snowdog.dzialajlokalnie;
 
 import android.content.Context;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -16,7 +12,6 @@ import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.ViewById;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.greenrobot.event.EventBus;
@@ -49,8 +44,7 @@ public abstract class AddBaseActivity extends BaseActivity {
     String address;
     List<Integer> categoryIDs;
     String photoUri;
-
-
+    
     @Override
     protected void afterView() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -61,7 +55,6 @@ public abstract class AddBaseActivity extends BaseActivity {
         ab.setDisplayHomeAsUpEnabled(true);
 
         if (mViewPager != null) {
-
             setupViewPager(mViewPager);
         }
 
@@ -101,7 +94,6 @@ public abstract class AddBaseActivity extends BaseActivity {
             //Use back button to go back in the viewpager tabs.
             goToPreviousPage();
         }
-
     }
 
     protected void toggleProgressWheel(boolean show) {
@@ -138,7 +130,6 @@ public abstract class AddBaseActivity extends BaseActivity {
                 photoUri = event.getImage();
                 goToNextPage();
                 break;
-
         }
     }
 
@@ -146,13 +137,6 @@ public abstract class AddBaseActivity extends BaseActivity {
         toggleProgressWheel(false);
         EventBus.getDefault().post(new ObjectAddedEvent(added));
         finish();
-
-
-    }
-
-    public void onObjectCreated() {
-        Log.d(TAG, "title: "+title+" description: "+description+ " lat: "+lat+ " lon: "+lon+ " districtID: "+districtID
-        +" categories: "+categoryIDs.toString());
     }
 
     @OptionsItem(android.R.id.home)
