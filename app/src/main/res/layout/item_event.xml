@@ -94,7 +94,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/textView_item_desc"
-                    android:text="@{StringUtil.date2String(event.createdAt)}"/>
+                    android:text='@{StringUtil.date2String(event.startDate) + " - " + StringUtil.date2String(event.endDate)}'/>
 
                 <TextView
                     android:id="@+id/tvDesc"
