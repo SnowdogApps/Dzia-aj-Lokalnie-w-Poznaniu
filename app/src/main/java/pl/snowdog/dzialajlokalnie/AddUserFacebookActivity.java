@@ -24,7 +24,7 @@ import retrofit.client.Response;
 /**
  * Created by chomi3 on 2015-07-06.
  */
-@EActivity(R.layout.activity_add_issue)
+@EActivity(R.layout.activity_add)
 public class AddUserFacebookActivity extends AddUserActivity {
     private static final String TAG = "AddUserFacebookActivity";
 

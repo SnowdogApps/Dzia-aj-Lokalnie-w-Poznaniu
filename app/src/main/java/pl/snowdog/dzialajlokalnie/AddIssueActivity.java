@@ -30,7 +30,7 @@ import retrofit.mime.TypedFile;
 /**
  * Created by chomi3 on 2015-07-06.
  */
-@EActivity(R.layout.activity_add_issue)
+@EActivity(R.layout.activity_add)
 public class AddIssueActivity extends AddBaseActivity {
     private static final String TAG = "AddIssueActivity";
 
@@ -184,7 +184,7 @@ public class AddIssueActivity extends AddBaseActivity {
         newIssue.setLocation(Double.toString(lat) + "," + Double.toString(lon));
         newIssue.setCategoryID(categoryIDs);
         newIssue.setDistrictID(districtID);
-        
+
         return newIssue;
     }
 }

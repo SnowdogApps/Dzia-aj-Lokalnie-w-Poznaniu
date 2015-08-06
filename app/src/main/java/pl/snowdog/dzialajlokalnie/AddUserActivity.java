@@ -32,7 +32,7 @@ import retrofit.mime.TypedFile;
 /**
  * Created by chomi3 on 2015-07-06.
  */
-@EActivity(R.layout.activity_add_issue)
+@EActivity(R.layout.activity_add)
 public class AddUserActivity extends AddBaseActivity {
     private static final String TAG = "AddUserActivity";
     public static final int MODE_SIGN_UP = 1234;
