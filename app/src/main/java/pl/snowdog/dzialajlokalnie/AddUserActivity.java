@@ -58,6 +58,7 @@ public class AddUserActivity extends AddBaseActivity {
                 .mEditedObject(mEditedUser != null ? new CreateNewObjectEvent.Builder()
                         .name(mEditedUser.getName())
                         .surname(mEditedUser.getSurname())
+                        .email(mEditedUser.getEmail())
                         .description(mEditedUser.getDescription())
                         .build() : null)
                 .build());

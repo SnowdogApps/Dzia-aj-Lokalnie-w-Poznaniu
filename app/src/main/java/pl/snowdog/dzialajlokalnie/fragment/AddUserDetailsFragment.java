@@ -75,7 +75,6 @@ public class AddUserDetailsFragment extends AddBaseFragment {
                     .type(CreateNewObjectEvent.Type.details);
 
             EventBus.getDefault().post(builder.build());
-            //((AddBaseActivity)getActivity()).goToNextPage();
         }
     }
 
