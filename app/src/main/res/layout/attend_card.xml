@@ -76,7 +76,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/textView_item_desc"
-                android:text='@{@plurals/invited(event.invitedCount, event.invitedCount) + ", " + @plurals/comments(event.commentsCount, event.commentsCount) + "\n" + @string/tags(event.categoriesText)}'/>
+                android:text='@{@plurals/attending(event.attendingCount, event.attendingCount) + ", " + @plurals/maybe(event.maybeCount, event.maybeCount) + "\n" + @plurals/invited(event.invitedCount, event.invitedCount) + ", " + @plurals/comments(event.commentsCount, event.commentsCount) + "\n" + @string/tags(event.categoriesText)}'/>
         </LinearLayout>
     </RelativeLayout>
 </layout>

@@ -135,6 +135,18 @@
         <item quantity="other">%d komentarzy</item>
     </plurals>
 
+    <plurals name="attending">
+        <item quantity="one">%d weźmie udział</item>
+        <item quantity="few">%d wezmą udział</item>
+        <item quantity="other">%d weźmie udział</item>
+    </plurals>
+
+    <plurals name="maybe">
+        <item quantity="one">%d może dołączy</item>
+        <item quantity="few">%d może dołączą</item>
+        <item quantity="other">%d może dołączy</item>
+    </plurals>
+
     <plurals name="invited">
         <item quantity="one">%d zaproszona</item>
         <item quantity="few">%d zaproszone</item>
