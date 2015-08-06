@@ -15,7 +15,6 @@ import org.androidannotations.annotations.ViewById;
 
 import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.R;
-import pl.snowdog.dzialajlokalnie.databinding.FragmentAddTitleDateBinding;
 import pl.snowdog.dzialajlokalnie.databinding.FragmentAddUserDetailsBinding;
 import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
 import pl.snowdog.dzialajlokalnie.util.PasswordValidator;
@@ -66,7 +65,7 @@ public class AddUserDetailsFragment extends AddBaseFragment {
 
     @Click(R.id.btnNext)
     void onNextButtonClicked() {
-        if(validateInput()) {
+        if (validateInput()) {
             CreateNewObjectEvent.Builder builder = new CreateNewObjectEvent.Builder()
                     .name(etName.getText().toString())
                     .surname(etSurname.getText().toString())
@@ -87,28 +86,26 @@ public class AddUserDetailsFragment extends AddBaseFragment {
         boolean validEmail = validateEmail();
 
         //Normal password validation if not in edit mode
-        if(mEditedObject == null) {
+        if (mEditedObject == null) {
             validPassword = validatePassword();
         } else {
             //If we're editing the password, and user added new password, validate it
-            if(etPassword.getText().toString().length() > 0) {
+            if (etPassword.getText().toString().length() > 0) {
                 validPassword = validatePassword();
             }
         }
         boolean validDescription = validateDescription();
 
-        if(validName && validSurname && validEmail && validPassword && validDescription) {
+        if (validName && validSurname && validEmail && validPassword && validDescription) {
             return true;
         } else {
             return false;
         }
-
     }
-
 
     private boolean validateName() {
         boolean isInputValid = true;
-        if(etName.getText().toString().length() == 0) {
+        if (etName.getText().toString().length() == 0) {
             etNameWrapper.setErrorEnabled(true);
             etNameWrapper.setError(getString(R.string.warning_fill_name));
             isInputValid = false;
@@ -120,7 +117,7 @@ public class AddUserDetailsFragment extends AddBaseFragment {
 
     private boolean validateSurname() {
         boolean isInputValid = true;
-        if(etSurname.getText().toString().length() == 0) {
+        if (etSurname.getText().toString().length() == 0) {
             etSurnameWrapper.setErrorEnabled(true);
             etSurnameWrapper.setError(getString(R.string.warning_fill_surname));
             isInputValid = false;
@@ -132,7 +129,7 @@ public class AddUserDetailsFragment extends AddBaseFragment {
 
     private boolean validateEmail() {
         boolean isInputValid = true;
-        if(!android.util.Patterns.EMAIL_ADDRESS.matcher(etEmail.getText().toString()).matches()) {
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(etEmail.getText().toString()).matches()) {
             etEmailWrapper.setErrorEnabled(true);
             etEmailWrapper.setError(getString(R.string.warning_fill_email));
             isInputValid = false;
@@ -144,7 +141,7 @@ public class AddUserDetailsFragment extends AddBaseFragment {
 
     private boolean validatePassword() {
         boolean isInputValid = true;
-        if(etPassword.getText().toString().length() == 0
+        if (etPassword.getText().toString().length() == 0
                 || new PasswordValidator().validate(etPassword.getText().toString()) == false) {
             etPasswordWrapper.setErrorEnabled(true);
             etPasswordWrapper.setError(getString(R.string.warning_fill_password));
@@ -155,10 +152,9 @@ public class AddUserDetailsFragment extends AddBaseFragment {
         return isInputValid;
     }
 
-
-
     private boolean validateDescription() {
         return true;
+        //TODO to validate description or not to validate description?
         /*boolean isInputValid = true;
         if(etDescription.getText().toString().length() == 0) {
             etDescriptionWrapper.setErrorEnabled(true);
@@ -172,39 +168,38 @@ public class AddUserDetailsFragment extends AddBaseFragment {
 
     @TextChange(R.id.etName)
     void onTextChangeName(TextView tv, CharSequence text) {
-        if(text.length() > 0) {
+        if (text.length() > 0) {
             validateName();
         }
     }
 
     @TextChange(R.id.etSurname)
     void onTextChangeSurname(TextView tv, CharSequence text) {
-        if(text.length() > 0) {
+        if (text.length() > 0) {
             validateSurname();
         }
     }
 
     @TextChange(R.id.etEmail)
     void onTextChangeEmail(TextView tv, CharSequence text) {
-        if(text.length() > 0) {
+        if (text.length() > 0) {
             validateEmail();
         }
     }
 
     @TextChange(R.id.etPassword)
     void onTextChangePassword(TextView tv, CharSequence text) {
-        if(text.length() > 0) {
+        if (text.length() > 0) {
             validatePassword();
         }
     }
 
     @TextChange(R.id.etDescription)
     void onTextChangeDescription(TextView tv, CharSequence text) {
-        if(text.length() > 0) {
+        if (text.length() > 0) {
             validateDescription();
         }
     }
-
 
     @AfterViews
     void afterViewsCreated() {
@@ -213,11 +208,9 @@ public class AddUserDetailsFragment extends AddBaseFragment {
         FragmentAddUserDetailsBinding binding = DataBindingUtil.bind(rootView);
         binding.setEditedObject(mEditedObject);
 
-        if(mEditedObject != null) {
-        //    etPassword.setVisibility(View.GONE);
+        if (mEditedObject != null) {
+            //    etPassword.setVisibility(View.GONE);
         }
-
-
     }
 
     @Override
