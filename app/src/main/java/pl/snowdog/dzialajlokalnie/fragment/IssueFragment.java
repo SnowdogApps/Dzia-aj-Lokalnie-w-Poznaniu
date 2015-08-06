@@ -2,6 +2,7 @@ package pl.snowdog.dzialajlokalnie.fragment;
 
 import android.databinding.DataBindingUtil;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -19,9 +20,14 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
+import org.androidannotations.annotations.OptionsItem;
+import org.androidannotations.annotations.OptionsMenu;
+import org.androidannotations.annotations.OptionsMenuItem;
 import org.androidannotations.annotations.ViewById;
 
 import de.greenrobot.event.EventBus;
+import pl.snowdog.dzialajlokalnie.AddIssueActivity_;
+import pl.snowdog.dzialajlokalnie.DlApplication;
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.databinding.FragmentIssueBinding;
@@ -38,6 +44,7 @@ import pl.snowdog.dzialajlokalnie.util.CircleTransform;
  */
 
 @EFragment(R.layout.fragment_issue)
+@OptionsMenu(R.menu.menu_details)
 public class IssueFragment extends BaseFragment implements OnMapReadyCallback {
 
     private static final String TAG = "IssueFragment";
@@ -52,10 +59,15 @@ public class IssueFragment extends BaseFragment implements OnMapReadyCallback {
     private SupportMapFragment mapFragment;
     private GoogleMap map;
 
+    @OptionsMenuItem(R.id.action_edit)
+    MenuItem menuEdit;
+
     @AfterViews
     void afterViews() {
         binding = DataBindingUtil.bind(rootView);
         getIssue(objId);
+
+
     }
 
     @Click(R.id.ibRateUp)
@@ -93,6 +105,7 @@ public class IssueFragment extends BaseFragment implements OnMapReadyCallback {
         mapFragment = SupportMapFragment.newInstance(options);
         getChildFragmentManager().beginTransaction().add(R.id.mapCard, mapFragment).commit();
         mapFragment.getMapAsync(this);
+        menuEdit.setVisible(isLoggedInUserAuthor());
     }
 
     @Override
@@ -127,5 +140,18 @@ public class IssueFragment extends BaseFragment implements OnMapReadyCallback {
                 snippet(binding.getIssue().getDistrictName()).
                 icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_issue_marker)));
         marker.showInfoWindow();
+    }
+
+    @OptionsItem(R.id.action_edit)
+    void edit() {
+        AddIssueActivity_.intent(this).mEditedIssue(binding.getIssue()).start();
+    }
+
+    private boolean isLoggedInUserAuthor() {
+        if(DlApplication.currentSession != null) {
+            return DlApplication.currentSession.getUserID() == binding.getIssue().getUserID();
+        } else {
+            return false;
+        }
     }
 }

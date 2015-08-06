@@ -74,7 +74,7 @@
     <string name="title_activity_issue">Zgłoszenie</string>
     <string name="comment_hint">Dodaj komentarz...</string>
     <string name="response_hint">Odpowiedz...</string>
-    <string name="action_refresh">Odwież</string>
+    <string name="action_refresh">Odśwież</string>
     <string name="choose_date_info">Wybierz datę lub zakres dat (od - do)</string>
     <string name="outside_city_warning">Miejsce poza miastem</string>
     <string name="skip">Pomiń</string>
@@ -121,6 +121,7 @@
     <string name="pref_title_email_notifications">Powiadomienia emailem</string>
     <string name="pref_subtitle_email_notifications">Nowości, komentarze, wydarzenia</string>
     <string name="action_about">O aplikacji</string>
+    <string name="action_edit">Edytuj</string>
 
 
     <plurals name="votes">

@@ -162,6 +162,8 @@ public class AddTitleDateFragment extends AddBaseFragment {
         binding.setEditedObject(mEditedObject);
 
         if(mEditedObject != null) {
+            startDate = mEditedObject.getStartDate();
+            endDate = mEditedObject.getEndDate();
             updateDateTextView();
         }
         //updateNextButton();

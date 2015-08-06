@@ -2,6 +2,7 @@ package pl.snowdog.dzialajlokalnie.fragment;
 
 import android.databinding.DataBindingUtil;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -18,9 +19,15 @@ import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.FragmentArg;
+import org.androidannotations.annotations.OptionsItem;
+import org.androidannotations.annotations.OptionsMenu;
+import org.androidannotations.annotations.OptionsMenuItem;
 import org.androidannotations.annotations.ViewById;
 
 import de.greenrobot.event.EventBus;
+import pl.snowdog.dzialajlokalnie.AddEventActivity_;
+import pl.snowdog.dzialajlokalnie.AddIssueActivity_;
+import pl.snowdog.dzialajlokalnie.DlApplication;
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.databinding.FragmentEventBinding;
@@ -34,6 +41,7 @@ import pl.snowdog.dzialajlokalnie.model.ParticipateEvent;
  */
 
 @EFragment(R.layout.fragment_event)
+@OptionsMenu(R.menu.menu_details)
 public class EventFragment extends BaseFragment implements OnMapReadyCallback {
 
     private static final String TAG = "EventFragment";
@@ -48,10 +56,15 @@ public class EventFragment extends BaseFragment implements OnMapReadyCallback {
     private SupportMapFragment mapFragment;
     private GoogleMap map;
 
+    @OptionsMenuItem(R.id.action_edit)
+    MenuItem menuEdit;
+
     @AfterViews
     void afterViews() {
         binding = DataBindingUtil.bind(rootView);
         getEvent(objId);
+
+
     }
 
     @Click(R.id.ibAttend)
@@ -74,6 +87,7 @@ public class EventFragment extends BaseFragment implements OnMapReadyCallback {
         mapFragment = SupportMapFragment.newInstance(options);
         getChildFragmentManager().beginTransaction().add(R.id.mapCard, mapFragment).commit();
         mapFragment.getMapAsync(this);
+        menuEdit.setVisible(isLoggedInUserAuthor());
     }
 
     @Override
@@ -101,5 +115,19 @@ public class EventFragment extends BaseFragment implements OnMapReadyCallback {
                 snippet(binding.getEvent().getDistrictName()).
                 icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_event_marker)));
         marker.showInfoWindow();
+    }
+
+    @OptionsItem(R.id.action_edit)
+    void edit() {
+        AddEventActivity_.intent(this).mEditedEvent(binding.getEvent()).start();
+    }
+
+
+    private boolean isLoggedInUserAuthor() {
+        if(DlApplication.currentSession != null) {
+            return DlApplication.currentSession.getUserID() == binding.getEvent().getUserID();
+        } else {
+            return false;
+        }
     }
 }
