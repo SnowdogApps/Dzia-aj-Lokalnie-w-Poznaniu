@@ -7,16 +7,16 @@ public class ParticipateEvent {
 
     public enum ParcitipateType {attending, maybe, declined, invited, banned}
 
-    private int eventId;
+    private int eventID;
     private int participateType;
 
-    public ParticipateEvent(int eventId, int participateType) {
-        this.eventId = eventId;
+    public ParticipateEvent(int eventID, int participateType) {
+        this.eventID = eventID;
         this.participateType = participateType;
     }
 
-    public ParticipateEvent(int eventId, ParcitipateType participateType) {
-        this.eventId = eventId;
+    public ParticipateEvent(int eventID, ParcitipateType participateType) {
+        this.eventID = eventID;
 
         int intPt;
         switch (participateType) {
@@ -45,7 +45,7 @@ public class ParticipateEvent {
     @Override
     public String toString() {
         return "ParticipateEvent{" +
-                "eventId=" + eventId +
+                "eventID=" + eventID +
                 ", participateType=" + participateType +
                 '}';
     }
@@ -58,11 +58,11 @@ public class ParticipateEvent {
         this.participateType = participateType;
     }
 
-    public int getEventId() {
-        return eventId;
+    public int getEventID() {
+        return eventID;
     }
 
-    public void setEventId(int eventId) {
-        this.eventId = eventId;
+    public void setEventID(int eventID) {
+        this.eventID = eventID;
     }
 }

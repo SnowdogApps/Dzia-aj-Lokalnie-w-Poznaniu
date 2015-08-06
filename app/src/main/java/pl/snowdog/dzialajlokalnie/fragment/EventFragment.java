@@ -89,6 +89,16 @@ public class EventFragment extends BaseFragment implements OnMapReadyCallback {
     @Override
     protected void participateResult(ParticipateEvent participateEvent) {
         Log.d(TAG, "participateResult " + participateEvent);
+        Event event = binding.getEvent();
+        if (event.getEventID() == participateEvent.getEventID()) {
+            event.setUserInEvent(participateEvent.getParticipateType());
+            if (participateEvent.getParticipateType() == 1) {
+                event.setAttendingCount(event.getAttendingCount()+1);
+            } else {
+                event.setAttendingCount(event.getAttendingCount()-1);
+            }
+            binding.setEvent(event);
+        }
     }
 
     @Override

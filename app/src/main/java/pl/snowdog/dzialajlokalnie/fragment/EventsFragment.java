@@ -63,4 +63,21 @@ public class EventsFragment extends ListFragment {
 
         refreshItems();
     }
+
+    @Override
+    protected void participateResult(ParticipateEvent participateEvent) {
+        for (int i = 0; i < adapter.getEvents().size(); i++) {
+            Event event = adapter.getEvents().get(i);
+            if (event.getEventID() == participateEvent.getEventID()) {
+                event.setUserInEvent(participateEvent.getParticipateType());
+                if (participateEvent.getParticipateType() == 1) {
+                    event.setAttendingCount(event.getAttendingCount()+1);
+                } else {
+                    event.setAttendingCount(event.getAttendingCount()-1);
+                }
+                adapter.notifyItemChanged(i);
+                break;
+            }
+        }
+    }
 }

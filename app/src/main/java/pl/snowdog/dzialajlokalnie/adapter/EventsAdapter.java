@@ -85,4 +85,8 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
             this.binding = binding;
         }
     }
+
+    public List<Event> getEvents() {
+        return events;
+    }
 }

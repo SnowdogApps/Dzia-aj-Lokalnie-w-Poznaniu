@@ -294,7 +294,7 @@ public abstract class BaseFragment extends Fragment {
     protected void voteResult(Vote vote) { }
 
     protected void participate(ParticipateEvent participateEvent) {
-        DlApplication.eventApi.putParticipateEvent(participateEvent, participateEvent.getEventId(),
+        DlApplication.eventApi.putParticipateEvent(participateEvent, participateEvent.getEventID(),
                 new Callback<ParticipateEvent>() {
             @Override
             public void success(ParticipateEvent participateEvent, Response response) {
