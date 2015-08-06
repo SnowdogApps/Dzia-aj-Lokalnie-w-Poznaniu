@@ -94,7 +94,7 @@
 
         <activity
             android:name=".SplashActivity_"
-            android:label="@string/new_event">
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

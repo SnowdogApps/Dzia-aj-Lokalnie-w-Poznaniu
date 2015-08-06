@@ -39,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_behavior="pl.snowdog.dzialajlokalnie.view.FloatingActionsMenuBehavior"
-        app:fab_icon="@drawable/ic_action_camera"
+        fab:fab_icon="@drawable/ic_action_camera"
         fab:fab_addButtonColorNormal="@color/colorAccent"
         fab:fab_addButtonColorPressed="@color/white_pressed"
         fab:fab_labelStyle="@style/menu_labels_style"
