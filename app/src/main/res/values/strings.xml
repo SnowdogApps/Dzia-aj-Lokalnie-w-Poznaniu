@@ -141,4 +141,12 @@
         <item quantity="other">%d zaproszonych</item>
     </plurals>
 
+    <array name="participate_types">
+        <item>Możesz wziąć udział klikając na ptaszka</item>
+        <item>Weźmiesz udział</item>
+        <item>Może weźmiesz udział</item>
+        <item>Nie chcesz wziąć udziału</item>
+        <item>Jesteś zaproszony</item>
+        <item>Nie możesz wziąć udziału</item>
+    </array>
 </resources>

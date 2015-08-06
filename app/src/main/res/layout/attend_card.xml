@@ -64,6 +64,14 @@
                 android:text='@{StringUtil.date2String(event.startDate) + " - " + StringUtil.date2String(event.endDate)}'/>
 
             <TextView
+                android:id="@+id/tvAttend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/textView_item_desc"
+                android:background='@{(event.userInEvent == 3 || event.userInEvent == 5) ? @android:color/transparent : @color/colorAccentSemi}'
+                android:text='@{@stringArray/participate_types[event.userInEvent]}'/>
+
+            <TextView
                 android:id="@+id/tvStats"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
