@@ -47,7 +47,6 @@ public class AddEventActivity extends AddBaseActivity {
     @Override
     void setupViewPager(ViewPager viewPager) {
         Log.d(TAG, "setupViewPager");
-        Locale l = Locale.getDefault();
         mViewPager.setOffscreenPageLimit(4);
         FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager());
 

@@ -35,7 +35,6 @@ public class AddUserFacebookActivity extends AddUserActivity {
     @Override
     void setupViewPager(ViewPager viewPager) {
         Log.d(TAG, "setupViewPager facebook");
-        Locale l = Locale.getDefault();
         mViewPager.setOffscreenPageLimit(1);
         FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager());
 
