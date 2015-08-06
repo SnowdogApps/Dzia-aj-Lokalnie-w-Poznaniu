@@ -31,7 +31,7 @@ import pl.snowdog.dzialajlokalnie.util.NotEmptyValidator;
  */
 @EFragment(R.layout.fragment_add_title_date)
 public class AddTitleDateFragment extends AddBaseFragment {
-    private static final String TAG = "AddIssueTitleDateFragment";
+    private static final String TAG = "AddTitleDateFragment";
 
     public static final int MODE_EVENT = 0;
     public static final int MODE_ISSUE = 1;

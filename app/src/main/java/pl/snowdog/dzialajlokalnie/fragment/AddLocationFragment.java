@@ -1,10 +1,7 @@
 package pl.snowdog.dzialajlokalnie.fragment;
 
-import android.content.Context;
-import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
-import android.os.Debug;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
@@ -24,7 +21,6 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolygonOptions;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;
@@ -35,7 +31,6 @@ import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,8 +42,6 @@ import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.adapter.DistrictAdapter;
 import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
 import pl.snowdog.dzialajlokalnie.model.District;
-import pl.snowdog.dzialajlokalnie.model.Point;
-import pl.snowdog.dzialajlokalnie.model.Polygon;
 import pl.snowdog.dzialajlokalnie.model.ReverseGeocoding;
 import pl.snowdog.dzialajlokalnie.util.PolygonUtil;
 import pl.snowdog.dzialajlokalnie.util.PrefsUtil_;
@@ -61,7 +54,7 @@ import retrofit.client.Response;
  */
 @EFragment(R.layout.fragment_add_location)
 public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCallback, GoogleMap.OnMyLocationChangeListener, GoogleMap.OnCameraChangeListener {
-    private static final String TAG = "AddIssueLocationFr";
+    private static final String TAG = "AddLocationFragment";
 
 
     @ViewById
@@ -84,7 +77,8 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
     @FragmentArg
     CreateNewObjectEvent mEditedObject;
 
-    @FragmentArg int mMode;
+    @FragmentArg
+    int mMode;
 
     List<District> districts;
 
@@ -110,9 +104,9 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
 
     @Override
     boolean validateInput() {
-        if(mMarker == null && spinner.getSelectedItemPosition() == 0) {
+        if (mMarker == null && spinner.getSelectedItemPosition() == 0) {
             Snackbar.make(btnNext, getActivity().getString(R.string.warning_set_place), Snackbar.LENGTH_SHORT)
-                .setAction("Action", null).show();
+                    .setAction("Action", null).show();
             return false;
         } else {
             return true;
@@ -121,7 +115,7 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
 
     @Click(R.id.btnNext)
     void onNextButtonClicked() {
-        if(validateInput()) {
+        if (validateInput()) {
             CreateNewObjectEvent.Builder builder = new CreateNewObjectEvent.Builder()
                     .lat(mMarker.getPosition().latitude)
                     .lon(mMarker.getPosition().longitude)
@@ -130,10 +124,8 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
                     .type(CreateNewObjectEvent.Type.location);
 
             EventBus.getDefault().post(builder.build());
-            //((AddBaseActivity)getActivity()).goToNextPage();
         }
     }
-
 
     @AfterViews
     void afterViewsCreated() {
@@ -141,7 +133,7 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
         mapView.getMapAsync(this);
 
         districts = new Select().from(District.class).orderBy("name").execute();
-        for(District d : districts) {
+        for (District d : districts) {
             d.createPolygonFromCoordinates();
         }
         districts.add(0, new District(-1, getString(R.string.all_districts_filter), null, 16.934167, 52.408333, -1));
@@ -152,7 +144,7 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
         spinner.setAdapter(adapter);
         spinner.setSelection(adapter.getSelection());
 
-        if(mMode == AddUserActivity.MODE_SIGN_UP_FACEBOOK) {
+        if (mMode == AddUserActivity.MODE_SIGN_UP_FACEBOOK) {
             btnNext.setText(R.string.save_user_edit);
             btnPrev.setVisibility(View.GONE);
         }
@@ -163,8 +155,8 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
         if (selected) {
             adapter.setSelection(position);
 
-            if(position != 0 && !isMarkerChange) {
-                Toast.makeText(getActivity(), "district latlng: "+adapter.getSelectedItem().getLat(), Toast.LENGTH_SHORT).show();
+            if (position != 0 && !isMarkerChange) {
+                Toast.makeText(getActivity(), "district latlng: " + adapter.getSelectedItem().getLat(), Toast.LENGTH_SHORT).show();
                 map.clear();
                 mMarker = map.addMarker(
                         new MarkerOptions()
@@ -209,7 +201,7 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
     void updateMarkerWithAddress(ReverseGeocoding.Property property) {
         String streetName = property.getImie() != null ? property.getImie() : property.getNazwisko();
         streetName = String.valueOf(streetName.charAt(0)).toUpperCase() + streetName.substring(1, streetName.length());
-        address = property.getTyp()+streetName +" "+ property.getNr();
+        address = property.getTyp() + streetName + " " + property.getNr();
         mMarker.setTitle(address);
         mMarker.showInfoWindow();
     }
@@ -234,7 +226,7 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
                 Log.d(TAG, "mpdbg markerLat: " + point.latitude + " marker.lon: " + point.longitude);
 
 
-                if(findDistrictAndSetSpinner(point)) {
+                if (findDistrictAndSetSpinner(point)) {
                     getAddressForLocation(point.latitude, point.longitude);
                 } else {
                     map.clear();
@@ -243,8 +235,6 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
                     Snackbar.make(getView(), getString(R.string.outside_city_warning), Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
-
-
             }
         });
 
@@ -263,7 +253,7 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
             public void onMarkerDragEnd(Marker marker) {
                 map.clear();
                 mMarker = map.addMarker(new MarkerOptions().position(marker.getPosition()).draggable(true));
-                if(findDistrictAndSetSpinner(new LatLng(marker.getPosition().latitude, marker.getPosition().longitude))) {
+                if (findDistrictAndSetSpinner(new LatLng(marker.getPosition().latitude, marker.getPosition().longitude))) {
                     getAddressForLocation(marker.getPosition().latitude, marker.getPosition().longitude);
                 } else {
                     map.clear();
@@ -276,8 +266,8 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
         });
 
         //EDIT Mode
-        if(mEditedObject != null) {
-            if(mEditedObject.getLat() != 0.0f && mEditedObject.getLon() != 0.0f) {
+        if (mEditedObject != null) {
+            if (mEditedObject.getLat() != 0.0f && mEditedObject.getLon() != 0.0f) {
                 mMarker = map.addMarker(new MarkerOptions().position(new LatLng(mEditedObject.getLat(), mEditedObject.getLon())).draggable(true));
                 getAddressForLocation(mEditedObject.getLat(), mEditedObject.getLon());
                 map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mEditedObject.getLat(), mEditedObject.getLon()), 11));
@@ -291,9 +281,9 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
         }
 
 
-        if(mMode == AddUserActivity.MODE_SIGN_UP || mMode == AddUserActivity.MODE_SIGN_UP_FACEBOOK) {
+        if (mMode == AddUserActivity.MODE_SIGN_UP || mMode == AddUserActivity.MODE_SIGN_UP_FACEBOOK) {
             tvHint.setText(R.string.info_select_live_distrcit);
-            if(pref.lastLat().exists() && pref.lastLon().exists()) {
+            if (pref.lastLat().exists() && pref.lastLon().exists()) {
                 mMarker = map.addMarker(new MarkerOptions().position(new LatLng(pref.lastLat().get(), pref.lastLon().get())).draggable(true));
                 if (findDistrictAndSetSpinner(new LatLng(pref.lastLat().get(), pref.lastLon().get()))) {
                     getAddressForLocation(pref.lastLat().get(), pref.lastLon().get());
@@ -303,15 +293,14 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
     }
 
     /**
-     *
      * @param point to check if it belongs to any district in the city
      * @return true if point is within given district
      */
     private boolean findDistrictAndSetSpinner(LatLng point) {
         boolean isWithinDistrict = false;
         int counter = 0;
-        for(District d : districts) {
-            if(d.getPolygon() != null) {
+        for (District d : districts) {
+            if (d.getPolygon() != null) {
                 if (PolygonUtil.isPointInPolygon(point, d.getPolygon())) {
                     isMarkerChange = true;
                     spinner.setSelection(counter);
@@ -324,8 +313,6 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
         }
         return isWithinDistrict;
     }
-
-
 
     @Override
     public void onMyLocationChange(Location location) {
@@ -349,5 +336,4 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
         super.onPause();
         mapView.onPause();
     }
-
 }
