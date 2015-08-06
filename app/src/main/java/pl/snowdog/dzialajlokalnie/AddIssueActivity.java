@@ -12,6 +12,7 @@ import org.androidannotations.annotations.Extra;
 import java.io.File;
 import java.util.Locale;
 
+import pl.snowdog.dzialajlokalnie.adapter.FragmentAdapter;
 import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
 import pl.snowdog.dzialajlokalnie.events.ObjectAddedEvent;
 import pl.snowdog.dzialajlokalnie.fragment.AddCategoriesFragment_;
@@ -42,7 +43,7 @@ public class AddIssueActivity extends AddBaseActivity {
         Log.d(TAG, "setupViewPager");
         Locale l = Locale.getDefault();
         mViewPager.setOffscreenPageLimit(4);
-        Adapter adapter = new Adapter(getSupportFragmentManager());
+        FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager());
 
         adapter.addFragment(new AddTitleDateFragment_().builder()
                 .mEditedObject(mEditedIssue != null ? new CreateNewObjectEvent.Builder()

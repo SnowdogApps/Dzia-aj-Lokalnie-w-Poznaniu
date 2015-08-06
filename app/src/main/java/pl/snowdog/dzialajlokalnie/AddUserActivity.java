@@ -16,6 +16,7 @@ import java.io.File;
 import java.util.List;
 import java.util.Locale;
 
+import pl.snowdog.dzialajlokalnie.adapter.FragmentAdapter;
 import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
 import pl.snowdog.dzialajlokalnie.events.ObjectAddedEvent;
 import pl.snowdog.dzialajlokalnie.fragment.AddImageFragment_;
@@ -52,7 +53,7 @@ public class AddUserActivity extends AddBaseActivity {
         Log.d(TAG, "setupViewPager");
         Locale l = Locale.getDefault();
         mViewPager.setOffscreenPageLimit(3);
-        Adapter adapter = new Adapter(getSupportFragmentManager());
+        FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager());
 
         adapter.addFragment(new AddUserDetailsFragment_().builder()
                 .mEditedObject(mEditedUser != null ? new CreateNewObjectEvent.Builder()

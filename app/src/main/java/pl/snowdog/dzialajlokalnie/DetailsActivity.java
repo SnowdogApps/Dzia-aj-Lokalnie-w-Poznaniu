@@ -110,9 +110,9 @@ public class DetailsActivity extends BaseActivity {
 
         adapter = new FragmentAdapter(getSupportFragmentManager());
         if (firstFragment != null) {
-            adapter.addFragment(firstFragment, getString(R.string.details_title_section1).toUpperCase());
+            adapter.addFragment(firstFragment, getString(R.string.details_title_section1));
         }
-        adapter.addFragment(commentsFragment, getString(R.string.details_title_section2).toUpperCase());
+        adapter.addFragment(commentsFragment, getString(R.string.details_title_section2));
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(2);
         tabLayout.setupWithViewPager(viewPager);

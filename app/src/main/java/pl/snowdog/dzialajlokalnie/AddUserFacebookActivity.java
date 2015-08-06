@@ -12,6 +12,7 @@ import org.androidannotations.annotations.Extra;
 
 import java.util.Locale;
 
+import pl.snowdog.dzialajlokalnie.adapter.FragmentAdapter;
 import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
 import pl.snowdog.dzialajlokalnie.events.ObjectAddedEvent;
 import pl.snowdog.dzialajlokalnie.fragment.AddLocationFragment_;
@@ -36,7 +37,7 @@ public class AddUserFacebookActivity extends AddUserActivity {
         Log.d(TAG, "setupViewPager facebook");
         Locale l = Locale.getDefault();
         mViewPager.setOffscreenPageLimit(1);
-        Adapter adapter = new Adapter(getSupportFragmentManager());
+        FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager());
 
         adapter.addFragment(new AddLocationFragment_().builder()
                 .mMode(MODE_SIGN_UP_FACEBOOK)

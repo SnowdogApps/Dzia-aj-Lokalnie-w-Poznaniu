@@ -24,6 +24,11 @@ public class FragmentAdapter extends FragmentPagerAdapter {
         mFragmentTitles.add(title);
     }
 
+    public void addFragment(Fragment fragment) {
+        mFragments.add(fragment);
+        mFragmentTitles.add("");
+    }
+
     @Override
     public Fragment getItem(int position) {
         return mFragments.get(position);
