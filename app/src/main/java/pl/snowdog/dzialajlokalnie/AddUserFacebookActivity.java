@@ -82,7 +82,6 @@ public class AddUserFacebookActivity extends AddUserActivity {
         });
     }
 
-
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -106,7 +105,6 @@ public class AddUserFacebookActivity extends AddUserActivity {
         // Create the AlertDialog
         AlertDialog dialog = builder.create();
         dialog.show();
-
     }
 
     public void onEvent(CreateNewObjectEvent event) {

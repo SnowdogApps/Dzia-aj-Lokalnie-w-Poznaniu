@@ -44,7 +44,7 @@ public abstract class AddBaseActivity extends BaseActivity {
     String address;
     List<Integer> categoryIDs;
     String photoUri;
-    
+
     @Override
     protected void afterView() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -110,7 +110,6 @@ public abstract class AddBaseActivity extends BaseActivity {
     private void updateSubtitle() {
         getSupportActionBar().setSubtitle(getString(R.string.add_issue_step) + " " + (mViewPager.getCurrentItem() + 1) + "/" + mViewPager.getAdapter().getCount());
     }
-
 
     public void onEvent(CreateNewObjectEvent event) {
         switch (event.getType()) {

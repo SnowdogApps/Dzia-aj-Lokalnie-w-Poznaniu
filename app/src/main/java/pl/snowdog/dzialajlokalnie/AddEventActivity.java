@@ -146,7 +146,6 @@ public class AddEventActivity extends AddBaseActivity {
         });
     }
 
-
     private void putEvent() {
         toggleProgressWheel(true);
         NewEvent newEvent = createNewEventObject();
@@ -169,7 +168,6 @@ public class AddEventActivity extends AddBaseActivity {
             }
         });
     }
-
 
     private void putEventImage(int eventId) {
 
@@ -204,6 +202,4 @@ public class AddEventActivity extends AddBaseActivity {
         newEvent.setEndDate(endDate);
         return newEvent;
     }
-
-
 }
