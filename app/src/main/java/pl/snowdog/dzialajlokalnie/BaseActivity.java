@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.MainThread;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
@@ -29,6 +30,7 @@ import com.google.android.gms.iid.InstanceID;
 import com.google.android.gms.location.LocationServices;
 
 import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
 import org.androidannotations.annotations.sharedpreferences.Pref;
@@ -49,6 +51,7 @@ import pl.snowdog.dzialajlokalnie.model.Category;
 import pl.snowdog.dzialajlokalnie.model.Comment;
 import pl.snowdog.dzialajlokalnie.model.District;
 import pl.snowdog.dzialajlokalnie.model.Login;
+import pl.snowdog.dzialajlokalnie.model.NewUser;
 import pl.snowdog.dzialajlokalnie.model.Session;
 import pl.snowdog.dzialajlokalnie.model.User;
 import pl.snowdog.dzialajlokalnie.util.PrefsUtil_;
@@ -307,7 +310,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 
                 DlApplication.refreshCurrentSession();
-
+                sendRegistrationToken();
                 loginResult(session);
             }
 
@@ -317,6 +320,52 @@ public abstract class BaseActivity extends AppCompatActivity {
                 Log.d(TAG, "login failure: " + error);
             }
         });
+    }
+
+    @Background
+    void sendRegistrationToken() {
+        SharedPreferences sharedPreferences =
+                PreferenceManager.getDefaultSharedPreferences(this);
+        boolean sentToken = sharedPreferences
+                .getBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false);
+        if (sentToken) {
+            Log.d(TAG, "gcmdbg TOKEN sent");
+            InstanceID instanceID = InstanceID.getInstance(BaseActivity.this);
+            try {
+                String token = instanceID.getToken(getString(R.string.gcm_defaultSenderId),
+                        GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+                pref.edit().pushRegId().put(token).apply();
+                sendRegistrationToServer(token);
+            } catch (IOException e) {
+
+                e.printStackTrace();
+            }
+        } else {
+            Log.d(TAG, "gcmdbg TOKEN NOT sent");
+        }
+    }
+
+
+    private void sendRegistrationToServer(String token) {
+        // Add custom implementation, as needed.
+        if(DlApplication.currentSession != null && DlApplication.currentSession.getSsid() != null) {
+            NewUser newUser = new NewUser();
+            newUser.setPushRegId(token);
+
+            DlApplication.userApi.putUser(newUser, DlApplication.currentSession.getUserID(), new Callback<User>() {
+                @Override
+                public void success(User user, Response response) {
+                    Log.d(TAG, "userApi.sendRegistrationToServer post success: " + response + " user: " + user.toString());
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    Log.d(TAG, "userApi.postNewUser post error: " + error);
+
+                }
+            });
+        }
+
     }
 
     @Nullable
