@@ -24,6 +24,7 @@ import pl.snowdog.dzialajlokalnie.databinding.FragmentAddTitleDateBinding;
 import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
 import pl.snowdog.dzialajlokalnie.events.DateSetEvent;
 import pl.snowdog.dzialajlokalnie.model.DateWrapper;
+import pl.snowdog.dzialajlokalnie.util.NotEmptyValidator;
 
 /**
  * Created by chomi3 on 2015-07-06.
@@ -71,18 +72,17 @@ public class AddTitleDateFragment extends AddBaseFragment {
 
     @Click(R.id.btnNext)
     void onNextButtonClicked() {
-        if(validateInput()) {
+        if (validateInput()) {
             CreateNewObjectEvent.Builder builder = new CreateNewObjectEvent.Builder()
                     .title(etTitle.getText().toString())
                     .description(etDescription.getText().toString())
                     .type(CreateNewObjectEvent.Type.title);
-            if(mAddingMode == MODE_EVENT) {
+            if (mAddingMode == MODE_EVENT) {
                 builder.startDate(startDate);
                 builder.endDate(endDate);
                 builder.type(CreateNewObjectEvent.Type.date);
             }
             EventBus.getDefault().post(builder.build());
-            //((AddBaseActivity)getActivity()).goToNextPage();
         }
     }
 
@@ -92,7 +92,7 @@ public class AddTitleDateFragment extends AddBaseFragment {
         boolean validDescription = validateDescription();
         boolean validDate = validateDate();
 
-        if(validTitle && validDescription && validDate) {
+        if (validTitle && validDescription && validDate) {
             return true;
         } else {
             return false;
@@ -101,59 +101,41 @@ public class AddTitleDateFragment extends AddBaseFragment {
 
     private boolean validateDate() {
         boolean validDate = true;
-        if(mAddingMode == MODE_EVENT) {
-            if(startDate == null) {
+        if (mAddingMode == MODE_EVENT) {
+            if (startDate == null) {
                 validDate = false;
                 Snackbar.make(getView(), getString(R.string.warning_fill_date), Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
+                        .setAction("Action", null).show();
             }
         }
         return validDate;
     }
 
     private boolean validateTitle() {
-        boolean isInputValid = true;
-        if(etTitle.getText().toString().length() == 0) {
-            etTitleWrapper.setErrorEnabled(true);
-            etTitleWrapper.setError(getString(R.string.warning_fill_title));
-            isInputValid = false;
-        } else {
-            etTitleWrapper.setErrorEnabled(false);
-        }
-        return isInputValid;
+        return NotEmptyValidator.validate(etTitle, etTitleWrapper, R.string.warning_fill_title);
     }
 
     private boolean validateDescription() {
-        boolean isInputValid = true;
-        if(etDescription.getText().toString().length() == 0) {
-            etDescriptionWrapper.setErrorEnabled(true);
-            etDescriptionWrapper.setError(getString(R.string.warning_fill_description));
-            isInputValid = false;
-        } else {
-            etDescriptionWrapper.setErrorEnabled(false);
-        }
-        return isInputValid;
+        return NotEmptyValidator.validate(etDescription, etDescriptionWrapper, R.string.warning_fill_description);
     }
 
     @TextChange(R.id.etTitle)
     void onTextChangeTitle(TextView tv, CharSequence text) {
-        if(text.length() > 0) {
+        if (text.length() > 0) {
             validateTitle();
         }
     }
 
     @TextChange(R.id.etDescription)
     void onTextChangeDescription(TextView tv, CharSequence text) {
-        if(text.length() > 0) {
+        if (text.length() > 0) {
             validateDescription();
         }
     }
 
-
     @AfterViews
     void afterViewsCreated() {
-
-        if(mAddingMode == MODE_EVENT) {
+        if (mAddingMode == MODE_EVENT) {
             vEventContainer.setVisibility(View.VISIBLE);
         }
         btnPrev.setVisibility(View.GONE);
@@ -161,10 +143,9 @@ public class AddTitleDateFragment extends AddBaseFragment {
         FragmentAddTitleDateBinding binding = DataBindingUtil.bind(rootView);
         binding.setEditedObject(mEditedObject);
 
-        if(mEditedObject != null) {
+        if (mEditedObject != null) {
             updateDateTextView();
         }
-        //updateNextButton();
     }
 
     @Click(R.id.btnCaldroid)
@@ -172,36 +153,32 @@ public class AddTitleDateFragment extends AddBaseFragment {
         AddCaldroidDialogFragment_.builder().startDate(startDate).endDate(endDate).build().show(getChildFragmentManager(), AddCaldroidDialogFragment.TAG);
     }
 
-
     public void onEvent(DateSetEvent event) {
-        if(event.getEndDate() != null) {
-            if(endDate == null) {
+        if (event.getEndDate() != null) {
+            if (endDate == null) {
                 endDate = new DateWrapper(new Date());
             }
             endDate.setDate(event.getEndDate());
 
         }
-        if(event.getStartDate() != null) {
-            if(startDate== null) {
+        if (event.getStartDate() != null) {
+            if (startDate == null) {
                 startDate = new DateWrapper(new Date());
             }
             startDate.setDate(event.getStartDate());
         }
         updateDateTextView();
-        /*Toast.makeText(getActivity(),"onDateSet: "+event.toString(),
-                Toast.LENGTH_SHORT).show();*/
     }
 
     private void updateDateTextView() {
-        if(startDate == null) return;
+        if (startDate == null) return;
 
-        if(startDate.getDate().compareTo(endDate.getDate()) != 0) {
-            tvDateStatus.setText(getString(R.string.date)+ " "+startDate.getDateString(getActivity())+ " - "+endDate.getDateString(getActivity()));
+        if (startDate.getDate().compareTo(endDate.getDate()) != 0) {
+            tvDateStatus.setText(getString(R.string.date) + " " + startDate.getDateString(getActivity()) + " - " + endDate.getDateString(getActivity()));
         } else {
-            tvDateStatus.setText(getString(R.string.date)+ " "+startDate.getDateString(getActivity()));
+            tvDateStatus.setText(getString(R.string.date) + " " + startDate.getDateString(getActivity()));
         }
     }
-
 
     @Override
     protected boolean isImplementingEventBus() {
