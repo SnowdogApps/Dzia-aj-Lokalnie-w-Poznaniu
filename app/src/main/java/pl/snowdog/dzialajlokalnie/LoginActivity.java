@@ -225,6 +225,7 @@ public class LoginActivity extends BaseActivity {
                         }
                         hideKeyboard();
                         AddUserFacebookActivity_.intent(LoginActivity.this).userID(user.getUser().getUserID()).start();
+                        finish();
                     }
                 }
                 toggleProgressWheel(false);
