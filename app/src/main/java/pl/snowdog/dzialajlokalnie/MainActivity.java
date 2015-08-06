@@ -193,11 +193,10 @@ public class MainActivity extends BaseActivity {
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        Locale l = Locale.getDefault();
         FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager());
-        adapter.addFragment(new IssuesFragment_(), getString(R.string.title_section1).toUpperCase(l));
-        adapter.addFragment(new MapFragment_(), getString(R.string.title_section2).toUpperCase(l));
-        adapter.addFragment(new EventsFragment_(), getString(R.string.title_section3).toUpperCase(l));
+        adapter.addFragment(new IssuesFragment_(), getString(R.string.title_section1));
+        adapter.addFragment(new MapFragment_(), getString(R.string.title_section2));
+        adapter.addFragment(new EventsFragment_(), getString(R.string.title_section3));
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(3);
     }

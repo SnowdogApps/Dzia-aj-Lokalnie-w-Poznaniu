@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by bartek on 23.07.15.
@@ -35,7 +36,8 @@ public class FragmentAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return mFragmentTitles.get(position);
+        final Locale locale = Locale.getDefault();
+        return mFragmentTitles.get(position).toUpperCase(locale);
     }
 
     public void setPageTitle(int position, String pageTitle) {
