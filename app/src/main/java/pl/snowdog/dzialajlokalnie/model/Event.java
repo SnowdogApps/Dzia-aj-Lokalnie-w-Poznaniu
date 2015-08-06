@@ -92,6 +92,9 @@ public class Event extends Model implements Serializable {
     @Column
     private int userStatus;
 
+    @Column
+    private int userInEvent;
+
     private String categoriesText;
     private String districtName;
 
@@ -103,11 +106,14 @@ public class Event extends Model implements Serializable {
         super();
     }
 
-    public Event(int eventID, int parentID, int userID, String title, String description, int districtID, double lon, double lat, String address, Date startDate, Date endDate, String facebookUrl, String eventUrl, Date createdAt, int eventStatus, String categoryID, String photoEventUri, int commentsCount, int votesCount, int invitedCount, int attendingCount, int maybeCount, int declinedCount, int userStatus) {
+    public Event(int eventID, int parentID, int userID, String authorName, String authorAvatar, String title, String description, int districtID, double lon, double lat, String address, Date startDate, Date endDate, String facebookUrl, String eventUrl, Date createdAt, int eventStatus, String categoryID, String photoEventUri, int commentsCount, int votesCount, int invitedCount, int attendingCount, int maybeCount, int declinedCount, int userStatus, int userInEvent, String categoriesText, String districtName, List<Integer> categoriesList) {
         super();
+
         this.eventID = eventID;
         this.parentID = parentID;
         this.userID = userID;
+        this.authorName = authorName;
+        this.authorAvatar = authorAvatar;
         this.title = title;
         this.description = description;
         this.districtID = districtID;
@@ -129,6 +135,10 @@ public class Event extends Model implements Serializable {
         this.maybeCount = maybeCount;
         this.declinedCount = declinedCount;
         this.userStatus = userStatus;
+        this.userInEvent = userInEvent;
+        this.categoriesText = categoriesText;
+        this.districtName = districtName;
+        this.categoriesList = categoriesList;
     }
 
     @Override
@@ -160,10 +170,19 @@ public class Event extends Model implements Serializable {
                 ", maybeCount=" + maybeCount +
                 ", declinedCount=" + declinedCount +
                 ", userStatus=" + userStatus +
+                ", userInEvent=" + userInEvent +
                 ", categoriesText='" + categoriesText + '\'' +
                 ", districtName='" + districtName + '\'' +
                 ", categoriesList=" + categoriesList +
                 '}';
+    }
+
+    public int getUserInEvent() {
+        return userInEvent;
+    }
+
+    public void setUserInEvent(int userInEvent) {
+        this.userInEvent = userInEvent;
     }
 
     public String getAuthorName() {
