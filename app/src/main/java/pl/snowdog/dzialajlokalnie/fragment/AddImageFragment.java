@@ -204,7 +204,7 @@ public class AddImageFragment extends AddBaseFragment {
                 Log.d(TAG, "edtdbg image: " + mEditedObject.getImage());
             } else {
                 Picasso.with(getActivity())
-                        .load(String.format(DlApi.PHOTO_THUMB_URL, mEditedObject.getImage()))
+                        .load(String.format(DlApi.PHOTO_NORMAL_URL, mEditedObject.getImage()))
                         .error(
                                 R.drawable.ic_editor_insert_emoticon).into(ivPreview);
                 Log.d(TAG, "edtdbg image: " + mEditedObject.getImage());
