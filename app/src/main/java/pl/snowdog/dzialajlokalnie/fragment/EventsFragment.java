@@ -69,12 +69,12 @@ public class EventsFragment extends ListFragment {
         for (int i = 0; i < adapter.getEvents().size(); i++) {
             Event event = adapter.getEvents().get(i);
             if (event.getEventID() == participateEvent.getEventID()) {
-                event.setUserInEvent(participateEvent.getParticipateType());
-                if (participateEvent.getParticipateType() == 1) {
+                if (event.getUserInEvent() != 1 && participateEvent.getParticipateType() == 1) {
                     event.setAttendingCount(event.getAttendingCount()+1);
-                } else {
+                } else if (event.getUserInEvent() == 1 && participateEvent.getParticipateType() != 1) {
                     event.setAttendingCount(event.getAttendingCount()-1);
                 }
+                event.setUserInEvent(participateEvent.getParticipateType());
                 adapter.notifyItemChanged(i);
                 break;
             }
