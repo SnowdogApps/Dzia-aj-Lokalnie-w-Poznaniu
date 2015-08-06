@@ -95,7 +95,7 @@ public class AddEventActivity extends AddBaseActivity {
     @Override
     protected void afterView() {
         super.afterView();
-        if(mEditedEvent != null) {
+        if (mEditedEvent != null) {
             getSupportActionBar().setTitle(getString(R.string.edit_event));
         }
     }
@@ -112,7 +112,7 @@ public class AddEventActivity extends AddBaseActivity {
                 return;
             case category:
                 categoryIDs = event.getCategoryIDs();
-                if(mEditedEvent != null) {
+                if (mEditedEvent != null) {
                     putEvent();
                 } else {
                     postEvent();
@@ -129,8 +129,13 @@ public class AddEventActivity extends AddBaseActivity {
         DlApplication.eventApi.postEvent(newEvent, new Callback<Event>() {
             @Override
             public void success(Event eventWrapper, Response response) {
-                finishAdding(ObjectAddedEvent.Type.event);
                 Log.d(TAG, "eventApi post success: " + response + " newEventFromApi: " + eventWrapper.toString());
+                if (photoUri != null && photoUri.length() > 0) {
+                    putEventImage(eventWrapper.getEventID());
+                } else {
+                    //Finished adding, close view
+                    finishAdding(ObjectAddedEvent.Type.event);
+                }
             }
 
             @Override
@@ -150,13 +155,11 @@ public class AddEventActivity extends AddBaseActivity {
             public void success(Event eventWrapper, Response response) {
                 Log.d(TAG, "eventApi post success: " + response + " newEventFromApi: " + eventWrapper.toString());
                 if (photoUri != null && photoUri.length() > 0) {
-                    putIssueImage(eventWrapper.getEventID());
+                    putEventImage(eventWrapper.getEventID());
                 } else {
                     //Finished adding, close view
                     finishAdding(ObjectAddedEvent.Type.event);
                 }
-
-
             }
 
             @Override
@@ -168,7 +171,7 @@ public class AddEventActivity extends AddBaseActivity {
     }
 
 
-    private void putIssueImage(int eventId) {
+    private void putEventImage(int eventId) {
 
         TypedFile file = new TypedFile("image/jpg", new File(photoUri));
 
@@ -194,7 +197,7 @@ public class AddEventActivity extends AddBaseActivity {
         newEvent.setTitle(title);
         newEvent.setDescription(description);
         newEvent.setAddress(address);
-        newEvent.setLocation(Double.toString(lat)+","+Double.toString(lon));
+        newEvent.setLocation(Double.toString(lat) + "," + Double.toString(lon));
         newEvent.setCategoryID(categoryIDs);
         newEvent.setDistrictID(districtID);
         newEvent.setStartDate(startDate);

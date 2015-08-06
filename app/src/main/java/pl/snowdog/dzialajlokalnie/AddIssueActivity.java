@@ -87,7 +87,7 @@ public class AddIssueActivity extends AddBaseActivity {
     @Override
     protected void afterView() {
         super.afterView();
-        if(mEditedIssue != null) {
+        if (mEditedIssue != null) {
             getSupportActionBar().setTitle(getString(R.string.edit_issue));
         }
     }
@@ -96,7 +96,7 @@ public class AddIssueActivity extends AddBaseActivity {
         switch (event.getType()) {
             case category:
                 categoryIDs = event.getCategoryIDs();
-                if(mEditedIssue != null) {
+                if (mEditedIssue != null) {
                     putIssue();
                 } else {
                     //toggleProgressWheel(true);
@@ -114,7 +114,7 @@ public class AddIssueActivity extends AddBaseActivity {
         DlApplication.issueApi.postIssue(newIssue, new Callback<Issue>() {
             @Override
             public void success(Issue issueWrapper, Response response) {
-                Log.d(TAG, "issueApi post success: " + response.toString() + " newIssueFromApi: " + issueWrapper.toString()+ " photoUri: "+photoUri.toString());
+                Log.d(TAG, "issueApi post success: " + response.toString() + " newIssueFromApi: " + issueWrapper.toString() + " photoUri: " + photoUri.toString());
                 if (photoUri != null && photoUri.length() > 0) {
                     putIssueImage(issueWrapper.getIssueID());
                 } else {
@@ -130,7 +130,6 @@ public class AddIssueActivity extends AddBaseActivity {
             }
         });
     }
-
 
 
     private void putIssue() {
@@ -151,7 +150,7 @@ public class AddIssueActivity extends AddBaseActivity {
             @Override
             public void failure(RetrofitError error) {
                 Log.d(TAG, "issueApi put error: " + error);
-               toggleProgressWheel(false);
+                toggleProgressWheel(false);
             }
         });
     }
@@ -185,10 +184,7 @@ public class AddIssueActivity extends AddBaseActivity {
         newIssue.setLocation(Double.toString(lat) + "," + Double.toString(lon));
         newIssue.setCategoryID(categoryIDs);
         newIssue.setDistrictID(districtID);
-
-
+        
         return newIssue;
     }
-
-
 }
