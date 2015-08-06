@@ -49,7 +49,14 @@ public class EventsFragment extends ListFragment {
 
     public void onEvent(EventAttendEvent event) {
         Log.d(TAG, "onEvent " + event);
-        participate(new ParticipateEvent(event.getEventId(), ParticipateEvent.ParcitipateType.attending));
+        ParticipateEvent.ParcitipateType participateType;
+        if (event.getEvent().getUserInEvent() != 1) {
+            participateType = ParticipateEvent.ParcitipateType.attending;
+        } else {
+            participateType = ParticipateEvent.ParcitipateType.declined;
+        }
+
+        participate(new ParticipateEvent(event.getEvent().getEventID(), participateType));
     }
 
     public void onEvent(ObjectAddedEvent event) {

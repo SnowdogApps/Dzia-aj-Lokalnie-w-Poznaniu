@@ -57,7 +57,14 @@ public class EventFragment extends BaseFragment implements OnMapReadyCallback {
     @Click(R.id.ibAttend)
     protected void attend() {
         if (binding.getEvent() != null) {
-            participate(new ParticipateEvent(binding.getEvent().getEventID(), ParticipateEvent.ParcitipateType.attending));
+            ParticipateEvent.ParcitipateType participateType;
+            if (binding.getEvent().getUserInEvent() != 1) {
+                participateType = ParticipateEvent.ParcitipateType.attending;
+            } else {
+                participateType = ParticipateEvent.ParcitipateType.declined;
+            }
+
+            participate(new ParticipateEvent(binding.getEvent().getEventID(), participateType));
         }
     }
 

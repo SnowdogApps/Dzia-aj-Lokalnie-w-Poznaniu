@@ -69,8 +69,7 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
                 @Override
                 public void onClick(View v) {
                     EventBus.getDefault().post(new EventAttendEvent(
-                            ViewHolder.this.binding.getEvent().getEventID()
-                    ));
+                            ViewHolder.this.binding.getEvent()));
                 }
             });
 

@@ -1,28 +1,30 @@
 package pl.snowdog.dzialajlokalnie.events;
 
+import pl.snowdog.dzialajlokalnie.model.Event;
+
 /**
  * Created by bartek on 08.07.15.
  */
 public class EventAttendEvent {
 
-    private int eventId;
+    private Event event;
 
-    public EventAttendEvent(int eventId) {
-        this.eventId = eventId;
+    public EventAttendEvent(Event event) {
+        this.event = event;
     }
 
     @Override
     public String toString() {
         return "EventAttendEvent{" +
-                "eventId=" + eventId +
+                "event=" + event +
                 '}';
     }
 
-    public int getEventId() {
-        return eventId;
+    public Event getEvent() {
+        return event;
     }
 
-    public void setEventId(int eventId) {
-        this.eventId = eventId;
+    public void setEvent(Event event) {
+        this.event = event;
     }
 }
