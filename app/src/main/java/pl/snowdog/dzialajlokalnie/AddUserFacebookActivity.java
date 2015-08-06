@@ -38,7 +38,6 @@ public class AddUserFacebookActivity extends AddUserActivity {
         mViewPager.setOffscreenPageLimit(1);
         Adapter adapter = new Adapter(getSupportFragmentManager());
 
-
         adapter.addFragment(new AddLocationFragment_().builder()
                 .mMode(MODE_SIGN_UP_FACEBOOK)
                 .build());
@@ -73,7 +72,6 @@ public class AddUserFacebookActivity extends AddUserActivity {
 
                 //Finished adding, close view
                 finishAdding(ObjectAddedEvent.Type.user);
-
             }
 
             @Override
@@ -121,6 +119,4 @@ public class AddUserFacebookActivity extends AddUserActivity {
         }
         super.onEvent(event);
     }
-
-
 }

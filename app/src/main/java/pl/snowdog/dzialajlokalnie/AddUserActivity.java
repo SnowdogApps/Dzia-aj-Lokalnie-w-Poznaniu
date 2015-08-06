@@ -66,7 +66,7 @@ public class AddUserActivity extends AddBaseActivity {
                 .mEditedObject(mEditedUser != null ? new CreateNewObjectEvent.Builder()
                         .districtID(mEditedUser.getDistrictID())
                         .build() : null)
-                    .mMode(MODE_SIGN_UP)
+                .mMode(MODE_SIGN_UP)
                 .build());
 
         adapter.addFragment(new AddImageFragment_().builder()
@@ -90,7 +90,7 @@ public class AddUserActivity extends AddBaseActivity {
     @Override
     protected void afterView() {
         super.afterView();
-        if(mEditedUser != null) {
+        if (mEditedUser != null) {
             getSupportActionBar().setTitle(getString(R.string.edit_user));
         }
     }
@@ -108,7 +108,7 @@ public class AddUserActivity extends AddBaseActivity {
                 return;
             case image:
                 photoUri = event.getImage();
-                if(mEditedUser == null) {
+                if (mEditedUser == null) {
                     postNewUser();
                 } else {
                     putEditedUser();
@@ -224,8 +224,8 @@ public class AddUserActivity extends AddBaseActivity {
                 }
 
                 List<User> users = new Select().from(User.class).execute();
-                for(User u : users) {
-                    Log.d(TAG, "usrdbg user: "+u.toString());
+                for (User u : users) {
+                    Log.d(TAG, "usrdbg user: " + u.toString());
                 }
 
                 finishAdding(ObjectAddedEvent.Type.user);
@@ -252,6 +252,4 @@ public class AddUserActivity extends AddBaseActivity {
 
         return newUser;
     }
-
-
 }
