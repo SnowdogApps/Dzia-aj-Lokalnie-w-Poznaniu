@@ -4,6 +4,7 @@
 
     <data>
         <variable name="count" type="int"/>
+        <variable name="participatetype" type="int"/>
     </data>
 
 
@@ -17,12 +18,12 @@
 
         <ImageButton
             android:id="@+id/ibAttend"
-            android:background="@android:color/transparent"
+            android:background="@{participatetype == 1 || participatetype == 2 || participatetype == 4 ? @drawable/vote_bg_selected : @drawable/vote_bg}"
             android:src="@drawable/ic_action_accept_dark"
             android:paddingLeft="@dimen/rating_button_padding"
             android:paddingRight="@dimen/rating_button_padding"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="@dimen/rate_button_size"
+            android:layout_height="@dimen/rate_button_size" />
 
         <TextView
             android:id="@+id/tvCount"

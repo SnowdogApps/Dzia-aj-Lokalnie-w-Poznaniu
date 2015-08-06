@@ -19,6 +19,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             bind:count="@{event.attendingCount}"
+            bind:participatetype="@{event.userInEvent}"
             />
 
         <LinearLayout

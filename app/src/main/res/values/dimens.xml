@@ -21,4 +21,5 @@
     <!--TODO check how to measure this value-->
     <dimen name="statusbar_height">24dp</dimen>
     <dimen name="nav_header_photo">72dp</dimen>
+    <dimen name="rate_button_size">32dp</dimen>
 </resources>
