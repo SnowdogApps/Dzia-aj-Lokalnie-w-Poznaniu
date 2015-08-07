@@ -60,6 +60,8 @@
     <string name="set">Ustaw</string>
     <string name="date">Data:</string>
     <string name="simple_date_format">dd MMM yyyy</string>
+    <string name="simple_date_time_format">dd MMM yyyy HH:mm:ss</string>
+    <string name="simple_time_format">HH:mm:ss</string>
     <string name="facebook_event">Wydarzenie na Facebooku (opcjonalnie)</string>
 
     <string name="choose">Wybierz</string>
@@ -122,6 +124,11 @@
     <string name="pref_subtitle_email_notifications">Nowości, komentarze, wydarzenia</string>
     <string name="action_about">O aplikacji</string>
     <string name="action_edit">Edytuj</string>
+    <string name="date_end">Data zakończenia</string>
+    <string name="date_start">Data rozpoczęcia</string>
+    <string name="date_start_time">Godzina rozpoczęcia</string>
+    <string name="date_end_time">Godzina zakończenia</string>
+    <string name="warning_fill_date_after">Koniec wydarzenia powinien być później niż początek</string>
 
 
     <plurals name="votes">

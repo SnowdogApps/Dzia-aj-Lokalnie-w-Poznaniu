@@ -28,6 +28,11 @@ public class DateWrapper implements Serializable {
         return formatter.format(date);
     }
 
+    public String getTimeString(Context context) {
+        SimpleDateFormat printFormat = new SimpleDateFormat(context.getString(R.string.simple_time_format));
+        return printFormat.format(date);
+    }
+
     public Date getDate() {
         return date;
     }

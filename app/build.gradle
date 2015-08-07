@@ -71,7 +71,7 @@ dependencies {
     compile "com.splunk.mint:mint:4.2.1"
     compile 'com.getbase:floatingactionbutton:1.9.1'
     compile 'com.roomorama:caldroid:2.1.0'
-
+    compile 'com.wdullaer:materialdatetimepicker:1.4.2'
     compile 'com.squareup.retrofit:retrofit:1.8.0'
     compile 'com.squareup.okhttp:okhttp:2.1.0'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.1.0'
