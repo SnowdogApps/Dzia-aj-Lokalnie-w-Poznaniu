@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -23,6 +24,7 @@ import org.androidannotations.annotations.ViewById;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Random;
@@ -32,6 +34,7 @@ import pl.snowdog.dzialajlokalnie.AddUserActivity;
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.events.CreateNewObjectEvent;
+import pl.snowdog.dzialajlokalnie.helpers.BitmapHeplers;
 import pl.snowdog.dzialajlokalnie.util.FileChooserUtil;
 
 /**
@@ -121,12 +124,19 @@ public class AddImageFragment extends AddBaseFragment {
 
         /* Set bitmap options to scale the image decode target */
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        bmOptions.inJustDecodeBounds = false;
-        bmOptions.inSampleSize = 2;
-        bmOptions.inPurgeable = true;
+//        bmOptions.inJustDecodeBounds = false;
+//        bmOptions.inSampleSize = 2;
+//        bmOptions.inPurgeable = true;
+
+
 
         /* Decode the JPEG file into a Bitmap */
-        Bitmap bitmap = BitmapFactory.decodeFile(mFileUri.getPath(), bmOptions);
+
+         /* Rotate image by EXIF data */
+
+        BitmapHeplers bmHelpers = new BitmapHeplers();
+
+        Bitmap bitmap = bmHelpers.rotateBitmap(mFileUri, bmOptions);
 
         /* Test compress */
         File imageFile = new File(mFileUri.getPath());
