@@ -5,6 +5,7 @@ package pl.snowdog.dzialajlokalnie.gcm;
  */
 public class NotificationAction {
     public static final String INTENT_ACTION = "action";
+    public static final String ACTION_VALUE = "action_value";
 
     //ISSUES
     public static final int NEW_ISSUE_SURROUND = 10;
@@ -20,5 +21,7 @@ public class NotificationAction {
     public static final int EVENT_REMINDER =24;
 
     //COMMENTS
-    public static final int COMMENT_PARENT_USER_OWNER = 30;
+    public static final int COMMENT_TO_ISSUE = 31;
+    public static final int COMMENT_TO_EVENT = 32;
+
 }

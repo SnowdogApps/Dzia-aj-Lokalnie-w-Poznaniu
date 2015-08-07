@@ -142,6 +142,7 @@ public class MainActivity extends BaseActivity {
         Bundle extras = intent.getExtras();
         if (extras != null) {
             int action = extras.getInt(NotificationAction.INTENT_ACTION);
+            int objectId = extras.getInt(NotificationAction.ACTION_VALUE);
             switch (action) {
                 case NotificationAction.NEW_ISSUE_SURROUND:
 
