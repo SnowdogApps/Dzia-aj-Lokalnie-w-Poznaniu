@@ -56,7 +56,7 @@ public class EventsFragment extends ListFragment {
             participateType = ParticipateEvent.ParcitipateType.declined;
         }
 
-        participate(new ParticipateEvent(event.getEvent().getEventID(), participateType));
+        participate(new ParticipateEvent(event.getEvent().getEventID(), event.getParcitipateType()));
     }
 
     public void onEvent(ObjectAddedEvent event) {

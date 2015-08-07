@@ -2,8 +2,10 @@ package pl.snowdog.dzialajlokalnie.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 
 import com.squareup.picasso.Picasso;
 
@@ -16,6 +18,7 @@ import pl.snowdog.dzialajlokalnie.databinding.ItemEventBinding;
 import pl.snowdog.dzialajlokalnie.events.EventAttendEvent;
 import pl.snowdog.dzialajlokalnie.events.EventClickedEvent;
 import pl.snowdog.dzialajlokalnie.model.Event;
+import pl.snowdog.dzialajlokalnie.model.ParticipateEvent;
 import pl.snowdog.dzialajlokalnie.util.CircleTransform;
 
 /**
@@ -62,14 +65,32 @@ public class EventsAdapter extends RecyclerView.Adapter<EventsAdapter.ViewHolder
 
         private ItemEventBinding binding;
 
-        public ViewHolder(ItemEventBinding binding) {
+        public ViewHolder(final ItemEventBinding binding) {
             super(binding.getRoot());
 
             binding.attendingWidget.ibAttend.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    EventBus.getDefault().post(new EventAttendEvent(
-                            ViewHolder.this.binding.getEvent()));
+                    PopupMenu popupMenu = new PopupMenu(binding.getRoot().getContext(), binding.attendingWidget.ibAttend);
+                    popupMenu.inflate(R.menu.menu_participate);
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            switch (item.getItemId()) {
+                                case R.id.attend:
+                                    EventBus.getDefault().post(new EventAttendEvent(ViewHolder.this.binding.getEvent(), ParticipateEvent.ParcitipateType.attending));
+                                    break;
+                                case R.id.maybe:
+                                    EventBus.getDefault().post(new EventAttendEvent(ViewHolder.this.binding.getEvent(), ParticipateEvent.ParcitipateType.maybe));
+                                    break;
+                                case R.id.decline:
+                                    EventBus.getDefault().post(new EventAttendEvent(ViewHolder.this.binding.getEvent(), ParticipateEvent.ParcitipateType.declined));
+                                    break;
+                            }
+                            return true;
+                        }
+                    });
+                    popupMenu.show();
                 }
             });
 

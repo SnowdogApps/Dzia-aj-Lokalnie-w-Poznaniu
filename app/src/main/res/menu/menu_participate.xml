@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/attend"
+        android:title="Wezmę udział"/>
+
+    <item android:id="@+id/maybe"
+        android:title="Może wezmę udział"/>
+
+    <item android:id="@+id/decline"
+        android:title="Nie wezmę udziału"/>
+
+</menu>
