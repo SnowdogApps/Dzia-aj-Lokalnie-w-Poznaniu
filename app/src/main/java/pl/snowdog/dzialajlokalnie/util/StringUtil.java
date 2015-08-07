@@ -14,6 +14,14 @@ import java.util.Date;
  */
 public class StringUtil {
 
+    public static String oneLine(String s) {
+        if (s == null) {
+            return null;
+        }
+
+        return s.replaceAll("\n", " ");
+    }
+
     public static String date2String(Date date) {
         if (date == null) {
             return null;

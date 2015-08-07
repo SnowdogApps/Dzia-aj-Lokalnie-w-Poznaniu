@@ -100,9 +100,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/textView_item_desc"
-                    android:maxLines="3"
+                    android:maxLines="2"
                     android:ellipsize="end"
-                    android:text="@{issue.description}"/>
+                    android:text="@{StringUtil.oneLine(issue.description)}"/>
             </LinearLayout>
 
             <include layout="@layout/item_footer"
