@@ -46,7 +46,7 @@ public class StringUtil {
         int startIndex = 0;
         for (int i = 0; i < lines.length; i++) {
             if (quoteLines[i]) {
-                spannableString.setSpan(new QuoteSpan(Color.parseColor("#FF4081")),
+                spannableString.setSpan(new QuoteSpan(Color.parseColor("#FF5252")),
                         startIndex, startIndex+lines[i].length(), 0);
                 spannableString.setSpan(new StyleSpan(Typeface.ITALIC),
                         startIndex, startIndex+lines[i].length(), 0);

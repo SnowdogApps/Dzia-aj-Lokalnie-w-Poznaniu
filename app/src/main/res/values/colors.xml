@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="text">#414141</color>
+    <color name="text">#212121</color>
     <color name="text_inverse">#efefef</color>
     <color name="background">#ececec</color>
     <color name="background_inverse">#717171</color>
@@ -14,21 +14,21 @@
     <color name="black_semi_transparent">#B2000000</color>
 
 
-    <color name="colorPrimary">#673AB7</color>
-    <color name="colorPrimaryDark">#512DA8</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#2196F3</color>
+    <color name="colorPrimaryDark">#1976D2</color>
+    <color name="colorAccent">#FF5252</color>
 
     <!-- Update these with colorPrimary and colorPrimaryDark values !!!-->
     <!-- To color the Circular Time Picker! -->
-    <color name="mdtp_accent_color">#673AB7</color>
-    <color name="mdtp_accent_color_dark">#512DA8</color>
+    <color name="mdtp_accent_color">#2196F3</color>
+    <color name="mdtp_accent_color_dark">#1976D2</color>
 
     <!-- Map Shapes -->
-    <color name="map_shape_stroke">#FF4081</color>
-    <color name="map_shape_fill">#512DA8</color>
+    <color name="map_shape_stroke">#FF5252</color>
+    <color name="map_shape_fill">#1976D2</color>
 
 <!-- updated these colors (add 99 alpha) after updating main app colors-->
-    <color name="colorAccentSemi">#66FF4081</color>
+    <color name="colorAccentSemi">#66FF5252</color>
     <color name="focus_background">#CC000000</color>
     <color name="transparent">#00000000</color>
 
