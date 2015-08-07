@@ -80,10 +80,11 @@ public class MainActivity extends BaseActivity {
     void onNavHeaderClicked() {
         if (isLoggedIn() && !DlApplication.currentSession.isFacebookSession()) {
             AddUserActivity_.intent(this).mEditedUser(getLoggedInUser()).start();
-        } else {
+            mDrawerLayout.closeDrawers();
+        } else if (DlApplication.currentSession == null){
             LoginActivity_.intent(this).start();
+            mDrawerLayout.closeDrawers();
         }
-        mDrawerLayout.closeDrawers();
     }
 
     @AfterViews
