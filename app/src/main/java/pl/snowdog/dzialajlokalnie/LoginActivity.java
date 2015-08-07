@@ -38,6 +38,7 @@ import pl.snowdog.dzialajlokalnie.fragment.ApiActionDialogFragment;
 import pl.snowdog.dzialajlokalnie.fragment.ApiActionDialogFragment_;
 import pl.snowdog.dzialajlokalnie.model.Login;
 import pl.snowdog.dzialajlokalnie.model.Session;
+import pl.snowdog.dzialajlokalnie.model.User;
 import pl.snowdog.dzialajlokalnie.util.PasswordValidator;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -192,6 +193,25 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
+    @Override
+    protected void getUserById(int userId) {
+        DlApplication.userApi.getUserById(userId, new Callback<User>() {
+            @Override
+            public void success(User user, Response response) {
+                toggleProgressWheel(false);
+                user.save();
+                EventBus.getDefault().post(new ObjectAddedEvent(ObjectAddedEvent.Type.user));
+                finish();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                finish();
+                toggleProgressWheel(false);
+            }
+        });
+    }
+
     private void loginWithFacebook(Login.Facebook login) {
         DlApplication.userApi.loginFb(login, new Callback<Login.Facebook>() {
             @Override
@@ -202,15 +222,16 @@ public class LoginActivity extends BaseActivity {
                     if (user.getSession() != null && user.getUser() == null) {
                         //Consecutive facebook login, user was already created - store session
                         //and start regular app usage
-                        Log.d(TAG, "fbdbg facebookLogin SESSION RECEIVED");
+                        Log.d(TAG, "fbdbg facebookLogin SESSION RECEIVED "+user.getSession());
                         try {
                             user.getSession().save();
                             DlApplication.refreshCurrentSession();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                        EventBus.getDefault().post(new ObjectAddedEvent(ObjectAddedEvent.Type.user));
-                        finish();
+                        getUserById(user.getSession().getUserID());
+                        /*EventBus.getDefault().post(new ObjectAddedEvent(ObjectAddedEvent.Type.user));
+                        finish();*/
 
                     }
                     if (user.getSession() != null && user.getUser() != null) {
@@ -223,12 +244,13 @@ public class LoginActivity extends BaseActivity {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+                        toggleProgressWheel(false);
                         hideKeyboard();
                         AddUserFacebookActivity_.intent(LoginActivity.this).userID(user.getUser().getUserID()).start();
                         finish();
                     }
                 }
-                toggleProgressWheel(false);
+
 
             }
 

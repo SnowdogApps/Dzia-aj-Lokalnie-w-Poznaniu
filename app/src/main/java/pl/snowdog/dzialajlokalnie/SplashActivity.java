@@ -36,6 +36,7 @@ public class SplashActivity extends BaseActivity {
     boolean districtsReady = false;
     boolean categoriesReady = false;
     boolean startActivity = false;
+    private boolean userReady = false;
 
     @Override
     protected void afterView() {
@@ -47,6 +48,18 @@ public class SplashActivity extends BaseActivity {
     void startApiSync() {
         getCategories();
         getDistricts();
+        if(DlApplication.currentSession != null) {
+            getUserById(DlApplication.currentSession.getUserID());
+        } else {
+            userReady = true;
+        }
+    }
+
+    @Override
+    protected void userResult() {
+        super.userResult();
+        userReady = true;
+        startMainOrLoginActivity();
     }
 
     @Override
@@ -66,7 +79,7 @@ public class SplashActivity extends BaseActivity {
     //TODO change delay to 2000 (Debug reasons)
     @Background(delay=0)
     void startMainOrLoginActivity() {
-        if((!districtsReady && !categoriesReady) || startActivity) return;
+        if((!districtsReady && !categoriesReady && !userReady) || startActivity) return;
         startActivity = true;
         MainActivity_.intent(this).start();
 
