@@ -7,23 +7,22 @@ import android.util.Log;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
+import com.crashlytics.android.Crashlytics;
 import com.facebook.FacebookSdk;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
-import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.splunk.mint.Mint;
 
 import org.androidannotations.annotations.EApplication;
 import org.androidannotations.annotations.sharedpreferences.Pref;
 
-import io.fabric.sdk.android.Fabric;
 import java.lang.reflect.Modifier;
 
+import io.fabric.sdk.android.Fabric;
 import pl.snowdog.dzialajlokalnie.api.CityApi;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.api.GlobalErrorHandler;
@@ -71,7 +70,11 @@ public class DlApplication extends Application implements
         super.onCreate();
         FacebookSdk.sdkInitialize(getApplicationContext());
         buildGoogleApiClient();
-        Fabric.with(this, new Crashlytics());
+        try {
+            Fabric.with(this, new Crashlytics());
+        } catch (java.lang.VerifyError e) {
+            Log.e(TAG, "" + e);
+        }
 
         ActiveAndroid.initialize(this);
 
@@ -84,14 +87,7 @@ public class DlApplication extends Application implements
 
         //initGoogleAnalytics();
 
-        initSplunkMint();
-
         filter = new Filter();
-    }
-
-    private void initSplunkMint() {
-        //TODO update API KEY
-        //Mint.initAndStartSession(getApplicationContext(), "");
     }
 
     private void initGoogleAnalytics() {
@@ -188,5 +184,4 @@ public class DlApplication extends Application implements
     public void onConnectionFailed(ConnectionResult connectionResult) {
         Log.d(TAG, "gacdbg GoogleApiClient onConnectionFailed connectionResult: " + connectionResult.toString());
     }
-
 }
