@@ -83,10 +83,11 @@ public class MainActivity extends BaseActivity {
     void onNavHeaderClicked() {
         if (isLoggedIn() && !DlApplication.currentSession.isFacebookSession()) {
             AddUserActivity_.intent(this).mEditedUser(getLoggedInUser()).start();
-        } else {
+            mDrawerLayout.closeDrawers();
+        } else if (DlApplication.currentSession == null){
             LoginActivity_.intent(this).start();
+            mDrawerLayout.closeDrawers();
         }
-        mDrawerLayout.closeDrawers();
     }
 
     @AfterViews
@@ -131,25 +132,17 @@ public class MainActivity extends BaseActivity {
                         error(R.drawable.ic_editor_insert_emoticon).
                         transform(new CircleTransform()).
                         into(ivNavAvatar);
+            } else {
+
+                Picasso.with(this).
+                        load(String.format(DlApi.AVATAR_NORMAL_URL, "")).
+                        error(R.drawable.ic_editor_insert_emoticon).
+                        transform(new CircleTransform()).
+                        into(ivNavAvatar);
             }
         }
     }
 
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        Bundle extras = intent.getExtras();
-        if (extras != null) {
-            int action = extras.getInt(NotificationAction.INTENT_ACTION);
-            int objectId = extras.getInt(NotificationAction.ACTION_VALUE);
-            switch (action) {
-                case NotificationAction.NEW_ISSUE_SURROUND:
-
-                    break;
-            }
-        }
-    }
 
     @Click(R.id.fab_new_event)
     void onFabNewEventClicked() {

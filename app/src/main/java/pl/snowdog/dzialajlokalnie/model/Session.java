@@ -55,7 +55,8 @@ public class Session extends Model {
                 ", ua='" + ua + '\'' +
                 ", createdAt=" + createdAt +
                 ", expiredAt=" + expiredAt +
-                '}';
+                ", isFacebookSession="+  isFacebookSession() +
+        '}';
     }
 
     public String getSsid() {

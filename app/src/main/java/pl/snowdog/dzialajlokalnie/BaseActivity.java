@@ -44,6 +44,7 @@ import pl.snowdog.dzialajlokalnie.events.EventClickedEvent;
 import pl.snowdog.dzialajlokalnie.events.IssueClickedEvent;
 import pl.snowdog.dzialajlokalnie.events.NetworkErrorEvent;
 import pl.snowdog.dzialajlokalnie.events.ApiErrorEvent;
+import pl.snowdog.dzialajlokalnie.events.ObjectAddedEvent;
 import pl.snowdog.dzialajlokalnie.gcm.QuickstartPreferences;
 import pl.snowdog.dzialajlokalnie.gcm.RegistrationIntentService;
 import pl.snowdog.dzialajlokalnie.gcm.RegistrationIntentService_;
@@ -371,12 +372,33 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Nullable
     protected User getLoggedInUser() {
         User user = null;
+        Log.d(TAG, "usrdbg user from session: "+DlApplication.currentSession.toString());
         try {
             user = new Select().from(User.class).where("userID = ?", DlApplication.currentSession.getUserID()).executeSingle();
         } catch (Exception e) {
             e.printStackTrace();
         }
         return user;
+    }
+
+    protected void getUserById(int userId) {
+        DlApplication.userApi.getUserById(userId, new Callback<User>() {
+            @Override
+            public void success(User user, Response response) {
+                user.save();
+                userResult();
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+
+            }
+        });
+    }
+
+    protected void userResult() {
+
     }
 
     protected void loginResult(Session session) {
