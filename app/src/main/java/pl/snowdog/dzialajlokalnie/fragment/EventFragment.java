@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.PopupMenu;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
@@ -32,6 +33,7 @@ import pl.snowdog.dzialajlokalnie.DlApplication;
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.databinding.FragmentEventBinding;
+import pl.snowdog.dzialajlokalnie.events.EventAttendEvent;
 import pl.snowdog.dzialajlokalnie.events.RefreshEvent;
 import pl.snowdog.dzialajlokalnie.events.SetTitleAndPhotoEvent;
 import pl.snowdog.dzialajlokalnie.model.Event;
@@ -72,14 +74,27 @@ public class EventFragment extends BaseFragment implements OnMapReadyCallback {
     @Click(R.id.ibAttend)
     protected void attend() {
         if (binding.getEvent() != null) {
-            ParticipateEvent.ParcitipateType participateType;
-            if (binding.getEvent().getUserInEvent() != 1) {
-                participateType = ParticipateEvent.ParcitipateType.attending;
-            } else {
-                participateType = ParticipateEvent.ParcitipateType.declined;
-            }
-
-            participate(new ParticipateEvent(binding.getEvent().getEventID(), participateType));
+            PopupMenu popupMenu = new PopupMenu(binding.getRoot().getContext(), binding.attendCard.attendingWidget.ibAttend);
+            popupMenu.inflate(R.menu.menu_participate);
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    switch (item.getItemId()) {
+                        case R.id.attend:
+                            participate(new ParticipateEvent(binding.getEvent().getEventID(), ParticipateEvent.ParcitipateType.attending));
+                            break;
+                        case R.id.maybe:
+                            participate(new ParticipateEvent(binding.getEvent().getEventID(), ParticipateEvent.ParcitipateType.maybe));
+                            break;
+                        case R.id.decline:
+                            participate(new ParticipateEvent(binding.getEvent().getEventID(), ParticipateEvent.ParcitipateType.declined));
+                            break;
+                    }
+                    return true;
+                }
+            });
+            popupMenu.show();
+//            participate(new ParticipateEvent(binding.getEvent().getEventID(), participateType));
         }
     }
 
