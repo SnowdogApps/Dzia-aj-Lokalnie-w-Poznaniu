@@ -28,12 +28,18 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GcmListenerService;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
+import pl.snowdog.dzialajlokalnie.DetailsActivity;
+import pl.snowdog.dzialajlokalnie.DetailsActivity_;
 import pl.snowdog.dzialajlokalnie.MainActivity;
+import pl.snowdog.dzialajlokalnie.MainActivity_;
 import pl.snowdog.dzialajlokalnie.R;
 
 public class MyGcmListenerService extends GcmListenerService {
 
     private static final String TAG = "MyGcmListenerService";
+    private final static AtomicInteger c = new AtomicInteger(0);
 
     /**
      * Called when message is received.
@@ -88,7 +94,16 @@ public class MyGcmListenerService extends GcmListenerService {
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        notificationManager.notify(getRandomPushId(), notificationBuilder.build());
+    }
+
+    private int getRandomPushId() {
+        return c.incrementAndGet();
+    }
+
+    @Override
+    public void onDeletedMessages() {
+        super.onDeletedMessages();
     }
 
     private PendingIntent buildPendingIntent(PushNotification pushNotification) {
@@ -96,44 +111,46 @@ public class MyGcmListenerService extends GcmListenerService {
         Intent intent = null;
         switch (pushNotification.getAction()) {
             case NotificationAction.NEW_ISSUE_SURROUND:
-                intent = new Intent(this, MainActivity.class);
-                //TODO
+                intent = new Intent(this, DetailsActivity_.class);
                 break;
             case NotificationAction.EDIT_ISSUE:
-                intent = new Intent(this, MainActivity.class);
+                intent = new Intent(this, DetailsActivity_.class);
                 break;
             case NotificationAction.DELETE_ISSUE:
-                intent = new Intent(this, MainActivity.class);
+                //intent = new Intent(this, MainActivity_.class);
                 break;
 
             case NotificationAction.NEW_EVENT_SURROUND:
-                intent = new Intent(this, MainActivity.class);
-                //TODO
+                intent = new Intent(this, DetailsActivity_.class);
 
                 break;
             case NotificationAction.NEW_EVENT_USER_PARTICIPATED:
-                intent = new Intent(this, MainActivity.class);
+                //intent = new Intent(this, MainActivity_.class);
                 break;
             case NotificationAction.EDIT_EVENT:
-                intent = new Intent(this, MainActivity.class);
+                intent = new Intent(this, DetailsActivity_.class);
                 break;
             case NotificationAction.DELETE_EVENT_USER_SAVED:
-                intent = new Intent(this, MainActivity.class);
+                //intent = new Intent(this, MainActivity_.class);
                 break;
             case NotificationAction.EVENT_REMINDER:
-                intent = new Intent(this, MainActivity.class);
+                intent = new Intent(this, DetailsActivity_.class);
                 break;
 
-            case NotificationAction.COMMENT_PARENT_USER_OWNER:
-                intent = new Intent(this, MainActivity.class);
+            case NotificationAction.COMMENT_TO_EVENT:
+                intent = new Intent(this, DetailsActivity_.class);
+                break;
+            case NotificationAction.COMMENT_TO_ISSUE:
+                intent = new Intent(this, DetailsActivity_.class);
                 break;
         }
         if(intent == null) return null;
 
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra(NotificationAction.INTENT_ACTION, pushNotification.getAction());
+        intent.putExtra(NotificationAction.ACTION_VALUE, pushNotification.getObjectID());
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, getRandomPushId(), intent,
                 PendingIntent.FLAG_ONE_SHOT);
         return pendingIntent;
     }

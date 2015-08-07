@@ -1,6 +1,8 @@
 package pl.snowdog.dzialajlokalnie;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -41,6 +43,7 @@ import pl.snowdog.dzialajlokalnie.fragment.CommentsFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.EventFragment_;
 import pl.snowdog.dzialajlokalnie.fragment.IssueFragment;
 import pl.snowdog.dzialajlokalnie.fragment.IssueFragment_;
+import pl.snowdog.dzialajlokalnie.gcm.NotificationAction;
 import pl.snowdog.dzialajlokalnie.model.Comment;
 import pl.snowdog.dzialajlokalnie.util.FadeInAnimation;
 import pl.snowdog.dzialajlokalnie.util.FadeOutAnimation;
@@ -90,11 +93,59 @@ public class DetailsActivity extends BaseActivity {
     private FragmentAdapter adapter;
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        parseIntent(intent);
+    }
+
+    private void parseIntent(Intent intent) {
+        if(intent == null) return;
+
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            int action = extras.getInt(NotificationAction.INTENT_ACTION);
+            int objectId = extras.getInt(NotificationAction.ACTION_VALUE);
+            switch (action) {
+                case NotificationAction.NEW_ISSUE_SURROUND:
+                    objType = DlApi.ParentType.issues;
+                    objId = objectId;
+                    break;
+                case NotificationAction.NEW_EVENT_SURROUND:
+                    objType = DlApi.ParentType.events;
+                    objId = objectId;
+                    break;
+                case NotificationAction.EDIT_ISSUE:
+                    objType = DlApi.ParentType.issues;
+                    objId = objectId;
+                    break;
+                case NotificationAction.EDIT_EVENT:
+                    objType = DlApi.ParentType.events;
+                    objId = objectId;
+                    break;
+                case NotificationAction.EVENT_REMINDER:
+                    objType = DlApi.ParentType.events;
+                    objId = objectId;
+                    break;
+                case NotificationAction.COMMENT_TO_ISSUE:
+                    objType = DlApi.ParentType.issues;
+                    objId = objectId;
+                    break;
+                case NotificationAction.COMMENT_TO_EVENT:
+                    objType = DlApi.ParentType.events;
+                    objId = objectId;
+                    break;
+            }
+        }
+    }
+
+    @Override
     protected void afterView() {
         setSupportActionBar(toolbar);
 
         final ActionBar ab = getSupportActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
+
+        parseIntent(getIntent());
 
         Log.d(TAG, "afterView " + objType + " " + objId);
 
