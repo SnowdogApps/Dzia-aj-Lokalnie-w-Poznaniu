@@ -18,6 +18,11 @@
     <color name="colorPrimaryDark">#512DA8</color>
     <color name="colorAccent">#FF4081</color>
 
+    <!-- Update these with colorPrimary and colorPrimaryDark values !!!-->
+    <!-- To color the Circular Time Picker! -->
+    <color name="mdtp_accent_color">#673AB7</color>
+    <color name="mdtp_accent_color_dark">#512DA8</color>
+
     <!-- Map Shapes -->
     <color name="map_shape_stroke">#FF4081</color>
     <color name="map_shape_fill">#512DA8</color>

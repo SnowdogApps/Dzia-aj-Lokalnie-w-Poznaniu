@@ -77,12 +77,13 @@
 
                 </android.support.design.widget.TextInputLayout>
                 <RelativeLayout
+                    android:id="@+id/dateStartContainer"
                     android:layout_below="@id/etFacebookEventWrapper"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/ivDate"
+                        android:id="@+id/ivDateStart"
                         android:layout_alignParentLeft="true"
                         android:src="@drawable/ic_event_white_36dp"
                         android:tint="@color/colorAccent"
@@ -91,14 +92,56 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <TextView
-                        android:id="@+id/tvDateStatus"
-                        android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/ivDate"
-                        android:text="@string/date"
+                        android:id="@+id/tvDateStartStatus"
+                        android:layout_toRightOf="@+id/ivDateStart"
+                        android:text="@string/date_start"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/tvDateStartTimeStatus"
+                        android:layout_toRightOf="@+id/ivDateStart"
+                        android:layout_below="@id/tvDateStartStatus"
+                        android:text="@string/date_start_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <Button
-                        android:id="@+id/btnCaldroid"
+                        android:id="@+id/btnDateStart"
+                        android:text="@string/set"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_below="@id/dateStartContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/ivDateEnd"
+                        android:layout_alignParentLeft="true"
+                        android:src="@drawable/ic_event_white_36dp"
+                        android:tint="@color/colorAccent"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="@dimen/item_padding"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/tvDateEndStatus"
+
+                        android:layout_toRightOf="@+id/ivDateEnd"
+                        android:text="@string/date_end"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/tvDateEndTimeStatus"
+                        android:layout_toRightOf="@+id/ivDateEnd"
+                        android:layout_below="@id/tvDateEndStatus"
+                        android:text="@string/date_end_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <Button
+                        android:id="@+id/btnDateEnd"
                         android:text="@string/set"
                         android:layout_centerVertical="true"
                         android:layout_alignParentRight="true"
