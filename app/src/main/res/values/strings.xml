@@ -129,6 +129,7 @@
     <string name="date_start_time">Godzina rozpoczęcia</string>
     <string name="date_end_time">Godzina zakończenia</string>
     <string name="warning_fill_date_after">Koniec wydarzenia powinien być później niż początek</string>
+    <string name="action_mail_feedback">Wyślij maila do autorów</string>
 
 
     <plurals name="votes">
