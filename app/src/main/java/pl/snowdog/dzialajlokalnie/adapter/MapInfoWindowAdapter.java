@@ -2,10 +2,15 @@ package pl.snowdog.dzialajlokalnie.adapter;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Point;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.squareup.picasso.Picasso;
 
@@ -32,15 +37,18 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
         private HashMap<String, Event> markerEventMap;
         private HashMap<String, Issue> markerIssueMap;
+        private GoogleMap map;
 
         public OnClickListener(HashMap<String, Event> markerEventMap,
-                               HashMap<String, Issue> markerIssueMap) {
+                               HashMap<String, Issue> markerIssueMap,
+                               GoogleMap map) {
             this.markerEventMap = markerEventMap;
             this.markerIssueMap = markerIssueMap;
+            this.map = map;
         }
 
         @Override
-        public void onInfoWindowClick(Marker marker) {
+        public void onInfoWindowClick(final Marker marker) {
             if (markerIssueMap.containsKey(marker.getId())) {
                 EventBus.getDefault().post(new IssueClickedEvent(
                         markerIssueMap.get(marker.getId()).getIssueID()));
@@ -48,6 +56,19 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
                 EventBus.getDefault().post(new EventClickedEvent(
                         markerEventMap.get(marker.getId()).getEventID()));
             }
+
+            //TODO test on smal screen devices
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    marker.showInfoWindow();
+
+                    Point mappoint = map.getProjection().toScreenLocation(new LatLng(marker.getPosition().latitude, marker.getPosition().longitude));
+                    mappoint.set(mappoint.x, mappoint.y-350);
+                    map.animateCamera(CameraUpdateFactory.newLatLng(map.getProjection().fromScreenLocation(mappoint)));
+                }
+            }, 200);
         }
     }
 
@@ -56,14 +77,17 @@ public class MapInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
     private HashMap<String, Event> markerEventMap;
     private HashMap<String, Issue> markerIssueMap;
     private OnClickListener onClickListener;
+    private GoogleMap map;
 
-    public MapInfoWindowAdapter(Context context) {
+    public MapInfoWindowAdapter(Context context,
+                                GoogleMap map) {
 
         this.context = context;
         this.res = context.getResources();
         markerEventMap = new HashMap<>();
         markerIssueMap = new HashMap<>();
-        onClickListener = new OnClickListener(markerEventMap, markerIssueMap);
+        onClickListener = new OnClickListener(markerEventMap, markerIssueMap, map);
+        this.map = map;
     }
 
     public OnClickListener getOnClickListener() {

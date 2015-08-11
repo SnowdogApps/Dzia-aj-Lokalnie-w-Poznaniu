@@ -43,7 +43,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Goo
     @AfterViews
     public void afterViews() {
         centerOnUser = false;
-        adapter = new MapInfoWindowAdapter(getActivity());
+
 
         mapFragment = new SupportMapFragment();
         getChildFragmentManager().beginTransaction().add(R.id.rl_container, mapFragment).commit();
@@ -54,7 +54,7 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Goo
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
-
+        adapter = new MapInfoWindowAdapter(getActivity(), map);
         map.setMyLocationEnabled(true);
         map.setBuildingsEnabled(true);
 
