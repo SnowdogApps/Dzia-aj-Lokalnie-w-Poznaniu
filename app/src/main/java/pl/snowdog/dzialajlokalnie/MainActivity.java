@@ -115,6 +115,11 @@ public class MainActivity extends BaseActivity {
         if (!isLoggedIn()) {
             tvNavUserName.setText(R.string.login_or_register);
             tvNavUserDistrict.setText("");
+            Picasso.with(this).
+                    load(String.format(DlApi.AVATAR_NORMAL_URL, "")).
+                    error(R.drawable.ic_editor_insert_emoticon).
+                    transform(new CircleTransform()).
+                    into(ivNavAvatar);
         } else {
             User user = getLoggedInUser();
             if (user != null) {
