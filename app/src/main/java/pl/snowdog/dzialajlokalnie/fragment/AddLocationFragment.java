@@ -152,22 +152,24 @@ public class AddLocationFragment extends AddBaseFragment implements OnMapReadyCa
 
     @ItemSelect(R.id.spDistrict)
     void districtSelected(boolean selected, int position) {
-        if (selected) {
-            adapter.setSelection(position);
+        if(map != null) {
+            if (selected) {
+                adapter.setSelection(position);
 
-            if (position != 0 && !isMarkerChange) {
-                map.clear();
-                mMarker = map.addMarker(
-                        new MarkerOptions()
-                                .position(new LatLng(adapter.getSelectedItem().getLat(), adapter.getSelectedItem().getLon()))
-                                .draggable(true));
-                getAddressForLocation(adapter.getSelectedItem().getLat(), adapter.getSelectedItem().getLon());
+                if (position != 0 && !isMarkerChange) {
+                    map.clear();
+                    mMarker = map.addMarker(
+                            new MarkerOptions()
+                                    .position(new LatLng(adapter.getSelectedItem().getLat(), adapter.getSelectedItem().getLon()))
+                                    .draggable(true));
+                    getAddressForLocation(adapter.getSelectedItem().getLat(), adapter.getSelectedItem().getLon());
 
-                PolygonUtil.createDistrictShapeOnMap(map, adapter.getSelectedItem(), getActivity());
+                    PolygonUtil.createDistrictShapeOnMap(map, adapter.getSelectedItem(), getActivity());
 
-                map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(adapter.getSelectedItem().getLat(), adapter.getSelectedItem().getLon()), 12));
+                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(adapter.getSelectedItem().getLat(), adapter.getSelectedItem().getLon()), 12));
+                }
+                isMarkerChange = false;
             }
-            isMarkerChange = false;
         }
     }
 
