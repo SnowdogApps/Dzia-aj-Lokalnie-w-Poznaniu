@@ -363,10 +363,10 @@ public class AddTitleDateFragment extends AddBaseFragment implements TimePickerD
     private void updateDateTextView() {
         if (startDate == null) return;
 
-        tvDateStartStatus.setText(getString(R.string.date_start)+ " "+startDate.getDateString(getActivity()));
-        tvDateStartTimeStatus.setText(getString(R.string.date_start_time)+ " "+startDate.getTimeString(getActivity()));
-        tvDateEndStatus.setText(getString(R.string.date_end)+ " "+endDate.getDateString(getActivity()));
-        tvDateEndTimeStatus.setText(getString(R.string.date_end_time)+ " "+endDate.getTimeString(getActivity()));
+        tvDateStartStatus.setText(startDate.getDateString(getActivity()));
+        tvDateStartTimeStatus.setText(startDate.getTimeString(getActivity()));
+        tvDateEndStatus.setText(endDate.getDateString(getActivity()));
+        tvDateEndTimeStatus.setText(endDate.getTimeString(getActivity()));
         /*
         if(startDate.getDate().compareTo(endDate.getDate()) != 0) {
             tvDateStartStatus.setText(getString(R.string.date_start)+ " "+startDate.getDateString(getActivity()));
