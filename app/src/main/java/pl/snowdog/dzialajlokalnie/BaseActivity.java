@@ -55,6 +55,7 @@ import pl.snowdog.dzialajlokalnie.model.Login;
 import pl.snowdog.dzialajlokalnie.model.NewUser;
 import pl.snowdog.dzialajlokalnie.model.Session;
 import pl.snowdog.dzialajlokalnie.model.User;
+import pl.snowdog.dzialajlokalnie.util.NotEmptyValidator;
 import pl.snowdog.dzialajlokalnie.util.PrefsUtil_;
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -201,6 +202,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void comment(DlApi.ParentType parentType, int parentID, int solution, String text) {
+        if(text.trim().toString().length() == 0) return;
+        
         int intParentType;
 
         switch (parentType){
