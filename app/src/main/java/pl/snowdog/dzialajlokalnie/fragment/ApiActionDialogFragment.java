@@ -9,8 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.roomorama.caldroid.CaldroidFragment;
-import com.roomorama.caldroid.CaldroidListener;
+
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Click;

@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.roomorama.caldroid.CaldroidFragment;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 import com.wdullaer.materialdatetimepicker.time.RadialPickerLayout;
 import com.wdullaer.materialdatetimepicker.time.TimePickerDialog;
@@ -77,7 +76,6 @@ public class AddTitleDateFragment extends AddBaseFragment implements TimePickerD
     @FragmentArg
     int mAddingMode;
 
-    CaldroidFragment caldroidFragment;
 
     private DateWrapper startDate;
     private DateWrapper endDate;
