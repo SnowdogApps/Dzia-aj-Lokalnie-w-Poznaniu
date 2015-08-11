@@ -125,7 +125,7 @@ public class AddUserDetailsFragment extends AddBaseFragment {
 
     private boolean validatePassword() {
         boolean isInputValid = true;
-        if (etPassword.getText().toString().length() == 0
+        if (etPassword.getText().toString().trim().length() == 0
                 || new PasswordValidator().validate(etPassword.getText().toString()) == false) {
             etPasswordWrapper.setErrorEnabled(true);
             etPasswordWrapper.setError(getString(R.string.warning_fill_password));

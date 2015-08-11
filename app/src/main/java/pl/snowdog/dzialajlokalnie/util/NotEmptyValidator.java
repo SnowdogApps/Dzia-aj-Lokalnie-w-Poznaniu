@@ -10,7 +10,7 @@ public class NotEmptyValidator {
 
     public static boolean validate(EditText et, TextInputLayout til, int warningStringId) {
         boolean isInputValid = true;
-        if (et.getText().toString().length() == 0) {
+        if (et.getText().toString().trim().length() == 0) {
             til.setErrorEnabled(true);
             til.setError(et.getContext().getString(warningStringId));
             isInputValid = false;
