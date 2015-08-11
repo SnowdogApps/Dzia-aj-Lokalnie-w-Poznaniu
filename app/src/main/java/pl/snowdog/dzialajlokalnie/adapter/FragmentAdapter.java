@@ -1,12 +1,18 @@
 package pl.snowdog.dzialajlokalnie.adapter;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
+import pl.snowdog.dzialajlokalnie.R;
 
 /**
  * Created by bartek on 23.07.15.
@@ -27,6 +33,15 @@ public class FragmentAdapter extends FragmentPagerAdapter {
     public void addFragment(Fragment fragment) {
         mFragments.add(fragment);
         mFragmentTitles.add("");
+    }
+
+    public View getTabView(int position, Context ctx) {
+        // Given you have a custom layout in `res/layout/custom_tab.xml` with a TextView and ImageView
+        View v = LayoutInflater.from(ctx).inflate(R.layout.custom_tab, null);
+        TextView tv = (TextView) v.findViewById(R.id.textView);
+        tv.setText(mFragmentTitles.get(position));
+
+        return v;
     }
 
     @Override

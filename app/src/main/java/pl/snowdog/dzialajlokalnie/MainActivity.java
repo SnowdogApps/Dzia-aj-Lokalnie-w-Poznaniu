@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -105,7 +106,7 @@ public class MainActivity extends BaseActivity {
             setupViewPager(mViewPager);
         }
 
-        mTabLayout.setupWithViewPager(mViewPager);
+        //mTabLayout.setupWithViewPager(mViewPager);
 
         updateUserNavHeader();
 
@@ -193,11 +194,21 @@ public class MainActivity extends BaseActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager());
+
         adapter.addFragment(new IssuesFragment_(), getString(R.string.title_section1));
         adapter.addFragment(new MapFragment_(), getString(R.string.title_section2));
         adapter.addFragment(new EventsFragment_(), getString(R.string.title_section3));
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(3);
+        // Give the TabLayout the ViewPager
+
+        mTabLayout.setupWithViewPager(viewPager);
+
+        // Iterate over all tabs and set the custom view
+        for (int i = 0; i < mTabLayout.getTabCount(); i++) {
+            TabLayout.Tab tab = mTabLayout.getTabAt(i);
+            tab.setCustomView(adapter.getTabView(i, this));
+        }
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
@@ -264,4 +275,6 @@ public class MainActivity extends BaseActivity {
         EventBus.getDefault().post(new FilterChangedEvent());
         return true;
     }
+
+
 }
