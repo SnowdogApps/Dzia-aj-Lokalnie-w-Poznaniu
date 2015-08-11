@@ -17,13 +17,17 @@ import com.google.android.gms.maps.model.UrlTileProvider;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.EFragment;
+import org.androidannotations.annotations.OptionsItem;
+import org.androidannotations.annotations.OptionsMenu;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
+import pl.snowdog.dzialajlokalnie.AddIssueActivity_;
 import pl.snowdog.dzialajlokalnie.R;
 import pl.snowdog.dzialajlokalnie.adapter.MapInfoWindowAdapter;
+import pl.snowdog.dzialajlokalnie.events.FilterChangedEvent;
 import pl.snowdog.dzialajlokalnie.model.Event;
 import pl.snowdog.dzialajlokalnie.model.Issue;
 
@@ -31,6 +35,7 @@ import pl.snowdog.dzialajlokalnie.model.Issue;
  * Created by bartek on 13.07.15.
  */
 @EFragment(R.layout.fragment_map)
+@OptionsMenu(R.menu.menu_map)
 public class MapFragment extends BaseFragment implements OnMapReadyCallback, GoogleMap.OnMyLocationChangeListener, GoogleMap.OnCameraChangeListener {
 
     private static final String TAG = "MapFragment";
@@ -49,6 +54,11 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Goo
         getChildFragmentManager().beginTransaction().add(R.id.rl_container, mapFragment).commit();
 
         mapFragment.getMapAsync(this);
+    }
+
+    @Override
+    protected boolean isImplementingEventBus() {
+        return true;
     }
 
     @Override
@@ -109,6 +119,23 @@ public class MapFragment extends BaseFragment implements OnMapReadyCallback, Goo
             }
             map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, zoom));
         }
+    }
+
+    public void onEvent(FilterChangedEvent event) {
+        Log.d(TAG, "onEvent " + event);
+        refreshItems();
+    }
+
+    private void refreshItems() {
+        map.clear();
+        getIssues();
+        getEvents();
+    }
+
+
+    @OptionsItem(R.id.action_refresh)
+    void refreshMenuClick() {
+        refreshItems();
     }
 
     @Override
