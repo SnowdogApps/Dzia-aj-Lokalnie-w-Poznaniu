@@ -1,6 +1,7 @@
 package pl.snowdog.dzialajlokalnie.fragment;
 
 import android.databinding.DataBindingUtil;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +25,8 @@ import org.androidannotations.annotations.OptionsItem;
 import org.androidannotations.annotations.OptionsMenu;
 import org.androidannotations.annotations.OptionsMenuItem;
 import org.androidannotations.annotations.ViewById;
+
+import java.util.Calendar;
 
 import de.greenrobot.event.EventBus;
 import pl.snowdog.dzialajlokalnie.AddEventActivity_;
@@ -72,6 +75,12 @@ public class EventFragment extends BaseFragment implements OnMapReadyCallback {
     @Click(R.id.ibAttend)
     protected void attend() {
         if (binding.getEvent() != null) {
+            final Calendar now = Calendar.getInstance();
+            if(now.getTime().after(binding.getEvent().getEndDate())) {
+                Snackbar.make(getView(), getString(R.string.warning_event_ended), Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                return;
+            }
             ParticipateEvent.ParcitipateType participateType;
             if (binding.getEvent().getUserInEvent() != 1) {
                 participateType = ParticipateEvent.ParcitipateType.attending;
