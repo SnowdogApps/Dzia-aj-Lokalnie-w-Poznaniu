@@ -130,13 +130,8 @@ public class AddImageFragment extends AddBaseFragment {
 
 
 
-        /* Decode the JPEG file into a Bitmap */
+        Bitmap bitmap = BitmapFactory.decodeFile(mFileUri.getPath(), bmOptions);
 
-         /* Rotate image by EXIF data */
-
-        BitmapHeplers bmHelpers = new BitmapHeplers();
-
-        Bitmap bitmap = bmHelpers.rotateBitmap(mFileUri, bmOptions);
 
         /* Test compress */
         File imageFile = new File(mFileUri.getPath());
@@ -152,6 +147,27 @@ public class AddImageFragment extends AddBaseFragment {
         } catch (Exception e) {
             Log.e(TAG, "imgdbg Error compressing: " + e.toString());
         }
+        /* Decode the JPEG file into a Bitmap */
+
+         /* Rotate image by EXIF data */
+
+        BitmapHeplers bmHelpers = new BitmapHeplers();
+
+        Bitmap bitmapRotated = bmHelpers.rotateBitmap(mFileUri, bmOptions);
+        File imageFileRotated = new File(mFileUri.getPath());
+        try {
+            OutputStream out = null;
+            out = new FileOutputStream(imageFileRotated);
+            //Bitmap bitmap = BitmapFactory.decodeFile(picturePath);
+
+            bitmapRotated.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            out.flush();
+            out.close();
+            Log.d(TAG, "imgdbg COMPRESSED FILE");
+        } catch (Exception e) {
+            Log.e(TAG, "imgdbg Error compressing: " + e.toString());
+        }
+
         photoFrom = TAKE_PICTURE;
         Picasso.with(getActivity()).load(mFileUri).error(
                 R.drawable.ic_editor_insert_emoticon).into(ivPreview);
