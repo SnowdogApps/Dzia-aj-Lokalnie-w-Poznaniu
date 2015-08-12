@@ -50,20 +50,24 @@ public class EventsFragment extends ListFragment {
 
     public void onEvent(EventAttendEvent event) {
         Log.d(TAG, "onEvent " + event);
+
         final Calendar now = Calendar.getInstance();
         if(now.getTime().after(event.getEvent().getEndDate())) {
             Snackbar.make(getView(), getString(R.string.warning_event_ended), Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
             return;
         }
-        ParticipateEvent.ParcitipateType participateType;
+        /*ParticipateEvent.ParcitipateType participateType;
         if (event.getEvent().getUserInEvent() != 1) {
             participateType = ParticipateEvent.ParcitipateType.attending;
         } else {
             participateType = ParticipateEvent.ParcitipateType.declined;
-        }
+        }*/
 
-        participate(new ParticipateEvent(event.getEvent().getEventID(), participateType));
+
+
+        participate(new ParticipateEvent(event.getEvent().getEventID(), event.getParcitipateType()));
+
     }
 
     public void onEvent(ObjectAddedEvent event) {

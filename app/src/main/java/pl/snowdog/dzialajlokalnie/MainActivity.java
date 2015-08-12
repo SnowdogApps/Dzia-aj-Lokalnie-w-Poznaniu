@@ -2,6 +2,9 @@ package pl.snowdog.dzialajlokalnie;
 
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -241,8 +244,14 @@ public class MainActivity extends BaseActivity {
                                 mDrawerLayout.closeDrawers();
                                 AboutActivity_.intent(MainActivity.this).start();
                                 break;
+
                             case R.id.nav_logout:
                                 logout();
+                                break;
+                            case R.id.nav_feedback:
+                                mDrawerLayout.closeDrawers();
+                                emailToAuthors();
+
                                 break;
                             default:
                                 menuItem.setChecked(true);
@@ -253,6 +262,22 @@ public class MainActivity extends BaseActivity {
                         return true;
                     }
                 });
+    }
+
+    private void emailToAuthors() {
+        String version = "unknown";
+        try {
+            PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            version = pInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                "mailto", "bartek@snowdog.co", null));
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Działaj lokalnie - testy " + version);
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Hej, testowałem apkę i ...");
+        startActivity(Intent.createChooser(emailIntent, "Wyślij e-mail..."));
     }
 
     @OptionsItem(android.R.id.home)

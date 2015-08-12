@@ -11,10 +11,13 @@
             android:icon="@drawable/ic_info_outline_white_36dp"
             android:title="@string/action_about" />
         <item
+            android:id="@+id/nav_feedback"
+            android:icon="@drawable/ic_action_send_email"
+            android:title="@string/action_mail_feedback" />
+        <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_power_settings_new_white_36dp"
             android:title="@string/action_logout" />
-
     </group>
 
 
