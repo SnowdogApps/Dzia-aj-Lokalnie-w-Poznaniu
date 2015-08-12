@@ -130,7 +130,6 @@ public class DlApi {
     public interface VoteApi {
 
         /**
-         *
          * @param what issues or comments
          * @param id id of issue or comment
          * @param vote with value 1, 0, -1

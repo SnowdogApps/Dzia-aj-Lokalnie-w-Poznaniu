@@ -203,7 +203,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected void comment(DlApi.ParentType parentType, int parentID, int solution, String text) {
         if(text.trim().toString().length() == 0) return;
-        
+
         int intParentType;
 
         switch (parentType){

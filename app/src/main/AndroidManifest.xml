@@ -67,6 +67,12 @@
         </activity>
 
         <activity
+            android:name=".ImageZoomActivity_"
+            android:label="@string/app_name" >
+
+        </activity>
+
+        <activity
             android:name=".AboutActivity_"
             android:label="@string/app_name" >
 

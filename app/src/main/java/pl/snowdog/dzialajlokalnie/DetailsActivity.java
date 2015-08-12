@@ -2,6 +2,7 @@ package pl.snowdog.dzialajlokalnie;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
@@ -66,6 +67,9 @@ public class DetailsActivity extends BaseActivity {
 
     @ViewById(R.id.ivAvatar)
     ImageView ivAvatar;
+
+    @ViewById(R.id.avatarOverlay)
+    View avatarOverlay;
 
     @ViewById(R.id.tabs)
     TabLayout tabLayout;
@@ -247,6 +251,16 @@ public class DetailsActivity extends BaseActivity {
                 // TODO lock expanding and collapsing the appbar because there is no photo
             }
         });
+
+
+        //TODO we need to handle clicks on imageview in header to open zoom details activity
+        //Unfortunately CollapsingToolbarLayout is not passing click events, oh yeah! sweet android:(
+        /*ivAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImageZoomActivity_.intent(DetailsActivity.this).imageBitmap(((BitmapDrawable)ivAvatar.getDrawable()).getBitmap()).start();
+            }
+        });*/
     }
 
     @Click(R.id.fab)
