@@ -48,6 +48,7 @@ import pl.snowdog.dzialajlokalnie.model.User;
 import pl.snowdog.dzialajlokalnie.util.CircleTransform;
 
 @EActivity(R.layout.activity_main)
+@OptionsMenu(R.menu.menu_main)
 public class MainActivity extends BaseActivity {
 
     private static final String TAG = "MainActivity";
