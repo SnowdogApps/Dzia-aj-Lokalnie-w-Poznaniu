@@ -48,7 +48,6 @@ import pl.snowdog.dzialajlokalnie.model.User;
 import pl.snowdog.dzialajlokalnie.util.CircleTransform;
 
 @EActivity(R.layout.activity_main)
-@OptionsMenu(R.menu.menu_main)
 public class MainActivity extends BaseActivity {
 
     private static final String TAG = "MainActivity";
@@ -121,6 +120,7 @@ public class MainActivity extends BaseActivity {
                     error(R.drawable.ic_editor_insert_emoticon).
                     transform(new CircleTransform()).
                     into(ivNavAvatar);
+            toggleLogoutActionMenu(false);
         } else {
             User user = getLoggedInUser();
             if (user != null) {
@@ -129,20 +129,26 @@ public class MainActivity extends BaseActivity {
                 if (district != null) {
                     tvNavUserDistrict.setText(district.getName());
                 }
-
+                toggleLogoutActionMenu(true);
                 Picasso.with(this).
                         load(String.format(DlApi.AVATAR_NORMAL_URL, user.getAvatarUri())).
                         error(R.drawable.ic_editor_insert_emoticon).
                         transform(new CircleTransform()).
                         into(ivNavAvatar);
             } else {
-
+                toggleLogoutActionMenu(false);
                 Picasso.with(this).
                         load(String.format(DlApi.AVATAR_NORMAL_URL, "")).
                         error(R.drawable.ic_editor_insert_emoticon).
                         transform(new CircleTransform()).
                         into(ivNavAvatar);
             }
+        }
+    }
+
+    private void toggleLogoutActionMenu(boolean visible) {
+        if(mNavigationView.getMenu().findItem(R.id.nav_logout) != null) {
+            mNavigationView.getMenu().findItem(R.id.nav_logout).setVisible(visible);
         }
     }
 
@@ -234,6 +240,9 @@ public class MainActivity extends BaseActivity {
                                 mDrawerLayout.closeDrawers();
                                 AboutActivity_.intent(MainActivity.this).start();
                                 break;
+                            case R.id.nav_logout:
+                                logout();
+                                break;
                             default:
                                 menuItem.setChecked(true);
                                 mDrawerLayout.closeDrawers();
@@ -257,10 +266,7 @@ public class MainActivity extends BaseActivity {
         fragment.show(getSupportFragmentManager(), "filter");
     }
 
-    @OptionsItem(R.id.action_logout)
-    void actionLogout() {
-        logout();
-    }
+
 
     @OptionsItem(R.id.action_sort_popular)
     void sortPopular(MenuItem item) {
