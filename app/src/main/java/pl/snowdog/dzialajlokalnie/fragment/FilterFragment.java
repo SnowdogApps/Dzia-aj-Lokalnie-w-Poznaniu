@@ -126,6 +126,18 @@ public class FilterFragment extends DialogFragment {
         dismiss();
     }
 
+    @Click(R.id.btClear)
+    void clearClick() {
+        spinner.setSelection(0);
+        SparseBooleanArray checked = lvCategories.getCheckedItemPositions();
+        List<Category> lSelectedCategoriesIds = new ArrayList<>(lvCategories.getCheckedItemCount());
+        for (int i = 0; i < lvCategories.getAdapter().getCount(); i++) {
+            if (checked.get(i)) {
+                lvCategories.setItemChecked(i, false);
+            }
+        }
+    }
+
     @ItemSelect(R.id.spDistrict)
     void districtSelected(boolean selected, int position) {
         if (selected) {

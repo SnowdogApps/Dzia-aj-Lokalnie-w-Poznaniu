@@ -134,7 +134,7 @@
     <string name="warning_fill_date_before_now">Data wydarzenia już minęła</string>
 
     <string name="action_mail_feedback">Wyślij maila do autorów</string>
-
+    <string name="clear">Wyczyść</string>
 
 
     <plurals name="votes">

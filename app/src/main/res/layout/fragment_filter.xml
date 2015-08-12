@@ -11,16 +11,20 @@
         android:layout_alignParentTop="true"
         android:paddingLeft="@dimen/dialog_padding"
         android:paddingRight="@dimen/dialog_padding"
-        android:layout_above="@+id/btSet">
+        android:layout_above="@+id/lower_buttons_container">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
             android:layout_marginTop="@dimen/dialog_padding"
             android:paddingLeft="@dimen/dialog_padding"
             style="@style/textView_item_desc"
             android:text="@string/district_label"
             />
+
+
 
         <android.support.v7.widget.CardView
             android:layout_width="match_parent"
@@ -53,23 +57,43 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btSet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        style="?android:attr/borderlessButtonStyle"
-        android:textColor="@color/colorAccent"
-        android:text="Ustaw" />
+    <View
+        android:layout_above="@+id/lower_buttons_container"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/dividerVertical" />
 
-    <Button
-        android:id="@+id/btCancel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <RelativeLayout
+        android:id="@+id/lower_buttons_container"
         android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/btSet"
-        style="?android:attr/borderlessButtonStyle"
-        android:textColor="@color/text"
-        android:text="Anuluj" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background">
+        <Button
+            android:id="@+id/btClear"
+            android:textColor="@color/text"
+            android:text="@string/clear"
+            android:layout_toLeftOf="@+id/btSet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?android:attr/borderlessButtonStyle"
+            />
+        <Button
+            android:id="@+id/btCancel"
+            style="?android:attr/borderlessButtonStyle"
+            android:textColor="@color/text"
+            android:layout_toLeftOf="@+id/btClear"
+            android:text="@string/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/btSet"
+            android:textColor="@color/colorAccent"
+            android:text="@string/set"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="?android:attr/borderlessButtonStyle" />
+    </RelativeLayout>
+
 </RelativeLayout>
