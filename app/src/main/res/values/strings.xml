@@ -130,6 +130,7 @@
     <string name="date_end_time">Godzina zakończenia</string>
     <string name="warning_fill_date_after">Koniec wydarzenia powinien być później niż początek</string>
     <string name="warning_event_ended">To wydarzenie już minęło</string>
+    <string name="warning_fill_date_before_now">Data wydarzenia już minęła</string>
 
 
     <plurals name="votes">

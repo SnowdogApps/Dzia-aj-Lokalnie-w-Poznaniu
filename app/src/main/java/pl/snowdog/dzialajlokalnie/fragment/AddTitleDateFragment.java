@@ -119,6 +119,12 @@ public class AddTitleDateFragment extends AddBaseFragment implements TimePickerD
                 validDate = false;
                 Snackbar.make(getView(), getString(R.string.warning_fill_date), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+            } else {
+                if(startDate.getDate().before(Calendar.getInstance().getTime())) {
+                    validDate = false;
+                    Snackbar.make(getView(), getString(R.string.warning_fill_date_before_now), Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
             }
         }
         return validDate;
@@ -249,7 +255,6 @@ public class AddTitleDateFragment extends AddBaseFragment implements TimePickerD
 
                     if (firstDateSetting) {
                         //If enddate is not set yet, set it to +1
-
                         now.set(Calendar.HOUR_OF_DAY, hour + 1);
                         endDate.setDate(now.getTime());
 
@@ -270,7 +275,7 @@ public class AddTitleDateFragment extends AddBaseFragment implements TimePickerD
 
 
 
-    private void openEndDateTimePicker() {
+    private void openEndDateTimePicker(final boolean firstDateSetting) {
         final Calendar now = Calendar.getInstance();
         now.setTime(endDate.getDate());
 
@@ -279,14 +284,23 @@ public class AddTitleDateFragment extends AddBaseFragment implements TimePickerD
             public void onTimeSet(RadialPickerLayout radialPickerLayout, int hour, int minutes) {
                 now.set(Calendar.HOUR_OF_DAY, hour);
                 now.set(Calendar.MINUTE, minutes);
+
+
+
                 if(now.getTime().before(startDate.getDate())) {
                     //endDate has to be after startdate, prompt user, don't set time
                     Snackbar.make(getView(), getString(R.string.warning_fill_date_after), Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 } else {
                     endDate.setDate(now.getTime());
+                    if (firstDateSetting) {
+                        //If enddate is not set yet, set it to +1
+                        now.set(Calendar.HOUR_OF_DAY, hour - 1);
+                        startDate.setDate(now.getTime());
+                    }
                     updateDateTextView();
                 }
+
             }
         };
 
@@ -318,7 +332,11 @@ public class AddTitleDateFragment extends AddBaseFragment implements TimePickerD
                 now.set(Calendar.MONTH, monthOfYear);
                 now.set(Calendar.DAY_OF_MONTH, dayOfYear);
                 Log.d(TAG, "clnddbg calendar: "+now.getTime().toString());
-
+                boolean firstDateSetting = false;
+                if(startDate.getDate() == null) {
+                    startDate.setDate(now.getTime());
+                    firstDateSetting = true;
+                }
 
                 if(now.getTime().before(startDate.getDate())) {
                     //endDate has to be after startdate, prompt user, don't set time
@@ -327,7 +345,7 @@ public class AddTitleDateFragment extends AddBaseFragment implements TimePickerD
                 } else {
                     //enddate fine, set it, get the time
                     endDate.setDate(now.getTime());
-                    openEndDateTimePicker();
+                    openEndDateTimePicker(firstDateSetting);
                 }
 
             }
