@@ -1,5 +1,7 @@
 package pl.snowdog.dzialajlokalnie.model;
 
+import com.activeandroid.Model;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +11,7 @@ import pl.snowdog.dzialajlokalnie.util.PolygonUtil;
 /**
  * Created by chomi3 on 2015-07-16.
  */
-public class Polygon implements Serializable {
+public class Polygon extends Model implements Serializable {
     List<Point> pointsList;
 
     public Polygon() {

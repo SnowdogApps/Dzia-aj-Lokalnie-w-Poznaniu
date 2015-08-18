@@ -3,9 +3,11 @@ package pl.snowdog.dzialajlokalnie;
 import android.app.Application;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.multidex.MultiDexApplication;
 import android.util.Log;
 
 import com.activeandroid.ActiveAndroid;
+import com.activeandroid.Configuration;
 import com.activeandroid.query.Select;
 import com.crashlytics.android.Crashlytics;
 import com.facebook.FacebookSdk;
@@ -26,8 +28,16 @@ import io.fabric.sdk.android.Fabric;
 import pl.snowdog.dzialajlokalnie.api.CityApi;
 import pl.snowdog.dzialajlokalnie.api.DlApi;
 import pl.snowdog.dzialajlokalnie.api.GlobalErrorHandler;
+import pl.snowdog.dzialajlokalnie.model.Category;
+import pl.snowdog.dzialajlokalnie.model.Comment;
+import pl.snowdog.dzialajlokalnie.model.District;
+import pl.snowdog.dzialajlokalnie.model.Event;
 import pl.snowdog.dzialajlokalnie.model.Filter;
+import pl.snowdog.dzialajlokalnie.model.Issue;
+import pl.snowdog.dzialajlokalnie.model.Point;
+import pl.snowdog.dzialajlokalnie.model.Polygon;
 import pl.snowdog.dzialajlokalnie.model.Session;
+import pl.snowdog.dzialajlokalnie.model.User;
 import pl.snowdog.dzialajlokalnie.util.PrefsUtil_;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
@@ -37,7 +47,7 @@ import retrofit.converter.GsonConverter;
  * Created by bartek on 06.07.15.
  */
 @EApplication
-public class DlApplication extends Application implements
+public class DlApplication extends MultiDexApplication implements
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = "DlApplication";
@@ -76,7 +86,20 @@ public class DlApplication extends Application implements
             Log.e(TAG, "" + e);
         }
 
-        ActiveAndroid.initialize(this);
+//        ActiveAndroid.initialize(this);
+
+        Configuration.Builder configurationBuilder = new Configuration.Builder(this);
+        configurationBuilder.addModelClasses(Category.class);
+        configurationBuilder.addModelClasses(Comment.class);
+        configurationBuilder.addModelClasses(District.class);
+        configurationBuilder.addModelClasses(Event.class);
+        configurationBuilder.addModelClasses(Issue.class);
+        configurationBuilder.addModelClasses(Session.class);
+        configurationBuilder.addModelClasses(User.class);
+        configurationBuilder.addModelClasses(Polygon.class);
+        configurationBuilder.addModelClasses(Point.class);
+
+        ActiveAndroid.initialize(configurationBuilder.create());
 
         gson = new GsonBuilder()
                 .excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC)

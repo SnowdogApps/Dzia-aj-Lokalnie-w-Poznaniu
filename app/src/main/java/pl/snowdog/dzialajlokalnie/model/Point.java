@@ -1,9 +1,11 @@
 package pl.snowdog.dzialajlokalnie.model;
 
+import com.activeandroid.Model;
+
 /**
  * Created by chomi3 on 2015-07-16.
  */
-public class Point {
+public class Point extends Model {
     public double x;
     public double y;
 
