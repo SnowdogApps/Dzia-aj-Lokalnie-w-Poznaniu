@@ -54,7 +54,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:checkMark="?android:attr/listChoiceIndicatorMultiple"
-                android:text="@string/report"/>
+                android:text="@string/report"
+                android:visibility="gone"/>
 
             <CheckedTextView
                 android:id="@+id/ctv_solution"
