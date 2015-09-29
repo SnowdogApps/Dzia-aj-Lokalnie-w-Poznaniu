@@ -80,7 +80,7 @@ dependencies {
     compile 'com.facebook.android:facebook-android-sdk:4.0.0'
     compile 'it.sephiroth.android.library.imagezoom:imagezoom:+'
     apt "org.androidannotations:androidannotations:$AAVersion"
-    apt "com.android.databinding:compiler:1.+"
+    apt "com.android.databinding:compiler:1.0-rc1"
     compile "org.androidannotations:androidannotations-api:$AAVersion"
     compile('com.crashlytics.sdk.android:crashlytics:2.5.0@aar') {
         transitive = true;
