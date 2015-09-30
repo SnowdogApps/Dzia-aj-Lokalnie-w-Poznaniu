@@ -15,7 +15,7 @@ Zgłoszenia i wydarzenia są prezentowane na mapie i listach.
 Użytkownik jest powiadamiany o aktywności we zgłoszeniach i wydarzeniach za pomocą push notifications.
 Użytkownik może się zalogować poprzez adres e-mail i hasło lub z wykorzystaniem Facebooka.
 
-
+![](app_screens.png)
 
 Media nt. konkursu i apliakcji
 ------------------------------
@@ -28,7 +28,9 @@ Zaangażowani w powstanie aplikacji
 ----------------------------------
 
 [Snowdog] [snowdog]
+
 [Miasto Poznań] [poznan]
+
 [ECDF mKlaster] [mklaster]
 
 
