@@ -4,7 +4,7 @@ Działaj Lokalnie w Poznaniu
 Krótki opis
 -----------
 
-Zwycięska aplikacja hakatonu NeedApp Poznań zorganizowanego przez ECDF mKlaster i Urząd Miasta Poznaia. Zadaniem uczestników było opracowanie aplikacji, która pomoże zmobilizować mieszkańców do aktywnego udziału w kształtowaniu obrazu ich otoczenia. Zrealizowana przez firmę Snowdog https://snow.dog Kod źródłowy jest dostępny na zasadach open-source.
+Zwycięska aplikacja hakatonu NeedApp Poznań zorganizowanego przez ECDF mKlaster i Urząd Miasta Poznania. Zadaniem uczestników było opracowanie aplikacji, która pomoże zmobilizować mieszkańców do aktywnego udziału w kształtowaniu obrazu ich otoczenia. Zrealizowana przez firmę Snowdog https://snow.dog Kod źródłowy jest dostępny na zasadach open-source.
 
 Funkcjonalność
 --------------
